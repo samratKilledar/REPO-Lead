@@ -3,7 +3,7 @@ import { View, TextInput } from "react-native";
 import InputStyle from "../constants/InputStyle";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-const CustomTextInput = ({ type ,iconName, value, onChangeText, placeholder }) => {
+const TextInput = ({ type ,iconName, value, onChangeText, placeholder }) => {
   return (
     <View style={InputStyle.container}>
       <Icon name={iconName} size={24} style={InputStyle.icon} />
@@ -19,4 +19,4 @@ const CustomTextInput = ({ type ,iconName, value, onChangeText, placeholder }) =
   );
 };
 
-export default CustomTextInput;
+export default TextInput;
