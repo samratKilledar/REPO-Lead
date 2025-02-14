@@ -28,6 +28,14 @@ export default StyleSheet.create({
     lineHeight: 19.6,
     letterSpacing: 0.2,
     color: "#616161",
+
+  },
+  eyeIcon: {
+    width: 16.67,
+    height: 14.17,
+    top: 2.92,
+    left: 1.67,
+    tintColor: "#616161",
   },
   eyeIcon: {
     width: 16.67,

@@ -3,6 +3,7 @@ import { View, TextInput, Image, Pressable } from "react-native";
 import InputStyle from "../styles/Inputstyle";
 import { useState } from "react";
 
+
 const CustomTextInput = ({ icon, type, value, onChangeText, placeholder, secureTextEntry }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(secureTextEntry);
   return (

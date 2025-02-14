@@ -1,12 +1,24 @@
 import { StyleSheet } from "react-native"
 export default StyleSheet.create({
     // On-Boarding part
+
     heading: {
         fontFamily: "Urbanist",  // ✅ Properly enclosed in quotes
         fontWeight: "700",       // ✅ Font weight should be a string in React Native
         fontSize: 32,
         lineHeight: 35.2,
         textAlign: "center",
+    },
+
+    forgotPasswordLogin: {
+        fontFamily: "Urbanist",
+        fontWeight: "600",
+        fontSize: 16,
+        lineHeight: 22.4,
+        letterSpacing: 0.2,
+        textAlign: "center",
+        color: "#2B2162", // ✅ Correct color
+        marginTop: 20,
     },
 
     forgotPasswordLogin: {
