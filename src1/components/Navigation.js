@@ -7,11 +7,11 @@ return (
 <View style={styles.navHeader}>
         <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.backButton}>
           <Image 
-            source={require('../assets/icons/Arrow.png')} // Ensure this file exists
+            source={require('../assets/icons/Arrow.png')} 
             style={styles.arrowIcon}
           />
         </TouchableOpacity>
-        <CustomText type="header" text="Forgot Password" customstyle={TextStyle.Titles}/> 
+        <CustomText type="header" text={props.text} customstyle={TextStyle.Titles}/> 
       </View>
 );
 };

@@ -65,6 +65,17 @@ export default StyleSheet.create({
         letterSpacing: 0.2,
         textAlign: "center",
         color: "#2b2162",
-    }
+    },
+    modalButton: {
+        width: 276,
+        height: 58,
+        borderRadius: 100,
+        paddingTop: 18,
+        paddingRight: 16,
+        paddingBottom: 18,
+        paddingLeft: 16,
+        gap: 10,
 
+      }
+      
 });

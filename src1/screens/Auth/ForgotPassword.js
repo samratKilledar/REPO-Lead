@@ -1,5 +1,6 @@
 import React from 'react';
 import { View,Image, StyleSheet, TouchableOpacity } from 'react-native';
+import Navigation from '../../components/Navigation';
 import CustomText from '../../components/CustomText'; // Custom Text Component
 import CustomTextInput from '../../components/CustomTextInput'; // Custom TextInput Component
 import CustomButton from '../../components/CustomButton'; // Custom Button Component
@@ -13,16 +14,7 @@ const ForgotPassword = (props) => {
   return (
     <View style={styles.container}>
       {/* Navigation Header */}
-      <View style={styles.navHeader}>
-        <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.backButton}>
-          <Image 
-            source={require('../../assets/icons/Arrow.png')} // Ensure this file exists
-            style={styles.arrowIcon}
-          />
-        </TouchableOpacity>
-        <CustomText type="header" text="Forgot Password" customstyle={TextStyle.Titles}/> 
-      </View>
-
+        <Navigation text="Forgot Password"/>
       {/* Lock Image */}
       <Image 
         source={require('../../assets/images/lock.png')} // Ensure this file exists
@@ -36,7 +28,7 @@ const ForgotPassword = (props) => {
       />
 
       {/* Email Input Field */}
-      <View style={styles.inputContainer}>
+      <View>
 
         <CustomTextInput 
           icon={require('../../assets/icons/Group.png')}
@@ -92,15 +84,6 @@ const styles = StyleSheet.create({
     width: 240,
     height: 240,
     alignSelf: 'center',
-  },
-  inputContainer: {
-      // flexDirection: 'row',
-      // alignItems: 'center',
-      // width: '100%',
-      // height: 60,
-      // paddingLeft: 16,
-      // borderRadius: 12,
-      // backgroundColor: "#FAFAFA",
   },
 
   buttonContainer: {

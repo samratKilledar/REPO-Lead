@@ -4,7 +4,6 @@ import Navigation from '../../components/Navigation';
 import ButtonStyles from '../../styles/ButtonStyles';
 import CustomButton from '../../components/CustomButton';
 import CustomText from '../../components/CustomText';
-import TextStyle from '../../styles/TextStyle';
 
 const ResetPassword = () => {
   const [code, setCode] = useState(['', '', '', '']);
@@ -18,15 +17,15 @@ const ResetPassword = () => {
 
   return (
     <View style={styles.container}>
-      <Navigation />
+      <Navigation text="Forgot Password" />
 
       <View style={styles.centerContainer}>
-        <CustomText 
-          text="Code has been sent to" 
+        <CustomText
+          text="Code has been sent to"
           customstyle={styles.instructionText}
         />
-        <CustomText 
-          text="daniel_austin@yourdomain.com" 
+        <CustomText
+          text="daniel_austin@yourdomain.com"
           customstyle={styles.emailText}
         />
 
@@ -44,17 +43,17 @@ const ResetPassword = () => {
           ))}
         </View>
 
-        <CustomText 
-          text="Resend code in 53 s" 
+        <CustomText
+          text="Resend code in 53 s"
           customstyle={styles.resendText}
         />
       </View>
 
       <View style={styles.buttonContainer}>
-        <CustomButton 
-          title="Verify" 
-          customStyle={ButtonStyles.blueButton} 
-          textStyles={ButtonStyles.blueButtonText} 
+        <CustomButton
+          title="Verify"
+          customStyle={ButtonStyles.blueButton}
+          textStyles={ButtonStyles.blueButtonText}
         />
       </View>
     </View>
@@ -63,7 +62,7 @@ const ResetPassword = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     paddingTop: 24,
     paddingRight: 24,
     paddingBottom: 48,
@@ -72,20 +71,21 @@ const styles = StyleSheet.create({
   },
 
   centerContainer: {
-    //width: '90%',
     alignItems: 'center',
     paddingVertical: 20,
     justifyContent: 'conter',
-    
+
   },
 
   instructionText: {
+    fontFamily: "Urbanist",
     fontSize: 16,
     color: '#000',
     textAlign: 'center',
   },
 
   emailText: {
+    fontFamily:"Urbanist",
     fontSize: 18,
     fontWeight: 'bold',
     color: '#000',

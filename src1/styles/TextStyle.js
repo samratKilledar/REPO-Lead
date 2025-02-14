@@ -82,14 +82,33 @@ export default StyleSheet.create({
     InstructionText: {
         width: 380,
         height: 44,
-        fontfamily: "Urbanist",
+        fontFamily: "Urbanist",
         fontWeight: 400,
         fontSize: 16,
         lineHeight: 22.4,
         letterSpacing: 0.2,
         background: 212121,
     },
+    //Congratulations
+    modalText: {
+        fontFamily: "Urbanist",
+        fontweight: 700,
+        fontSize: 24,
+        lineHeight: 28.8,
+        letterSpacing: 0,
+        textAlign: "center",
+        color: "#2B2162",
+    },
+    //Your account is ready to use
+    modalText2: {
+        fontFamily: "Source Sans Pro",
+        fontWeight: 400,
+        fontSize: 18,
+        lineHeight: 27,
+        letterSpacing: 0,
+        textAlign: "center",
 
+    },
     //Home & Action Menu 
     SearchBar: {                //Search
         fontfamily: "Urbanist",
