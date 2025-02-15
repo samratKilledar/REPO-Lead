@@ -16,7 +16,7 @@ const CreatePassword = () => {
             <Navigation text="Create New Password" />
 
             <Image
-                source={require('../../assets/images/Shield.png')}
+                source={require('../../assets/images/Shield/Shield2x.png')}
                 style={styles.SheildImage}
             />
             <View style={styles.inputcontainer} >
