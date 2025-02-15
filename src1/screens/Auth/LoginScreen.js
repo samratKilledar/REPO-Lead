@@ -26,7 +26,7 @@ const LoginScreen = () => {
         <View style={styles.inner}>
           
           <View style={{ flex: 1, justifyContent: "center" }}>
-            <Image source={require("../../assets/images/Logo.jpg")} style={styles.logo} />
+            <Image source={require("../../assets/images/Logo.png")} style={styles.logo} />
           </View>
 
          
