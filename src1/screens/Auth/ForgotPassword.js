@@ -17,7 +17,7 @@ const ForgotPassword = (props) => {
         <Navigation text="Forgot Password"/>
       {/* Lock Image */}
       <Image 
-        source={require('../../assets/images/lock.png')} // Ensure this file exists
+        source={require('../../assets/images/Lock/LockImage2x.png')} // Ensure this file exists
         style={styles.lockImage}
       />
      <View style={styles.instrucontainer}>
@@ -31,7 +31,7 @@ const ForgotPassword = (props) => {
       <View>
 
         <CustomTextInput 
-          icon={require('../../assets/icons/Group.png')}
+          icon={require('../../assets/icons/Message/message2x.png')}
           type={email}
           value={email}
           onChangeText={setEmail}
