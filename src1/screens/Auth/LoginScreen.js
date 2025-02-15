@@ -24,27 +24,26 @@ const LoginScreen = () => {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.inner}>
-          {/* Logo */}
+          
           <View style={{ flex: 1, justifyContent: "center" }}>
             <Image source={require("../../assets/images/Logo.jpg")} style={styles.logo} />
           </View>
 
-          {/* Login Header */}
+         
           <View style={{ flex: 0.4 }}>
             <CustomText text="Login to your Account" customstyle={TextStyle.heading} />
           </View>
 
-          {/* Input & Button Box */}
           <View style={styles.box}>
             <CustomTextInput 
-              icon={require('../../assets/icons/Profile.png')}
+              icon={require('../../assets/icons/Profile/profile3x.png')}
               type={customerId}
               value={customerId}
               placeholder="Customer Id"
               onChangeText={setCustomerId}
             />
             <CustomTextInput 
-              icon={require('../../assets/icons/Group.png')}
+              icon={require('../../assets/icons/Message/message3x.png')}
               type={email}
               value={email}
               placeholder="Email"
@@ -61,7 +60,6 @@ const LoginScreen = () => {
           </View>
 
           <View style={{ flex: 3, alignItems: "center" }}>
-            {/* Checkbox */}
             <View style={styles.checkboxContainer}>
               <Pressable style={[styles.checkbox, isChecked && styles.checked]} onPress={() => setIsChecked(!isChecked)}>
                 {isChecked && <Text style={styles.checkmark}>✓</Text>}
@@ -69,10 +67,9 @@ const LoginScreen = () => {
               <Text style={styles.rememberMe}>Remember me</Text>
             </View>
 
-            {/* Sign In Button */}
+            
             <CustomButton title="Sign in" customStyle={{ width: width - 30 }} textStyles={ButtonStyles.blueButtonText} />
 
-            {/* Forgot Password */}
             <CustomText text="Forgot the password?" customstyle={TextStyle.forgotPasswordLogin} />
           </View>
         </View>
