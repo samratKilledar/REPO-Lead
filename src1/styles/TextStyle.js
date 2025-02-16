@@ -6,7 +6,7 @@ export default StyleSheet.create({
         fontFamily: "Urbanist",  // ✅ Properly enclosed in quotes
         fontWeight: "700",       // ✅ Font weight should be a string in React Native
         fontSize: 32,
-        lineHeight: 35.2,
+       // lineHeight: 35.2,
         textAlign: "center",
     },
 
@@ -76,18 +76,19 @@ export default StyleSheet.create({
         fontWeight: 700,
         fontSize: 24,
         lineHeight: 28.8,
-
+        marginLeft:10
     },
     //Instruction
     InstructionText: {
-        width: 380,
-        height: 44,
+        // width: 380,
+        // height: 44,
         fontFamily: "Urbanist",
         fontWeight: 400,
         fontSize: 16,
         lineHeight: 22.4,
         letterSpacing: 0.2,
-        background: 212121,
+        background: 212121,textAlign:"left",
+        marginBottom:10
     },
     //Congratulations
     modalText: {
