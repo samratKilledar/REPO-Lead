@@ -4,6 +4,7 @@ import HomeScreen from '../screens/Main/HomeScreen';
 import ProfileScreen from '../screens/Main/ProfileScreen';
 import SettingsScreen from '../screens/Main/SettingsScreen';
 
+
 const Tab = createBottomTabNavigator();
 
 const MainNavigator = () => {

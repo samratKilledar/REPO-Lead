@@ -8,7 +8,6 @@ const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-alert(isAuthenticated)
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {isAuthenticated ? (

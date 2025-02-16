@@ -2,20 +2,23 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    width: 380,
     height: 60,
     paddingRight: 20,
     paddingLeft: 20,
     borderRadius: 12,
-    backgroundColor: "#F0F0F0",
+    gap: 20,
+    backgroundColor: "#FAFAFA",
     flexDirection: "row",
     alignItems: "center",
   },
   icon: {
     width: 13.33,
     height: 16.67,
-    marginRight: 10,
+    top: 2,
+    left: 2,
+    marginRight: 12,
     color: "#616161",
+    resizeMode: "contain",
   },
   input: {
     flex: 1,
@@ -25,5 +28,20 @@ export default StyleSheet.create({
     lineHeight: 19.6,
     letterSpacing: 0.2,
     color: "#616161",
+
+  },
+  eyeIcon: {
+    width: 16.67,
+    height: 14.17,
+    top: 2.92,
+    left: 1.67,
+    tintColor: "#616161",
+  },
+  eyeIcon: {
+    width: 16.67,
+    height: 14.17,
+    top: 2.92,
+    left: 1.67,
+    tintColor: "#616161",
   },
 });
