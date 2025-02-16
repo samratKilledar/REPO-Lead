@@ -192,5 +192,53 @@ export default StyleSheet.create({
         fontSize: 18,
         lineHeight: 25.2,
     },
+
+    //LeadCardStyle
+    nameText: {
+        fontFamily: "Urbanist",
+        fontWeight: 700,
+        fontSize: 20,
+        lineHeight: 24,
+        color: "#212121",
+
+    },
+    namePhone: {
+        fontFamily: "Urbanist",
+        fontWeight: 400,
+        fontSize: 14,
+        lineHeight: 19.6,
+        color: "#424242",
+    },
+    statusText: {
+        fontFamily: "Urbanist",
+        fontWeight: "600",
+        fontSize: 14,
+        lineHeight: 19.6,
+        letterSpacing: 0.2,
+        color: "#FFFFFF",
+        textAlign: "center",
+    },
+    dateTime: {
+        fontFamily: "Urbanist",
+        fontWeight: "400",
+        fontSize: 12,
+        lineHeight: 14.4,
+        letterSpacing: 0.2,
+        color: "#9E9E9E",
+    },
+    leadText: {
+        fontFamily: "Urbanist",
+        fontWeight: 700,
+        fontSize: 18,
+        lineHeight: 21.6,
+        color: "#212121",
+    },
+    seeAll: {
+        fontFamily: "Urbanist",
+        fontWeight: 700,
+        fontSize: 16,
+        lineHeight: 22.4,
+        color: "#246BFD",
+    },
 }
 );
