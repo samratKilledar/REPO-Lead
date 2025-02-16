@@ -8,10 +8,15 @@
 import React from 'react';
 import {View,Text} from "react-native";
 import StartApp from "./src1/StartApp";
+import ForgotPassword from './src1/screens/Auth/ForgotPassword';
+import TaskScreen from './src1/screens/Main/TaskScreen';
 const App=()=>{
   return(
     <View style={{flex:1}}>
-          <StartApp/>
+          {/* <StartApp/> */}
+          {/* <ForgotPassword/> */}
+          <TaskScreen/>
+
     </View>
   )
 }
