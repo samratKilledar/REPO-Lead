@@ -21,7 +21,7 @@ const CustomTextInput = ({ icon, type, value, onChangeText, placeholder, secureT
       />
       {secureTextEntry && (
         <Pressable onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
-          <Image source={require('../assets/icons/Hide/hide2x.png')} style={InputStyle.eyeIcon} />
+          <Image source={require('../assets/icons/Hide/hide.png')} style={InputStyle.eyeIcon} />
         </Pressable>
       )}
     </View>
