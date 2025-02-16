@@ -49,8 +49,4 @@ const styles1 = StyleSheet.create({
         width: 48,
         height: 48,
     },
-<<<<<<< HEAD
-});  
-=======
 });
->>>>>>> leadHome
