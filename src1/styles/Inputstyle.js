@@ -7,7 +7,7 @@ export default StyleSheet.create({
     paddingLeft: 20,
     borderRadius: 12,
     gap: 20,
-    backgroundColor: "#FAFAFA",
+    backgroundColor: "#FAF0F0",
     flexDirection: "row",
     alignItems: "center",
   },

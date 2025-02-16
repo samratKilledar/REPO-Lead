@@ -15,6 +15,7 @@ const MainNavigator = () => {
       <Tab.Screen name="Profile" component={ProfileScreen} />
       <Tab.Screen name="Settings" component={SettingsScreen} />
       <Tab.Screen name="Lead" component={LeadScreen} />
+      <Tab.Screen name="Task" component={TaskScreen} />
     </Tab.Navigator>
   );
 };
