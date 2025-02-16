@@ -18,6 +18,7 @@ const styles1 = StyleSheet.create({
 
     headerstyle:{
         //width: 428,
+       
         height: 100,
         flexDirection: "row",
         justifyContent: "space-between",
@@ -48,4 +49,8 @@ const styles1 = StyleSheet.create({
         width: 48,
         height: 48,
     },
+<<<<<<< HEAD
 });  
+=======
+});
+>>>>>>> leadHome
