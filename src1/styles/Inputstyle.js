@@ -7,7 +7,7 @@ export default StyleSheet.create({
     paddingLeft: 20,
     borderRadius: 12,
     gap: 20,
-    backgroundColor: "#FAF0F0",
+    backgroundColor: "#FAFAFA",
     flexDirection: "row",
     alignItems: "center",
   },
@@ -20,6 +20,19 @@ export default StyleSheet.create({
     color: "#616161",
     resizeMode: "contain",
   },
+  followupicon: {
+    width: 18,   
+    height: 57,
+    resizeMode: "contain", 
+  },
+  followup: {
+    position: "absolute",
+    top: 1,
+    right: 1,
+    width: 40,  
+    height: 24,
+  },
+
   input: {
     flex: 1,
     fontFamily: "Urbanist",

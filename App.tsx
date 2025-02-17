@@ -7,14 +7,12 @@
 
 import React from 'react';
 import {View,Text} from "react-native";
-import StartApp from "./src1/StartApp";
-import LeadScreen from './src1/screens/Main/LeadScreen';
+import StartApp from './src1/StartApp';
 
 const App=()=>{
   return(
     <View style={{flex:1}}>
-          {/* <StartApp/> */}
-          <LeadScreen/>
+          <StartApp/>
     </View>
   )
 }

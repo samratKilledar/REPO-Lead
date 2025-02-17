@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     blueButton: {
-        width: 380,
+       // width: 380,
         height: 55,
         paddingTop: 18,
         paddingRight: 16,
