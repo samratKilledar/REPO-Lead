@@ -4,6 +4,8 @@ import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import HomeScreen from '../screens/Main/HomeScreen';
 import ProfileScreen from '../screens/Main/ProfileScreen';
 import SettingsScreen from '../screens/Main/SettingsScreen';
+import LeadScreen from '../screens/Main/LeadScreen';
+import AddFollowUp from '../screens/Main/AddFollowUp';
 
 const Tab = createBottomTabNavigator();
 
