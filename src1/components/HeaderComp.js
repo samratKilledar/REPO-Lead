@@ -1,13 +1,15 @@
 
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native'; 
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'; 
 
-const HeaderComp = ()=>{
+const HeaderComp = (props)=>{
     return(
             <View style={styles1.headerstyle}>
             <Image source={require("../assets/images/Frame.png")}  style={styles1.frame}/>
             <View style={styles1.frameimage}>
-                <Image source={require("../assets/icons/Notification/notification2x.png")}  style={styles1.bell}/>
+                <TouchableOpacity onPress={props.onPress} >
+                    <Image source={require("../assets/icons/Notification/notification2x.png")}  style={styles1.bell}/>
+                </TouchableOpacity>
                 <Image source={require("../assets/images/Avatar.png")}  style={styles1.avtar}/>
             </View>
             </View> 

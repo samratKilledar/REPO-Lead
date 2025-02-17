@@ -57,7 +57,7 @@ const LoginScreen = (props) => {
               {/* Logo */}
               <View style={{flex: 1, justifyContent: 'center'}}>
                 <Image
-                  source={require('../../assets/images/Logo.jpg')}
+                 source={require('../../assets/images/Logo.png')}
                   style={styles.logo}
                 />
               </View>

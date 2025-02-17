@@ -1,7 +1,7 @@
 import { View, ScrollView, StyleSheet } from 'react-native';
-import Navigation from './src1/components/Navigation.js';
-import CustomText from './src1/components/CustomText.js';
-import TextStyle from './src1/styles/TextStyle.js';
+import Navigation from '../../components/NavigationHeaderBack.js';
+import CustomText from '../../components/CustomText.js';
+import TextStyle from '../../styles/TextStyle.js';
 import { Text } from 'react-native';
 
 
@@ -23,10 +23,16 @@ const DateName = [
 ];
 
 
-const Notifications = () => {
+const Notifications = (props) => {
+  const goBackCall = () => {
+    props.navigation.goBack();
+  };
   return (
-    <View style={{ flex: 1 , top: 15, paddingTop: 12,paddingBottom: 24, gap: 24,}}>
-    <Navigation text={"Notification"} />
+    <View style={{ flex: 1 , paddingTop: 12, gap: 24,}}>
+        <View style={{flex:0.3}}>
+        <Navigation text={"Upcoming Meetings"}  onPress={goBackCall}/>
+      </View>
+      <View style={{flex:8}}>
     <ScrollView style={style.container1} showsVerticalScrollIndicator={false}>
       <View style={style.container}>
 
@@ -80,6 +86,7 @@ const Notifications = () => {
 
     </View>
     </ScrollView>
+    </View>
   </View>
   );
 };
@@ -109,3 +116,45 @@ const style = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+
+
+// import React, { useEffect } from 'react';
+// import { View, Text, StyleSheet } from 'react-native';
+// import { useNavigation } from '@react-navigation/native';
+
+// const Notifications = () => {
+//   const navigation = useNavigation();
+
+//   useEffect(() => {
+//     const hideTabBar = () => navigation.setOptions({ tabBarStyle: { display: 'none' } });
+//     const showTabBar = () => navigation.setOptions({ tabBarStyle: undefined });
+
+//     // Hide tab bar when entering
+//     hideTabBar();
+
+//     return () => {
+//       // Show tab bar when leaving
+//       showTabBar();
+//     };
+//   }, [navigation]);
+
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.text}>Notifications Screen</Text>
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   text: {
+//     fontSize: 20,
+//   },
+// });
+
+// export default Notifications;

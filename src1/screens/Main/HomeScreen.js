@@ -1,10 +1,10 @@
 
-import { View, ScrollView, StyleSheet } from 'react-native';
-import Headercomp from './src1/components/HeaderComp.js';
-import HoriCardcomp from './src1/components/HoriCardcomp';
-import RectCardcomp from './src1/components/RectCardcomp.js';
-import CustomText from './src1/components/CustomText.js';
-import TextStyle from './src1/styles/TextStyle.js';
+import { View, ScrollView, StyleSheet,TouchableOpacity } from 'react-native';
+import Headercomp from '../../components/HeaderComp.js';
+import HoriCardcomp from '../../components/HoriCardcomp';
+import RectCardcomp from '../../components/RectCardcomp.js';
+import CustomText from '../../components/CustomText.js';
+import TextStyle from '../../styles/TextStyle.js';
 
 const meetingsData = [
   { name: "Barbara Moore", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12:00 PM" },
@@ -13,10 +13,13 @@ const meetingsData = [
   { name: "Joseph Collins", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12:00 PM" },
 ];
 
-const App = () => {
+const HomeScreen = (props) => {
+  const naviagteToNotificationPage=()=>{
+      props.navigation.navigate("Notifications")
+  }
   return (
     <View style={{ flex: 1 }}>
-      <Headercomp />
+      <Headercomp onPress={naviagteToNotificationPage} />
       <ScrollView style={style.container} showsVerticalScrollIndicator={false}>
         <View>
           <HoriCardcomp />
@@ -26,9 +29,13 @@ const App = () => {
               <View style={{ flex: 5, justifyContent: "flex-start" }}>
                 <CustomText customstyle={TextStyle.upComingUp} text={"Upcoming Meetings"} />
               </View>
-              <View style={{ flex: 1 }}>
-                <CustomText customstyle={TextStyle.SeeallText} text={"See All"} />
-              </View>
+                <TouchableOpacity onPress={() => props.navigation.navigate("UpcomingMeetings")}>
+                <View style={{ flex: 1 }}>
+
+                   <CustomText customstyle={TextStyle.SeeallText} text={"See All"} />
+                   </View>
+                </TouchableOpacity>
+             
             </View>
           </View>
 
@@ -38,9 +45,11 @@ const App = () => {
             <View style={{ flex: 5, justifyContent: "flex-start" }}>
               <CustomText customstyle={TextStyle.upComingUp} text={"Upcoming Tasks"} />
             </View>
-            <View style={{ flex: 1 }}>
-              <CustomText customstyle={TextStyle.SeeallText} text={"See All"} />
-            </View>
+            <TouchableOpacity onPress={() => props.navigation.navigate("UpcomingTask")}>
+                 <View style={{ flex: 1 }}>
+               <CustomText customstyle={TextStyle.SeeallText} text={"See All"} />
+               </View>
+               </TouchableOpacity>
           </View>
 
           <RectCardcomp props={meetingsData} />
@@ -50,7 +59,7 @@ const App = () => {
   );
 };
 
-export default App;
+export default HomeScreen;
 
 const style = StyleSheet.create({
   container: {
