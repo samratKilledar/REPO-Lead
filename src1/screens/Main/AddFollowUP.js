@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import Dropdown from "../../components/Dropdown";
-import Navigation from "../../components/Navigation";
 import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
+import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 
 
 const AddFollowUP = () => {
@@ -19,7 +19,7 @@ const AddFollowUP = () => {
 
   return (
     <View style={styles.container}>
-      <View><Navigation text="Add Follow-Up" /></View>
+      {/* <View><NavigationHeaderBack text="Add Follow-Up" /></View> */}
 
       <View style={styles.centerContainer}>
         <CustomTextInput

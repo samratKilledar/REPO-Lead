@@ -110,12 +110,9 @@ export default StyleSheet.create({
         textAlign: "center",
 
     },
-<<<<<<< HEAD
     //Task tab style
-=======
 
     //lead task client task tab text
->>>>>>> leadHome
     tabText: {
         fontFamily: "Urbanist",
         fontWeight: "600",

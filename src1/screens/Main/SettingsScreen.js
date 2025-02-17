@@ -1,10 +1,21 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import TaskScreen from './TaskScreen';
+import AddTask from './AddTask';
+import CloseAccountScreen from './CloseAccountScreen';
+import LeadScreen from './LeadScreen';
+import AddFollowUP from './AddFollowUP';
 
 const SettingsScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Settings Screen</Text>
+      {/* <Text style={styles.title}>Settings Screen</Text> */}
+      {/* <TaskScreen/> */}
+     {/* <CloseAccountScreen/> */}
+      {/* <AddTask/> */}
+      {/* <LeadScreen/> */}
+      {/* <AddFollowUP/> */}
+
     </View>
   );
 };

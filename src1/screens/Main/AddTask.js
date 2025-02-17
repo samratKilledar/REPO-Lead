@@ -48,7 +48,7 @@ const AddFollowUP = () => {
               { label: "Waiting For Documents", value: "Waiting For Documents" },
               { label: "Conversation Pending", value: "Conversation Pending" },
             ]}
-            zIndex={3000}
+            zIndex={4000}
           />
           <Dropdown
             label="Task Assign To"
@@ -60,7 +60,7 @@ const AddFollowUP = () => {
               { label: "Mr.Rajesh", value: "paresh" },
               { label: "Mr.Subhash", value: "subhash" },
             ]}
-            zIndex={2000}
+            zIndex={3000}
           />
           <Dropdown
             label="Client"
@@ -72,7 +72,7 @@ const AddFollowUP = () => {
               { label: "Mr.Rajesh", value: "paresh" },
               { label: "Mr.Subhash", value: "subhash" },
             ]}
-            zIndex={1000}
+            zIndex={2000}
           />
           <CustomTextInput
             followupicon={require('../../assets/icons/Calendar/calendar.png')}
