@@ -20,6 +20,20 @@ export default StyleSheet.create({
     color: "#616161",
     resizeMode: "contain",
   },
+  followupicon: {
+    width: 13.33,
+    height: 16.67,
+    top: 2,
+    left: 2,
+    marginRight: 12,
+    color: "#616161",
+    resizeMode: "contain",
+  },
+  searchbaricon:{
+    width: 15,
+    height: 15,
+    resizeMode: "contain",
+  },
   input: {
     flex: 1,
     fontFamily: "Urbanist",
