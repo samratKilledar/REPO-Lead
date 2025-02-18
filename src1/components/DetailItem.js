@@ -19,7 +19,7 @@ const DetailItem = ({ icon, label, detail }) => {
           <Text style={styles.leadStatusText}>{detail}</Text>
         </View>
       ) : isServiceRequest ? (
-        <View style={styles.serviceRequestContainer}>
+        <View style={styles.serviceRequestWrapper}>
           <Text style={styles.serviceRequestText}>{detail}</Text>
         </View>
       ) : (
@@ -71,46 +71,39 @@ const styles = StyleSheet.create({
 
   // Lead Status Style
   leadStatusContainer: {
-    // paddingHorizontal: 8,
-    // paddingVertical: 4,
-    
-paddingTop: 6,
-paddingRight: 16,
-paddingBottom: 7,
-paddingLeft: 16,
-
+    paddingTop: 6,
+    paddingRight: 16,
+    paddingBottom: 7,
+    paddingLeft: 16,
     borderWidth: 2,
-    borderColor: '#6A1B9A',
+    borderColor: '#2B2162',
     borderRadius: 100,
     alignSelf: 'flex-start',
-    //width: 380,
     height: 32,
     gap: 35,
-    marginRight:80,
-
+    marginRight: 80,
   },
   leadStatusText: {
-    color: '#6A1B9A',
+    color: '#2B2162',
     fontSize: 14,
     fontWeight: '600',
   },
 
-  // Service Request Style
-  serviceRequestContainer: {
-    width: 380,
-    height: 65,
-    flexWrap: 'wrap',
-    flexShrink: 1,
-    gap: 35,
-    backgroundColor: "pink",
+  // Service Request Wrapper 
+  serviceRequestWrapper: {
+    width: 220,
+    padding: 8,
+    borderRadius: 10,
+    marginRight: 2,
   },
+
   serviceRequestText: {
     fontFamily: "Urbanist",
-fontWeight: 500,
-fontSize: 16,
-lineHeight: 22.4,
-letterSpacing: 0.2,
-
+    fontWeight: "500",
+    fontSize: 16,
+    lineHeight: 22.4,
+    letterSpacing: 0.2,
+    color: "#212121",
   },
 });
 

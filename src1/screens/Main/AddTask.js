@@ -10,15 +10,20 @@ const AddFollowUP = () => {
   const [title, setTitle] = useState('');
   const [type, setType] = useState(null);
   const [assign, setAssign] = useState(null);
+  const [client, setClient] = useState(null);
+  const [dueDate, setDueDate] = useState('');
+  const [priority, setPriority] = useState('nulll');
+  const [service, setService] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [reminderDate, setReminderDate] = useState('');
   const [attachment, setAttachment] = useState('');
-  const [meetSchedule, setMeetSchedule] = useState('');
-  const [scheduleTime, setScheduleTime] = useState('');
   const [remark, setRemark] = useState('');
 
   return (
     <View style={styles.container}>
-      <ScrollView 
-        style={{ flex: 1 }}
+      {/* <NavigationHeaderBack text="Add Task"/> */}
+      <ScrollView
+        style={{ flex: 1, marginBottom: 60 }}
         contentContainerStyle={{ paddingBottom: 20 }}
         keyboardShouldPersistTaps="handled"
       >
@@ -34,19 +39,8 @@ const AddFollowUP = () => {
             selectedValue={type}
             onValueChange={setType}
             options={[
-              { label: "Insurance Under Process", value: "Insurance Under Process" },
-              { label: "Mandate Approved", value: "Mandate Approved" },
-              { label: "Demat Under Process", value: "Demat Under Process" },
-              { label: "Mandate Pending", value: "Mandate Pending" },
-              { label: "Case Declined", value: "Case Declined" },
-              { label: "Reject", value: "client" },
-              { label: "Payment Pending", value: "Payment Pending" },
-              { label: "Task Completed", value: "Task Completed" },
-              { label: "Document Recived & Under Process", value: "Document Recived & Under Process" },
-              { label: "Policy Issues", value: "Policy Issues" },
-              { label: "Insurance Pending", value: "Insurance Pending" },
-              { label: "Waiting For Documents", value: "Waiting For Documents" },
-              { label: "Conversation Pending", value: "Conversation Pending" },
+              { label: "Lead", value: "Lead" },
+              { label: "Client", value: "client" },
             ]}
             zIndex={4000}
           />
@@ -64,61 +58,61 @@ const AddFollowUP = () => {
           />
           <Dropdown
             label="Client"
-            selectedValue={assign}
-            onValueChange={setAssign}
+            selectedValue={client}
+            onValueChange={setClient}
             options={[
-              { label: "Mr.Akshat", value: "akshat" },
-              { label: "Mr.Paresh", value: "paresh" },
-              { label: "Mr.Rajesh", value: "paresh" },
-              { label: "Mr.Subhash", value: "subhash" },
+              { label: "Mahesh Pawar", value: "mahesh pawar" },
+              { label: "Sonali Thakur", value: "sonali takur" },
+              { label: "Raj Sharma", value: "raj sharma" },
+              { label: "Virendra Kambli", value: "virendra kambli" },
             ]}
             zIndex={2000}
           />
           <CustomTextInput
             followupicon={require('../../assets/icons/Calendar/calendar.png')}
-            type={meetSchedule}
-            value={meetSchedule}
+            type={dueDate}
+            value={dueDate}
             placeholder="Due Date"
-            onChangeText={setMeetSchedule}
+            onChangeText={setDueDate}
           />
           <Dropdown
             label="Priority"
-            selectedValue={assign}
-            onValueChange={setAssign}
+            selectedValue={priority}
+            onValueChange={setPriority}
             options={[
-              { label: "Mr.Akshat", value: "akshat" },
-              { label: "Mr.Paresh", value: "paresh" },
-              { label: "Mr.Rajesh", value: "paresh" },
-              { label: "Mr.Subhash", value: "subhash" },
+              { label: "High", value: "high" },
+              { label: "Mid", value: "mid" },
+              { label: "Low", value: "low" },
+
             ]}
             zIndex={1000}
           />
           <CustomTextInput
-            type={title}
-            value={title}
+            type={service}
+            value={service}
             placeholder="Service Request"
-            onChangeText={setTitle}
+            onChangeText={setService}
           />
           <CustomTextInput
             followupicon={require('../../assets/icons/Calendar/calendar.png')}
-            type={meetSchedule}
-            value={meetSchedule}
+            type={startDate}
+            value={setStartDate}
             placeholder="Start Date"
-            onChangeText={setMeetSchedule}
+            onChangeText={setStartDate}
           />
           <CustomTextInput
             followupicon={require('../../assets/icons/Calendar/calendar.png')}
-            type={meetSchedule}
-            value={meetSchedule}
+            type={reminderDate}
+            value={reminderDate}
             placeholder="Reminder Date"
-            onChangeText={setMeetSchedule}
+            onChangeText={setReminderDate}
           />
           <CustomTextInput
             followupicon={require('../../assets/icons/Scan/scan.png')}
             type={attachment}
             value={attachment}
             placeholder="Attachment"
-            onChangeText={setTitle}
+            onChangeText={setAttachment}
           />
           <CustomTextInput
             type={remark}
@@ -135,7 +129,7 @@ const AddFollowUP = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.8,
+    flex: 1,
     paddingRight: 24,
     paddingLeft: 24,
     paddingTop: 15,
