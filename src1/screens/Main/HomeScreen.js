@@ -21,7 +21,7 @@ const HomeScreen = (props) => {
     <View style={{ flex: 1 }}>
       <Headercomp onPress={naviagteToNotificationPage} />
       <ScrollView style={style.container} showsVerticalScrollIndicator={false}>
-        <View>
+        <View style={{marginBottom: 90}}>
           <HoriCardcomp />
 
           <View style={{ marginTop: 25 }}>

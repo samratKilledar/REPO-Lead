@@ -20,9 +20,9 @@ const UpcomingTask = (props) => {
   return (
     <View style={{ flex: 1 , top: 15,paddingTop: 12,paddingBottom: 24, gap: 24, }}>
     <View style={{flex:0.3}}>
-      <Navigation text={"Upcoming Meetings"}  onPress={goBackCall}/>
+      <Navigation text={"Upcoming Task"}  onPress={goBackCall}/>
     </View>
-    <View style={{flex:9,marginBottom:10}}>
+    <View style={{flex:9,marginBottom:90}}>
     <ScrollView style={style.container1} showsVerticalScrollIndicator={false}>
       <View style={style.container}>
         <RectCardcomp props={UpcomingMeetings} />

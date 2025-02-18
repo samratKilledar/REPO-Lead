@@ -30,7 +30,7 @@ const Notifications = (props) => {
   return (
     <View style={{ flex: 1 , paddingTop: 12, gap: 24,}}>
         <View style={{flex:0.3}}>
-        <Navigation text={"Upcoming Meetings"}  onPress={goBackCall}/>
+        <Navigation text={"Notifications"}  onPress={goBackCall}/>
       </View>
       <View style={{flex:8}}>
     <ScrollView style={style.container1} showsVerticalScrollIndicator={false}>
