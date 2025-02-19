@@ -47,6 +47,7 @@ const LeadCard = ({ name, phone, dateTime, status, statusGradient ,leadstatus}) 
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   cardContainer: {
     width: 380,
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     paddingLeft: 20,
     marginBottom: 24,
+    //backgroundColor: 'blue',
 
 },
 card: {

@@ -23,21 +23,8 @@ export default StyleSheet.create({
   followupicon: {
     width: 18,
     height: 57,
-    // top: 2,
-    // left: 2,
-    // marginRight: 12,
-    // color: "#616161",
     resizeMode: "contain",
   },
-  searchbaricon:{
-    width: 15,
-    height: 15,
-    resizeMode: "contain",
-  },
-  //   width: 18,   
-  //   height: 57,
-  //   resizeMode: "contain", 
-  // },
   followup: {
     position: "absolute",
     top: 1,
@@ -45,7 +32,11 @@ export default StyleSheet.create({
     width: 40,  
     height: 24,
   },
-
+  searchbaricon:{
+    width: 15,
+    height: 15,
+    resizeMode: "contain",
+  },
   input: {
     flex: 1,
     fontFamily: "Urbanist",

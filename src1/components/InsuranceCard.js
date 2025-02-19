@@ -7,10 +7,6 @@ import TextStyle from "../styles/TextStyle";
 const InsuranceCard = ({ title, date, description, onDelete }) => {
   return (
     <View style={cardstyle.Insurance}>
-      <Image
-        source={require("../assets/icons/Delete/delete2x.png")}
-        style={cardstyle.Delete}
-      />
       <View style={cardstyle.Inside}>
         <CustomText customstyle={TextStyle.Insurance} text={title} />
         <CustomText customstyle={TextStyle.datesText} text={date} />

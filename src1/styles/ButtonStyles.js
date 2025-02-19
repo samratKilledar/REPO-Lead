@@ -25,7 +25,7 @@ export default StyleSheet.create({
     },
 
     addButton: {
-        width: 178,
+        width: 170,
         height: 58,
         paddingTop: 18,
         paddingRight: 16,
@@ -46,7 +46,7 @@ export default StyleSheet.create({
         color: "#2b2162",
     },
     cancelbutton: {
-        width: 380,
+       // width: 380,
         height: 55,
         paddingTop: 18,
         paddingRight: 16,
