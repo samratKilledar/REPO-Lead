@@ -5,7 +5,6 @@ import CustomTextInput from "../../components/CustomTextInput";
 import CustomText from "../../components/CustomText";
 import TextStyle from "../../styles/TextStyle";
 import LeadCard from "../../components/LeadCard";
-import LeadCardStyles from "../../styles/LeadCardStyles";
 
 const tasksData = [
   { id: "1", name: "Add Account", phone: "Jonh Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"] },
