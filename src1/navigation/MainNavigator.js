@@ -184,6 +184,9 @@ import SettingsScreen from '../screens/Main/SettingsScreen';
 import UpcomingMeetings from '../screens/Main/UpcomingMeetings';
 import UpcomingTask from '../screens/Main/UpcomingTask';
 import Notifications from '../screens/Main/Notifications';
+import LeadScreen from '../screens/Main/LeadScreen';
+import AddFollowUp from '../screens/Main/AddFollowUp';
+
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -286,6 +289,11 @@ const MainNavigator = () => {
         }}
       />
     </Tab.Navigator>
+    // <Tab.Screen name="Home" component={HomeScreen} />
+    // <Tab.Screen name="Profile" component={ProfileScreen} />
+    // <Tab.Screen name="Settings" component={SettingsScreen} />
+    // <Tab.Screen name="Lead" component={LeadScreen} />
+    // <Tab.Screen name="Addfollowup" component={AddFollowUp} />
   );
 };
 

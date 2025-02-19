@@ -1,8 +1,7 @@
-
 import React from 'react';
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'; 
+import { View, StyleSheet, Image } from 'react-native'; 
 
-const HeaderComp = (props)=>{
+const HeaderComp = ()=>{
     return(
             <View style={styles1.headerstyle}>
             <Image source={require("../assets/images/Frame.png")}  style={styles1.frame}/>
@@ -20,7 +19,7 @@ export default HeaderComp;
 const styles1 = StyleSheet.create({
 
     headerstyle:{
-        // width: 428,
+       // width: 428,
         height: 100,
         flexDirection: "row",
         justifyContent: "space-between",

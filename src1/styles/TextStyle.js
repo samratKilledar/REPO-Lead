@@ -110,6 +110,23 @@ export default StyleSheet.create({
         textAlign: "center",
 
     },
+
+    //lead task client task tab text
+    tabText: {
+        fontFamily: "Urbanist",
+        fontWeight: "600",
+        fontSize: 18,
+        lineHeight: 25.2,
+        letterSpacing: 0.2,
+        textAlign: "center",
+      },
+
+      activeTabText: {
+        color: "#2B2162",
+      },
+      inactiveTabText: {
+        color: "#9E9E9E",
+      },
     //Home & Action Menu 
     SearchBar: {                //Search
         fontfamily: "Urbanist",
