@@ -19,7 +19,9 @@ const AddFollowUP = () => {
 
   return (
     <View style={styles.container}>
-      {/* <View><NavigationHeaderBack text="Add Follow-Up" /></View> */}
+      <View style={{flex:0.1}}>
+      <NavigationHeaderBack text="Add Follow-Up"/>
+      </View>
 
       <View style={styles.centerContainer}>
         <CustomTextInput

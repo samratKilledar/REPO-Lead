@@ -16,12 +16,12 @@ const SettingsScreen = () => {
       {/* <TaskScreen/> */}
      {/* <CloseAccountScreen/> */}
       {/* <AddTask/> */}
-      <LeadScreen/>
+      {/* <LeadScreen/> */}
       {/* <AddFollowUP/> */}
       {/* <LeadDetails/> */}
-      {/* <ClientDetails/> */}
+      <ClientDetails/>
       {/* <ClientAddFollowUP/> */}
-
+   {/* <ClientScreen/> */}
 
     </View>
   );

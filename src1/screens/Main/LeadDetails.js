@@ -27,7 +27,9 @@ const LeadDetails = () => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.centralcontainer}>
-          {/* <NavigationHeaderBack text="Create New Password"  /> */}
+        <View style={{flex:0.3}}>
+      <NavigationHeaderBack text="Barbara Moore"/>
+      </View>
 
           <View style={styles.detailsContainer}>
             <DetailItem icon={require('../../assets/icons/ProfileGrey/profileGrey.png')} label="Name" detail="Rajiv Sharma" />
@@ -70,14 +72,14 @@ const styles = StyleSheet.create({
   },
   centralcontainer: {
     flex: 3,
-    paddingTop: 24,
+    paddingTop: 35,
     paddingLeft: 10,
     paddingRight: 5,
   },
   detailsContainer: {
     flex: 5,
     gap: 12,
-
+    paddingTop: 30,
   },
   followup: {
     flexDirection: 'row',       // Aligns items in a horizontal line

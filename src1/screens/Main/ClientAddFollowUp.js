@@ -19,7 +19,9 @@ const ClientAddFollowUP = () => {
 
   return (
     <View style={styles.container}>
-      {/* <View><NavigationHeaderBack text="Add Follow-Up" /></View> */}
+      <View style={{ flex: 0.1 }}>
+        <NavigationHeaderBack text="Add Follow-Up" />
+      </View>
 
       <View style={styles.centerContainer}>
         <CustomTextInput
@@ -75,14 +77,14 @@ const ClientAddFollowUP = () => {
           placeholder="Next Meeting schedule on"
           onChangeText={setMeetSchedule}
         />
-         <CustomTextInput
-         followupicon={require('../../assets/icons/Calendar/calendar.png')}
+        <CustomTextInput
+          followupicon={require('../../assets/icons/Calendar/calendar.png')}
           type={scheduleTime}
           value={scheduleTime}
           placeholder="Schedule Time"
           onChangeText={setScheduleTime}
         />
-         <CustomTextInput
+        <CustomTextInput
           type={remark}
           value={remark}
           placeholder="Remark"
@@ -101,12 +103,12 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     paddingTop: 15,
     backgroundColor: "#FFFFFF",
-    gap: 20, 
+    gap: 20,
   },
   centerContainer: {
     flex: 0.7,
     gap: 12,
-    zIndex: 1, 
+    zIndex: 1,
   },
 });
 
