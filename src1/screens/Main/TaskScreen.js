@@ -10,22 +10,22 @@ import LeadCardStyles from "../../styles/LeadCardStyles";
 const tasksData = [
   { id: "1", name: "Add Account", phone: "Jonh Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"] },
   { id: "2", name: "Close Account", phone: "John Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"] },
-];  
+];
 const tasks2Data = [
-  { id: "1", name: "Close Account", phone: "Jonh Smith", dateTime: "02 Feb 2025 - 12.00 PM",leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"] },
+  { id: "1", name: "Close Account", phone: "Jonh Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"] },
   { id: "2", name: "Add Account", phone: "John Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"] },
-];    
+];
 
 
 const TaskScreen = () => {
-  const [search, setSearch] = useState(''); 
+  const [search, setSearch] = useState('');
   const [activeTab, setActiveTab] = useState("Lead Task");
 
   return (
     <View style={styles.container}>
       <HeaderComp />
       <View style={styles.input}>
-        <CustomTextInput 
+        <CustomTextInput
           icon={require('../../assets/icons/Search/search.png')}
           type={search}
           value={search}
@@ -37,32 +37,32 @@ const TaskScreen = () => {
       <View style={styles.tabContainer}>
         {["Lead Task", "Client Task"].map((tab) => (
           <TouchableOpacity key={tab} onPress={() => setActiveTab(tab)} style={styles.tab}>
-            <CustomText text={tab} customstyle={[TextStyle.tabText, activeTab === tab ? TextStyle.activeTabText : TextStyle.inactiveTabText]}/>
+            <CustomText text={tab} customstyle={[TextStyle.tabText, activeTab === tab ? TextStyle.activeTabText : TextStyle.inactiveTabText]} />
             <View style={activeTab === tab ? styles.activeTabIndicator : styles.inactiveTabIndicator} />
           </TouchableOpacity>
         ))}
       </View>
       <View style={styles.contentContainer}>
         {activeTab === "Lead Task" ? (
-         <ScrollView>
-         {tasksData.map((item, index) => (
-         <View key={item.id} style={styles.cardWrapper}>
-             <LeadCard {...item} />
-          <View style={[styles.progressLine, { backgroundColor: index === 0 ? "#246BFD" : "#FF4F4F" }]} />
-         </View>
-        ))}
+          <ScrollView>
+            {tasksData.map((item, index) => (
+              <View key={item.id} style={styles.cardWrapper}>
+                <LeadCard {...item} />
+                <View style={[styles.progressLine, { backgroundColor: index === 0 ? "#246BFD" : "#FF4F4F" }]} />
+              </View>
+            ))}
 
-       </ScrollView>
+          </ScrollView>
         ) : (
           <ScrollView>
-         {tasks2Data.map((item, index) => (
-         <View key={item.id} style={styles.cardWrapper}>
-             <LeadCard {...item} />
-          <View style={[styles.progressLine, { backgroundColor: index === 0 ? "#246BFD" : "#FF4F4F" }]} />
-         </View>
-        ))}
+            {tasks2Data.map((item, index) => (
+              <View key={item.id} style={styles.cardWrapper}>
+                <LeadCard {...item} />
+                <View style={[styles.progressLine, { backgroundColor: index === 0 ? "#246BFD" : "#FF4F4F" }]} />
+              </View>
+            ))}
 
-       </ScrollView>
+          </ScrollView>
         )}
       </View>
     </View>
@@ -75,13 +75,13 @@ const styles = StyleSheet.create({
     gap: 24,
   },
   input: {
-    height: 56,
+    //height: 56,
     gap: 10,
     paddingRight: 24,
     paddingLeft: 24,
   },
   tabContainer: {
-    height: 61,
+    //height: 61,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -109,24 +109,24 @@ const styles = StyleSheet.create({
     backgroundColor: "#EEEEEE",
     marginTop: 4,
   },
-  contentContainer:{
+  contentContainer: {
     //width: 428,
     height: 611,
     gap: 24,
   },
-      cardWrapper: {
-        marginBottom: 30, // Adds spacing between cards
-      },
-      progressLine: {
-        height: 4,
-        borderRadius: 200,
-        marginTop: -30, // Move it closer to the card
-        width: "200",
-        marginLeft:30,
-        
-      },
-  
-  
+  cardWrapper: {
+    marginBottom: 30, // Adds spacing between cards
+  },
+  progressLine: {
+    height: 4,
+    borderRadius: 200,
+    marginTop: -30, // Move it closer to the card
+    width: "200",
+    marginLeft: 30,
+
+  },
+
+
 });
 
 export default TaskScreen;
