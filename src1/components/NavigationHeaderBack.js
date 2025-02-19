@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import CustomText from '../components/CustomText';
+import CustomText from './CustomText';
 import TextStyle from '../styles/TextStyle';
-const Navigation=(props)=>{
+
+const NavigationHeaderBack=(props)=>{
+
 return (
 <View style={styles.navHeader}>
-        <TouchableOpacity onPress={() => props.navigation.goBack()} style={styles.backButton}>
+        <TouchableOpacity onPress={props.onPress} style={styles.backButton}>
           <Image 
             source={require('../assets/icons/Arrow.png')} 
             style={styles.arrowIcon}
@@ -20,14 +22,14 @@ const styles = StyleSheet.create({
     navHeader: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: '100%',
-        height: 48,
-        gap: 12,
+          
+       flex:1
       },
 
     arrowIcon: {
         width: 30,
         height: 30,
+        marginLeft:20
       },
 
     iconStyle: {
@@ -40,4 +42,4 @@ const styles = StyleSheet.create({
 
     });
 
-    export default Navigation;
+    export default NavigationHeaderBack;

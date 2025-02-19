@@ -6,17 +6,14 @@
  */
 
 import React from 'react';
-import {View,Text} from "react-native";
+import {View} from "react-native";
 import StartApp from "./src1/StartApp";
-import LeadAddServices from './src1/screens/Main/LeadAddServices';
-import LeadAddPersonal from './src1/screens/Main/LeadAddPersonal';
-import LeadAddOccupation from './src1/screens/Main/LeadAddOccupation';
-import LeadLast from './src1/screens/Main/LeadLast';
+import LeadAddService from './src1/screens/Main/LeadAddServices';
 const App=()=>{
   return(
     <View style={{flex:1}}>
       {/* <StartApp/> */}
-      {/* <LeadAddServices/>  DONE    */}
+      <LeadAddService/>  DONE   
        {/* <LeadAddPersonal></LeadAddPersonal> remain the spaces  */}
       {/* <LeadAddOccupation></LeadAddOccupation> require stepper improve  & Done  */}
       {/* <LeadLast></LeadLast>   DONE  */}
