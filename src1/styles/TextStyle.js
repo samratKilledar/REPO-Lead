@@ -259,6 +259,21 @@ export default StyleSheet.create({
         lineHeight: 22.4,
         color: "#246BFD",
     },
+    Insurance:{
+        fontFamily: "Urbanist",
+        fontWeight: 700,
+        fontSize: 20,
+        lineHeight: 24,
+        color : "#212121",
+    },
+    datesText :{
+        fontFamily: "Urbanist",
+        fontWeight: 400,
+        fontSize: 14,
+        lineHeight: 19.6,
+        letterSpacing: 0.2,
+        color : "#424242",
+    },
 }
 );
 

@@ -8,7 +8,7 @@ import ButtonStyles from "../../styles/ButtonStyles";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 
 
-const AddFollowUP = () => {
+const ClientAddFollowUP = () => {
   const [title, setTitle] = useState('');
   const [type, setType] = useState(null);
   const [assign, setAssign] = useState(null);
@@ -110,6 +110,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddFollowUP;
+export default ClientAddFollowUP;
 
 
