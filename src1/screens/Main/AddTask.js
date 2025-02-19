@@ -20,10 +20,13 @@ const AddFollowUP = () => {
   const [remark, setRemark] = useState('');
 
   return (
-    <View style={styles.container}>
-      {/* <NavigationHeaderBack text="Add Task"/> */}
+    <View >
+      <View style={{flex:0.3}}>
+      <NavigationHeaderBack text="Add Task"/>
+      </View>
+      <View style={styles.container}>
       <ScrollView
-        style={{ flex: 1, marginBottom: 60 }}
+        style={{ flex:1, marginBottom: 60 }}
         contentContainerStyle={{ paddingBottom: 20 }}
         keyboardShouldPersistTaps="handled"
       >
@@ -123,21 +126,34 @@ const AddFollowUP = () => {
           <CustomButton title="Submit" customStyle={ButtonStyles.blueButton} textStyles={ButtonStyles.blueButtonText} />
         </View>
       </ScrollView>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex:9,
+    // paddingRight: 24,
+    // paddingLeft: 24,
+    // paddingTop: 15,
+    // backgroundColor: "#FFFFFF",
+    // gap: 24, //bet nav and con
+    flex: 7, 
+    top: 15,
+    paddingTop: 5,
+    paddingBottom: 24, 
+    gap: 24,
+    //backgroundColor: "#FFFFFF",
+  },
+  centerContainer: {
+    // height: 590,
     paddingRight: 24,
     paddingLeft: 24,
     paddingTop: 15,
-    backgroundColor: "#FFFFFF",
-  },
-  centerContainer: {
-    flex: 1,
-    gap: 12,
+    flex: 7,
+    gap: 20,
+    zIndex: 1,  // Ensure it's below the dropdowns
   },
 });
 

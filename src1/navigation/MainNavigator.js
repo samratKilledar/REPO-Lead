@@ -181,14 +181,9 @@ import { getFocusedRouteNameFromRoute } from '@react-navigation/native'; // Impo
 import HomeScreen from '../screens/Main/HomeScreen';
 import ProfileScreen from '../screens/Main/ProfileScreen';
 import SettingsScreen from '../screens/Main/SettingsScreen';
-<<<<<<< HEAD
-// import LeadScreen from '../screens/Main/LeadScreen';
-// import AddFollowUp from '../screens/Main/AddFollowUp';
-=======
 import UpcomingMeetings from '../screens/Main/UpcomingMeetings';
 import UpcomingTask from '../screens/Main/UpcomingTask';
 import Notifications from '../screens/Main/Notifications';
->>>>>>> UATLead
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
