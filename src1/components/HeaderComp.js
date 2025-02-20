@@ -1,11 +1,5 @@
-<<<<<<< HEAD
-
-import React from 'react';
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'; 
-=======
 import React from 'react';
 import { View, StyleSheet, Image,TouchableOpacity } from 'react-native'; 
->>>>>>> UATLead
 
 const HeaderComp = (props)=>{
     return(
@@ -25,11 +19,7 @@ export default HeaderComp;
 const styles1 = StyleSheet.create({
 
     headerstyle:{
-<<<<<<< HEAD
-        // width: 428,
-=======
        // width: 428,
->>>>>>> UATLead
         height: 100,
         flexDirection: "row",
         justifyContent: "space-between",

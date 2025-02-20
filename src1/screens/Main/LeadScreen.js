@@ -4,7 +4,6 @@ import LeadCard from "../../components/LeadCard";
 import HeaderComp from "../../components/HeaderComp";
 import TextStyle from "../../styles/TextStyle";
 import CustomText from "../../components/CustomText";
-
 const leadsData = [
   { id: "1", name: "Barbara Moore", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Follow Up", statusGradient: ["#246BFD", "#6F9EFF"], menuType:"follow"},
   { id: "2", name: "Pricilla Maureen", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Meeting Pending", statusGradient: ["#FACC15", "#FFE580"],  menuType:"follow" },
@@ -16,62 +15,58 @@ const leadsData = [
 
 const LeadScreen = () => {
   return (
-<<<<<<< HEAD
     <View style={styles.container}>
-      <HeaderComp/>
-=======
-    <View style={LeadCardStyles.container}>
       <HeaderComp  />
->>>>>>> UATLead
 
       <View style={styles.centerContainer}>
         <View style={styles.lead}>
           <CustomText text= "Lead" customstyle={TextStyle.leadText}/>
           <CustomText  text="See all" customstyle={TextStyle.seeAll}/>
         </View>
-<<<<<<< HEAD
-        <View style={{marginBottom: 40}}>
-        <ScrollView style={{marginBottom: 80}}>
-=======
 
         <ScrollView style={{padding:20,flex:1, }}>
->>>>>>> UATLead
           {leadsData.map((item) => (
             <LeadCard key={item.id} {...item} />
           ))}
         </ScrollView>
         </View>
       </View>
-    </View>
   );
 };
 
 
-
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "#FFFFFF",
-       // height: 926,
-      width: "100%",
-        flex: 1,
-        gap: 4,
-    },
-    centerContainer: {
-       // height: 650,
-        gap: 24,
-        flex: 5,
-    },
-    lead: {
-        flexDirection: "row",  
-        justifyContent: "space-between", 
-        alignItems: "center", 
-        // width: 428,
-      //  height: 22,
-        gap: 12,
-        paddingRight: 24, 
-        paddingLeft: 24,
-    },
-  
-});
+container: {
+  // backgroundColor: "#FFFFFF",
+   flex: 1,
+   gap: 4,
+},
+navbar: {
+   //width: 428,
+   height: 70,
+   // flex: 0.3,
+   justifyContent: "space-between",
+   paddingTop: 10,
+   paddingRight: 24,
+   paddingBottom: 10,
+   paddingLeft: 24,
+   backgroundColor: "grey",
 
+},
+centerContainer: {
+   flexGrow:1
+},
+lead: {
+   flexDirection: "row",  
+   justifyContent: "space-between", 
+   alignItems: "center", 
+   // width: 428,
+   height: 22,
+   gap: 12,
+   paddingRight: 24, 
+   paddingLeft: 24,
+   //backgroundColor: "red",
+},
+
+});
 export default LeadScreen;

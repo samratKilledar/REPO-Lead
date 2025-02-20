@@ -10,12 +10,9 @@ import SettingsScreen from '../screens/Main/SettingsScreen';
 import UpcomingMeetings from '../screens/Main/UpcomingMeetings';
 import UpcomingTask from '../screens/Main/UpcomingTask';
 import Notifications from '../screens/Main/Notifications';
-<<<<<<< HEAD
-=======
 import LeadScreen from '../screens/Main/LeadScreen';
 import AddFollowUp from '../screens/Main/AddFollowUP';
 
->>>>>>> UATLead
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -46,10 +43,7 @@ const CustomTabButton = ({ onPress }) => (
 
 const MainNavigator = () => {
   return (
-<<<<<<< HEAD
-=======
   <View style={{flex:1}}>
->>>>>>> UATLead
     <Tab.Navigator
       screenOptions={({ route }) => {
         const routeName = getFocusedRouteNameFromRoute(route);
