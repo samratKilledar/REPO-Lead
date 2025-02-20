@@ -32,7 +32,7 @@ const ClientScreen = () => {
           <CustomText text="See all" customstyle={TextStyle.seeAll} />
         </View>
 
-        <ScrollView style={{marginBottom: 110}}>
+        <ScrollView style={{ flex:1, marginBottom: 110}}>
           {clientData.map((item) => (
             <LeadCard key={item.id} {...item} />
           ))}
@@ -45,27 +45,19 @@ const ClientScreen = () => {
 const styles = StyleSheet.create({
 container: {
     backgroundColor: "#FFFFFF",
-    height: 926,
+    width:'100%',
+    //height: 926,
     flex: 1,
     gap: 4,
-},
-navbar: {
-    //width: 428,
-    height: 70,
-    // flex: 0.3,
-    justifyContent: "space-between",
-    paddingTop: 10,
-    paddingRight: 24,
-    paddingBottom: 10,
-    paddingLeft: 24,
-    backgroundColor: "grey",
-
+    
 },
 centerContainer: {
     //backgroundColor: "pink",
     //width: 428,
     //height: 611,
-    height: 650,
+    //height: 650,
+    flexGrow:1,
+    //flex:1,
     gap: 24,
 },
 lead: {
