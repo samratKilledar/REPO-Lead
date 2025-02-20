@@ -16,7 +16,7 @@ const leadsData = [
 const LeadScreen = () => {
   return (
     <View style={LeadCardStyles.container}>
-      <HeaderComp/>
+      <HeaderComp  />
 
       <View style={LeadCardStyles.centerContainer}>
         <View style={LeadCardStyles.lead}>
@@ -24,7 +24,7 @@ const LeadScreen = () => {
           <CustomText  text="See all" customstyle={TextStyle.seeAll}/>
         </View>
 
-        <ScrollView>
+        <ScrollView style={{padding:20,flex:1, }}>
           {leadsData.map((item) => (
             <LeadCard key={item.id} {...item} />
           ))}

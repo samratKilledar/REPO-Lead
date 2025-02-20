@@ -2,8 +2,7 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
     container: {
-        backgroundColor: "#FFFFFF",
-        height: 926,
+       // backgroundColor: "#FFFFFF",
         flex: 1,
         gap: 4,
     },
@@ -20,11 +19,7 @@ export default StyleSheet.create({
 
     },
     centerContainer: {
-        //backgroundColor: "pink",
-        //width: 428,
-        //height: 611,
-        height: 650,
-        gap: 24,
+        flexGrow:1
     },
     lead: {
         flexDirection: "row",  
@@ -39,40 +34,40 @@ export default StyleSheet.create({
     },
   
    cardContainer: {
-        width: 380,
-        height: 150,
+        // width: 380,
+        // height: 150,
         gap: 24,
-        paddingRight: 20,
-        paddingLeft: 20,
+        // paddingRight: 10,
+        // paddingLeft: 10,
         marginBottom: 24,
         //backgroundColor: 'blue',
 
     },
     card: {
         // width: 380,
-        height: 164,
+       // height: 164,
         backgroundColor: "#FFFFFF",
-        borderRadius: 20,
+        borderRadius: 30,
         borderWidth: 2,
         borderColor: '#EEEEEE',
         shadowColor: '#04060F',
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.05,
         shadowRadius: 60,
-        elevation: 4,
+       // elevation: 1,
         padding: 24, 
-        gap: 24, 
+        gap: 24, overflow:"hidden"
     },
     HorLayout: {
         // width: 324,
-        height: 52,
+        // height: 52,
         gap: 10, 
         //backgroundColor: "pink",
 
     },
     VerLayout: {
         // width: 324,
-        height: 32,
+      //  height: 32,
         gap: 10,
         flexDirection: "row",  
         justifyContent: "space-between", 
@@ -81,8 +76,8 @@ export default StyleSheet.create({
     },
 
     statusBadge: {
-        width: 98,
-        height: 32,
+        // width: 98,
+        // height: 32,
         borderRadius: 100,
         paddingTop: 6,
         paddingRight: 16,

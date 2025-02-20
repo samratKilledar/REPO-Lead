@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native'; 
+import { View, StyleSheet, Image,TouchableOpacity } from 'react-native'; 
 
-const HeaderComp = ()=>{
+const HeaderComp = (props)=>{
     return(
             <View style={styles1.headerstyle}>
             <Image source={require("../assets/images/Frame.png")}  style={styles1.frame}/>

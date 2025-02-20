@@ -27,7 +27,7 @@ const LeadCard = ({ name, phone, dateTime, status, statusGradient }) => {
               end={{ x: 0, y: 0 }}
               style={LeadCardStyles.statusBadge}
             >
-              <CustomText text={status} customstyle={TextStyle.statusText} />
+              <CustomText text={status} customstyle={{}} />
             </LinearGradient>
           )}
           <CustomText text={dateTime} customstyle={TextStyle.dateTime} />
