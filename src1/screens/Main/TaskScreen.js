@@ -72,29 +72,36 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 24,
+    //width:'100%',
   },
   input: {
     //height: 56,
+    //flex:1,
     gap: 10,
     paddingRight: 24,
     paddingLeft: 24,
   },
   tabContainer: {
     //height: 61,
+    //width:'100%',
+    //flex:0.2,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
     paddingVertical: 10,
     paddingHorizontal: 24,
+    
   },
   tab: {
     //width: 160,
+    width:'50%',
     height: 41,
     justifyContent: "center",
     alignItems: "center",
   },
   activeTabIndicator: {
+    //flex:1,
     width: 160,
     height: 4,
     borderRadius: 100,
@@ -109,8 +116,8 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   contentContainer: {
-    //width: 428,
-    height: 611,
+    //width: '100%',
+    //height: 611,
     gap: 24,
   },
   cardWrapper: {
@@ -119,7 +126,7 @@ const styles = StyleSheet.create({
   progressLine: {
     height: 4,
     borderRadius: 200,
-    marginTop: -30, // Move it closer to the card
+    marginTop: -40, // Move it closer to the card
     width: "200",
     marginLeft: 30,
 
