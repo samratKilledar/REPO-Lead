@@ -16,16 +16,26 @@ const leadsData = [
 
 const LeadScreen = () => {
   return (
+<<<<<<< HEAD
     <View style={styles.container}>
       <HeaderComp/>
+=======
+    <View style={LeadCardStyles.container}>
+      <HeaderComp  />
+>>>>>>> UATLead
 
       <View style={styles.centerContainer}>
         <View style={styles.lead}>
           <CustomText text= "Lead" customstyle={TextStyle.leadText}/>
           <CustomText  text="See all" customstyle={TextStyle.seeAll}/>
         </View>
+<<<<<<< HEAD
         <View style={{marginBottom: 40}}>
         <ScrollView style={{marginBottom: 80}}>
+=======
+
+        <ScrollView style={{padding:20,flex:1, }}>
+>>>>>>> UATLead
           {leadsData.map((item) => (
             <LeadCard key={item.id} {...item} />
           ))}

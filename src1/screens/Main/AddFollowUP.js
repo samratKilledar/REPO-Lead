@@ -2,6 +2,10 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import Dropdown from "../../components/Dropdown";
+<<<<<<< HEAD
+=======
+// import Navigation from "../../components/Navigation";
+>>>>>>> UATLead
 import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
@@ -19,9 +23,13 @@ const AddFollowUP = () => {
 
   return (
     <View style={styles.container}>
+<<<<<<< HEAD
       <View style={{flex:0.1}}>
       <NavigationHeaderBack text="Add Follow-Up"/>
       </View>
+=======
+      {/* <View><Navigation text="Add Follow-Up" /></View> */}
+>>>>>>> UATLead
 
       <View style={styles.centerContainer}>
         <CustomTextInput

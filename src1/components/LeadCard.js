@@ -206,7 +206,11 @@ const LeadCard = (props) => {
               end={{ x: 0, y: 0 }}
               style={styles.statusBadge}
             >
+<<<<<<< HEAD
               <CustomText text={props.status} customstyle={TextStyle.statusText} />
+=======
+              <CustomText text={status} customstyle={{}} />
+>>>>>>> UATLead
             </LinearGradient>
           )}
           {props.leadstatus && (
