@@ -44,8 +44,12 @@ const ClientDetails = () => {
             <DetailItem icon={require('../../assets/icons/Remarks.png')} label="Attachment" detail="References.pdf" />
           </View>
           <View style={styles.followup}>
+            <View style={{flex:1,margin:10}}>
             <CustomButton title="Add Follow Up" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} />
+            </View>
+            <View style={{flex:1, margin:10}}>
             <CustomButton title="Add Services" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} />
+            </View>
           </View>
           <View style={styles.insuranceCard}>
             <Text style={styles.insuranceText}>Intrested Services</Text>
@@ -84,9 +88,9 @@ const styles = StyleSheet.create({
   },
   followup: {
     flexDirection: 'row',       // Aligns items in a horizontal line
-    justifyContent: 'space-between', // Ensures space between the buttons
+    // justifyContent: 'space-between', // Ensures space between the buttons
     gap: 10,
-    marginRight: 28,
+    flex:1
   },
   leadStatusContainer: {
     height: 32,

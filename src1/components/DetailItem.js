@@ -14,6 +14,7 @@ const DetailItem = ({ icon, label, detail }) => {
       </View>
 
       {/* Detail View - Separate for Lead Status & Service Request */}
+      <View style={{flex:1}}>
       {isLeadStatus ? (
         <View style={styles.leadStatusContainer}>
           <Text style={styles.leadStatusText}>{detail}</Text>
@@ -27,6 +28,7 @@ const DetailItem = ({ icon, label, detail }) => {
           <Text style={styles.detail}>{detail}</Text>
         </View>
       )}
+        </View>
     </View>
   );
 };
@@ -35,7 +37,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     marginBottom: 10,
   },
   specialContainer: {
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    width: 120, // Fixed width for labels
+    flex:1
   },
   icon: {
     width: 20,
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
     color: '#616161',
   },
   detailContainer: {
-    width: 205,
+    
     justifyContent: 'center',
   },
   detail: {
@@ -92,7 +93,7 @@ const styles = StyleSheet.create({
   // Service Request Wrapper 
   serviceRequestWrapper: {
     width: 220,
-    padding: 8,
+    padding: 2,
     borderRadius: 10,
     marginRight: 2,
   },

@@ -7,12 +7,12 @@ import TextStyle from "../../styles/TextStyle";
 import LeadCard from "../../components/LeadCard";
 
 const tasksData = [
-  { id: "1", name: "Add Account", phone: "Jonh Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"] },
-  { id: "2", name: "Close Account", phone: "John Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"] },
+  { id: "1", name: "Add Account", phone: "Jonh Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"] ,  menuType:"status" },
+  { id: "2", name: "Close Account", phone: "John Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"],menuType:"status" },
 ];
 const tasks2Data = [
-  { id: "1", name: "Close Account", phone: "Jonh Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"] },
-  { id: "2", name: "Add Account", phone: "John Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"] },
+  { id: "1", name: "Close Account", phone: "Jonh Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"] , menuType:"status"},
+  { id: "2", name: "Add Account", phone: "John Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"],menuType:"status" },
 ];
 
 

@@ -49,7 +49,7 @@ const AddFollowUP = () => {
             { label: "Waiting For Documents", value: "Waiting For Documents" },
             { label: "Conversation Pending", value: "Conversation Pending" },
           ]}
-          zIndex={2000}
+           zIndex={2000}
         />
         <Dropdown
           label="Assign"
@@ -113,5 +113,6 @@ const styles = StyleSheet.create({
 });
 
 export default AddFollowUP;
+
 
 

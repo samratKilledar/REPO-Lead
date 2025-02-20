@@ -8,6 +8,7 @@ import AddFollowUP from './AddFollowUP';
 import LeadDetails from './LeadDetails';
 import ClientDetails from './ClientDetails';
 import ClientAddFollowUP from './ClientAddFollowUp';
+import ClientScreen from './ClientScreen';
 
 const SettingsScreen = () => {
   return (
@@ -17,11 +18,11 @@ const SettingsScreen = () => {
      {/* <CloseAccountScreen/> */}
       {/* <AddTask/> */}
       {/* <LeadScreen/> */}
-      {/* <AddFollowUP/> */}
+      <AddFollowUP/>
       {/* <LeadDetails/> */}
-      <ClientDetails/>
+      {/* <ClientDetails/> */}
       {/* <ClientAddFollowUP/> */}
-   {/* <ClientScreen/> */}
+      {/* <ClientScreen/> */}
 
     </View>
   );

@@ -6,9 +6,9 @@ import TextStyle from "../../styles/TextStyle";
 import CustomText from "../../components/CustomText";
 
 const leadsData = [
-  { id: "1", name: "Barbara Moore", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Follow Up", statusGradient: ["#246BFD", "#6F9EFF"] },
-  { id: "2", name: "Pricilla Maureen", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Meeting Pending", statusGradient: ["#FACC15", "#FFE580"] },
-  { id: "3", name: "Robert George", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Lead Win", statusGradient: ["#4ADE80", "#73FFA6"] },
+  { id: "1", name: "Barbara Moore", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Follow Up", statusGradient: ["#246BFD", "#6F9EFF"], menuType:"follow"},
+  { id: "2", name: "Pricilla Maureen", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Meeting Pending", statusGradient: ["#FACC15", "#FFE580"],  menuType:"follow" },
+  { id: "3", name: "Robert George", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Lead Win", statusGradient: ["#4ADE80", "#73FFA6"], menuType:"follow" },
  
 
 ];   
@@ -41,27 +41,25 @@ const LeadScreen = () => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#FFFFFF",
-        height: 926,
+       // height: 926,
+      width: "100%",
         flex: 1,
         gap: 4,
     },
     centerContainer: {
-        //backgroundColor: "pink",
-        //width: 428,
-        //height: 611,
-        height: 650,
+       // height: 650,
         gap: 24,
+        flex: 5,
     },
     lead: {
         flexDirection: "row",  
         justifyContent: "space-between", 
         alignItems: "center", 
         // width: 428,
-        height: 22,
+      //  height: 22,
         gap: 12,
         paddingRight: 24, 
         paddingLeft: 24,
-        //backgroundColor: "red",
     },
   
 });

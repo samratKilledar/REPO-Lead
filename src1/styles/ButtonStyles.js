@@ -25,8 +25,7 @@ export default StyleSheet.create({
     },
 
     addButton: {
-        width: 170,
-        height: 58,
+        flex:1,
         paddingTop: 18,
         paddingRight: 16,
         paddingBottom: 18,

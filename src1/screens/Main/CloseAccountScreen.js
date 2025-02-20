@@ -5,10 +5,11 @@ import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 const CloseAccountScreen = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.centralcontainer}>
       <View style={{flex:0.3}}>
       <NavigationHeaderBack text="Close Account"/>
       </View>
+      <View style={styles.centralcontainer}>
+      
         <View style={styles.detailsContainer}>
 
           <DetailItem icon={require('../../assets/icons/Work/work.png')} label="Task Name" detail="Close Account" />
@@ -32,7 +33,7 @@ const CloseAccountScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 10,
+    flex: 1,
     paddingRight: 24,
     paddingBottom: 48,
     paddingLeft: 24,
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     gap: 32,
     paddingTop: 24,
     paddingLeft: 20,
-    flex:8,
+    flex:5,
 
 
   },
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     //paddingLeft:15,
     //height: 470,
     gap: 15,
-    flex:4,
+    flex: 6,
   }
 });
 export default CloseAccountScreen;
