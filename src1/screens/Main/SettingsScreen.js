@@ -18,7 +18,7 @@ const SettingsScreen = () => {
      {/* <CloseAccountScreen/> */}
       {/* <AddTask/> */}
       {/* <LeadScreen/> */}
-      <AddFollowUP/>
+      {/* <AddFollowUP/> */}
       {/* <LeadDetails/> */}
       {/* <ClientDetails/> */}
       {/* <ClientAddFollowUP/> */}
