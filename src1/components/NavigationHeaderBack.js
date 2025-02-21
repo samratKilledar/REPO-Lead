@@ -22,14 +22,13 @@ const styles = StyleSheet.create({
     navHeader: {
         flexDirection: 'row',
         alignItems: 'center',
-          
-       flex:1
+        flex:1
       },
 
     arrowIcon: {
         width: 30,
         height: 30,
-        marginLeft:20
+        marginLeft:10
       },
 
     iconStyle: {
