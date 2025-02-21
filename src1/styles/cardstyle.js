@@ -319,15 +319,16 @@ export default StyleSheet.create({
 
 //profile page
     service:{
-        width: 380, 
+        //width: 380, 
         height: 136, 
+        //borderWidth: 2,
         borderRadius : 20, 
         backgroundColor: "#FFFFFF",  // White background
         shadowColor: "#04060F", // Shadow color
-        shadowOffset: { width: 0, height: 4 }, // Shadow position
-        shadowOpacity: 0.08, // Shadow visibility (8%)
-        shadowRadius: 60, // Shadow blur
-        elevation: 5,
+        // shadowOffset: { width: 0, height: 4 }, // Shadow position
+        // shadowOpacity: 0.08, // Shadow visibility (8%)
+        // shadowRadius: 60, // Shadow blur
+        // elevation: 5,
     },
 
     maskk:{
@@ -341,9 +342,11 @@ export default StyleSheet.create({
         gap : 24,
     },
     auto1:{
-        width : 324,
-        height : 24, 
+        marginTop: 20,
+        marginLeft : 25,
+        flex: 0.23,
         gap : 32,
+        backgroundColor: "red",
     },
     auto2:{
         width : 268,
@@ -351,8 +354,8 @@ export default StyleSheet.create({
         gap : 8,
     },
     iconedit : {
-        width :24,
-        height : 24, 
+        width :2,
+        height : 2, 
     },
     edit:{
         width: 18,
@@ -364,48 +367,52 @@ export default StyleSheet.create({
         width: 324,
         height: 32,
         gap: 10,
+        
+
     },
-    green1:{
-        width: 94,
-        height: 32,
+    green1: {
         gap: 4,
+        height :32,
         paddingTop: 6,
         paddingRight: 16,
         paddingBottom: 6,
         paddingLeft: 16,
         borderRadius: 100,
-        x : "#4ADE80", 
-        y : "#73FFA6",// Define gradient colors
-        start : { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end : {x: 0.2, y: 1},
+        x: "#4ADE80",
+        y: "#73FFA6", 
+        start: { x: 0.8, y: 0 }, 
+        end: { x: 0.2, y: 1 },
+        backgroundColor: "pink"
     },
-    blue1:{
-        width: 118,
-        height: 32,
+    blue1: {
+        flex: 0.6,
         gap: 4,
+        height :32,
         paddingTop: 6,
         paddingRight: 16,
         paddingBottom: 6,
         paddingLeft: 16,
         borderRadius: 100,
-        x : "#246BFD", 
-        y : "#6F9EFF",// Define gradient colors
-        start : { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end : {x: 0.2, y: 1},
+        x: "#246BFD",
+        y: "#6F9EFF", 
+        start: { x: 0.8, y: 0 }, 
+        end: { x: 0.2, y: 1 },
+        backgroundColor: "pink"
     },
-    red1 :{
-        width: 76,
-        height: 32,
+    red1: {
+        flex: 0.3,
         gap: 4,
+        height :32,
         paddingTop: 6,
         paddingRight: 16,
         paddingBottom: 6,
         paddingLeft: 16,
         borderRadius: 100,
-        x : "#FF4D67", 
-        y : "#FF8A9B",// Define gradient colors
-        start : { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end : {x: 0.2, y: 1},
+        x: "#FF4D67",
+        y: "#FF8A9B", 
+        start: { x: 0.8, y: 0 },
+        end: { x: 0.2, y: 1 },
+        backgroundColor: "pink"
     },
 
     //occupation
@@ -454,64 +461,68 @@ export default StyleSheet.create({
         gap: 10,
 
     },
-    blue2:{
-        width: 55, 
-        height: 32, 
-        borderRadius : 100, 
+    blue2: {
+        flex: 0.245, // Adjust size dynamically
+        height: 32,
+        borderRadius: 100,
         paddingTop: 6,
         paddingRight: 16,
         paddingBottom: 6,
         paddingLeft: 16,
         gap: 4,
-        x : "#246BFD", 
-        y : "#6F9EFF",// Define gradient colors
-        start : { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end : {x: 0.2, y: 1},
+        x: "#246BFD",
+        y: "#6F9EFF",
+        start: { x: 0.8, y: 0 },
+        end: { x: 0.2, y: 1 },
+        backgroundColor: "pink",
     },
-
-    green2:{
-        width: 86, 
-        height: 32, 
-        borderRadius : 100, 
+    
+    green2: {
+        flex: 0.3, 
+        height: 32,
+        borderRadius: 100,
         paddingTop: 6,
         paddingRight: 16,
         paddingBottom: 6,
         paddingLeft: 16,
         gap: 4,
-        x : "#4ADE80", 
-        y : "#73FFA6",// Define gradient colors
-        start : { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end : {x: 0.2, y: 1},
-
+        x: "#4ADE80",
+        y: "#73FFA6",
+        start: { x: 0.8, y: 0 },
+        end: { x: 0.2, y: 1 },
+        backgroundColor: "pink",
     },
-    yellow2:{
-        width: 115, 
-        height: 32, 
-        borderRadius : 100, 
+    
+    yellow2: {
+        flex: 0.4,
+        height: 32,
+        borderRadius: 100,
         paddingTop: 6,
         paddingRight: 16,
         paddingBottom: 6,
         paddingLeft: 16,
         gap: 4,
-        x : "#FACC15", 
-        y : "#FFE580",// Define gradient colors
-        start : { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end : {x: 0.2, y: 1},
-
+        x: "#FACC15",
+        y: "#FFE580",
+        start: { x: 0.8, y: 0 },
+        end: { x: 0.2, y: 1 },
+        backgroundColor: "pink",
     },
-    red2 :{
-        width: 70, 
-        height: 32, 
-        borderRadius : 100, 
+    
+    red2: {
+        flex: 0.2,
+        height: 32,
+        borderRadius: 100,
         paddingTop: 6,
         paddingRight: 16,
         paddingBottom: 6,
         paddingLeft: 16,
         gap: 4,
-        x : "#FF4D67", 
-        y : "#FF8A9B",// Define gradient colors
-        start : { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end : {x: 0.2, y: 1},
+        x: "#FF4D67",
+        y: "#FF8A9B",
+        start: { x: 0.8, y: 0 },
+        end: { x: 0.2, y: 1 },
+        backgroundColor: "pink",
     },
 
 })
