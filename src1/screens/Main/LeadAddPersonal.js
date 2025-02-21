@@ -1,14 +1,12 @@
-
-// New Code with navigation 
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
-import TextStyle from '../../styles/TextStyle';
-import Stepper from '../../components/StepperComp';
+import Dropdown from '../../components/DropDown';
+import NavigationHeaderBack from '../../components/NavigationHeaderBack';
+import Stepper from "../../components/StepperComp";
 
-const LeadAddPersonal = ({ navigation }) => {
+const LeadAddPersonal = () => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [mobileNo, setMobileNo] = useState('');
@@ -17,229 +15,128 @@ const LeadAddPersonal = ({ navigation }) => {
   const [addressLine1, setAddressLine1] = useState('');
   const [addressLine2, setAddressLine2] = useState('');
   const [pincode, setPincode] = useState('');
-
-  // Dropdown states for Lead Source
-  const [leadSourceOpen, setLeadSourceOpen] = useState(false);
-  const [leadSource, setLeadSource] = useState(null);
-  const [leadSourceItems, setLeadSourceItems] = useState([
-    { label: 'Website', value: 'website' },
-    { label: 'Referral', value: 'referral' },
-    { label: 'Social Media', value: 'social_media' },
-  ]);
-
-  // Dropdown states for City
-  const [cityOpen, setCityOpen] = useState(false);
-  const [city, setCity] = useState(null);
-  const [cityItems, setCityItems] = useState([
-    { label: 'Mumbai', value: 'mumbai' },
-    { label: 'Delhi', value: 'delhi' },
-    { label: 'Bangalore', value: 'bangalore' },
-  ]);
-
-  // Dropdown states for State
-  const [stateOpen, setStateOpen] = useState(false);
-  const [state, setState] = useState(null);
-  const [stateItems, setStateItems] = useState([
-    { label: 'Maharashtra', value: 'maharashtra' },
-    { label: 'Karnataka', value: 'karnataka' },
-    { label: 'Tamil Nadu', value: 'tamilnadu' },
-  ]);
-
-  // Dropdown states for Country
-  const [countryOpen, setCountryOpen] = useState(false);
-  const [country, setCountry] = useState(null);
-  const [countryItems, setCountryItems] = useState([
-    { label: 'India', value: 'india' },
-    { label: 'USA', value: 'usa' },
-    { label: 'UK', value: 'uk' },
-  ]);
+  const [leadService, setLeadService] = useState('');
+  const [city, setCity] = useState('');
+  const [state, setState] = useState('');
+  const [country, setCountry] = useState('');
 
   const steps = ["Personal", "Occupation", "Services"];
-  const currentStep = 1;
-
-  const handleNext = () => {
-    navigation.navigate('LeadAddOccupation'); // Navigate to the next screen
-  };
+  const currentStep = 1; // Set the current step dynamically based on your logic
 
   return (
     <View style={styles.container}>
-      {/* Header */}
+      {/* Header Section */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Image
-            source={require("../../assets/icons/Cross/cross.png")}
-            style={styles.arrowIcon}
-          />
-        </TouchableOpacity>
-        <Text style={TextStyle.subTitle}>Add Lead</Text>
+        <NavigationHeaderBack text="Add Lead" />
       </View>
 
-      {/* Stepper */}
-      <Stepper steps={steps} currentStep={currentStep} />
+      {/* Stepper Section */}
+      <View style={styles.stepperContainer}>
+        <Stepper steps={steps} currentStep={currentStep} />
+      </View>
 
-      {/* Content */}
-      <ScrollView contentContainerStyle={styles.content}>
-        {/* Form Fields */}
-        <CustomTextInput
-          placeholder="First Name"
-          value={firstName}
-          onChangeText={setFirstName}
-          style={TextStyle.Task_descp}
-        />
+      {/* Scrollable Content Section */}
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.centerContainer}>
+          <CustomTextInput
+            value={firstName}
+            placeholder="First Name"
+            onChangeText={setFirstName}
+          />
 
-        <CustomTextInput
-          placeholder="Last Name"
-          value={lastName}
-          onChangeText={setLastName}
-          style={TextStyle.Task_descp}
-        />
+          <CustomTextInput
+            value={lastName}
+            placeholder="Last Name"
+            onChangeText={setLastName}
+          />
 
-        {/* Dropdown for Lead Source */}
-        <View >
-          <DropDownPicker
-            open={leadSourceOpen}
-            value={leadSource}
-            items={leadSourceItems}
-            setOpen={setLeadSourceOpen}
-            setValue={setLeadSource}
-            setItems={setLeadSourceItems}
-            placeholder="    Lead Source"
-            style={styles.dropdown}
-            dropDownContainerStyle={styles.dropdownContainer}
-            // placeholderStyle={styles.dropdownPlaceholder}
-            // selectedItemLabelStyle={styles.selectedItemLabel}
+          <Dropdown
+            label="Lead Service"
+            selectedValue={leadService}
+            onValueChange={setLeadService}
+            options={[
+              { label: "John Doe", value: "John Doe" },
+              { label: "Jane Smith", value: "Jane Smith" },
+            ]}
             zIndex={3000}
-          ArrowUpIconComponent={() => (
-            <Image source={require("../../assets/icons/Cross/cross.png")} style={styles.arrowIcon} />
-          )}
-          ArrowDownIconComponent={() => (
-            <Image source={require("../../assets/icons/Plus/plus.png")} style={styles.arrowIcon} />
-          )}
           />
-        </View>
 
-        {/* Mobile No */}
-        <CustomTextInput
-          placeholder="Mobile No"
-          value={mobileNo}
-          onChangeText={setMobileNo}
-          keyboardType="numeric"
-          style={TextStyle.Task_descp}
-        />
-
-        {/* Email Id */}
-        <CustomTextInput
-          placeholder="Email Id"
-          value={emailId}
-          onChangeText={setEmailId}
-          keyboardType="email-address"
-          style={TextStyle.Task_descp}
-        />
-
-        {/* Whatsapp No */}
-        <CustomTextInput
-          placeholder="Whatsapp No"
-          value={whatsappNo}
-          onChangeText={setWhatsappNo}
-          keyboardType="numeric"
-          style={TextStyle.Task_descp}
-        />
-
-        {/* Address Line 1 */}
-        <CustomTextInput
-          placeholder="Address Line 1"
-          value={addressLine1}
-          onChangeText={setAddressLine1}
-          style={TextStyle.Task_descp}
-        />
-
-        {/* Address Line 2 */}
-        <CustomTextInput
-          placeholder="Address Line 2"
-          value={addressLine2}
-          onChangeText={setAddressLine2}
-          style={TextStyle.Task_descp}
-        />
-
-        {/* Dropdown for City */}
-        <View>
-          <DropDownPicker
-            open={cityOpen}
-            value={city}
-            items={cityItems}
-            setOpen={setCityOpen}
-            setValue={setCity}
-            setItems={setCityItems}
-            placeholder="Select City"
-            style={styles.dropdown}
-            dropDownContainerStyle={styles.dropdownContainer}
-            zIndex={2000}
-            ArrowUpIconComponent={() => (
-              <Image source={require("../../assets/icons/Cross/cross.png")} style={styles.arrowIcon} />
-            )}
-            ArrowDownIconComponent={() => (
-              <Image source={require("../../assets/icons/Plus/plus.png")} style={styles.arrowIcon} />
-            )}
+          <CustomTextInput
+            value={mobileNo}
+            placeholder="Mobile No"
+            onChangeText={setMobileNo}
           />
-        </View>
 
-        {/* Dropdown for State */}
-        <View >
-          <DropDownPicker
-            open={stateOpen}
-            value={state}
-            items={stateItems}
-            setOpen={setStateOpen}
-            setValue={setState}
-            setItems={setStateItems}
-            placeholder="Select State"
-            style={styles.dropdown}
-            dropDownContainerStyle={styles.dropdownContainer}
-            zIndex={1000}
-            ArrowUpIconComponent={() => (
-              <Image source={require("../../assets/icons/Cross/cross.png")} style={styles.arrowIcon} />
-            )}
-            ArrowDownIconComponent={() => (
-              <Image source={require("../../assets/icons/Plus/plus.png")} style={styles.arrowIcon} />
-            )}
+          <CustomTextInput
+            value={emailId}
+            placeholder="Email id"
+            onChangeText={setEmailId}
           />
-        </View>
 
-        {/* Dropdown for Country */}
-        <View >
-          <DropDownPicker
-            open={countryOpen}
-            value={country}
-            items={countryItems}
-            setOpen={setCountryOpen}
-            setValue={setCountry}
-            setItems={setCountryItems}
-            placeholder="Select Country"
-            style={styles.dropdown}
-            dropDownContainerStyle={styles.dropdownContainer}
-            zIndex={500}
-            ArrowUpIconComponent={() => (
-              <Image source={require("../../assets/icons/Cross/cross.png")} style={styles.arrowIcon} />
-            )}
-            ArrowDownIconComponent={() => (
-              <Image source={require("../../assets/icons/Plus/plus.png")} style={styles.arrowIcon} />
-            )}
+          <CustomTextInput
+            value={whatsappNo}
+            placeholder="Whatsapp No"
+            onChangeText={setWhatsappNo}
           />
+
+          <CustomTextInput
+            value={addressLine1}
+            placeholder="Address Line 1"
+            onChangeText={setAddressLine1}
+          />
+
+          <CustomTextInput
+            value={addressLine2}
+            placeholder="Address Line 2"
+            onChangeText={setAddressLine2}
+          />
+
+          <Dropdown
+            label="City"
+            selectedValue={city}
+            onValueChange={setCity}
+            options={[
+              { label: "Mumbai", value: "Mumbai" },
+              { label: "Pune", value: "Pune" },
+              { label: "Kolhapur", value: "Kolhapur" },
+              { label: "Hyderabad", value: "Telangana" },
+            ]}
+            zIndex={5000}
+          />
+
+          <Dropdown
+            label="State"
+            selectedValue={state}
+            onValueChange={setState}
+            options={[
+              { label: "Mumbai", value: "Maharashtra" },
+              { label: "Pune", value: "Maharashtra" },
+              { label: "Kolhapur", value: "Maharashtra" },
+              { label: "Hyderabad", value: "Maharashtra" },
+            ]}
+            zIndex={4000}
+          />
+
+          <Dropdown
+            label="Country"
+            selectedValue={country}
+            onValueChange={setCountry}
+            options={[
+              { label: "India", value: "India" },
+              { label: "USA", value: "USA" },
+              { label: "Australia", value: "Australia" },
+            ]}
+            zIndex={3000}
+          />
+
+          <CustomTextInput
+            value={pincode}
+            placeholder="Pincode"
+            onChangeText={setPincode}
+          />
+
+        <CustomButton title="ADD" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
         </View>
-
-        {/* Pincode */}
-        <CustomTextInput
-          placeholder="Pincode"
-          value={pincode}
-          onChangeText={setPincode}
-          keyboardType="numeric"
-          style={TextStyle.Task_descp}
-        />
-
-        {/* Next Button */}
-        <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
-          <CustomButton title="Submit" customStyle={styles.submitButton} textStyles={styles.nextButtonText} />
-        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -248,68 +145,25 @@ const LeadAddPersonal = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    // backgroundColor: 'red',
-    padding: 16,
+    paddingHorizontal: 24,
+    paddingTop: 15,
+    backgroundColor: "#FFFFFF",
+    gap: 18,
   },
-
   header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingBottom: 16,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-    padding: 10,
+    height: 50, // Fixed height for the header
   },
-  
-  headerBack: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#000',
+  stepperContainer: {
+    height: 50, // Fixed height for the stepper
+    marginTop: 10,
   },
-  
-  content: {
-    paddingVertical: 15,
+  centerContainer: {
+    paddingBottom: 20, // Add padding at the bottom for better spacing
+    gap:10,
   },
-
-  input: {
-    height: 48,
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    paddingHorizontal: 16,
-    marginBottom: 20, // Consistent spacing between inputs
-    fontSize: 16,
-    backgroundColor: '#FAFAFA',
-    color: '#000',
+  scrollViewContent: {
+    flexGrow: 1, // Ensures the content grows within the ScrollView
   },
-  
-  dropdownWrapper: {
-    marginBottom: 20, // Consistent spacing between dropdowns
-  },
-
-  dropdown: {
-    borderWidth: 1,
-    borderColor: "#FAFAFA",
-    borderRadius: 8,
-    backgroundColor: "#FAFAFA",
-    marginBottom: 15,
-  },
-
-  dropdownContainer: {
-    borderWidth: 1.2,
-    borderColor: "#2B2162",
-    borderRadius: 8,
-    backgroundColor: "#FAFAFA",
-  },
-
-  arrowIcon: {
-    width: 24, // Set the width of the arrow
-    height: 24, // Set the height of the arrow
-    resizeMode: "contain", // Ensure the image scales properly
-    marginRight: 10, // Add some spacing between the arrow and the title
-  },
-
 });
 
 export default LeadAddPersonal;

@@ -1,189 +1,141 @@
-
-//New LeadLast with Stepper component 
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Image, // Import the Image component
-} from "react-native";
-import DropDownPicker from "react-native-dropdown-picker";
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import CustomButton from '../../components/CustomButton';
+import CustomTextInput from '../../components/CustomTextInput';
+import TextStyle from '../../styles/TextStyle';
+import Dropdown from '../../components/DropDown';
+import NavigationHeaderBack from '../../components/NavigationHeaderBack';
+import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from "../../components/StepperComp";
-import CustomTextInput from "../../components/CustomTextInput";
-import CustomButton from "../../components/CustomButton";
-import TextStyle from "../../styles/TextStyle";
+
+
 
 const LeadAdd = () => {
-  const [assignTo, setAssignTo] = useState(null);
-  const [service, setService] = useState(null);
-  const [remark, setRemark] = useState("");
-  const steps = ["Personal", "Occupation", "Services"];
-  const currentStep = 3;
+  const [assignto, setAssignto] = useState('');
+  const [services, setService] = useState('');
 
-  // Dropdown states for Assign To
-  const [assignToOpen, setAssignToOpen] = useState(false);
-  const [assignToItems, setAssignToItems] = useState([
-    { label: "John Doe", value: "John Doe" },
-    { label: "Jane Smith", value: "Jane Smith" },
-  ]);
+  const [Remark, setRemark] = useState(null);
 
-  // Dropdown states for Services
-  const [serviceOpen, setServiceOpen] = useState(false);
-  const [serviceItems, setServiceItems] = useState([
-    { label: "Mutual Fund", value: "Mutual Fund" },
-    { label: "Insurance", value: "Insurance" },
-  ]);
+  const steps = [ "Personal", "Occupation", "Services"];
+  const currentStep = 3; // Set the current step dynamically based on your logic
 
-  const addLead = () => {
-    console.log("Lead Added:", { assignTo, service, remark });
-  };
+
+  const cardData = [
+    {
+      id: 1,
+      title: "Insurance",
+      date: "20-01-2025",
+      description:
+        "Loorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type ...",
+    },
+    {
+      id: 2,
+      title: "Mutual Fund",
+      date: "20-01-2025",
+      description:
+        "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type ...",
+    },
+  ];
 
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity>
-          <Image
-            source={require("../../assets/icons/Cross/cross.png")}
-            style={styles.arrowIcon}
-          />
-        </TouchableOpacity>
-        <Text style={TextStyle.Task_Title}>Add Lead</Text>
+      <View style={{flex:0.1}}>
+      <NavigationHeaderBack text="Add Services"/>
       </View>
+    
+      <View style={styles.centerContainer}>
 
-      {/* Stepper */}
+      {/* Stepper Component */}
       <Stepper steps={steps} currentStep={currentStep} />
 
-      {/* Space Below Stepper */}
-      <View style={{ height: 20 }} />
 
-      {/* Dropdowns & Inputs */}
-      <ScrollView contentContainerStyle={styles.inputContainer}>
-        {/* Assign To Dropdown */}
-        <DropDownPicker
-          open={assignToOpen}
-          value={assignTo}
-          items={assignToItems}
-          setOpen={setAssignToOpen}
-          setValue={setAssignTo}
-          setItems={setAssignToItems}
-          placeholder="   Assign to"
-          style={styles.dropdown}
-          dropDownContainerStyle={styles.dropdownContainer}
-          textStyle={TextStyle.Task_descp}
-          placeholderStyle={styles.dropdownPlaceholder}
-          selectedItemLabelStyle={styles.selectedItemLabel}
-          zIndex={3000}
-          ArrowUpIconComponent={() => (
-            <Image source={require("../../assets/icons/Cross/cross.png")} style={styles.arrowIcon} />
-          )}
-          ArrowDownIconComponent={() => (
-            <Image source={require("../../assets/icons/Plus/plus.png")} style={styles.arrowIcon} />
-          )}
+      <Dropdown
+          label="Assign to"
+          selectedValue={assignto}
+          onValueChange={setAssignto}
+          options={[
+            { label: "John Doe", value: "John Doe" },
+            { label: "Jane Smith", value: "Jane Smith" },
+          ]}
+           zIndex={3000}
+
+      />
+        <Dropdown
+          label="Services"
+          selectedValue={services}
+          onValueChange={setService}
+          options={[
+            { label: "Mutual Fund", value: "Mutual Fund" },
+            { label: "Insurance", value: "Insurance" },
+            { label: "Loans", value: "Loans" },
+            { label: "Real Estate", value: "Real Estate" },
+            { label: "Real E", value: "Real E" },
+            { label: "Real Est", value: "Real Est" },
+            { label: "Real E", value: "Real E" },
+            { label: "Real E", value: "Real E" },
+
+          ]}
+           zIndex={2000}
         />
 
-        {/* Services Dropdown */}
-        <DropDownPicker
-          open={serviceOpen}
-          value={service}
-          items={serviceItems}
-          setOpen={setServiceOpen}
-          setValue={setService}
-          setItems={setServiceItems}
-          placeholder="   Services"
-          style={styles.dropdown}
-          dropDownContainerStyle={styles.dropdownContainer}
-          textStyle={TextStyle.Task_descp}
-          placeholderStyle={styles.dropdownPlaceholder}
-          selectedItemLabelStyle={styles.selectedItemLabel}
-          zIndex={2000}
-          ArrowUpIconComponent={() => (
-            <Image source={require("../../assets/icons/Cross/cross.png")} style={styles.arrowIcon} />
-          )}
-          ArrowDownIconComponent={() => (
-            <Image source={require("../../assets/icons/Plus/plus.png")} style={styles.arrowIcon} />
-          )}
-        />
-
-        {/* Remark Input */}
         <CustomTextInput
+          type={Remark}
+          value={setRemark}
           placeholder="Remark"
-          value={remark}
           onChangeText={setRemark}
-          style={TextStyle.Task_descp}
         />
 
-        {/* Space between Remark and Button */}
-        <View style={{ height: 20 }} />
+        <CustomButton title="ADD" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
 
-        {/* Add Button */}
-        <TouchableOpacity onPress={addLead}>
-          <CustomButton
-            title="ADD"
-            customStyle={{ width: "100%" }}
-            textStyles={styles.nextButtonText}
-          />
-        </TouchableOpacity>
-      </ScrollView>
+        </View>
+          <View style={styles.insuranceCard}>
+              <Text style={styles.insuranceText}></Text>
+              {cardData.map((item) => (
+                <InsuranceCard
+                  key={item.id}
+                  title={item.title}
+                  date={item.date}
+                  description={item.description}
+                />
+              ))}
+        </View>
+        
     </View>
+
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: "#fff",
+    paddingRight: 24,
+    paddingLeft: 24,
+    paddingTop: 15,
+    backgroundColor: "#FFFFFF",
+    // backgroundColor: "red",
+    gap: 15, 
+  },
+  centerContainer: {
+    flex: 0.7,
+    gap: 12,
+    zIndex: 1,
 
   },
-  
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-  },
 
-  arrowIcon: {
-    width: 24, // Set the width of the arrow
-    height: 24, // Set the height of the arrow
-    resizeMode: "contain", // Ensure the image scales properly
-    marginRight: 10, // Add some spacing between the arrow and the title
+  insuranceCard: {
+    marginTop: 30,
+    marginRight: 10,
+    marginLeft: 5,
+    marginBottom: 30,
+    gap: 24,
   },
-  
-  inputContainer: {
-    flexGrow: 1,
+  insuranceText: {
+    fontFamily: "Urbanist",
+    fontWeight: 700,
+    fontSize: 18,
+    lineHeight: 21.6,
+    color: "#212121",
   },
-  input: {
-    marginBottom: 15,
-  },
-  
-  dropdown: {
-    borderWidth: 1,
-    borderColor: "#FAFAFA",
-    borderRadius: 8,
-    backgroundColor: "#FAFAFA",
-    marginBottom: 15,
-  },
-
-  dropdownContainer: {
-    borderWidth: 1.2,
-    borderColor: "#2B2162",
-    borderRadius: 8,
-    backgroundColor: "#FAFAFA",
-  },
-
-  dropdownPlaceholder: {
-    color: "#616161",
-  },
-
-  selectedItemLabel: {
-    fontWeight: "bold",
-    color: "#2B2162",
-  },
-
-  
 });
 
 export default LeadAdd;
