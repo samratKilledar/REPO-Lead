@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     height: 32,
     gap: 35,
-    marginRight: 80,
+    marginRight: 20,
   },
   leadStatusText: {
     color: '#2B2162',

@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import Dropdown from "../../components/Dropdown";
+// import Navigation from "../../components/Navigation";
 import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
@@ -19,9 +20,7 @@ const ClientAddFollowUP = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 0.1 }}>
-        <NavigationHeaderBack text="Add Follow-Up" />
-      </View>
+      <View style={{flex: 0.1 , marginLeft: 5,}}><NavigationHeaderBack text="Add Follow-Up" /></View>
 
       <View style={styles.centerContainer}>
         <CustomTextInput
@@ -49,7 +48,7 @@ const ClientAddFollowUP = () => {
             { label: "Waiting For Documents", value: "Waiting For Documents" },
             { label: "Conversation Pending", value: "Conversation Pending" },
           ]}
-          zIndex={2000}
+           zIndex={2000}
         />
         <Dropdown
           label="Assign"
@@ -77,14 +76,14 @@ const ClientAddFollowUP = () => {
           placeholder="Next Meeting schedule on"
           onChangeText={setMeetSchedule}
         />
-        <CustomTextInput
-          followupicon={require('../../assets/icons/Calendar/calendar.png')}
+         <CustomTextInput
+         followupicon={require('../../assets/icons/Calendar/calendar.png')}
           type={scheduleTime}
           value={scheduleTime}
           placeholder="Schedule Time"
           onChangeText={setScheduleTime}
         />
-        <CustomTextInput
+         <CustomTextInput
           type={remark}
           value={remark}
           placeholder="Remark"
@@ -99,19 +98,22 @@ const ClientAddFollowUP = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingRight: 24,
-    paddingLeft: 24,
-    paddingTop: 15,
+    paddingRight: 20,
+    paddingLeft: 5,
+    paddingTop: 10,
     backgroundColor: "#FFFFFF",
-    gap: 20,
+    gap: 20, 
   },
   centerContainer: {
     flex: 0.7,
     gap: 12,
-    zIndex: 1,
+    zIndex: 1, 
+    paddingRight: 5,
+    paddingLeft: 12,
   },
 });
 
 export default ClientAddFollowUP;
+
 
 

@@ -20,7 +20,7 @@ const AddFollowUP = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{flex: 0.1}}><NavigationHeaderBack text="Add Follow-Up" /></View>
+      <View style={{flex: 0.1 , marginLeft: 5,}}><NavigationHeaderBack text="Add Follow-Up" /></View>
 
       <View style={styles.centerContainer}>
         <CustomTextInput
@@ -98,9 +98,9 @@ const AddFollowUP = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingRight: 24,
-    paddingLeft: 24,
-    paddingTop: 15,
+    paddingRight: 20,
+    paddingLeft: 5,
+    paddingTop: 10,
     backgroundColor: "#FFFFFF",
     gap: 20, 
   },
@@ -108,6 +108,8 @@ const styles = StyleSheet.create({
     flex: 0.7,
     gap: 12,
     zIndex: 1, 
+    paddingRight: 5,
+    paddingLeft: 12,
   },
 });
 

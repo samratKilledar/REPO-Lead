@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     arrowIcon: {
         width: 30,
         height: 30,
-        marginLeft:20
+        marginLeft:10
       },
 
     iconStyle: {

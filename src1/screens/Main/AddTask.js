@@ -20,11 +20,11 @@ const AddFollowUP = () => {
   const [remark, setRemark] = useState('');
 
   return (
-    <View >
-      <View style={{flex:0.3}}>
+     
+      <View style={styles.container}>
+      <View style={{flex:0.1}}>
       <NavigationHeaderBack text="Add Task"/>
       </View>
-      <View style={styles.container}>
       <ScrollView
         style={{ flex:1, marginBottom: 60 }}
         contentContainerStyle={{ paddingBottom: 20 }}
@@ -127,33 +127,25 @@ const AddFollowUP = () => {
         </View>
       </ScrollView>
       </View>
-    </View>
+  
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // flex:9,
-    // paddingRight: 24,
-    // paddingLeft: 24,
-    // paddingTop: 15,
-    // backgroundColor: "#FFFFFF",
-    // gap: 24, //bet nav and con
-    flex: 7, 
-    top: 15,
-    paddingTop: 5,
-    paddingBottom: 24, 
-    gap: 24,
-    //backgroundColor: "#FFFFFF",
+    flex: 1,
+    paddingRight: 10,
+    paddingLeft: 8,
+    paddingTop: 15,
+    backgroundColor: "#FFFFFF",
+    gap: 20, 
   },
   centerContainer: {
-    // height: 590,
-    paddingRight: 24,
-    paddingLeft: 24,
-    paddingTop: 15,
-    flex: 7,
-    gap: 20,
-    zIndex: 1,  // Ensure it's below the dropdowns
+    flex: 0.7,
+    gap: 12,
+    zIndex: 1, 
+    paddingRight: 10,
+    paddingLeft: 5,
   },
 });
 

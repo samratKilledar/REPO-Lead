@@ -322,7 +322,13 @@ export default StyleSheet.create({
             letterSpacing: 0.2,
             color : "#424242",
         },
-    
+    leadText:{
+        fontFamily: "Urbanist",
+        fontWeight: 700,
+        fontSize: 18,
+        lineHeight: 21.6,
+        color : "#212121",
+    },
     
 }
 );

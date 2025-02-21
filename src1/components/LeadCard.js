@@ -64,7 +64,7 @@ const LeadCard = (props) => {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Status clicked")}>
-              <Image source={require("../assets/icons/Bag/bag.png")} style={styles.menuIcon} />
+              <Image source={require("../assets/icons/LSTIckSquare/lsTickSquare.png")} style={styles.menuIcon} />
               <Text style={styles.menuText}>Status</Text>
             </TouchableOpacity>
           )}

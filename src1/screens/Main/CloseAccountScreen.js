@@ -1,8 +1,9 @@
-import React from "react";
+import { useState } from "react";
 import { View, Text, StyleSheet,Image,TouchableOpacity } from "react-native";
 import DetailItem from "../../components/DetailItem";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 const CloseAccountScreen = () => {
+   const [menuVisible, setMenuVisible] = useState(false);
   return (
     
     <View style={styles.container}>
@@ -11,7 +12,7 @@ const CloseAccountScreen = () => {
     {/* Adjust flex to give enough space */}
     <View style={{ flex:0.3 ,gap:16, flexDirection:"row"}} >
       <NavigationHeaderBack text="Close Account" />
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
                 <Image 
                   source={require('../../assets/icons/MoreCircle.png')} 
                   style={{width:28 ,height:28}}
@@ -32,6 +33,22 @@ const CloseAccountScreen = () => {
       <DetailItem icon={require('../../assets/icons/Remarks.png')} label="Remarks" detail="Query raised- 11310957" />
     </View>
   </View>
+   {menuVisible && (
+                  <View style={styles.menuBox}>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Edit clicked")}>
+                      <Image source={require("../../assets/icons/Edit/edit.png")} style={styles.menuIcon} />
+                      <Text style={styles.menuText}>Edit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Status clicked")}>
+                      <Image source={require("../../assets/icons/LSTIckSquare/lsTickSquare.png")} style={styles.menuIcon} />
+                      <Text style={styles.menuText}>Status</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Delete clicked")}>
+                      <Image source={require("../../assets/icons/Delete/delete.png")} style={styles.menuIcon} />
+                      <Text style={styles.menuText}>Delete</Text>
+                    </TouchableOpacity>
+                  </View>
+  )}
 </View>
 
 
@@ -45,6 +62,7 @@ const styles = StyleSheet.create({
     width:'100%',
     flexDirection:'row',
     paddingHorizontal: 24,
+    paddingLeft: 5,
     paddingBottom: 48,
     justifyContent: "space-between",
   },
@@ -53,16 +71,47 @@ const styles = StyleSheet.create({
     flex:3,
     width:'100%',
     gap: 32,
-    paddingTop: 20,
-    paddingLeft: 20,
+    paddingLeft: 5,
+    paddingRight: 5,
+    paddingTop: 35,
     marginBottom:150,
   },
   detailsContainer: {
     flex: 5,
     //width: "80%", // Make it responsive
     gap: 15,
+    paddingLeft: 5,
+  paddingRight: 20,
   
-  }
+  },
+  menuBox: {
+    position: "absolute",
+    flex: 1,
+    top: 30, 
+    right: 55,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    padding: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  menuItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+  },
+  menuIcon: {
+    width: 16,
+    height: 16,
+    marginRight: 10,
+    resizeMode: "contain",
+  },
+  menuText: {
+    fontSize: 14,
+  },
 });
 
 export default CloseAccountScreen;

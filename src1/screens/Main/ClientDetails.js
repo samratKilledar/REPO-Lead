@@ -1,5 +1,5 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { useState } from "react";
+import { View, Text, StyleSheet , TouchableOpacity, Image } from "react-native";
 import DetailItem from "../../components/DetailItem";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import CustomButton from "../../components/CustomButton";
@@ -23,12 +23,19 @@ const ClientDetails = () => {
         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type ...",
     },
   ];
+  const [menuVisible, setMenuVisible] = useState(false);
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.centralcontainer}>
-        <View style={{flex:0.3}}>
+        <View style={{flex:0.3 , flexDirection:"row" , paddingRight: 15,}}>
       <NavigationHeaderBack text="Barbara Moore"/>
+      <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
+                      <Image 
+                        source={require('../../assets/icons/MoreCircle.png')} 
+                        style={{width:28 ,height:28}}
+                      />
+      </TouchableOpacity>
       </View>
 
           <View style={styles.detailsContainer}>
@@ -63,6 +70,18 @@ const ClientDetails = () => {
             ))}
           </View>
         </View>
+              {menuVisible && (
+                <View style={styles.menuBox}>
+                  <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Edit clicked")}>
+                    <Image source={require("../../assets/icons/Edit/edit.png")} style={styles.menuIcon} />
+                    <Text style={styles.menuText}>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Delete clicked")}>
+                    <Image source={require("../../assets/icons/Delete/delete.png")} style={styles.menuIcon} />
+                    <Text style={styles.menuText}>Delete</Text>
+                  </TouchableOpacity>
+                </View>
+              )}
       </ScrollView>
     </View>
   );
@@ -94,7 +113,7 @@ const styles = StyleSheet.create({
   },
   leadStatusContainer: {
     height: 32,
-    marginRight: 32,
+    marginRight: 10,
   },
   leadStatusText: {
     color: '#2B2162',
@@ -114,6 +133,34 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 21.6,
     color: "#212121",
+  },
+  menuBox: {
+    position: "absolute",
+    flex: 1,
+    top: 30, 
+    right: 55,
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10,
+    padding: 5,
+    shadowColor: "#000",
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  menuItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+  },
+  menuIcon: {
+    width: 16,
+    height: 16,
+    marginRight: 10,
+    resizeMode: "contain",
+  },
+  menuText: {
+    fontSize: 14,
   },
 
 });
