@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
   },
   cardWrapper: {
     marginBottom: 30, // Adds spacing between cards
-    paddingHorizontal: 30,
+    paddingHorizontal: 15,
   },
   progressLine: {
     height: 4,
