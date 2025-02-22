@@ -4,7 +4,12 @@ import DetailItem from "../../components/DetailItem";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
+import { useNavigation } from "@react-navigation/native";
 const CloseAccountScreen = () => {
+  const navigation = useNavigation()
+  const goBackCall = () => {
+    navigation.goBack();
+  };
    const [menuVisible, setMenuVisible] = useState(false);
     const [modalVisible, setModalVisible] = useState(false);
      const [selectedStatus, setSelectedStatus] = useState("Task Complete");
@@ -23,7 +28,7 @@ const CloseAccountScreen = () => {
   <View style={styles.centralcontainer}>
     {/* Adjust flex to give enough space */}
     <View style={{ flex:0.3 ,gap:16, flexDirection:"row"}} >
-      <NavigationHeaderBack text="Close Account" />
+      <NavigationHeaderBack text="Close Account" onPress={goBackCall} />
       <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
                 <Image 
                   source={require('../../assets/icons/MoreCircle.png')} 

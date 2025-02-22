@@ -6,9 +6,15 @@ import TextStyle from '../../styles/TextStyle';
 import Dropdown from '../../components/Dropdown';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
+import { useNavigation } from '@react-navigation/native';
 const LeadAddService = () => {
   const [services, setService] = useState('');
   const [Remark, setRemark] = useState(null);
+  const navigation = useNavigation()
+  const goBackCall = () => {
+    navigation.popToTop(); // Goes back to the first screen in the stack (LeadScreen)
+  };
+  
 
   const cardData = [
     {
@@ -30,7 +36,7 @@ const LeadAddService = () => {
   return (
     <View style={styles.container}>
       <View style={{flex:0.1}}>
-      <NavigationHeaderBack text="Add Services"/>
+      <NavigationHeaderBack text="Add Services" onPress={goBackCall}/>
       </View>
 
       <View style={styles.centerContainer}>

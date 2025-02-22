@@ -7,6 +7,7 @@ import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
+import { useNavigation } from "@react-navigation/native";
 
 
 const AddFollowUP = (props) => {
@@ -17,8 +18,9 @@ const AddFollowUP = (props) => {
   const [meetSchedule, setMeetSchedule] = useState('');
   const [scheduleTime, setScheduleTime] = useState('');
   const [remark, setRemark] = useState('');
+  const navigation = useNavigation(); 
   const goBackCall = () => {
-    props.navigation.goBack();
+    navigation.popToTop(); // Goes back to the first screen in the stack (LeadScreen)
   };
   return (
     <View style={styles.container}>
