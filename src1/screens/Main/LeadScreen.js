@@ -13,7 +13,7 @@ const leadsData = [
 ];   
 
 
-const LeadScreen = () => {
+const LeadScreen = (props) => {
   return (
     <View style={styles.container}>
       <HeaderComp  />
@@ -26,7 +26,9 @@ const LeadScreen = () => {
 
         <ScrollView style={{padding:20,flex:1, }}>
           {leadsData.map((item) => (
-            <LeadCard key={item.id} {...item} />
+            // <LeadCard key={item.id} {...item} />
+<LeadCard key={item.id} {...item} navigation={props.navigation} />
+
           ))}
         </ScrollView>
         </View>

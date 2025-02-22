@@ -9,7 +9,7 @@ import ButtonStyles from "../../styles/ButtonStyles";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 
 
-const AddFollowUP = () => {
+const AddFollowUP = (props) => {
   const [title, setTitle] = useState('');
   const [type, setType] = useState(null);
   const [assign, setAssign] = useState(null);
@@ -17,10 +17,14 @@ const AddFollowUP = () => {
   const [meetSchedule, setMeetSchedule] = useState('');
   const [scheduleTime, setScheduleTime] = useState('');
   const [remark, setRemark] = useState('');
-
+  const goBackCall = () => {
+    props.navigation.goBack();
+  };
   return (
     <View style={styles.container}>
-      <View style={{flex: 0.1 , marginLeft: 5,}}><NavigationHeaderBack text="Add Follow-Up" /></View>
+      <View style={{flex: 0.1 , marginLeft: 5,}}>
+        <NavigationHeaderBack text="Add Follow-Up" onPress={goBackCall}/>
+        </View>
 
       <View style={styles.centerContainer}>
         <CustomTextInput
