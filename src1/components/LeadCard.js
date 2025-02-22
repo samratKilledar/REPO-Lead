@@ -1,12 +1,26 @@
 import React, { useState } from "react";
-import { View, Image, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { 
+  View, Image, Text, TouchableOpacity, StyleSheet, Modal 
+} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import CustomText from "./CustomText";
 import TextStyle from "../styles/TextStyle";
-
+import CustomButton from "./CustomButton";
+import ButtonStyles from "../styles/ButtonStyles";
 
 const LeadCard = (props) => {
   const [menuVisible, setMenuVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState("Task Complete");
+
+  const statusOptions = [
+    "Task Complete",
+    "Waiting for Documents",
+    "Under Process",
+    "Reject",
+    "Mandate Pending",
+    "Informed Client"
+  ];
 
   return (
     <View style={styles.cardContainer}>
@@ -56,14 +70,13 @@ const LeadCard = (props) => {
             <Text style={styles.menuText}>Edit</Text>
           </TouchableOpacity>
 
-          {/* Conditional Menu Item */}
-          {props.menuType === "follow" ? (
+         {props.menuType === "follow" ? (
             <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Add Follow clicked")}>
               <Image source={require("../assets/icons/PlusBlack/Plus.png")} style={styles.menuIcon} />
               <Text style={styles.menuText}>Add Follow</Text>
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Status clicked")}>
+            <TouchableOpacity style={styles.menuItem} onPress={() => setModalVisible(true)}>
               <Image source={require("../assets/icons/LSTIckSquare/lsTickSquare.png")} style={styles.menuIcon} />
               <Text style={styles.menuText}>Status</Text>
             </TouchableOpacity>
@@ -75,73 +88,107 @@ const LeadCard = (props) => {
           </TouchableOpacity>
         </View>
       )}
+
+      {/* Bottom Pop-up Modal */}
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Status</Text>
+            
+            {statusOptions.map((option, index) => (
+              <TouchableOpacity 
+                key={index} 
+                style={styles.radioButton}
+                onPress={() => setSelectedStatus(option)}
+              >
+                <Text style={styles.radioText}>{option}</Text>
+                <View style={selectedStatus === option ? styles.radioSelected : styles.radioUnselected} />
+              </TouchableOpacity>
+            ))}
+
+            <CustomButton 
+              title="Submit"
+              customstyle={ButtonStyles.blueButton} textStyles={ButtonStyles.blueButtonText}
+              onPress={() => {
+                console.log("Selected Status:", selectedStatus);
+                setModalVisible(false);
+              }}
+            >
+              <Text style={styles.submitText}>Submit</Text>
+            </CustomButton>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   cardContainer: {
-        gap: 24,
-        marginBottom: 24,
+    gap: 24,
+    marginBottom: 24,
   },
   card: {
     backgroundColor: "#FFFFFF",
     borderRadius: 20,
     borderWidth: 2,
-    borderColor: '#EEEEEE',
-    shadowColor: '#04060F14',
+    borderColor: "#EEEEEE",
+    shadowColor: "#04060F14",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.05,
     shadowRadius: 60,
-   // elevation: 1,
     padding: 24, 
     gap: 24, 
-    overflow:"hidden"
-},
-HorLayout: {
+    overflow: "hidden",
+  },
+  HorLayout: {
     gap: 10, 
-},
-VerLayout: { 
+  },
+  VerLayout: { 
     gap: 10,
     flexDirection: "row",  
     justifyContent: "space-between", 
     alignItems: "flex-end", 
-},
-statusBadge: {
-  borderRadius: 100,
-  paddingTop: 6,
-  paddingRight: 16,
-  paddingBottom: 6,
-  paddingLeft: 16,
-  gap: 4,
-},
-moreCircleDot: {
-  position: "absolute",
-  top: 1,
-  right: 1,
-  width: 24,  
-  height: 24,
-},
-moreCircleIcon: {
-  width: 24,   
-  height: 24,
-  resizeMode: "contain", 
-},
+  },
+  statusBadge: {
+    borderRadius: 100,
+    //paddingVertical: 6,
+    paddingTop:6,
+    //paddingHorizontal: 16,
+    paddingRight:16,
+    paddingBottom:6,
+    paddingLeft:16,
+    gap: 4,
+  },
+  moreCircleDot: {
+    position: "absolute",
+    top: 1,
+    right: 1,
+    width: 24,  
+    height: 24,
+  },
+  moreCircleIcon: {
+    width: 24,   
+    height: 24,
+    resizeMode: "contain", 
+  },
   leadstatusBadge: {
     width: 159,
     height: 32,
     borderRadius: 100,
-    paddingTop: 6,
-    paddingRight: 16,
-    paddingBottom: 6,
-    paddingLeft: 16,
+    paddingVertical: 6,
+    paddingHorizontal: 16,
     gap: 4,
   },
 
   /* Menu Styles */
   menuBox: {
     position: "absolute",
-    flex: 1,
     top: 30, 
     right: 55,
     backgroundColor: "#FFFFFF",
@@ -167,7 +214,57 @@ moreCircleIcon: {
   menuText: {
     fontSize: 14,
   },
+
+  /* Modal Styles */
+  modalContainer: {
+    flex: 1,
+    justifyContent: "flex-end",
+    backgroundColor: "rgba(0,0,0,0.5)",
+  },
+  modalContent: {
+    backgroundColor: "#FFFFFF",
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+  },
+  modalTitle: {
+    fontFamily:'Urbanist',
+    fontSize: 24,
+    fontWeight: "700",
+    textAlign: "center",
+    marginBottom: 20,
+    lineHeight:28.8,
+    borderBottomWidth:1,
+    borderBottomColor:'#EEEEEE'
+  },
+  radioButton: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 10,
+    },
+  radioText: {
+    fontFamily:'Urbanist',
+    fontSize: 18,
+    fontWeight: "700",
+    textAlign: "center",
+    //marginBottom: 10,
+    lineHeight:21.6,
+  },
+  radioUnselected: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 3,
+    borderColor: "#2B2162",
+  },
+  radioSelected: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: "#2B2162",
+  },
+
 });
 
 export default LeadCard;
-

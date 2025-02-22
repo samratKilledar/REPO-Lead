@@ -121,8 +121,8 @@ const styles = StyleSheet.create({
     gap: 24,
   },
   cardWrapper: {
-    marginBottom: 30, // Adds spacing between cards
-    paddingHorizontal: 15,
+    marginBottom: 30,
+    paddingHorizontal:15, // Adds spacing between cards
   },
   progressLine: {
     height: 4,
