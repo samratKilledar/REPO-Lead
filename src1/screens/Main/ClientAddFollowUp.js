@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
-import Dropdown from "../../components/Dropdown";
+import Dropdown from "../../components/DropDown";
 // import Navigation from "../../components/Navigation";
 import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";

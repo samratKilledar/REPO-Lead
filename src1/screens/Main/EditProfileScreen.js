@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, StyleSheet, Image, TextInput } from "react-native";
-import Dropdown from "../../components/Dropdown";
+// import Dropdown from "../../components/DropDown";
 import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
@@ -40,10 +40,10 @@ const EditProfileScreen = (props) => {
                     />
                 </View>
 
-                <Dropdown label="Male" selectedValue={type} onValueChange={setType} options={[
+                {/* <Dropdown label="Male" selectedValue={type} onValueChange={setType} options={[
                     { label: "Male", value: "Male" },
                     { label: "Female", value: "Female" },
-                    { label: "Other", value: "Other" },]} zIndex={2000} />
+                    { label: "Other", value: "Other" },]} zIndex={2000} /> */}
 
                 <CustomTextInput followupicon={require('../../assets/icons/Calendar/calendar.png')} type={date} value={date} placeholder="12/27/1995" onChangeText={setDate} />
                 <CustomTextInput followupicon={require('../../assets/icons/Scan/scan.png')} type={attachment} value={attachment} placeholder="Profile Photo" onChangeText={setAttachment} />

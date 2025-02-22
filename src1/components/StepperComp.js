@@ -170,6 +170,7 @@ const styles = StyleSheet.create({
   stepContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
   },
 
   circle: {
@@ -209,10 +210,10 @@ const styles = StyleSheet.create({
   },
   
   separator: {
-    width: 40, // Increased width
+    width: 20, // Increased width
     height: 2,
     backgroundColor: '#A0A0A0', // Gray line
-    marginHorizontal: 8, // Add margin
+    marginHorizontal: 10, // Add margin
   },
 });
 

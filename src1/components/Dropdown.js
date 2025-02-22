@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   icon: {
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 12,
     resizeMode: "contain",
   },
   listItem: {

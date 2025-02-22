@@ -55,8 +55,8 @@ const LeadAddPersonal = () => {
             selectedValue={leadService}
             onValueChange={setLeadService}
             options={[
-              { label: "John Doe", value: "John Doe" },
-              { label: "Jane Smith", value: "Jane Smith" },
+              { label: "Online", value: "Online" },
+              { label: "Offline", value: "Offline" },
             ]}
             zIndex={3000}
           />
@@ -97,9 +97,9 @@ const LeadAddPersonal = () => {
             onValueChange={setCity}
             options={[
               { label: "Mumbai", value: "Mumbai" },
-              { label: "Pune", value: "Pune" },
-              { label: "Kolhapur", value: "Kolhapur" },
-              { label: "Hyderabad", value: "Telangana" },
+              { label: "Thane", value: "Thane" },
+              { label: "Navi Mumbai", value: "Navi Mumbai" },
+              { label: "Panvel", value: "Panvel" },
             ]}
             zIndex={5000}
           />
@@ -109,10 +109,10 @@ const LeadAddPersonal = () => {
             selectedValue={state}
             onValueChange={setState}
             options={[
-              { label: "Mumbai", value: "Maharashtra" },
-              { label: "Pune", value: "Maharashtra" },
-              { label: "Kolhapur", value: "Maharashtra" },
-              { label: "Hyderabad", value: "Maharashtra" },
+              { label: "Maharashtra", value: "Maharashtra" },
+              { label: "Gujrat", value: "Gujarat" },
+              { label: "Goa", value: "Goa" },
+              { label: "Karnataka", value: "Karnataka" },
             ]}
             zIndex={4000}
           />
@@ -149,13 +149,14 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     backgroundColor: "#FFFFFF",
     gap: 18,
+    marginBottom: 50,
   },
   header: {
     height: 50, // Fixed height for the header
   },
   stepperContainer: {
     height: 50, // Fixed height for the stepper
-    marginTop: 10,
+    marginTop: 5,
   },
   centerContainer: {
     paddingBottom: 20, // Add padding at the bottom for better spacing
