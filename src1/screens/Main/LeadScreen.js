@@ -13,7 +13,7 @@ const leadsData = [
 ];   
 
 
-const LeadScreen = ({props}) => {
+const LeadScreen = (props) => {
   return (
     <View style={styles.container}>
       <HeaderComp/>

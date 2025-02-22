@@ -24,7 +24,6 @@ import CloseAccountScreen from '../screens/Main/CloseAccountScreen';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
-
 const HomeStackScreen = ({ navigation, route }) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
