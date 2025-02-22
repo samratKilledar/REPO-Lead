@@ -9,6 +9,8 @@ import LeadDetails from './LeadDetails';
 import ClientDetails from './ClientDetails';
 import ClientAddFollowUP from './ClientAddFollowUp';
 import ClientScreen from './ClientScreen';
+import LogoutPage from './LogoutPage';
+
 
 const SettingsScreen = () => {
   return (
@@ -18,11 +20,12 @@ const SettingsScreen = () => {
      {/* <CloseAccountScreen/> */}
       {/* <AddTask/> */}
       {/* <LeadScreen/> */}
-      <AddFollowUP/>
+      {/* <AddFollowUP/> */}
       {/* <LeadDetails/> */}
       {/* <ClientDetails/> */}
       {/* <ClientAddFollowUP/> */}
       {/* <ClientScreen/> */}
+      <LogoutPage/>
 
     </View>
   );

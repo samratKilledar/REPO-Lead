@@ -367,22 +367,38 @@ export default StyleSheet.create({
             color : "#FFFFFF",
             textAlign: "center",
         },
-        modalText:{
+        modallText:{
             fontFamily: "Urbanist",
             fontWeight: 700,
             fontSize: 28,
             lineHeight: 28.8,
             color : "#F75555",
             textAlign: "center",
-
-
+        
+        }, 
+        modallText2:{  
+             fontFamily: "Urbanist",
+            fontWeight: 700,
+            fontSize: 28,
+            lineHeight: 28.8,
+            color : "#212121",
+            textAlign: "center",
         },
-    leadText:{
+        leadText:{
         fontFamily: "Urbanist",
         fontWeight: 700,
         fontSize: 18,
         lineHeight: 21.6,
         color : "#212121",
+    },
+    logoutText : {
+        fontFamily: "Urbanist",
+        fontWeight: 700,
+        fontSize: 20,
+        lineHeight: 24,
+        color : "#424242",
+        textAlign: "center",
+
     },
     
 }
