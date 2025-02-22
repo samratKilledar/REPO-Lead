@@ -12,8 +12,10 @@ import UpcomingTask from '../screens/Main/UpcomingTask';
 import Notifications from '../screens/Main/Notifications';
 import LeadScreen from '../screens/Main/LeadScreen';
 import AddFollowUp from '../screens/Main/AddFollowUP';
-
-
+import EditProfileScreen from '../screens/Main/EditProfileScreen';
+import ClientScreen from '../screens/Main/ClientScreen';
+import LeadAddService from '../screens/Main/LeadAddServices'
+import TaskScreen from '../screens/Main/TaskScreen';
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 
@@ -27,6 +29,36 @@ const HomeStackScreen = ({ navigation, route }) => {
       <HomeStack.Screen name="UpcomingMeetings" component={UpcomingMeetings} />
       <HomeStack.Screen name="UpcomingTask" component={UpcomingTask} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
+      <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+    </HomeStack.Navigator>
+  );
+};
+
+const LeadStackScreen = ({ navigation, route }) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+       <HomeStack.Screen name="Lead" component={LeadScreen} />
+      <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+    </HomeStack.Navigator>
+  );
+};
+
+
+const ClientStackScreen= ({ navigation, route }) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+             <HomeStack.Screen name="Lead" component={LeadScreen} />
+
+       <HomeStack.Screen name="ClientScreen" component={LeadAddService} />
+       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
+       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+      
     </HomeStack.Navigator>
   );
 };
@@ -85,6 +117,8 @@ const CustomTabButton = ({ onPress }) => {
   );
 };
 
+
+
 const MainNavigator = () => {
   return (
   <View style={{flex:1}}>
@@ -113,7 +147,7 @@ const MainNavigator = () => {
       />
       <Tab.Screen
         name="Lead"
-        component={LeadScreen}
+        component={LeadStackScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
@@ -135,7 +169,7 @@ const MainNavigator = () => {
       />
       <Tab.Screen
         name="Client"
-        component={SettingsScreen}
+        component={ClientStackScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
@@ -147,8 +181,8 @@ const MainNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="AddFollowUp"
-        component={AddFollowUp}
+        name="Task"
+        component={TaskScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
