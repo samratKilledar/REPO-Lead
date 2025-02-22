@@ -1,7 +1,7 @@
-import React from 'react';
+import {useState} from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet ,Modal,Text, useWindowDimensions} from 'react-native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native'; // Import this
 
 import HomeScreen from '../screens/Main/HomeScreen';
@@ -19,6 +19,7 @@ const HomeStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation, route }) => {
   const routeName = getFocusedRouteNameFromRoute(route);
+  
 
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
@@ -30,8 +31,12 @@ const HomeStackScreen = ({ navigation, route }) => {
   );
 };
 
-const CustomTabButton = ({ onPress }) => (
-  <TouchableOpacity style={styles.plusButton} onPress={onPress}>
+const CustomTabButton = ({ onPress }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  //const { width } = useWindowDimensions();
+  return(
+    <View>
+  <TouchableOpacity style={styles.plusButton} onPress={() => setModalVisible(true)}>
     <View style={styles.plusButtonInner}>
       <Image 
         source={require('../assets/icons/Plus/plus.png')}
@@ -39,7 +44,46 @@ const CustomTabButton = ({ onPress }) => (
       />
     </View>
   </TouchableOpacity>
-);
+  <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <TouchableOpacity 
+          style={styles.modalOverlay} 
+          activeOpacity={1} 
+          onPress={() => setModalVisible(false)}
+        >
+          <View style={[styles.modalContainer]}>
+            {/* Tooltip Arrow */}
+            <View style={styles.triangle} />
+
+            {/* Options with Icon & Text */}
+            <TouchableOpacity style={styles.option} onPress={() => setModalVisible(false)}>
+            <Text style={styles.optionText}>Lead</Text>
+              <Image 
+                source={require('../assets/icons/PlusFilter.png')} 
+                style={styles.optionIcon} 
+              />
+             
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.option} onPress={() => setModalVisible(false)}>
+            <Text style={styles.optionText}>Task</Text>
+              <Image 
+                source={require('../assets/icons/PlusTask.png')} 
+                style={styles.optionIcon} 
+              />
+              
+            </TouchableOpacity>
+
+          </View>
+        </TouchableOpacity>
+      </Modal>
+  </View>
+  );
+};
 
 const MainNavigator = () => {
   return (
@@ -155,6 +199,74 @@ const styles = StyleSheet.create({
     width: 60, 
     height: 60,
     resizeMode: 'contain', 
+  },
+
+  //modal style for plus icon 
+  container: {
+    position: 'absolute',
+    bottom: 20,
+    alignSelf: 'center',
+    
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  
+  },
+  modalContainer: {
+    backgroundColor: '#FFFFFF',
+    //width: width * 0.5,
+    width:184,
+    paddingVertical: 20,
+    borderRadius: 32,
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 90, // Positioned just above the FAB
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+  },
+  option: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    Top:32,
+    Left:32,
+    gap:24,
+  },
+  optionText: {
+    fontFamily:'Urbanist',
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#424242',
+    lineHeight:25.2,
+    letterSpacing:0.2,
+  },
+  optionIcon: {
+    width: 28,
+    height: 28,
+    //tintColor: '#4C4DDC',
+  },
+  triangle: {
+    position: 'absolute',
+    bottom: -10,
+    left: '50%',
+    marginLeft: -10,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderTopWidth: 10, 
+    borderStyle: 'solid',
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: 'white',
   },
 });
 
