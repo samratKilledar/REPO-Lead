@@ -322,7 +322,69 @@ export default StyleSheet.create({
             letterSpacing: 0.2,
             color : "#424242",
         },
-    leadText:{
+
+        //edit profile page
+        logouttext:{
+            fontFamily: "Urbanist",
+            fontWeight: 600,
+            fontSize: 18,
+            lineHeight: 25.2,
+            letter: 0.2,
+            color : "#F75555",
+            textAlign: "center",  // Centers text horizontally
+            alignSelf: "center",
+        },
+        DanielName :{
+            fontFamily: "Urbanist",
+            fontWeight: 700,
+            fontSize: 24,
+            lineHeight: 28.8,
+            textAlign: "center",
+            color :"#212121",
+        },
+        gmailText:{
+            fontFamily: "Urbanist",
+            fontWeight: 600,
+            fontSize: 14,
+            lineHeight: 19.6,
+            letter: 0.2,
+            color : "#212121",
+            textAlign: "center",  // Centers text horizontally
+        },
+        serviceText :{
+            fontFamily: "Urbanist",
+            fontWeight: 700,
+            fontSize: 20,
+            lineHeight: 24,
+            color : "#212121",
+        },
+        InsuranceTextt :{
+            fontFamily: "Urbanist",
+            fontWeight: 600,
+            fontSize: 14,
+            lineHeight: 19.6,
+            letter: 0.2,
+            color : "#FFFFFF",
+            textAlign: "center",
+        },
+        modallText:{
+            fontFamily: "Urbanist",
+            fontWeight: 700,
+            fontSize: 28,
+            lineHeight: 28.8,
+            color : "#F75555",
+            textAlign: "center",
+        
+        }, 
+        modallText2:{  
+             fontFamily: "Urbanist",
+            fontWeight: 700,
+            fontSize: 28,
+            lineHeight: 28.8,
+            color : "#212121",
+            textAlign: "center",
+        },
+        leadText:{
         fontFamily: "Urbanist",
         fontWeight: 700,
         fontSize: 18,
@@ -330,7 +392,7 @@ export default StyleSheet.create({
         color : "#212121",
     },
     //LeadCardStyle
-    nameText: {
+    logoutText : {
         fontFamily: "Urbanist",
         fontWeight: 700,
         fontSize: 20,

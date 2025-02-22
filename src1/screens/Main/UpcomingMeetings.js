@@ -13,7 +13,10 @@ const meetingsData = [
   { name: "Barbara Moore", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12:00 PM" },
 ];
 
-const UpcomingMeetings = (props) => {
+const UpcomingMeetings = ({props,navigation }) => {
+  const NavigateToLeadDetails =(props)=>{
+    props.navigation.navigate("LeadDetails")
+  }
   const goBackCall = () => {
     props.navigation.goBack();
   };
@@ -22,10 +25,11 @@ const UpcomingMeetings = (props) => {
       <View style={{flex:0.3}}>
         <Navigation text={"Upcoming Meetings"}  onPress={goBackCall}/>
       </View>
-      <View style={{flex:9,marginBottom:10}}>
+      <View style={{flex:9,marginBottom:90}}>
       <ScrollView style={style.container1} showsVerticalScrollIndicator={false}>
         <View style={style.container}>
-          <RectCardcomp props={meetingsData} />
+          <RectCardcomp props={meetingsData} onPress={NavigateToLeadDetails} 
+           navigation={navigation} />
         </View>
       </ScrollView>
       </View>

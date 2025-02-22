@@ -26,6 +26,8 @@ const HomeStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation, route }) => {
   const routeName = getFocusedRouteNameFromRoute(route);
+  
+
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Home" component={HomeScreen} />
@@ -40,6 +42,7 @@ const HomeStackScreen = ({ navigation, route }) => {
 
 const LeadStackScreen = ({ navigation, route }) => {
   const routeName = getFocusedRouteNameFromRoute(route);
+
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
        <HomeStack.Screen name="Lead" component={LeadScreen} />
@@ -60,8 +63,7 @@ const ClientStackScreen = ({ navigation, route }) => {
       <HomeStack.Screen name="ClientAddFollowUp" component={ClientAddFollowUP} />
       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
       <HomeStack.Screen name="ClientDetails" component={ClientDetails} />
-      <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
-      <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
+      
     </HomeStack.Navigator>
   );
 };
@@ -74,6 +76,7 @@ const TaskStackScreen = ({ navigation, route }) => {
       <HomeStack.Screen name="Task" component={TaskScreen} />
       <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen} />
     </HomeStack.Navigator>
+
   );
 };
 
