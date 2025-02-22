@@ -25,7 +25,7 @@ const SettingsScreen = () => {
       {/* <ClientDetails/> */}
       {/* <ClientAddFollowUP/> */}
       {/* <ClientScreen/> */}
-      <LogoutPage/>
+      {/* <LogoutPage/> */}
 
     </View>
   );

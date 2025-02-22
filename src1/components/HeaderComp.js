@@ -9,7 +9,9 @@ const HeaderComp = (props)=>{
                 <TouchableOpacity onPress={props.onPress} >
                     <Image source={require("../assets/icons/Notification/notification2x.png")}  style={styles1.bell}/>
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => props.navigation.navigate("EditProfileScreen")}>
                 <Image source={require("../assets/images/Avatar.png")}  style={styles1.avtar}/>
+                </TouchableOpacity>
             </View>
             </View> 
     );
