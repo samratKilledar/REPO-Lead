@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native'; 
+import { View, StyleSheet, Image,TouchableOpacity } from 'react-native'; 
 
 const HeaderComp = (props)=>{
     return(
@@ -20,7 +19,7 @@ export default HeaderComp;
 const styles1 = StyleSheet.create({
 
     headerstyle:{
-        // width: 428,
+       // width: 428,
         height: 100,
         flexDirection: "row",
         justifyContent: "space-between",

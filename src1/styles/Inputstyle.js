@@ -20,6 +20,23 @@ export default StyleSheet.create({
     color: "#616161",
     resizeMode: "contain",
   },
+  followupicon: {
+    width: 18,
+    height: 57,
+    resizeMode: "contain",
+  },
+  followup: {
+    position: "absolute",
+    top: 1,
+    right: 1,
+    width: 40,  
+    height: 24,
+  },
+  searchbaricon:{
+    width: 15,
+    height: 15,
+    resizeMode: "contain",
+  },
   input: {
     flex: 1,
     fontFamily: "Urbanist",
@@ -29,13 +46,6 @@ export default StyleSheet.create({
     letterSpacing: 0.2,
     color: "#616161",
 
-  },
-  eyeIcon: {
-    width: 16.67,
-    height: 14.17,
-    top: 2.92,
-    left: 1.67,
-    tintColor: "#616161",
   },
   eyeIcon: {
     width: 16.67,
