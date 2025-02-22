@@ -20,13 +20,13 @@ const Dropdown = ({ label, selectedValue, onValueChange, options, zIndex }) => {
         listItemContainerStyle={styles.listItem}
         ArrowUpIconComponent={() => (
           <Image
-            source={require("../assets/icons/ArrowDown/arrowDown3x.png")}
+            source={require("../assets/icons/ArrowDown/arrowDown.png")}
             style={styles.icon}
           />
         )}
         ArrowDownIconComponent={() => (
           <Image
-            source={require("../assets/icons/ArrowDown/arrowDown3x.png")}
+            source={require("../assets/icons/ArrowDown/arrowDown.png")}
             style={styles.icon}
           />
         )}
