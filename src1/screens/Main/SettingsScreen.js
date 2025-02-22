@@ -9,6 +9,7 @@ import LeadDetails from './LeadDetails';
 import ClientDetails from './ClientDetails';
 import ClientAddFollowUP from './ClientAddFollowUp';
 import ClientScreen from './ClientScreen';
+import LeadAddPersonal from './LeadAddPersonal';
 
 const SettingsScreen = () => {
   return (
@@ -23,7 +24,7 @@ const SettingsScreen = () => {
       {/* <ClientDetails/> */}
       {/* <ClientAddFollowUP/> */}
       {/* <ClientScreen/> */}
-
+      <LeadAddPersonal/>
     </View>
   );
 };

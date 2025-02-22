@@ -2,7 +2,7 @@ import {useState} from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, TouchableOpacity, Image, StyleSheet ,Modal,Text, useWindowDimensions} from 'react-native';
-import { getFocusedRouteNameFromRoute } from '@react-navigation/native'; // Import this
+import { getFocusedRouteNameFromRoute ,useNavigation } from '@react-navigation/native'; // Import this
 
 import HomeScreen from '../screens/Main/HomeScreen';
 import ProfileScreen from '../screens/Main/ProfileScreen';
@@ -53,9 +53,9 @@ const ClientStackScreen= ({ navigation, route }) => {
 
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-             <HomeStack.Screen name="Lead" component={LeadScreen} />
+             {/* <HomeStack.Screen name="Lead" component={LeadScreen} /> */}
 
-       <HomeStack.Screen name="ClientScreen" component={LeadAddService} />
+       <HomeStack.Screen name="ClientScreen" component={ClientScreen} />
        <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
        <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
       
@@ -65,6 +65,7 @@ const ClientStackScreen= ({ navigation, route }) => {
 
 const CustomTabButton = ({ onPress }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
   //const { width } = useWindowDimensions();
   return(
     <View>
@@ -92,7 +93,7 @@ const CustomTabButton = ({ onPress }) => {
             <View style={styles.triangle} />
 
             {/* Options with Icon & Text */}
-            <TouchableOpacity style={styles.option} onPress={() => setModalVisible(false)}>
+            <TouchableOpacity style={styles.option} onPress={() =>{ setModalVisible(false) ;navigation.navigate('LeadAddPersonal');}}>
             <Text style={styles.optionText}>Lead</Text>
               <Image 
                 source={require('../assets/icons/PlusFilter.png')} 
@@ -101,7 +102,7 @@ const CustomTabButton = ({ onPress }) => {
              
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.option} onPress={() => setModalVisible(false)}>
+            <TouchableOpacity style={styles.option} onPress={() =>{ setModalVisible(false) ;navigation.navigate('AddTask');} }>
             <Text style={styles.optionText}>Task</Text>
               <Image 
                 source={require('../assets/icons/PlusTask.png')} 
@@ -158,6 +159,14 @@ const MainNavigator = () => {
           ),
         }}
       />
+      
+      {/* <Tab.Screen
+        name="PlusButton"
+        component={() => null} // Empty component, we don't need a screen here
+        options={{
+          tabBarButton: (props) => <CustomTabButton {...props} />,
+        }}
+      /> */}
       <Tab.Screen
         name="AddTask"
         component={ProfileScreen} 
@@ -167,6 +176,15 @@ const MainNavigator = () => {
           ),
         }}
       />
+      {/* <Tab.Screen
+        name="LeadAddPersonal"
+        component={SettingsScreen} 
+        options={{
+          tabBarButton: (props) => (
+            <CustomTabButton {...props} onPress={() => navigation.navigate('LeadAddPersonal')} />
+          ),
+        }}
+      /> */}
       <Tab.Screen
         name="Client"
         component={ClientStackScreen}

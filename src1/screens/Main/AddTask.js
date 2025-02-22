@@ -6,7 +6,10 @@ import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 
-const AddFollowUP = () => {
+const AddFollowUP = (props) => {
+  const goBackCall = () => {
+    props.navigation.goBack();
+  };
   const [title, setTitle] = useState('');
   const [type, setType] = useState(null);
   const [assign, setAssign] = useState(null);
@@ -23,7 +26,7 @@ const AddFollowUP = () => {
      
       <View style={styles.container}>
       <View style={{flex:0.1}}>
-      <NavigationHeaderBack text="Add Task"/>
+      <NavigationHeaderBack text="Add Task" onPress={goBackCall}/>
       </View>
       <ScrollView
         style={{ flex:1, marginBottom: 60 }}
