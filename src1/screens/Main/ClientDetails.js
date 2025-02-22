@@ -6,7 +6,12 @@ import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 import { ScrollView } from "react-native-gesture-handler";
 import InsuranceCard from "../../components/InsuranceCard";
-const ClientDetails = () => {
+import { useNavigation } from "@react-navigation/native";
+const ClientDetails = (props) => {
+  const navigation = useNavigation()
+  const goBackCall = () => {
+    navigation.goBack();
+  };
   const cardData = [
     {
       id: 1,
@@ -24,12 +29,18 @@ const ClientDetails = () => {
     },
   ];
   const [menuVisible, setMenuVisible] = useState(false);
+  const addfollow = () => {
+    props.navigation.navigate("AddFollowUp")
+  }
+  const addService = () => {
+    props.navigation.navigate("LeadAddServices")
+  }
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.centralcontainer}>
         <View style={{flex:0.3 , flexDirection:"row" , paddingRight: 15,}}>
-      <NavigationHeaderBack text="Barbara Moore"/>
+      <NavigationHeaderBack text="Barbara Moore" onPress={goBackCall}/>
       <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
                       <Image 
                         source={require('../../assets/icons/MoreCircle.png')} 
@@ -52,10 +63,10 @@ const ClientDetails = () => {
           </View>
           <View style={styles.followup}>
             <View style={{flex:1,margin:10}}>
-            <CustomButton title="Add Follow Up" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} />
+            <CustomButton title="Add Follow Up" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} onPress={addfollow} />
             </View>
             <View style={{flex:1, margin:10}}>
-            <CustomButton title="Add Services" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} />
+            <CustomButton title="Add Services" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} onPress={addService} />
             </View>
           </View>
           <View style={styles.insuranceCard}>

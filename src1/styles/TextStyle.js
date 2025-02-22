@@ -249,20 +249,6 @@ export default StyleSheet.create({
         letterSpacing: 0.2,
         color: "#9E9E9E",
     },
-    leadText: {
-        fontFamily: "Urbanist",
-        fontWeight: 700,
-        fontSize: 18,
-        lineHeight: 21.6,
-        color: "#212121",
-    },
-    seeAll: {
-        fontFamily: "Urbanist",
-        fontWeight: 700,
-        fontSize: 16,
-        lineHeight: 22.4,
-        color: "#246BFD",
-    },
     
 }
 );

@@ -14,15 +14,18 @@ import LeadScreen from '../screens/Main/LeadScreen';
 import AddFollowUp from '../screens/Main/AddFollowUP';
 import EditProfileScreen from '../screens/Main/EditProfileScreen';
 import ClientScreen from '../screens/Main/ClientScreen';
-import LeadAddService from '../screens/Main/LeadAddServices'
 import TaskScreen from '../screens/Main/TaskScreen';
+import ClientAddFollowUP from '../screens/Main/ClientAddFollowUp';
+import ClientDetails from '../screens/Main/ClientDetails';
+import LeadDetails from '../screens/Main/LeadDetails';
+import CloseAccountScreen from '../screens/Main/CloseAccountScreen';
+import LeadAddServices from '../screens/Main/LeadAddServices'
+
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation, route }) => {
   const routeName = getFocusedRouteNameFromRoute(route);
-  
-
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Home" component={HomeScreen} />
@@ -37,28 +40,39 @@ const HomeStackScreen = ({ navigation, route }) => {
 
 const LeadStackScreen = ({ navigation, route }) => {
   const routeName = getFocusedRouteNameFromRoute(route);
-
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
        <HomeStack.Screen name="Lead" component={LeadScreen} />
       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+      <HomeStack.Screen name="LeadDetails" component={LeadDetails} />
+      <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
     </HomeStack.Navigator>
   );
 };
 
 
-const ClientStackScreen= ({ navigation, route }) => {
+const ClientStackScreen = ({ navigation, route }) => {
   const routeName = getFocusedRouteNameFromRoute(route);
-
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-             {/* <HomeStack.Screen name="Lead" component={LeadScreen} /> */}
+      <HomeStack.Screen name="Client" component={ClientScreen} />
+      <HomeStack.Screen name="ClientAddFollowUp" component={ClientAddFollowUP} />
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+      <HomeStack.Screen name="ClientDetails" component={ClientDetails} />
+      <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
+      <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
+    </HomeStack.Navigator>
+  );
+};
 
-       <HomeStack.Screen name="ClientScreen" component={ClientScreen} />
-       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
-       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
-      
+
+const TaskStackScreen = ({ navigation, route }) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="Task" component={TaskScreen} />
+      <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen} />
     </HomeStack.Navigator>
   );
 };
@@ -200,7 +214,7 @@ const MainNavigator = () => {
       />
       <Tab.Screen
         name="Task"
-        component={TaskScreen}
+        component={TaskStackScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <Image

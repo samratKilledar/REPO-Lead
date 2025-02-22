@@ -16,7 +16,7 @@ const tasks2Data = [
 ];
 
 
-const TaskScreen = () => {
+const TaskScreen = (props) => {
   const [search, setSearch] = useState('');
   const [activeTab, setActiveTab] = useState("Lead Task");
 
@@ -46,7 +46,7 @@ const TaskScreen = () => {
           <ScrollView>
             {tasksData.map((item, index) => (
               <View key={item.id} style={styles.cardWrapper}>
-                <LeadCard {...item} />
+                <LeadCard {...item} navigation={props.navigation} screenType="task"/>
                 <View style={[styles.progressLine, { backgroundColor: index === 0 ? "#246BFD" : "#FF4F4F" }]} />
               </View>
             ))}
@@ -56,7 +56,7 @@ const TaskScreen = () => {
           <ScrollView>
             {tasks2Data.map((item, index) => (
               <View key={item.id} style={styles.cardWrapper}>
-                <LeadCard {...item} />
+                <LeadCard {...item} navigation={props.navigation} screenType="task"/>
                 <View style={[styles.progressLine, { backgroundColor: index === 0 ? "#246BFD" : "#FF4F4F" }]} />
               </View>
             ))}

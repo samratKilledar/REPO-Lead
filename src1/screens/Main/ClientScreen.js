@@ -37,7 +37,7 @@ const ClientScreen = (props) => {
 
         <ScrollView style={{padding:20,flex:1, }}>
           {clintsData.map((item) => (
-            <LeadCard key={item.id} {...item} />
+            <LeadCard key={item.id} {...item}  navigation={props.navigation}  screenType="client"/>
           ))}
         </ScrollView>
         </View>
