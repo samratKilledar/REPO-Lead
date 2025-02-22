@@ -9,7 +9,7 @@ import LeadDetails from './LeadDetails';
 import ClientDetails from './ClientDetails';
 import ClientAddFollowUP from './ClientAddFollowUp';
 import ClientScreen from './ClientScreen';
-import LogoutPage from './LogoutPage';
+import LogoutPage from '../Auth/LogoutScreen';
 
 
 const SettingsScreen = () => {

@@ -13,10 +13,10 @@ const leadsData = [
 ];   
 
 
-const LeadScreen = (props) => {
+const LeadScreen = ({props}) => {
   return (
     <View style={styles.container}>
-      <HeaderComp  />
+      <HeaderComp/>
 
       <View style={styles.centerContainer}>
         <View style={styles.lead}>
