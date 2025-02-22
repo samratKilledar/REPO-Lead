@@ -22,6 +22,18 @@ const LeadCard = (props) => {
     "Informed Client"
   ];
 
+  const addFllow=()=>{
+
+    props.navigation.navigate("AddFollowUp");
+    setMenuVisible(false);
+    setModalVisible(false)
+  }
+  const editProfile=()=>{
+    props.navigation.navigate("EditProfileScreen")
+    setMenuVisible(false);
+    setModalVisible(false)
+  }
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
@@ -65,13 +77,13 @@ const LeadCard = (props) => {
       {/* Popup Menu */}
       {menuVisible && (
         <View style={styles.menuBox}>
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Edit clicked")}>
+          <TouchableOpacity style={styles.menuItem} onPress={ editProfile}>
             <Image source={require("../assets/icons/Edit/edit.png")} style={styles.menuIcon} />
             <Text style={styles.menuText}>Edit</Text>
           </TouchableOpacity>
 
          {props.menuType === "follow" ? (
-            <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Add Follow clicked")}>
+            <TouchableOpacity style={styles.menuItem} onPress={addFllow}>
               <Image source={require("../assets/icons/PlusBlack/Plus.png")} style={styles.menuIcon} />
               <Text style={styles.menuText}>Add Follow</Text>
             </TouchableOpacity>

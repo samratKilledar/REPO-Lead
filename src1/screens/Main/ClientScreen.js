@@ -15,7 +15,7 @@ const clintsData = [
 ];   
 
 
-const ClientScreen = () => {
+const ClientScreen = (props) => {
   const [search, setSearch] = useState('');
   return (
     <View style={styles.container}>
