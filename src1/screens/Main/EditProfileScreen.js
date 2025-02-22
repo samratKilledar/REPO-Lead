@@ -6,7 +6,7 @@ import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 
-const EditProfileScreen = () => {
+const EditProfileScreen = (props) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
@@ -14,11 +14,13 @@ const EditProfileScreen = () => {
     const [attachment, setAttachment] = useState('');
     const [date, setDate] = useState('');
     const [surName, setSurName] = useState('');
-
+    const goBackCall = () => {
+        props.navigation.goBack();
+      };
     return (
         <View style={styles.container}>
             <View style={{ flex: 0.1, marginLeft: 5 }}>
-                <NavigationHeaderBack text="Edit Profile" />
+                <NavigationHeaderBack text="Edit Profile"  onPress={goBackCall}/>
             </View>
 
             <View style={styles.centerContainer}>
