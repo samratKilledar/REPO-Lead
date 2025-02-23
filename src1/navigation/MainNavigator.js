@@ -20,6 +20,9 @@ import ClientDetails from '../screens/Main/ClientDetails';
 import LeadDetails from '../screens/Main/LeadDetails';
 import CloseAccountScreen from '../screens/Main/CloseAccountScreen';
 import LeadAddServices from '../screens/Main/LeadAddServices'
+import AddTask from '../screens/Main/AddTask';
+import LeadAddOccupation from '../screens/Main/LeadAddOccupation';
+import LeadAddPersonal from '../screens/Main/LeadAddPersonal';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -47,6 +50,8 @@ const LeadStackScreen = ({ navigation, route }) => {
       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
       <HomeStack.Screen name="LeadDetails" component={LeadDetails} />
       <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
+      <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
+      <HomeStack.Screen name="LeadAddOccupation" component={LeadAddOccupation} />
     </HomeStack.Navigator>
   );
 };
@@ -73,6 +78,7 @@ const TaskStackScreen = ({ navigation, route }) => {
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Task" component={TaskScreen} />
       <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen} />
+      <HomeStack.Screen name="AddTask" component={AddTask} /> 
     </HomeStack.Navigator>
   );
 };
@@ -183,7 +189,7 @@ const MainNavigator = () => {
       /> */}
       <Tab.Screen
         name="AddTask"
-        component={ProfileScreen} 
+        component={AddTask} 
         options={{
           tabBarButton: (props) => (
             <CustomTabButton {...props} onPress={() => navigation.navigate('AddTask')} />

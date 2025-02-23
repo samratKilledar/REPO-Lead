@@ -6,7 +6,7 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       {/* <Text style={styles.title}>Profile Screen</Text> */}
-      <AddTask/>
+      {/* <AddTask/> */}
     </View>
   );
 };

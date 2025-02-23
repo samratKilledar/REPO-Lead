@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 import CustomButton from "../../components/CustomButton";
 import CustomTextInput from "../../components/CustomTextInput";
 import TextStyle from "../../styles/TextStyle";
-import Dropdown from "../../components/DropDown";
+import Dropdown from "../../components/Dropdown";
 import Stepper from "../../components/StepperComp";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 
