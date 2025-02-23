@@ -7,7 +7,7 @@ import Dropdown from "../../components/DropDown";
 import Stepper from "../../components/StepperComp";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 
-const LeadAddOccupation = () => {
+const LeadAddOccupation = (props) => {
   const [typeOfWork, setTypeOfWork] = useState("");
   const [type, setType] = useState(null);
   const [monthlyIncome, setMonthlyIncome] = useState("");
@@ -59,7 +59,10 @@ const LeadAddOccupation = () => {
           onChangeText={setMonthlyIncome}
         />
 
-        <CustomButton title="NEXT" customStyle={{ width: -30 }} />
+        <CustomButton title="NEXT" 
+        customStyle={{ width: -30 }}
+        onPress={() => props.navigation.navigate('LeadLast')} 
+        />
       </View>
     </View>
   );

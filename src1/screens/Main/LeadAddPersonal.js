@@ -6,7 +6,7 @@ import Dropdown from '../../components/DropDown';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from "../../components/StepperComp";
 
-const LeadAddPersonal = () => {
+const LeadAddPersonal = (props) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [mobileNo, setMobileNo] = useState('');
@@ -135,7 +135,12 @@ const LeadAddPersonal = () => {
             onChangeText={setPincode}
           />
 
-        <CustomButton title="ADD" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
+        <CustomButton title="ADD" 
+        customStyle={{ width: -30 }} 
+        textStyles={styles.nextButtonText} 
+        onPress={() => props.navigation.navigate('LeadAddOccupation')}  // Navigate on button press
+        />
+
         </View>
       </ScrollView>
     </View>
