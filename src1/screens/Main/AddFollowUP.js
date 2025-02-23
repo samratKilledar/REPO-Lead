@@ -1,14 +1,11 @@
-
 import React, { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import Dropdown from "../../components/Dropdown";
-// import Navigation from "../../components/Navigation";
 import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import { useNavigation } from "@react-navigation/native";
-
 
 const AddFollowUP = (props) => {
   const [title, setTitle] = useState('');
@@ -18,15 +15,15 @@ const AddFollowUP = (props) => {
   const [meetSchedule, setMeetSchedule] = useState('');
   const [scheduleTime, setScheduleTime] = useState('');
   const [remark, setRemark] = useState('');
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
   const goBackCall = () => {
-    navigation.popToTop(); // Goes back to the first screen in the stack (LeadScreen)
+    navigation.popToTop();
   };
   return (
     <View style={styles.container}>
-      <View style={{flex: 0.1 , marginLeft: 5,}}>
-        <NavigationHeaderBack text="Add Follow-Up" onPress={goBackCall}/>
-        </View>
+      <View style={{ flex: 0.1, marginLeft: 5, }}>
+        <NavigationHeaderBack text="Add Follow-Up" onPress={goBackCall} />
+      </View>
 
       <View style={styles.centerContainer}>
         <CustomTextInput
@@ -54,7 +51,7 @@ const AddFollowUP = (props) => {
             { label: "Waiting For Documents", value: "Waiting For Documents" },
             { label: "Conversation Pending", value: "Conversation Pending" },
           ]}
-           zIndex={2000}
+          zIndex={2000}
         />
         <Dropdown
           label="Assign"
@@ -82,14 +79,14 @@ const AddFollowUP = (props) => {
           placeholder="Next Meeting schedule on"
           onChangeText={setMeetSchedule}
         />
-         <CustomTextInput
-         followupicon={require('../../assets/icons/Calendar/calendar.png')}
+        <CustomTextInput
+          followupicon={require('../../assets/icons/Calendar/calendar.png')}
           type={scheduleTime}
           value={scheduleTime}
           placeholder="Schedule Time"
           onChangeText={setScheduleTime}
         />
-         <CustomTextInput
+        <CustomTextInput
           type={remark}
           value={remark}
           placeholder="Remark"
@@ -108,18 +105,15 @@ const styles = StyleSheet.create({
     paddingLeft: 5,
     paddingTop: 10,
     backgroundColor: "#FFFFFF",
-    gap: 20, 
+    gap: 20,
   },
   centerContainer: {
     flex: 0.7,
     gap: 12,
-    zIndex: 1, 
+    zIndex: 1,
     paddingRight: 5,
     paddingLeft: 12,
   },
 });
 
 export default AddFollowUP;
-
-
-

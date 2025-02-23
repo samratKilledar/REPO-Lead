@@ -16,15 +16,15 @@ const EditProfileScreen = (props) => {
     const [surName, setSurName] = useState('');
     const goBackCall = () => {
         props.navigation.goBack();
-      };
+    };
     return (
         <View style={styles.container}>
             <View style={{ flex: 0.1, marginLeft: 5 }}>
-                <NavigationHeaderBack text="Edit Profile"  onPress={goBackCall}/>
+                <NavigationHeaderBack text="Edit Profile" onPress={goBackCall} />
             </View>
 
             <View style={styles.centerContainer}>
-                <CustomTextInput type={name} value={name} placeholder="Daniel" onChangeText={setName}/>
+                <CustomTextInput type={name} value={name} placeholder="Daniel" onChangeText={setName} />
                 <CustomTextInput type={surName} value={surName} placeholder="Austin" onChangeText={setSurName} />
                 <CustomTextInput followupicon={require('../../assets/icons/Message.png')} type={email} value={email} placeholder="daniel_austin@gmail.com" onChangeText={setEmail} />
 
@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 10,
         height: 50,
-        justifyContent: "flex-start", // Align items to the start
-        gap: 5, // Space between flag & dropdown icon
+        justifyContent: "flex-start",
+        gap: 5,
     },
     flagIcon: {
         width: 30,
@@ -86,10 +86,10 @@ const styles = StyleSheet.create({
         resizeMode: "contain",
     },
     dropdownIcon: {
-        width: 15, // Smaller dropdown icon
+        width: 15,
         height: 15,
         resizeMode: "contain",
-        marginLeft: 5, // Ensure it’s next to the flag
+        marginLeft: 5,
     },
     phoneInput: {
         fontSize: 14,
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         lineHeight: 19.6,
         letterSpacing: 0.2,
         color: "#212121",
-        marginLeft: 10, // Space between input & icons
+        marginLeft: 10,
     },
     input: {
         color: "pink",

@@ -6,10 +6,7 @@ import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 
-const AddFollowUP = (props) => {
-  const goBackCall = () => {
-    props.navigation.goBack();
-  };
+const AddTask = () => {
   const [title, setTitle] = useState('');
   const [type, setType] = useState(null);
   const [assign, setAssign] = useState(null);
@@ -23,13 +20,13 @@ const AddFollowUP = (props) => {
   const [remark, setRemark] = useState('');
 
   return (
-     
-      <View style={styles.container}>
-      <View style={{flex:0.1}}>
-      <NavigationHeaderBack text="Add Task" onPress={goBackCall}/>
+
+    <View style={styles.container}>
+      <View style={{ flex: 0.1 }}>
+        <NavigationHeaderBack text="Add Task" />
       </View>
       <ScrollView
-        style={{ flex:1, marginBottom: 60 }}
+        style={{ flex: 1, marginBottom: 60 }}
         contentContainerStyle={{ paddingBottom: 20 }}
         keyboardShouldPersistTaps="handled"
       >
@@ -129,8 +126,8 @@ const AddFollowUP = (props) => {
           <CustomButton title="Submit" customStyle={ButtonStyles.blueButton} textStyles={ButtonStyles.blueButtonText} />
         </View>
       </ScrollView>
-      </View>
-  
+    </View>
+
   );
 };
 
@@ -141,15 +138,15 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingTop: 15,
     backgroundColor: "#FFFFFF",
-    gap: 20, 
+    gap: 20,
   },
   centerContainer: {
     flex: 0.7,
     gap: 12,
-    zIndex: 1, 
+    zIndex: 1,
     paddingRight: 10,
     paddingLeft: 5,
   },
 });
 
-export default AddFollowUP;
+export default AddTask;

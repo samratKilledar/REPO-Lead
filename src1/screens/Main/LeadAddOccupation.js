@@ -11,27 +11,20 @@ const LeadAddOccupation = () => {
   const [typeOfWork, setTypeOfWork] = useState("");
   const [type, setType] = useState(null);
   const [monthlyIncome, setMonthlyIncome] = useState("");
-
-  // Define stepper steps
-  const steps = [ "Personal", "Occupation", "Services"];
-  const currentStep = 2; // Set the current step dynamically based on your logic
+  const steps = ["Personal", "Occupation", "Services"];
+  const currentStep = 2;
 
   return (
     <View style={styles.container}>
-      <View style={{flex:0.1}}>
-        <NavigationHeaderBack text="Add Lead"/>
+      <View style={{ flex: 0.1 }}>
+        <NavigationHeaderBack text="Add Lead" />
       </View>
-
       {/* Stepper Component
       <Stepper steps={steps} currentStep={currentStep} /> */}
-
       <View style={styles.stepperContainer1}>
         <Stepper steps={steps} currentStep={currentStep} />
       </View>
-
-
       <View style={styles.centerContainer}>
-       
         <Dropdown
           label="Occupation"
           selectedValue={type}
@@ -45,20 +38,16 @@ const LeadAddOccupation = () => {
           ]}
           zIndex={2000}
         />
-
         <CustomTextInput
           value={typeOfWork}
           placeholder="Type of Work"
           onChangeText={setTypeOfWork}
         />
-
-        
         <CustomTextInput
           value={monthlyIncome}
           placeholder="Monthly Income"
           onChangeText={setMonthlyIncome}
         />
-
         <CustomButton title="NEXT" customStyle={{ width: -30 }} />
       </View>
     </View>
@@ -80,13 +69,9 @@ const styles = StyleSheet.create({
     gap: 12,
     zIndex: 1,
   },
-  stepperContainer1:{
+  stepperContainer1: {
     justifyContent: "space-evenly",
   }
-
-
 });
 
 export default LeadAddOccupation;
-
-

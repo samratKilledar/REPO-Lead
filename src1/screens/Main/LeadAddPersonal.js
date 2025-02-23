@@ -21,22 +21,19 @@ const LeadAddPersonal = () => {
   const [country, setCountry] = useState('');
 
   const steps = ["Personal", "Occupation", "Services"];
-  const currentStep = 1; // Set the current step dynamically based on your logic
+  const currentStep = 1;
 
 
   return (
     <View style={styles.container}>
-      {/* Header Section */}
       <View style={styles.header}>
         <NavigationHeaderBack text="Add Lead" />
       </View>
 
-      {/* Stepper Section */}
       <View style={styles.stepperContainer}>
         <Stepper steps={steps} currentStep={currentStep} />
       </View>
 
-      {/* Scrollable Content Section */}
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.centerContainer}>
           <CustomTextInput
@@ -44,13 +41,11 @@ const LeadAddPersonal = () => {
             placeholder="First Name"
             onChangeText={setFirstName}
           />
-
           <CustomTextInput
             value={lastName}
             placeholder="Last Name"
             onChangeText={setLastName}
           />
-
           <Dropdown
             label="Lead Service"
             selectedValue={leadService}
@@ -61,37 +56,31 @@ const LeadAddPersonal = () => {
             ]}
             zIndex={3000}
           />
-
           <CustomTextInput
             value={mobileNo}
             placeholder="Mobile No"
             onChangeText={setMobileNo}
           />
-
           <CustomTextInput
             value={emailId}
             placeholder="Email id"
             onChangeText={setEmailId}
           />
-
           <CustomTextInput
             value={whatsappNo}
             placeholder="Whatsapp No"
             onChangeText={setWhatsappNo}
           />
-
           <CustomTextInput
             value={addressLine1}
             placeholder="Address Line 1"
             onChangeText={setAddressLine1}
           />
-
           <CustomTextInput
             value={addressLine2}
             placeholder="Address Line 2"
             onChangeText={setAddressLine2}
           />
-
           <Dropdown
             label="City"
             selectedValue={city}
@@ -104,7 +93,6 @@ const LeadAddPersonal = () => {
             ]}
             zIndex={5000}
           />
-
           <Dropdown
             label="State"
             selectedValue={state}
@@ -117,7 +105,6 @@ const LeadAddPersonal = () => {
             ]}
             zIndex={4000}
           />
-
           <Dropdown
             label="Country"
             selectedValue={country}
@@ -129,7 +116,6 @@ const LeadAddPersonal = () => {
             ]}
             zIndex={3000}
           />
-
           <CustomTextInput
             value={pincode}
             placeholder="Pincode"
@@ -153,18 +139,18 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   header: {
-    height: 50, // Fixed height for the header
+    height: 50,
   },
   stepperContainer: {
-    height: 50, // Fixed height for the stepper
-    marginTop: 5,
+    height: 50,
+    marginTop: 10,
   },
   centerContainer: {
-    paddingBottom: 20, // Add padding at the bottom for better spacing
-    gap:10,
+    paddingBottom: 20,
+    gap: 10,
   },
   scrollViewContent: {
-    flexGrow: 1, // Ensures the content grows within the ScrollView
+    flexGrow: 1,
   },
 });
 
