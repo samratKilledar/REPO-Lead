@@ -8,18 +8,12 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from "../../components/StepperComp";
 
-
-
 const LeadAdd = () => {
   const [assignto, setAssignto] = useState('');
   const [services, setService] = useState('');
-
   const [Remark, setRemark] = useState(null);
-
-  const steps = [ "Personal", "Occupation", "Services"];
-  const currentStep = 3; // Set the current step dynamically based on your logic
-
-
+  const steps = ["Personal", "Occupation", "Services"];
+  const currentStep = 3;
   const cardData = [
     {
       id: 1,
@@ -39,17 +33,12 @@ const LeadAdd = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{flex:0.1}}>
-      <NavigationHeaderBack text="Add Services"/>
+      <View style={{ flex: 0.1 }}>
+        <NavigationHeaderBack text="Add Services" />
       </View>
-    
       <View style={styles.centerContainer}>
-
-      {/* Stepper Component */}
-      <Stepper steps={steps} currentStep={currentStep} />
-
-
-      <Dropdown
+        <Stepper steps={steps} currentStep={currentStep} />
+        <Dropdown
           label="Assign to"
           selectedValue={assignto}
           onValueChange={setAssignto}
@@ -57,9 +46,8 @@ const LeadAdd = () => {
             { label: "John Doe", value: "John Doe" },
             { label: "Jane Smith", value: "Jane Smith" },
           ]}
-           zIndex={3000}
-
-      />
+          zIndex={3000}
+        />
         <Dropdown
           label="Services"
           selectedValue={services}
@@ -75,33 +63,28 @@ const LeadAdd = () => {
             { label: "Real E", value: "Real E" },
 
           ]}
-           zIndex={2000}
+          zIndex={2000}
         />
-
         <CustomTextInput
           type={Remark}
           value={setRemark}
           placeholder="Remark"
           onChangeText={setRemark}
         />
-
         <CustomButton title="ADD" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
-
-        </View>
-          <View style={styles.insuranceCard}>
-              <Text style={styles.insuranceText}></Text>
-              {cardData.map((item) => (
-                <InsuranceCard
-                  key={item.id}
-                  title={item.title}
-                  date={item.date}
-                  description={item.description}
-                />
-              ))}
-        </View>
-        
+      </View>
+      <View style={styles.insuranceCard}>
+        <Text style={styles.insuranceText}></Text>
+        {cardData.map((item) => (
+          <InsuranceCard
+            key={item.id}
+            title={item.title}
+            date={item.date}
+            description={item.description}
+          />
+        ))}
+      </View>
     </View>
-
   );
 };
 
@@ -112,14 +95,12 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
     paddingTop: 15,
     backgroundColor: "#FFFFFF",
-    // backgroundColor: "red",
-    gap: 15, 
+    gap: 15,
   },
   centerContainer: {
     flex: 0.7,
     gap: 12,
     zIndex: 1,
-
   },
 
   insuranceCard: {

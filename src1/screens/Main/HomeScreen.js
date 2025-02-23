@@ -1,5 +1,4 @@
-
-import { View, ScrollView, StyleSheet,TouchableOpacity } from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import Headercomp from '../../components/HeaderComp.js';
 import HoriCardcomp from '../../components/HoriCardcomp';
 import RectCardcomp from '../../components/RectCardcomp.js';
@@ -13,11 +12,11 @@ const meetingsData = [
   { name: "Joseph Collins", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12:00 PM" },
 ];
 
-const HomeScreen = ({navigation}) => {
-  const NavigateToLeadDetails =(props)=>{
+const HomeScreen = ({ navigation }) => {
+  const NavigateToLeadDetails = (props) => {
     props.navigation.navigate("LeadDetails")
   }
-  const NavigatetoCloseAccountScreen=(props)=>{
+  const NavigatetoCloseAccountScreen = (props) => {
     props.navigation.navigate("CloseAccountScreen")
   }
 
@@ -26,7 +25,7 @@ const HomeScreen = ({navigation}) => {
     <View style={{ flex: 1 }}>
       <Headercomp navigation={navigation} />
       <ScrollView style={style.container} showsVerticalScrollIndicator={false}>
-        <View style={{marginBottom: 90}}>
+        <View style={{ marginBottom: 90 }}>
           <HoriCardcomp />
 
           <View style={{ marginTop: 25 }}>
@@ -34,32 +33,32 @@ const HomeScreen = ({navigation}) => {
               <View style={{ flex: 5, justifyContent: "flex-start" }}>
                 <CustomText customstyle={TextStyle.upComingUp} text={"Upcoming Meetings"} />
               </View>
-                <TouchableOpacity onPress={() => navigation.navigate("UpcomingMeetings")}>
+              <TouchableOpacity onPress={() => navigation.navigate("UpcomingMeetings")}>
                 <View style={{ flex: 1 }}>
 
-                   <CustomText customstyle={TextStyle.SeeallText} text={"See All"} />
-                   </View>
-                </TouchableOpacity>
-             
+                  <CustomText customstyle={TextStyle.SeeallText} text={"See All"} />
+                </View>
+              </TouchableOpacity>
+
             </View>
           </View>
 
-          <RectCardcomp  props={meetingsData} onPress={NavigateToLeadDetails} 
-           navigation={navigation}/>
+          <RectCardcomp props={meetingsData} onPress={NavigateToLeadDetails}
+            navigation={navigation} />
 
           <View style={style.textlayout}>
             <View style={{ flex: 5, justifyContent: "flex-start" }}>
               <CustomText customstyle={TextStyle.upComingUp} text={"Upcoming Tasks"} />
             </View>
             <TouchableOpacity onPress={() => navigation.navigate("UpcomingTask")}>
-                 <View style={{ flex: 1 }}>
-               <CustomText customstyle={TextStyle.SeeallText} text={"See All"} />
-               </View>
-               </TouchableOpacity>
+              <View style={{ flex: 1 }}>
+                <CustomText customstyle={TextStyle.SeeallText} text={"See All"} />
+              </View>
+            </TouchableOpacity>
           </View>
 
-          <RectCardcomp props={meetingsData}  onPress={NavigatetoCloseAccountScreen} 
-           navigation={navigation}/>
+          <RectCardcomp props={meetingsData} onPress={NavigatetoCloseAccountScreen}
+            navigation={navigation} />
         </View>
       </ScrollView>
     </View>

@@ -20,22 +20,28 @@ import ClientDetails from '../screens/Main/ClientDetails';
 import LeadDetails from '../screens/Main/LeadDetails';
 import CloseAccountScreen from '../screens/Main/CloseAccountScreen';
 import LeadAddServices from '../screens/Main/LeadAddServices'
+import LoginScreen from '../screens/Auth/LoginScreen';
+import LogoutScreen from '../screens/Auth/LogoutScreen';
+import HeaderComp from '../components/HeaderComp';
+
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 
 const HomeStackScreen = ({ navigation, route }) => {
   const routeName = getFocusedRouteNameFromRoute(route);
-  
 
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="UpcomingMeetings" component={UpcomingMeetings} />
+      <HomeStack.Screen name="LeadDetails" component={LeadDetails}/>
       <HomeStack.Screen name="UpcomingTask" component={UpcomingTask} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
-      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+      <HomeStack.Screen name="LogoutScreen" component={LogoutScreen}/>
+      <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen}/>
+      <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
     </HomeStack.Navigator>
   );
 };
@@ -50,6 +56,19 @@ const LeadStackScreen = ({ navigation, route }) => {
       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
       <HomeStack.Screen name="LeadDetails" component={LeadDetails} />
       <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
+      <HomeStack.Screen name="LogoutScreen" component={LogoutScreen}/>
+    </HomeStack.Navigator>
+  );
+};
+
+const LogoutStackScreen = ({ navigation, route }) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+      <HomeStack.Screen name="LoginScreen" component={LoginScreen} />
     </HomeStack.Navigator>
   );
 };
@@ -63,7 +82,9 @@ const ClientStackScreen = ({ navigation, route }) => {
       <HomeStack.Screen name="ClientAddFollowUp" component={ClientAddFollowUP} />
       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
       <HomeStack.Screen name="ClientDetails" component={ClientDetails} />
-      
+      <HomeStack.Screen name="LogoutScreen" component={LogoutScreen}/>
+      <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
+
     </HomeStack.Navigator>
   );
 };
@@ -75,6 +96,7 @@ const TaskStackScreen = ({ navigation, route }) => {
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Task" component={TaskScreen} />
       <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen} />
+      <HomeStack.Screen name="LogoutScreen" component={LogoutScreen}/>
     </HomeStack.Navigator>
 
   );
@@ -210,6 +232,19 @@ const MainNavigator = () => {
           ),
         }}
       />
+       {/* <Tab.Screen
+          name="Logout"
+          component={LogoutStackScreen}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={focused = require('../assets/images/Avatar.png')}
+                                
+                style={styles.icon}
+              />
+            ),
+          }}
+        /> */}
     </Tab.Navigator>
     </View>
     
