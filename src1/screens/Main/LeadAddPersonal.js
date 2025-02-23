@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
-import Dropdown from '../../components/DropDown';
+import Dropdown from '../../components/Dropdown';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from "../../components/StepperComp";
 
