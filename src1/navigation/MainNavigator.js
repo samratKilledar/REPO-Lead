@@ -38,6 +38,7 @@ const HomeStackScreen = ({ navigation, route }) => {
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="UpcomingMeetings" component={UpcomingMeetings} />
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
       <HomeStack.Screen name="LeadDetails" component={LeadDetails}/>
       <HomeStack.Screen name="UpcomingTask" component={UpcomingTask} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
@@ -101,6 +102,7 @@ const TaskStackScreen = ({ navigation, route }) => {
       <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen} />
       <HomeStack.Screen name="AddTask" component={AddTask} /> 
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen}/>
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
     </HomeStack.Navigator>
 
   );
