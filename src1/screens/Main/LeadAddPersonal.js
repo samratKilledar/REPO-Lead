@@ -5,6 +5,7 @@ import CustomTextInput from '../../components/CustomTextInput';
 import Dropdown from '../../components/DropDown';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from "../../components/StepperComp";
+import TextStyle from '../../styles/TextStyle';
 
 const LeadAddPersonal = (props) => {
   const [firstName, setFirstName] = useState('');
@@ -158,6 +159,10 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 50, // Fixed height for the header
+    fontfamily: "Urbanist",
+    fontWeight: 700,
+    fontSize: 20,
+    lineHeight: 24,
   },
   stepperContainer: {
     height: 50, // Fixed height for the stepper
