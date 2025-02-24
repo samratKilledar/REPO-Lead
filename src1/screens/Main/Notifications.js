@@ -27,20 +27,16 @@ const Notifications = (props) => {
     props.navigation.goBack();
   };
   return (
-    <View style={{ flex: 1, paddingTop: 12, gap: 24, }}>
+    <View style={{ flex: 1, paddingTop: 12, gap: 24, marginTop: 30 }}>
       <View style={{ flex: 0.3 }}>
         <Navigation text={"Notifications"} onPress={goBackCall} />
       </View>
       <View style={{ flex: 8 }}>
         <ScrollView style={style.container1} showsVerticalScrollIndicator={false}>
           <View style={style.container}>
-
-            {/* Today Header */}
             <View style={style.container2}>
               <CustomText customstyle={TextStyle.notificationtext} text={"Today"} />
             </View>
-
-            {/* Loop through notifications */}
             {TodayName.map((item, index) => (
               <View key={index} style={style.container3}>
                 <CustomText customstyle={TextStyle.notificationtext} text={item.name} />
@@ -50,13 +46,9 @@ const Notifications = (props) => {
                 </Text>
               </View>
             ))}
-
-            {/* Yesterday Header */}
             <View style={style.container2}>
               <CustomText customstyle={TextStyle.notificationtext} text={"Yesterday"} />
             </View>
-
-            {/* Loop through notifications */}
             {YesterdayNames.map((item, index) => (
               <View key={index} style={style.container3}>
                 <CustomText customstyle={TextStyle.notificationtext} text={item.name} />
@@ -66,8 +58,6 @@ const Notifications = (props) => {
                 </Text>
               </View>
             ))}
-
-            {/* Date Header */}
             <View style={style.container2}>
               <CustomText customstyle={TextStyle.notificationtext} text={"January 21,2025"} />
             </View>

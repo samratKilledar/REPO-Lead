@@ -96,7 +96,6 @@ const CloseAccountScreen = () => {
                 setModalVisible(false);
               }}
             >
-              <Text style={styles.submitText}>Submit</Text>
             </CustomButton>
           </View>
         </View>

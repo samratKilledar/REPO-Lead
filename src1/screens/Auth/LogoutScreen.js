@@ -44,7 +44,7 @@ const LogoutScreen = ({ navigation }) => {
         <View style={styles.middleContainer}>
           <TouchableOpacity
             style={styles.profilepicContainer}
-            onPress={() => navigation.navigate('EditProfileScreen')} 
+            onPress={() => navigation.navigate('EditProfileScreen')}
           >
             <Image source={require("../../assets/icons/profilePic.png")} style={styles.profilepic} />
           </TouchableOpacity>
@@ -153,8 +153,8 @@ const LogoutScreen = ({ navigation }) => {
                 title={"Yes, logout"}
                 customStyle={{ width: width - 30 }}
                 onPress={() => {
-                  setLogoutVisible(false); 
-                  navigation.navigate('LoginScreen'); 
+                  setLogoutVisible(false);
+                  navigation.navigate('LoginScreen');
                 }}
               />
               <View style={{ width: width - 30 }}>
@@ -267,6 +267,7 @@ const styles = StyleSheet.create({
   fullcontainer: {
     flex: 1,
     padding: width * 0.05,
+    marginBottom: 50,
   },
   headcontainer: {
     flexDirection: "row",
@@ -274,9 +275,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logoImage: {
-    width: width * 0.3,
-    height: height * 0.05,
+    width: width * 0.2,
+    height: height * 0.06,
     resizeMode: 'contain',
+    padding: width * 0.05,
   },
   logout: {
     flexDirection: 'row',
@@ -298,8 +300,8 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   textContainer: {
-    gap: height * 0.02,
-    marginTop: height * 0.04,
+    gap: height * 0.01,
+    marginTop: height * 0.02,
     alignItems: "center",
   },
   line: {
@@ -310,8 +312,8 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "#FFFFFF",
     borderRadius: 20,
-    padding: width * 0.04,
-    shadowColor: "#04060F",
+    padding: width * 0.07,
+    shadowColor: "#0406F",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.08,
     shadowRadius: 60,

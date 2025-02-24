@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
-import Dropdown from '../../components/Dropdown';
+import Dropdown from "../../components/Dropdown";
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from "../../components/StepperComp";
 
@@ -22,6 +22,7 @@ const LeadAddPersonal = () => {
 
   const steps = ["Personal", "Occupation", "Services"];
   const currentStep = 1;
+
 
   return (
     <View style={styles.container}>
@@ -120,7 +121,8 @@ const LeadAddPersonal = () => {
             placeholder="Pincode"
             onChangeText={setPincode}
           />
-          <CustomButton title="ADD" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
+
+        <CustomButton title="Next" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
         </View>
       </ScrollView>
     </View>
@@ -134,6 +136,7 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     backgroundColor: "#FFFFFF",
     gap: 18,
+    marginBottom: 50,
   },
   header: {
     height: 50,

@@ -57,7 +57,7 @@ const LeadDetails = (props) => {
             <DetailItem icon={require('../../assets/icons/Work/work.png')} label="Type Of Work" detail="IT Engineer" />
             <DetailItem icon={require('../../assets/icons/Wallet/wallett.png')} label="Monthly Income" detail="30000" />
             <DetailItem icon={require('../../assets/icons/Chart/chart.png')} label="Company Name" detail="ABC Contact Pvt Ltd" />
-            <View style={styles.leadStatusContainer}><DetailItem icon={require('../../assets/icons/LSTIckSquare/lsTickSquare.png')} label="Lead Status" detail={<Text style={styles.leadStatusText}>Follow up</Text>} /> </View>
+            <View style={styles.leadStatusContainer}><DetailItem icon={require('../../assets/icons/LSTIckSquare/lsTickSquare.png')} label="Lead Status" detail={<Text style={styles.leadStatusText}>Follow Up</Text>} /> </View>
             <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label="Next Meeting Date" detail="Feb 14, 2025" />
             <DetailItem icon={require('../../assets/icons/Remarks.png')} label="Attachment" detail="References.pdf" />
           </View>
@@ -124,11 +124,12 @@ const styles = StyleSheet.create({
   leadStatusContainer: {
     height: 32,
     marginRight: 10,
+    justifyContent: 'center',
   },
   leadStatusText: {
     color: '#2B2162',
     fontSize: 14,
-    lineHeight: 19.6,
+    lineHeight: 15,
   },
   insuranceCard: {
     marginTop: 30,
