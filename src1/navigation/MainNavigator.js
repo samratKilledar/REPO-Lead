@@ -46,7 +46,6 @@ const HomeStackScreen = ({ navigation, route }) => {
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen}/>
       <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen}/>
       <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
-      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
     </HomeStack.Navigator>
   );
 };
@@ -261,19 +260,6 @@ const MainNavigator = () => {
           ),
         }}
       />
-       {/* <Tab.Screen
-          name="Logout"
-          component={LogoutStackScreen}
-          options={{
-            tabBarIcon: ({ focused }) => (
-              <Image
-                source={focused = require('../assets/images/Avatar.png')}
-                                
-                style={styles.icon}
-              />
-            ),
-          }}
-        /> */}
     </Tab.Navigator>
     </View>
     

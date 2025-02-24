@@ -19,7 +19,7 @@ import CustomButton from '../../components/CustomButton';
 import TextStyle from '../../styles/TextStyle';
 import ButtonStyles from '../../styles/ButtonStyles';
 import { useDispatch } from 'react-redux';
-import { loginSuccess } from '../../redux/actions/authActions'; // Import your login action
+import { loginSuccess } from '../../redux/actions/authActions'; 
 
 const LoginScreen = (props) => {
   const [customerId, setCustomerId] = useState('');
@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
     gap: 20,
     justifyContent: 'flex-start',
     width: '100%', 
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
   },
   checkboxContainer: {
     flexDirection: 'row',
