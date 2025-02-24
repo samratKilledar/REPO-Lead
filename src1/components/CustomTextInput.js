@@ -24,8 +24,8 @@ const CustomTextInput = ({ icon, followupicon,type, value, onChangeText, placeho
         <Image
           source={
             isPasswordVisible
-              ? require("../assets/icons/Hide/hide.png") // Change icon when password is visible
-              : require("../assets/icons/Unhide/unhide.png") // Default hidden state icon
+              ? require("../assets/icons/Hide/hide.png") 
+              : require("../assets/icons/Unhide/unhide.png") 
           }
           style={InputStyle.eyeIcon}
         />
