@@ -33,7 +33,7 @@ export default StyleSheet.create({
     },
     //Instruction
     InstructionText: {
-        // width: 380,
+         //width: 380,
         // height: 44,
         fontFamily: "Urbanist",
         fontWeight: 400,

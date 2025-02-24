@@ -20,7 +20,7 @@ const LeadScreen = (props) => {
       <View style={styles.centerContainer}>
         <View style={styles.lead}>
           <CustomText text="Lead" customstyle={TextStyle.leadText} />
-          <CustomText text="See all" customstyle={TextStyle.SeeallText} />
+          {/* <CustomText text="See all" customstyle={TextStyle.SeeallText} /> */}
         </View>
 
         <ScrollView style={{ padding: 20, flex: 1, }}>
