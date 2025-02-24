@@ -21,8 +21,15 @@ const CustomTextInput = ({ icon, followupicon,type, value, onChangeText, placeho
       />
       {secureTextEntry && (
         <Pressable onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
-          <Image source={require('../assets/icons/Hide/hide.png')} style={InputStyle.eyeIcon} />
-        </Pressable>
+        <Image
+          source={
+            isPasswordVisible
+              ? require("../assets/icons/Hide/hide.png") // Change icon when password is visible
+              : require("../assets/icons/Unhide/unhide.png") // Default hidden state icon
+          }
+          style={InputStyle.eyeIcon}
+        />
+      </Pressable>
       )}
       {searchbaricon && <Image source={searchbaricon} style={InputStyle.searchbaricon}/>}
       <View style={InputStyle.followup}>

@@ -13,16 +13,16 @@ const meetingsData = [
   { name: "Barbara Moore", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12:00 PM" },
 ];
 
-const UpcomingMeetings = ({props,navigation }) => {
+const UpcomingMeetings = ({navigation }) => {
   const NavigateToLeadDetails =(props)=>{
     props.navigation.navigate("LeadDetails")
   }
   const goBackCall = () => {
-    props.navigation.goBack();
+    navigation.goBack();
   };
   return (
-    <View style={{ flex: 1 , top: 15,paddingTop: 12,paddingBottom: 24, gap: 24, }}>
-      <View style={{flex:0.3}}>
+    <View style={{ flex: 1 , top: 15,paddingTop: 12,paddingBottom: 24, gap: 24, marginTop : 13, }}>
+      <View style={{flex:0.4}}>
         <Navigation text={"Upcoming Meetings"}  onPress={goBackCall}/>
       </View>
       <View style={{flex:9,marginBottom:90}}>

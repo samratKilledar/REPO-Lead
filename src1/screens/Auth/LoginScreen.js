@@ -101,7 +101,12 @@ const LoginScreen = (props) => {
                   <Pressable
                     style={[styles.checkbox, isChecked && styles.checked]}
                     onPress={() => setIsChecked(!isChecked)}>
-                    {isChecked && <CustomText customstyle={styles.checkmark} text="✓"></CustomText>}
+                    {isChecked && (
+                   <Image
+                        source={require("../../assets/icons/check.png")} // Use your checked icon here
+                     style={styles.checkIcon}
+                    />
+                    )}
                   </Pressable>
                   <CustomText customstyle={styles.rememberMe} text="Remember me"></CustomText>
                 </View>
@@ -154,6 +159,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 20,
     justifyContent: 'flex-start',
+    width: '100%', 
+    paddingHorizontal: 15,
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -179,9 +186,15 @@ const styles = StyleSheet.create({
   checked: {
     backgroundColor: '#2B2162',
   },
+  checkIcon: {
+    width: 14,
+    height: 10,
+    tintColor: "#fff", // Optional: Adjust icon color
+    resizeMode: "contain",
+  },
   checkmark: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
   },
 });
