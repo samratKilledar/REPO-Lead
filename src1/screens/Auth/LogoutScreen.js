@@ -44,7 +44,7 @@ const LogoutScreen = ({ navigation }) => {
         <View style={styles.middleContainer}>
           <TouchableOpacity
             style={styles.profilepicContainer}
-            onPress={() => navigation.navigate('EditProfileScreen')} 
+            onPress={() => navigation.navigate('EditProfileScreen')}
           >
             <Image source={require("../../assets/icons/profilePic.png")} style={styles.profilepic} />
           </TouchableOpacity>
@@ -153,8 +153,8 @@ const LogoutScreen = ({ navigation }) => {
                 title={"Yes, logout"}
                 customStyle={{ width: width - 30 }}
                 onPress={() => {
-                  setLogoutVisible(false); 
-                  navigation.navigate('LoginScreen'); 
+                  setLogoutVisible(false);
+                  navigation.navigate('LoginScreen');
                 }}
               />
               <View style={{ width: width - 30 }}>
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
   fullcontainer: {
     flex: 1,
     padding: width * 0.05,
-    marginBottom : 50,
+    marginBottom: 50,
   },
   headcontainer: {
     flexDirection: "row",
