@@ -19,12 +19,8 @@ import CustomButton from '../../components/CustomButton';
 import TextStyle from '../../styles/TextStyle';
 import ButtonStyles from '../../styles/ButtonStyles';
 import { useDispatch } from 'react-redux';
-<<<<<<< HEAD
-import { loginSuccess } from '../../redux/actions/authActions'; 
-=======
 import { loginSuccess,updateCredential,loginUser } from '../../redux/actions/authActions'; // Import your login action
 import { useSelector } from "react-redux";
->>>>>>> UATLead
 
 const LoginScreen = (props) => {
   const [customerId, setCustomerId] = useState('');
