@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Image,
@@ -10,9 +10,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Alert,TouchableOpacity
+  Alert, TouchableOpacity
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import CustomText from '../../components/CustomText';
 import CustomTextInput from '../../components/CustomTextInput';
 import CustomButton from '../../components/CustomButton';
@@ -26,7 +26,7 @@ const LoginScreen = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isChecked, setIsChecked] = useState(false);
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -47,23 +47,23 @@ const LoginScreen = (props) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}>
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.inner}>
               {/* Logo */}
-              <View style={{flex: 1, justifyContent: 'center'}}>
+              <View style={{ flex: 1, justifyContent: 'center' }}>
                 <Image
-                 source={require('../../assets/images/Logo.png')}
+                  source={require('../../assets/images/Logo.png')}
                   style={styles.logo}
                 />
               </View>
 
               {/* Login Header */}
-              <View style={{flex: 0.7}}>
+              <View style={{ flex: 0.7 }}>
                 <CustomText
                   text="Login to your Account"
                   customstyle={TextStyle.heading}
@@ -95,17 +95,17 @@ const LoginScreen = (props) => {
                 />
               </View>
 
-              <View style={{flex: 3, alignItems: 'center'}}>
+              <View style={{ flex: 3, alignItems: 'center' }}>
                 {/* Checkbox */}
                 <View style={styles.checkboxContainer}>
                   <Pressable
                     style={[styles.checkbox, isChecked && styles.checked]}
                     onPress={() => setIsChecked(!isChecked)}>
                     {isChecked && (
-                   <Image
+                      <Image
                         source={require("../../assets/icons/check.png")} // Use your checked icon here
-                     style={styles.checkIcon}
-                    />
+                        style={styles.checkIcon}
+                      />
                     )}
                   </Pressable>
                   <CustomText customstyle={styles.rememberMe} text="Remember me"></CustomText>
@@ -114,7 +114,7 @@ const LoginScreen = (props) => {
                 {/* Sign In Button */}
                 <CustomButton
                   title="Sign in"
-                  customStyle={{width: width - 30}}
+                  customStyle={{ width: width - 30 }}
                   textStyles={ButtonStyles.blueButtonText}
                   onPress={handleLogin}
                 />
@@ -159,8 +159,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 20,
     justifyContent: 'flex-start',
-    width: '100%', 
-    paddingHorizontal: 15,
+    width: '100%',
+    paddingHorizontal: 10,
   },
   checkboxContainer: {
     flexDirection: 'row',

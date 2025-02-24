@@ -60,7 +60,7 @@ const LeadAddService = () => {
           ]}
           zIndex={2000}
         />
-        <CustomButton title="NEXT" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
+        <CustomButton title="Submit" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
       </View>
       <View style={styles.insuranceCard}>
         {cardData.map((item) => (

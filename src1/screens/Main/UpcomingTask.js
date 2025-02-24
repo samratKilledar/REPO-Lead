@@ -11,13 +11,13 @@ const UpcomingMeetings = [
   { name: "Barbara Moore", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12:00 PM" },
 ];
 
-const UpcomingTask = ({ navigation }) => {  // Removed props and kept navigation
+const UpcomingTask = ({ navigation }) => {
   const NavigatetoCloseAccountScreen = () => {
-    navigation.navigate("CloseAccountScreen"); // No need for props
+    navigation.navigate("CloseAccountScreen");
   };
 
   const goBackCall = () => {
-    navigation.goBack();  // Directly using navigation
+    navigation.goBack();
   };
 
   return (

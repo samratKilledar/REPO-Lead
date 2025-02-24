@@ -19,20 +19,19 @@ const ClientScreen = (props) => {
     <View style={styles.container}>
       <HeaderComp navigation={navigation} />
       <View style={styles.input}>
-      <CustomTextInput
-        icon={require('../../assets/icons/Search/search.png')}
-        type={search}
-        value={search}
-        onChangeText={setSearch}
-        placeholder="Search"
-        searchbaricon={require('../../assets/icons/Group.png')}
-      />
-       </View>
+        <CustomTextInput
+          icon={require('../../assets/icons/Search/search.png')}
+          type={search}
+          value={search}
+          onChangeText={setSearch}
+          placeholder="Search"
+          searchbaricon={require('../../assets/icons/Group.png')}
+        />
+      </View>
 
       <View style={styles.centerContainer}>
         <View style={styles.lead}>
           <CustomText text="Client" customstyle={TextStyle.leadText} />
-          {/* <CustomText text="See all" customstyle={TextStyle.SeeallText} /> */}
         </View>
 
         <ScrollView style={{ padding: 20, flex: 1, }}>

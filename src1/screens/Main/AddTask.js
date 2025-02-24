@@ -18,15 +18,15 @@ const AddTask = (props) => {
   const [reminderDate, setReminderDate] = useState('');
   const [attachment, setAttachment] = useState('');
   const [remark, setRemark] = useState('');
-  const goBackCall= ()=>{
-     props.navigation.goBack();
+  const goBackCall = () => {
+    props.navigation.goBack();
   };
 
   return (
 
     <View style={styles.container}>
       <View style={{ flex: 0.1 }}>
-        <NavigationHeaderBack text="Add Task" onPress={goBackCall}/>
+        <NavigationHeaderBack text="Add Task" onPress={goBackCall} />
       </View>
       <ScrollView
         style={{ flex: 1, marginBottom: 60 }}
