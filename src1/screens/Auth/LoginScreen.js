@@ -112,12 +112,15 @@ const LoginScreen = (props) => {
                 </View>
 
                 {/* Sign In Button */}
+                <View style={{paddingRight:10 , paddingLeft:10}}>
                 <CustomButton
                   title="Sign in"
                   customStyle={{ width: width - 30 }}
                   textStyles={ButtonStyles.blueButtonText}
                   onPress={handleLogin}
                 />
+                </View>
+                
 
                 {/* Forgot Password */}
                 <View>

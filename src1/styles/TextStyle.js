@@ -1,12 +1,9 @@
 import { StyleSheet } from "react-native"
 export default StyleSheet.create({
-    // On-Boarding part
-
     heading: {
-        fontFamily: "Urbanist",  // ✅ Properly enclosed in quotes
-        fontWeight: "700",       // ✅ Font weight should be a string in React Native
+        fontFamily: "Urbanist",
+        fontWeight: "700",
         fontSize: 32,
-        // lineHeight: 35.2,
         textAlign: "center",
     },
 
@@ -17,24 +14,17 @@ export default StyleSheet.create({
         lineHeight: 22.4,
         letterSpacing: 0.2,
         textAlign: "center",
-        color: "#2B2162", // ✅ Correct color
+        color: "#2B2162",
         marginTop: 20,
     },
-
-
-
-    //Forgot and Reset Password 
-    Titles: {                   //H4 bold, Taska 
+    Titles: {
         fontfamily: "Urbanist",
         fontWeight: 700,
         fontSize: 24,
         lineHeight: 28.8,
         marginLeft: 10
     },
-    //Instruction
     InstructionText: {
-        //width: 380,
-        // height: 44,
         fontFamily: "Urbanist",
         fontWeight: 400,
         fontSize: 16,
@@ -81,23 +71,6 @@ export default StyleSheet.create({
     inactiveTabText: {
         color: "#9E9E9E",
     },
-    //Home & Action Menu 
-    SearchBar: {                //Search
-        fontfamily: "Urbanist",
-        fontWeight: 400,
-        fontSize: 14,
-        lineHeight: 19.6,
-    },
-
-    subTitle: {
-        fontfamily: "Urbanist",  //Recent Project + Notification part + Inbox Sec (msg)
-        fontWeight: 700,
-        fontSize: 18,
-        lineHeight: 21.6,
-    },
-
-
-    //06 Profile & Setting  yet name to decide 
     //Home page
     textNum: {
         fontSize: 24,
@@ -106,7 +79,6 @@ export default StyleSheet.create({
         lineHeight: 28.8,
         fontFamily: "Urbanist",
         marginBottom: 5,
-
     },
     textLabel: {
         fontFamily: "Urbanist",
@@ -166,7 +138,6 @@ export default StyleSheet.create({
         letterSpacing: 0.2,
 
     },
-
     //notification
     notificationtext: {
         fontFamily: "Urbanist",
@@ -175,7 +146,6 @@ export default StyleSheet.create({
         lineHeight: 21.6,
         color: "#212121",
     },
-
     notificationtext1: {
         fontFamily: "Urbanist",
         fontWeight: 500,
@@ -192,7 +162,6 @@ export default StyleSheet.create({
         letterSpacing: 0.2,
         color: "#616161",
     },
-
     //Insurance and mutual fund text
     Insurance: {
         fontFamily: "Urbanist",
@@ -209,7 +178,6 @@ export default StyleSheet.create({
         letterSpacing: 0.2,
         color: "#424242",
     },
-
     //edit profile page
     logouttext: {
         fontFamily: "Urbanist",
@@ -218,7 +186,7 @@ export default StyleSheet.create({
         lineHeight: 25.2,
         letter: 0.2,
         color: "#F75555",
-        textAlign: "center",  // Centers text horizontally
+        textAlign: "center",
         alignSelf: "center",
     },
     DanielName: {
@@ -236,7 +204,7 @@ export default StyleSheet.create({
         lineHeight: 19.6,
         letter: 0.2,
         color: "#212121",
-        textAlign: "center",  // Centers text horizontally
+        textAlign: "center",
     },
     serviceText: {
         fontFamily: "Urbanist",
@@ -285,33 +253,7 @@ export default StyleSheet.create({
         fontSize: 20,
         lineHeight: 24,
         color: "#212121",
-
     },
-    namePhone: {
-        fontFamily: "Urbanist",
-        fontWeight: 400,
-        fontSize: 14,
-        lineHeight: 19.6,
-        color: "#424242",
-    },
-    statusText: {
-        fontFamily: "Urbanist",
-        fontWeight: "600",
-        fontSize: 14,
-        lineHeight: 19.6,
-        letterSpacing: 0.2,
-        color: "#FFFFFF",
-        textAlign: "center",
-    },
-    dateTime: {
-        fontFamily: "Urbanist",
-        fontWeight: "400",
-        fontSize: 12,
-        lineHeight: 14.4,
-        letterSpacing: 0.2,
-        color: "#9E9E9E",
-    },
-    //LeadCardStyle
     nameText: {
         fontFamily: "Urbanist",
         fontWeight: 700,
