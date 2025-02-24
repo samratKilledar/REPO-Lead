@@ -112,12 +112,15 @@ const LoginScreen = (props) => {
                 </View>
 
                 {/* Sign In Button */}
+                <View style={{paddingRight:10 , paddingLeft:10}}>
                 <CustomButton
                   title="Sign in"
                   customStyle={{width: width - 30}}
                   textStyles={ButtonStyles.blueButtonText}
                   onPress={handleLogin}
                 />
+                </View>
+                
 
                 {/* Forgot Password */}
                 <View>
@@ -160,7 +163,7 @@ const styles = StyleSheet.create({
     gap: 20,
     justifyContent: 'flex-start',
     width: '100%', 
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
   },
   checkboxContainer: {
     flexDirection: 'row',

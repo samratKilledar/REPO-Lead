@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { 
-  View, Image, Text, TouchableOpacity, StyleSheet, Modal 
+import {
+  View, Image, Text, TouchableOpacity, StyleSheet, Modal
 } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import CustomText from "./CustomText";
@@ -24,19 +24,19 @@ const LeadCard = (props) => {
 
   const addFollow = () => {
     if (props.screenType === "lead") {
-      props.navigation.navigate("AddFollowUp");  // ✅ Ensure this exists inside LeadStackScreen
+      props.navigation.navigate("AddFollowUp");
     } else if (props.screenType === "client") {
-      props.navigation.navigate("ClientAddFollowUp");  // ✅ Ensure this exists inside ClientStackScreen
+      props.navigation.navigate("ClientAddFollowUp");
     }
     setMenuVisible(false);
     setModalVisible(false);
   };
-  const editProfile=()=>{
+  const editProfile = () => {
     props.navigation.navigate("EditProfileScreen")
     setMenuVisible(false);
     setModalVisible(false)
   }
-  const details = () => {   
+  const details = () => {
     if (props.screenType === "lead") {
       props.navigation.navigate("LeadDetails", { name: props.name });
     } else if (props.screenType === "client") {
@@ -45,17 +45,17 @@ const LeadCard = (props) => {
       props.navigation.navigate("CloseAccountScreen", { name: props.name }); // ✅ Fix
     }
   };
-  
 
-  
+
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
         <View style={styles.HorLayout}>
-        <TouchableOpacity onPress={details}>
-               <CustomText text={props.name} customstyle={TextStyle.nameText} />
-        </TouchableOpacity>
-          
+          <TouchableOpacity onPress={details}>
+            <CustomText text={props.name} customstyle={TextStyle.nameText} />
+          </TouchableOpacity>
+
           <CustomText text={props.phone} customstyle={TextStyle.namePhone} />
 
           {/* Three Dots Icon */}
@@ -94,12 +94,12 @@ const LeadCard = (props) => {
       {/* Popup Menu */}
       {menuVisible && (
         <View style={styles.menuBox}>
-          <TouchableOpacity style={styles.menuItem} onPress={ editProfile}>
+          <TouchableOpacity style={styles.menuItem} onPress={editProfile}>
             <Image source={require("../assets/icons/Edit/edit.png")} style={styles.menuIcon} />
             <Text style={styles.menuText}>Edit</Text>
           </TouchableOpacity>
 
-         {props.menuType === "follow" ? (
+          {props.menuType === "follow" ? (
             <TouchableOpacity style={styles.menuItem} onPress={addFollow}>
               <Image source={require("../assets/icons/PlusBlack/Plus.png")} style={styles.menuIcon} />
               <Text style={styles.menuText}>Add Follow</Text>
@@ -128,10 +128,10 @@ const LeadCard = (props) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Status</Text>
-            
+
             {statusOptions.map((option, index) => (
-              <TouchableOpacity 
-                key={index} 
+              <TouchableOpacity
+                key={index}
                 style={styles.radioButton}
                 onPress={() => setSelectedStatus(option)}
               >
@@ -140,7 +140,7 @@ const LeadCard = (props) => {
               </TouchableOpacity>
             ))}
 
-            <CustomButton 
+            <CustomButton
               title="Submit"
               customstyle={ButtonStyles.blueButton} textStyles={ButtonStyles.blueButtonText}
               onPress={() => {
@@ -171,40 +171,40 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.05,
     shadowRadius: 60,
-    padding: 24, 
-    gap: 24, 
+    padding: 24,
+    gap: 24,
     overflow: "hidden",
   },
   HorLayout: {
-    gap: 10, 
-  },
-  VerLayout: { 
     gap: 10,
-    flexDirection: "row",  
-    justifyContent: "space-between", 
-    alignItems: "flex-end", 
+  },
+  VerLayout: {
+    gap: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
   },
   statusBadge: {
     borderRadius: 100,
     //paddingVertical: 6,
-    paddingTop:6,
+    paddingTop: 6,
     //paddingHorizontal: 16,
-    paddingRight:16,
-    paddingBottom:6,
-    paddingLeft:16,
+    paddingRight: 16,
+    paddingBottom: 6,
+    paddingLeft: 16,
     gap: 4,
   },
   moreCircleDot: {
     position: "absolute",
     top: 1,
     right: 1,
-    width: 24,  
+    width: 24,
     height: 24,
   },
   moreCircleIcon: {
-    width: 24,   
+    width: 24,
     height: 24,
-    resizeMode: "contain", 
+    resizeMode: "contain",
   },
   leadstatusBadge: {
     width: 159,
@@ -218,7 +218,7 @@ const styles = StyleSheet.create({
   /* Menu Styles */
   menuBox: {
     position: "absolute",
-    top: 30, 
+    top: 30,
     right: 55,
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
@@ -257,28 +257,28 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   modalTitle: {
-    fontFamily:'Urbanist',
+    fontFamily: 'Urbanist',
     fontSize: 24,
     fontWeight: "700",
     textAlign: "center",
     marginBottom: 20,
-    lineHeight:28.8,
-    borderBottomWidth:1,
-    borderBottomColor:'#EEEEEE'
+    lineHeight: 28.8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#EEEEEE'
   },
   radioButton: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     paddingVertical: 10,
-    },
+  },
   radioText: {
-    fontFamily:'Urbanist',
+    fontFamily: 'Urbanist',
     fontSize: 18,
     fontWeight: "700",
     textAlign: "center",
     //marginBottom: 10,
-    lineHeight:21.6,
+    lineHeight: 21.6,
   },
   radioUnselected: {
     width: 20,

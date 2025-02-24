@@ -4,16 +4,11 @@ export default StyleSheet.create({
     blueButton: {
         width: "100%",
         height: 55,
-        // paddingTop: 18,
-        // paddingRight: 16,
-        // paddingBottom: 18,
-        // paddingLeft: 16,
         borderRadius: 100,
         backgroundColor: "#2b2162",
         alignItems: "center",
         justifyContent: "center",
     },
-
     blueButtonText: {
         fontFamily: "Urbanist",
         fontWeight: "700",
@@ -23,9 +18,8 @@ export default StyleSheet.create({
         textAlign: "center",
         color: "#FFFFFF",
     },
-
     addButton: {
-        flex:1,
+        flex: 1,
         paddingTop: 18,
         paddingRight: 16,
         paddingBottom: 18,
@@ -45,7 +39,6 @@ export default StyleSheet.create({
         color: "#2b2162",
     },
     cancelbutton: {
-       // width: 380,
         height: 55,
         paddingTop: 18,
         paddingRight: 16,
@@ -75,6 +68,5 @@ export default StyleSheet.create({
         paddingLeft: 16,
         gap: 10,
 
-      }
-      
+    }
 });
