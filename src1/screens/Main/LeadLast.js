@@ -8,15 +8,13 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from "../../components/StepperComp";
 
-const LeadLast = () => {
+const LeadAdd = () => {
   const [assignto, setAssignto] = useState('');
   const [services, setService] = useState('');
   const [Remark, setRemark] = useState(null);
-
   const steps = ["Personal", "Occupation", "Services"];
   const currentStep = 3;
-
-  const [cardData, setCardData] = useState([
+  const cardData = [
     {
       id: 1,
       title: "Insurance",
@@ -39,7 +37,7 @@ const LeadLast = () => {
         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type ...",
     },
 
-  ]);
+  ];
 
   // Function to delete a card
   const deleteCard = (id) => {
@@ -51,20 +49,18 @@ const LeadLast = () => {
       <View style={{ flex: 0.1 }}>
         <NavigationHeaderBack text="Add Services" />
       </View>
-
-      <View style={styles.stepperContainer1}>
-        <Stepper steps={steps} currentStep={currentStep} />
-      </View>
-
       <View style={styles.centerContainer}>
+        <Stepper steps={steps} currentStep={currentStep} />
         <Dropdown
           label="Assign to"
           selectedValue={assignto}
           onValueChange={setAssignto}
-          options={[{ label: "John Doe", value: "John Doe" }, { label: "Jane Smith", value: "Jane Smith" }]}
+          options={[
+            { label: "John Doe", value: "John Doe" },
+            { label: "Jane Smith", value: "Jane Smith" },
+          ]}
           zIndex={3000}
         />
-
         <Dropdown
           label="Services"
           selectedValue={services}
@@ -77,33 +73,25 @@ const LeadLast = () => {
           ]}
           zIndex={2000}
         />
-
         <CustomTextInput
           type={Remark}
           value={setRemark}
           placeholder="Remark"
           onChangeText={setRemark}
         />
-
         <CustomButton title="ADD" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
       </View>
-
-      {/* Scrollable Cards Section */}
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.insuranceCard}>
-          {cardData.map((item) => (
-            <View key={item.id} style={styles.cardContainer}>
-              {/* Delete Button Positioned at the Top Right Inside the Card */}
-              <Pressable onPress={() => deleteCard(item.id)} style={styles.deleteButton}>
-                <Image source={require("../../assets/icons/Delete/delete.png")} style={styles.deleteIcon} />
-              </Pressable>
-
-              {/* Insurance Card */}
-              <InsuranceCard title={item.title} date={item.date} description={item.description} />
-            </View>
-          ))}
-        </View>
-      </ScrollView>
+      <View style={styles.insuranceCard}>
+        <Text style={styles.insuranceText}></Text>
+        {cardData.map((item) => (
+          <InsuranceCard
+            key={item.id}
+            title={item.title}
+            date={item.date}
+            description={item.description}
+          />
+        ))}
+      </View>
     </View>
   );
 };
@@ -114,19 +102,12 @@ const styles = StyleSheet.create({
   //  paddingHorizontal: 24,
     paddingTop: 15,
     backgroundColor: "#FFFFFF",
-    gap: 18,
-    marginBottom: 50,
+    gap: 15,
   },
   centerContainer: {
     flex: 0.7,
     gap: 12,
     zIndex: 1,
-    paddingLeft:20,
-    paddingRight:20,
-  },
-  scrollView: {
-    flex: 0.3,
-    marginTop: 10,
   },
   insuranceCard: {
     marginTop: 35,

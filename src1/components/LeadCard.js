@@ -22,23 +22,40 @@ const LeadCard = (props) => {
     "Informed Client"
   ];
 
-  const addFllow=()=>{
-
-    props.navigation.navigate("AddFollowUp");
+  const addFollow = () => {
+    if (props.screenType === "lead") {
+      props.navigation.navigate("AddFollowUp");  // ✅ Ensure this exists inside LeadStackScreen
+    } else if (props.screenType === "client") {
+      props.navigation.navigate("ClientAddFollowUp");  // ✅ Ensure this exists inside ClientStackScreen
+    }
     setMenuVisible(false);
-    setModalVisible(false)
-  }
+    setModalVisible(false);
+  };
   const editProfile=()=>{
     props.navigation.navigate("EditProfileScreen")
     setMenuVisible(false);
     setModalVisible(false)
   }
+  const details = () => {   
+    if (props.screenType === "lead") {
+      props.navigation.navigate("LeadDetails", { name: props.name });
+    } else if (props.screenType === "client") {
+      props.navigation.navigate("ClientDetails", { name: props.name });
+    } else if (props.screenType === "task") {
+      props.navigation.navigate("CloseAccountScreen", { name: props.name }); // ✅ Fix
+    }
+  };
+  
 
+  
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
         <View style={styles.HorLayout}>
-          <CustomText text={props.name} customstyle={TextStyle.nameText} />
+        <TouchableOpacity onPress={details}>
+               <CustomText text={props.name} customstyle={TextStyle.nameText} />
+        </TouchableOpacity>
+          
           <CustomText text={props.phone} customstyle={TextStyle.namePhone} />
 
           {/* Three Dots Icon */}
@@ -83,7 +100,7 @@ const LeadCard = (props) => {
           </TouchableOpacity>
 
          {props.menuType === "follow" ? (
-            <TouchableOpacity style={styles.menuItem} onPress={addFllow}>
+            <TouchableOpacity style={styles.menuItem} onPress={addFollow}>
               <Image source={require("../assets/icons/PlusBlack/Plus.png")} style={styles.menuIcon} />
               <Text style={styles.menuText}>Add Follow</Text>
             </TouchableOpacity>

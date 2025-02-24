@@ -6,10 +6,14 @@ import TextStyle from '../../styles/TextStyle';
 import Dropdown from "../../components/DropDown";
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
+import { useNavigation } from '@react-navigation/native';
 const LeadAddService = () => {
   const [services, setService] = useState('');
   const [Remark, setRemark] = useState(null);
-
+  const navigation = useNavigation()
+  const goBackCall = () => {
+    navigation.popToTop();
+  };
   const cardData = [
     {
       id: 1,
@@ -29,10 +33,9 @@ const LeadAddService = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{flex:0.1}}>
-      <NavigationHeaderBack text="Add Services"/>
+      <View style={{ flex: 0.3 }}>
+        <NavigationHeaderBack text="Add Services" onPress={goBackCall} />
       </View>
-
       <View style={styles.centerContainer}>
         <CustomTextInput
           type={Remark}
@@ -55,23 +58,20 @@ const LeadAddService = () => {
             { label: "Real E", value: "Real E" },
 
           ]}
-           zIndex={2000}
+          zIndex={2000}
         />
-        <CustomButton title="SUBMIT" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
-      
-        </View>
-        
-        <View style={styles.insuranceCard}>
-            {cardData.map((item) => (
-              <InsuranceCard
-                key={item.id}
-                title={item.title}
-                date={item.date}
-                description={item.description}
-              />
-            ))}
-          </View>
-
+        <CustomButton title="NEXT" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
+      </View>
+      <View style={styles.insuranceCard}>
+        {cardData.map((item) => (
+          <InsuranceCard
+            key={item.id}
+            title={item.title}
+            date={item.date}
+            description={item.description}
+          />
+        ))}
+      </View>
     </View>
   );
 };
@@ -80,17 +80,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingRight: 24,
-    paddingLeft: 24,
+    paddingLeft: 10,
     paddingTop: 15,
     backgroundColor: "#FFFFFF",
-    gap: 20, 
+    gap: 20,
   },
   centerContainer: {
     flex: 0.7,
     gap: 12,
-    zIndex: 1, 
+    zIndex: 1,
   },
-  
   insuranceCard: {
     marginTop: 30,
     marginRight: 10,

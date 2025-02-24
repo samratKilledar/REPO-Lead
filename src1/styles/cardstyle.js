@@ -299,6 +299,8 @@ export default StyleSheet.create({
         end: { x: 0.2, y: 1 },
     },
 
+//profile page
+
     //profile page
     service: {
         width: 380,
@@ -306,10 +308,10 @@ export default StyleSheet.create({
         borderRadius: 20,
         backgroundColor: "#FFFFFF",  // White background
         shadowColor: "#04060F", // Shadow color
-        shadowOffset: { width: 0, height: 4 }, // Shadow position
-        shadowOpacity: 0.08, // Shadow visibility (8%)
-        shadowRadius: 60, // Shadow blur
-        elevation: 5,
+        // shadowOffset: { width: 0, height: 4 }, // Shadow position
+        // shadowOpacity: 0.08, // Shadow visibility (8%)
+        // shadowRadius: 60, // Shadow blur
+        // elevation: 5,
     },
 
     maskk: {
@@ -322,19 +324,21 @@ export default StyleSheet.create({
         padding: 28,
         gap: 24,
     },
-    auto1: {
-        width: 324,
-        height: 24,
-        gap: 32,
+    auto1:{
+        marginTop: 20,
+        marginLeft : 25,
+        flex: 0.23,
+        gap : 32,
+        backgroundColor: "red",
     },
     auto2: {
         width: 268,
         height: 24,
         gap: 8,
     },
-    iconedit: {
-        width: 24,
-        height: 24,
+    iconedit : {
+        width :2,
+        height : 2, 
     },
     edit: {
         width: 18,
@@ -346,49 +350,41 @@ export default StyleSheet.create({
         width: 324,
         height: 32,
         gap: 10,
+        
+
     },
     green1: {
-        width: 94,
-        height: 32,
         gap: 4,
+        height: 32,
         paddingTop: 6,
         paddingRight: 16,
         paddingBottom: 6,
         paddingLeft: 16,
         borderRadius: 100,
-        x: "#4ADE80",
-        y: "#73FFA6",// Define gradient colors
-        start: { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end: { x: 0.2, y: 1 },
-    },
-    blue1: {
-        width: 118,
-        height: 32,
+        overflow: 'hidden', // Ensure the gradient is clipped to the border radius
+      },
+      blue1: {
+        flex: 0.6,
         gap: 4,
+        height: 32,
         paddingTop: 6,
         paddingRight: 16,
         paddingBottom: 6,
         paddingLeft: 16,
         borderRadius: 100,
-        x: "#246BFD",
-        y: "#6F9EFF",// Define gradient colors
-        start: { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end: { x: 0.2, y: 1 },
-    },
-    red1: {
-        width: 76,
-        height: 32,
+        overflow: 'hidden', // Ensure the gradient is clipped to the border radius
+      },
+      red1: {
+        flex: 0.3,
         gap: 4,
+        height: 32,
         paddingTop: 6,
         paddingRight: 16,
         paddingBottom: 6,
         paddingLeft: 16,
         borderRadius: 100,
-        x: "#FF4D67",
-        y: "#FF8A9B",// Define gradient colors
-        start: { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end: { x: 0.2, y: 1 },
-    },
+        overflow: 'hidden', // Ensure the gradient is clipped to the border radius
+      },
 
     //occupation
     occupation: {
@@ -437,7 +433,8 @@ export default StyleSheet.create({
 
     },
     blue2: {
-        width: 55,
+        flex: 0.245,
+        width: '100%', // Adjust size dynamically
         height: 32,
         borderRadius: 100,
         paddingTop: 6,
@@ -445,14 +442,10 @@ export default StyleSheet.create({
         paddingBottom: 6,
         paddingLeft: 16,
         gap: 4,
-        x: "#246BFD",
-        y: "#6F9EFF",// Define gradient colors
-        start: { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end: { x: 0.2, y: 1 },
-    },
-
-    green2: {
-        width: 86,
+        overflow: 'hidden', // Ensure the gradient is clipped to the border radius
+      },
+      green2: {
+        flex: 0.3,
         height: 32,
         borderRadius: 100,
         paddingTop: 6,
@@ -460,14 +453,10 @@ export default StyleSheet.create({
         paddingBottom: 6,
         paddingLeft: 16,
         gap: 4,
-        x: "#4ADE80",
-        y: "#73FFA6",// Define gradient colors
-        start: { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end: { x: 0.2, y: 1 },
-
-    },
-    yellow2: {
-        width: 115,
+        overflow: 'hidden', // Ensure the gradient is clipped to the border radius
+      },
+      yellow2: {
+        flex: 0.4,
         height: 32,
         borderRadius: 100,
         paddingTop: 6,
@@ -475,26 +464,17 @@ export default StyleSheet.create({
         paddingBottom: 6,
         paddingLeft: 16,
         gap: 4,
-        x: "#FACC15",
-        y: "#FFE580",// Define gradient colors
-        start: { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end: { x: 0.2, y: 1 },
-
-    },
-    red2: {
-        width: 70,
-        height: 32,
+        overflow: 'hidden', // Ensure the gradient is clipped to the border radius
+      },
+      red2: {
+        width: '25%',
         borderRadius: 100,
-        paddingTop: 6,
-        paddingRight: 16,
-        paddingBottom: 6,
-        paddingLeft: 16,
+        paddingVertical: 6,
+        paddingHorizontal: 16,
         gap: 4,
-        x: "#FF4D67",
-        y: "#FF8A9B",// Define gradient colors
-        start: { x: 0.8, y: 0 }, // Equivalent to 286.17 degrees
-        end: { x: 0.2, y: 1 },
-    },
+        overflow: 'hidden', // Ensure the gradient is clipped to the border radius
+        marginTop: 10,
+      },
     Insurance: {
         //width: 380,
         //height: 196,

@@ -19,7 +19,8 @@ import CustomButton from '../../components/CustomButton';
 import TextStyle from '../../styles/TextStyle';
 import ButtonStyles from '../../styles/ButtonStyles';
 import { useDispatch } from 'react-redux';
-import { loginSuccess } from '../../redux/actions/authActions'; // Import your login action
+import { loginSuccess,updateCredential,loginUser } from '../../redux/actions/authActions'; // Import your login action
+import { useSelector } from "react-redux";
 
 const LoginScreen = (props) => {
   const [customerId, setCustomerId] = useState('');
@@ -29,22 +30,30 @@ const LoginScreen = (props) => {
   const {width} = useWindowDimensions();
   const navigation = useNavigation();
   const dispatch = useDispatch();
+  const loginPlaceHolder = useSelector(state => state.auth.loginPlaceHolder);
+  const loginValue = useSelector(state => state.auth.loginValue);
 
+  // alert(JSON.stringify(loginPlaceHolder))
   // Validation and Login Handler
   const handleLogin = () => {
     //props.navigation.navigate('Main'); // Navigate to Dashboard after successful login
-    dispatch(loginSuccess()); // This should set isAuthenticated to true in Redux
-    if (!customerId || !email || !password) {
+    //dispatch(loginSuccess()); // This should set isAuthenticated to true in Redux
+    if (!loginValue.customerId || !loginValue.email || !loginValue.password) {
       Alert.alert('Lead', 'All fields are required!');
       return;
-    }
-    if (!/\S+@\S+\.\S+/.test(email)) {
+    }else if (!/\S+@\S+\.\S+/.test(loginValue.email)) {
       Alert.alert('Error', 'Enter a valid email address!');
       return;
+    }else{
+      dispatch(loginUser())
     }
-
-    console.log('Logging in...');
+    // console.log('Logging in...');
   };
+
+const updateCustomerId=(ele)=>{
+  dispatch(updateCredential()); // This should set isAuthenticated to true in Redux
+}
+
 
   return (
     <View style={{flex: 1}}>
@@ -74,23 +83,23 @@ const LoginScreen = (props) => {
               <View style={[styles.box, {}]}>
                 <CustomTextInput
                   icon={require('../../assets/icons/Profile/profile.png')}
-                  value={customerId}
-                  placeholder="Customer Id"
-                  onChangeText={setCustomerId}
+                  value={loginValue.customerId}
+                  placeholder={loginPlaceHolder.customerId}
+                  onChangeText={(text) => dispatch(updateCredential({ customerId: text }))}
                   keyboardType="numeric"
                 />
                 <CustomTextInput
                   icon={require('../../assets/icons/Message/message.png')}
-                  value={email}
-                  placeholder="Email"
-                  onChangeText={setEmail}
+                  value={loginValue.email}
+                  placeholder={loginPlaceHolder.email}
+                  onChangeText={(text) => dispatch(updateCredential({ email: text }))}
                   keyboardType="email-address"
                 />
                 <CustomTextInput
                   icon={require('../../assets/icons/Lock/lock.png')}
-                  value={password}
-                  placeholder="Password"
-                  onChangeText={setPassword}
+                  value={loginValue.password}
+                  placeholder={loginPlaceHolder.password}
+                  onChangeText={(text) => dispatch(updateCredential({ password: text }))}
                   secureTextEntry
                 />
               </View>

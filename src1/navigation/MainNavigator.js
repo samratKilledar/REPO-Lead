@@ -1,7 +1,7 @@
-import React from 'react';
+import {useState} from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
-import { View, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Image, StyleSheet ,Modal,Text, useWindowDimensions} from 'react-native';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native'; // Import this
 
 import HomeScreen from '../screens/Main/HomeScreen';
@@ -14,8 +14,17 @@ import LeadScreen from '../screens/Main/LeadScreen';
 import AddFollowUp from '../screens/Main/AddFollowUP';
 import EditProfileScreen from '../screens/Main/EditProfileScreen';
 import ClientScreen from '../screens/Main/ClientScreen';
-import LeadAddService from '../screens/Main/LeadAddServices'
 import TaskScreen from '../screens/Main/TaskScreen';
+import ClientAddFollowUP from '../screens/Main/ClientAddFollowUp';
+import ClientDetails from '../screens/Main/ClientDetails';
+import LeadDetails from '../screens/Main/LeadDetails';
+import CloseAccountScreen from '../screens/Main/CloseAccountScreen';
+import LeadAddServices from '../screens/Main/LeadAddServices'
+import LoginScreen from '../screens/Auth/LoginScreen';
+import LogoutScreen from '../screens/Auth/LogoutScreen';
+import HeaderComp from '../components/HeaderComp';
+
+
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 
@@ -26,9 +35,13 @@ const HomeStackScreen = ({ navigation, route }) => {
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
       <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="UpcomingMeetings" component={UpcomingMeetings} />
+      <HomeStack.Screen name="LeadDetails" component={LeadDetails}/>
       <HomeStack.Screen name="UpcomingTask" component={UpcomingTask} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
+      <HomeStack.Screen name="LogoutScreen" component={LogoutScreen}/>
+      <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen}/>
+      <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
     </HomeStack.Navigator>
   );
@@ -42,28 +55,61 @@ const LeadStackScreen = ({ navigation, route }) => {
        <HomeStack.Screen name="Lead" component={LeadScreen} />
       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+      <HomeStack.Screen name="LeadDetails" component={LeadDetails} />
+      <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
+      <HomeStack.Screen name="LogoutScreen" component={LogoutScreen}/>
     </HomeStack.Navigator>
   );
 };
 
-
-const ClientStackScreen= ({ navigation, route }) => {
+const LogoutStackScreen = ({ navigation, route }) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-             <HomeStack.Screen name="Lead" component={LeadScreen} />
-
-       <HomeStack.Screen name="ClientScreen" component={LeadAddService} />
-       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
-       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
-      
+      <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+      <HomeStack.Screen name="LoginScreen" component={LoginScreen} />
     </HomeStack.Navigator>
   );
 };
 
-const CustomTabButton = ({ onPress }) => (
-  <TouchableOpacity style={styles.plusButton} onPress={onPress}>
+
+const ClientStackScreen = ({ navigation, route }) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="Client" component={ClientScreen} />
+      <HomeStack.Screen name="ClientAddFollowUp" component={ClientAddFollowUP} />
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+      <HomeStack.Screen name="ClientDetails" component={ClientDetails} />
+      <HomeStack.Screen name="LogoutScreen" component={LogoutScreen}/>
+      <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
+
+    </HomeStack.Navigator>
+  );
+};
+
+
+const TaskStackScreen = ({ navigation, route }) => {
+  const routeName = getFocusedRouteNameFromRoute(route);
+  return (
+    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+      <HomeStack.Screen name="Task" component={TaskScreen} />
+      <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen} />
+      <HomeStack.Screen name="LogoutScreen" component={LogoutScreen}/>
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+    </HomeStack.Navigator>
+
+  );
+};
+
+const CustomTabButton = ({ onPress }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+  //const { width } = useWindowDimensions();
+  return(
+    <View>
+  <TouchableOpacity style={styles.plusButton} onPress={() => setModalVisible(true)}>
     <View style={styles.plusButtonInner}>
       <Image 
         source={require('../assets/icons/Plus/plus.png')}
@@ -71,7 +117,46 @@ const CustomTabButton = ({ onPress }) => (
       />
     </View>
   </TouchableOpacity>
-);
+  <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <TouchableOpacity 
+          style={styles.modalOverlay} 
+          activeOpacity={1} 
+          onPress={() => setModalVisible(false)}
+        >
+          <View style={[styles.modalContainer]}>
+            {/* Tooltip Arrow */}
+            <View style={styles.triangle} />
+
+            {/* Options with Icon & Text */}
+            <TouchableOpacity style={styles.option} onPress={() => setModalVisible(false)}>
+            <Text style={styles.optionText}>Lead</Text>
+              <Image 
+                source={require('../assets/icons/PlusFilter.png')} 
+                style={styles.optionIcon} 
+              />
+             
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.option} onPress={() => setModalVisible(false)}>
+            <Text style={styles.optionText}>Task</Text>
+              <Image 
+                source={require('../assets/icons/PlusTask.png')} 
+                style={styles.optionIcon} 
+              />
+              
+            </TouchableOpacity>
+
+          </View>
+        </TouchableOpacity>
+      </Modal>
+  </View>
+  );
+};
 
 
 
@@ -138,7 +223,7 @@ const MainNavigator = () => {
       />
       <Tab.Screen
         name="Task"
-        component={TaskScreen}
+        component={TaskStackScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <Image
@@ -149,6 +234,19 @@ const MainNavigator = () => {
           ),
         }}
       />
+       {/* <Tab.Screen
+          name="Logout"
+          component={LogoutStackScreen}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={focused = require('../assets/images/Avatar.png')}
+                                
+                style={styles.icon}
+              />
+            ),
+          }}
+        /> */}
     </Tab.Navigator>
     </View>
     
@@ -189,6 +287,74 @@ const styles = StyleSheet.create({
     width: 60, 
     height: 60,
     resizeMode: 'contain', 
+  },
+
+  //modal style for plus icon 
+  container: {
+    position: 'absolute',
+    bottom: 20,
+    alignSelf: 'center',
+    
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  
+  },
+  modalContainer: {
+    backgroundColor: '#FFFFFF',
+    //width: width * 0.5,
+    width:184,
+    paddingVertical: 20,
+    borderRadius: 32,
+    alignItems: 'center',
+    position: 'absolute',
+    bottom: 90, // Positioned just above the FAB
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
+  },
+  option: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    justifyContent: 'space-between',
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    Top:32,
+    Left:32,
+    gap:24,
+  },
+  optionText: {
+    fontFamily:'Urbanist',
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#424242',
+    lineHeight:25.2,
+    letterSpacing:0.2,
+  },
+  optionIcon: {
+    width: 28,
+    height: 28,
+    //tintColor: '#4C4DDC',
+  },
+  triangle: {
+    position: 'absolute',
+    bottom: -10,
+    left: '50%',
+    marginLeft: -10,
+    width: 0,
+    height: 0,
+    borderLeftWidth: 10,
+    borderRightWidth: 10,
+    borderTopWidth: 10, 
+    borderStyle: 'solid',
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: 'white',
   },
 });
 

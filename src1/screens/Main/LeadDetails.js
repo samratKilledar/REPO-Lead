@@ -1,12 +1,17 @@
 import { useState } from "react";
-import { View, Text, StyleSheet , TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import DetailItem from "../../components/DetailItem";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 import { ScrollView } from "react-native-gesture-handler";
 import InsuranceCard from "../../components/InsuranceCard";
-const LeadDetails = () => {
+import { useNavigation } from "@react-navigation/native";
+const LeadDetails = (props) => {
+  const navigation = useNavigation();
+  const goBackCall = () => {
+    navigation.goBack();
+  };
   const cardData = [
     {
       id: 1,
@@ -24,19 +29,25 @@ const LeadDetails = () => {
     },
   ];
   const [menuVisible, setMenuVisible] = useState(false);
+  const addfollow = () => {
+    props.navigation.navigate("AddFollowUp")
+  }
+  const addService = () => {
+    props.navigation.navigate("LeadAddServices")
+  }
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.centralcontainer}>
-        <View style={{flex:0.3 , flexDirection:"row" , paddingRight: 15,}}>
-      <NavigationHeaderBack text="Barbara Moore"/>
-      <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
-                      <Image 
-                        source={require('../../assets/icons/MoreCircle.png')} 
-                        style={{width:28 ,height:28}}
-                      />
-      </TouchableOpacity>
-      </View>
+          <View style={{ flex: 0.3, flexDirection: "row", paddingRight: 15, }}>
+            <NavigationHeaderBack text="Barbara Moore" onPress={goBackCall} />
+            <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
+              <Image
+                source={require('../../assets/icons/MoreCircle.png')}
+                style={{ width: 28, height: 28 }}
+              />
+            </TouchableOpacity>
+          </View>
 
           <View style={styles.detailsContainer}>
             <DetailItem icon={require('../../assets/icons/ProfileGrey/profileGrey.png')} label="Name" detail="Rajiv Sharma" />
@@ -51,11 +62,11 @@ const LeadDetails = () => {
             <DetailItem icon={require('../../assets/icons/Remarks.png')} label="Attachment" detail="References.pdf" />
           </View>
           <View style={styles.followup}>
-            <View style={{flex:1,margin:10}}>
-            <CustomButton title="Add Follow Up" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} />
+            <View style={{ flex: 1, margin: 10 }}>
+              <CustomButton title="Add Follow Up" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} onPress={addfollow} />
             </View>
-            <View style={{flex:1, margin:10}}>
-            <CustomButton title="Add Services" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} />
+            <View style={{ flex: 1, margin: 10 }}>
+              <CustomButton title="Add Services" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} onPress={addService} />
             </View>
           </View>
           <View style={styles.insuranceCard}>
@@ -70,18 +81,18 @@ const LeadDetails = () => {
             ))}
           </View>
         </View>
-              {menuVisible && (
-                <View style={styles.menuBox}>
-                  <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Edit clicked")}>
-                    <Image source={require("../../assets/icons/Edit/edit.png")} style={styles.menuIcon} />
-                    <Text style={styles.menuText}>Edit</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Delete clicked")}>
-                    <Image source={require("../../assets/icons/Delete/delete.png")} style={styles.menuIcon} />
-                    <Text style={styles.menuText}>Delete</Text>
-                  </TouchableOpacity>
-                </View>
-              )}
+        {menuVisible && (
+          <View style={styles.menuBox}>
+            <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Edit clicked")}>
+              <Image source={require("../../assets/icons/Edit/edit.png")} style={styles.menuIcon} />
+              <Text style={styles.menuText}>Edit</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Delete clicked")}>
+              <Image source={require("../../assets/icons/Delete/delete.png")} style={styles.menuIcon} />
+              <Text style={styles.menuText}>Delete</Text>
+            </TouchableOpacity>
+          </View>
+        )}
       </ScrollView>
     </View>
   );
@@ -106,10 +117,9 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   followup: {
-    flexDirection: 'row',       // Aligns items in a horizontal line
-    // justifyContent: 'space-between', // Ensures space between the buttons
+    flexDirection: 'row',
     gap: 10,
-    flex:1
+    flex: 1
   },
   leadStatusContainer: {
     height: 32,
@@ -137,7 +147,7 @@ const styles = StyleSheet.create({
   menuBox: {
     position: "absolute",
     flex: 1,
-    top: 30, 
+    top: 30,
     right: 55,
     backgroundColor: "#FFFFFF",
     borderRadius: 10,
