@@ -52,9 +52,11 @@ const LeadLast = () => {
         <NavigationHeaderBack text="Add Services" />
       </View>
 
-      <View style={styles.centerContainer}>
+      <View style={styles.stepperContainer1}>
         <Stepper steps={steps} currentStep={currentStep} />
+      </View>
 
+      <View style={styles.centerContainer}>
         <Dropdown
           label="Assign to"
           selectedValue={assignto}
@@ -109,16 +111,18 @@ const LeadLast = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingRight: 24,
-    paddingLeft: 24,
+  //  paddingHorizontal: 24,
     paddingTop: 15,
     backgroundColor: "#FFFFFF",
-    gap: 15,
+    gap: 18,
+    marginBottom: 50,
   },
   centerContainer: {
     flex: 0.7,
     gap: 12,
     zIndex: 1,
+    paddingLeft:20,
+    paddingRight:20,
   },
   scrollView: {
     flex: 0.3,

@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     backgroundColor: '#EEF0FF', // Lighter purple/blue background
     paddingVertical: 18,
-    paddingHorizontal: 20,
+    paddingHorizontal: 8,
     marginBottom: 12,
   },
 
@@ -322,9 +322,9 @@ const styles = StyleSheet.create({
 
   separator: {
     width: 20, // Increased width
-    height: 2,
+    height: 1,
     backgroundColor: '#2F1C6A', // Gray line
-    marginHorizontal: 10, // Add margin
+    marginHorizontal: 21, // Add margin
   },
 
   activeSeparator: {

@@ -151,7 +151,7 @@ const LeadAddPersonal = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 24,
+  //  paddingHorizontal: 24,
     paddingTop: 15,
     backgroundColor: "#FFFFFF",
     gap: 18,
@@ -171,9 +171,13 @@ const styles = StyleSheet.create({
   centerContainer: {
     paddingBottom: 20, // Add padding at the bottom for better spacing
     gap:10,
+    marginTop: 15,
+
   },
   scrollViewContent: {
     flexGrow: 1, // Ensures the content grows within the ScrollView
+    paddingLeft:20,
+    paddingRight:20,
   },
 });
 
