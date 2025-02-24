@@ -71,6 +71,7 @@ const LogoutStackScreen = ({ navigation, route }) => {
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
       <HomeStack.Screen name="LoginScreen" component={LoginScreen} />
+      <HomeStack.Screen name="Notifications" component={Notifications} />
     </HomeStack.Navigator>
   );
 };
@@ -87,6 +88,7 @@ const ClientStackScreen = ({ navigation, route }) => {
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen}/>
       <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
+
     </HomeStack.Navigator>
   );
 };
