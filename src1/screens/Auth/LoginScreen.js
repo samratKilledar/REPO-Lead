@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   View,
   Image,
@@ -21,6 +21,7 @@ import ButtonStyles from '../../styles/ButtonStyles';
 import { useDispatch } from 'react-redux';
 import { loginSuccess,updateCredential,loginUser } from '../../redux/actions/authActions'; // Import your login action
 import { useSelector } from "react-redux";
+import { getItem } from '../../api/storageServices';
 
 const LoginScreen = (props) => {
   const [customerId, setCustomerId] = useState('');
@@ -33,6 +34,21 @@ const LoginScreen = (props) => {
   const loginPlaceHolder = useSelector(state => state.auth.loginPlaceHolder);
   const loginValue = useSelector(state => state.auth.loginValue);
 
+  useEffect(() => {
+    const checkAuthToken = async () => {
+      try {
+        const user = await getItem('authToken');
+        if (user) {
+          props.navigation.navigate('HomeStackScreen'); // Use props.navigation instead of props.navigate
+        }
+      } catch (error) {
+        console.error("Error retrieving auth token:", error);
+      }
+    };
+  
+    checkAuthToken();
+  }, []); // Ensure dependencies are correct
+  
   // alert(JSON.stringify(loginPlaceHolder))
   // Validation and Login Handler
   const handleLogin = () => {
