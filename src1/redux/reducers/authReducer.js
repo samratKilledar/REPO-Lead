@@ -1,5 +1,6 @@
 const initialState = {
   isAuthenticated: false,
+  isLoading:false,
   loginPlaceHolder: {
     customerId: "Customer Id",
     email: "Email",
@@ -26,7 +27,7 @@ const authReducer = (state = initialState, action) => {
               loginValue: { 
                   ...state.loginValue,  // Keep previous values
                   ...action.payload     // Update only the fields provided
-              } 
+              }
           };
 
       default:
