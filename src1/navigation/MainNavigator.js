@@ -19,7 +19,7 @@ import ClientAddFollowUP from '../screens/Main/ClientAddFollowUp';
 import ClientDetails from '../screens/Main/ClientDetails';
 import LeadDetails from '../screens/Main/LeadDetails';
 import CloseAccountScreen from '../screens/Main/CloseAccountScreen';
-import LeadAddServices from '../screens/Main/LeadAddServices'
+import LeadAddServices from '../screens/Main/LeadAddServices';
 import LoginScreen from '../screens/Auth/LoginScreen';
 import LogoutScreen from '../screens/Auth/LogoutScreen';
 import HeaderComp from '../components/HeaderComp';
