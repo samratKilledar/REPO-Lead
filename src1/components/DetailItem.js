@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
+import CustomText from './CustomText';
+import TextStyle from '../styles/TextStyle';
 
 const DetailItem = ({ icon, label, detail }) => {
   const isLeadStatus = label === "Lead Status";
@@ -10,22 +12,22 @@ const DetailItem = ({ icon, label, detail }) => {
       {/* Label View */}
       <View style={styles.labelContainer}>
         <Image source={icon} style={styles.icon} />
-        <Text style={styles.label}>{label}</Text>
+        <CustomText text={label} customstyle={TextStyle.label}/>
       </View>
 
       {/* Detail View - Separate for Lead Status & Service Request */}
       <View style={{flex:1}}>
       {isLeadStatus ? (
         <View style={styles.leadStatusContainer}>
-          <Text style={styles.leadStatusText}>{detail}</Text>
+          <CustomText text={detail} customstyle={TextStyle.leadStatusText}/>
         </View>
       ) : isServiceRequest ? (
         <View style={styles.serviceRequestWrapper}>
-          <Text style={styles.serviceRequestText}>{detail}</Text>
+          <CustomText text={detail} customstyle={TextStyle.serviceRequestText}/>
         </View>
       ) : (
         <View style={styles.detailContainer}>
-          <Text style={styles.detail}>{detail}</Text>
+          <CustomText text={detail} customstyle={TextStyle.detail}/>
         </View>
       )}
         </View>
@@ -53,22 +55,12 @@ const styles = StyleSheet.create({
     height: 20,
     resizeMode: 'contain',
   },
-  label: {
-    fontFamily: 'Urbanist',
-    fontWeight: '500',
-    fontSize: 14,
-    color: '#616161',
-  },
+  
   detailContainer: {
     
     justifyContent: 'center',
   },
-  detail: {
-    fontFamily: 'Urbanist',
-    fontWeight: '500',
-    fontSize: 16,
-    color: '#212121',
-  },
+ 
 
   // Lead Status Style
   leadStatusContainer: {
@@ -84,12 +76,7 @@ const styles = StyleSheet.create({
     gap: 35,
     marginRight: 20,
   },
-  leadStatusText: {
-    color: '#2B2162',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-
+  
   // Service Request Wrapper 
   serviceRequestWrapper: {
     width: 220,
@@ -98,14 +85,7 @@ const styles = StyleSheet.create({
     marginRight: 2,
   },
 
-  serviceRequestText: {
-    fontFamily: "Urbanist",
-    fontWeight: "500",
-    fontSize: 16,
-    lineHeight: 22.4,
-    letterSpacing: 0.2,
-    color: "#212121",
-  },
+  
 });
 
 export default DetailItem;

@@ -1,49 +1,41 @@
+import {loginUserApiCall} from '../../api/authApi';
+import { setItem } from '../../api/storageServices';
 
+// Action Types
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT = 'LOGOUT';
 export const CHANGE_USER_CREDENTIAL = 'CHANGE_USER_CREDENTIAL';
 
-export const loginUser = () => {
-  return async (dispatch, getState) => {
-    const { loginValue } = getState().auth; // Get loginValue from Redux
-    console.log(loginValue.email+"=="+loginValue.password)
-    try {
-      const response = await fetch('https://opticalerp.in:85/api/tokens/gettoken', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'tenant' : loginValue.customerId
-        },
-        body: JSON.stringify({
-          email: loginValue.email,
-          Password: loginValue.password, 
-      }), 
-      });
+// ✅ Corrected loginUser function
+export const loginUser = () => async (dispatch, getState) => {
+  try {
+    const {loginValue} = getState().auth; // Get loginValue from Redux
+    //  alert(JSON.stringify(loginValue))
+    const data = await loginUserApiCall(loginValue); // API call
+    //alert(JSON.stringify(data));
+    setItem('authToken',data); // Store token
 
-      const data = await response.json();
-      alert(JSON.stringify(data))
-      if (response.ok) {
-       // dispatch({ type: LOGIN_SUCCESS, payload: data }); // Dispatch success action
-      } else {
-        throw new Error(data.message || 'Login failed!');
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+    dispatch({ type: LOGIN_SUCCESS}); // Dispatch success action
+  } catch (error) {
+    dispatch({type: LOGIN_FAILURE, payload: error.message}); // Dispatch failure action
+  }
 };
 
-
-export const loginSuccess = () => ({
+// ✅ Login Success Action
+export const loginSuccess = userData => ({
   type: LOGIN_SUCCESS,
+  payload: userData,
 });
 
-export const logout = () => ({
-  type: LOGOUT,
-});
+// ✅ Logout Action
+export const logout = () => async dispatch => {
+  await AsyncStorage.removeItem('authToken');
+  dispatch({type: LOGOUT});
+};
 
-export const updateCredential =(data)=>({
-  type:CHANGE_USER_CREDENTIAL,
-  payload:data
-})
-  
+// ✅ Update Credentials Action
+export const updateCredential = data => ({
+  type: CHANGE_USER_CREDENTIAL,
+  payload: data,
+});

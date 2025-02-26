@@ -18,19 +18,20 @@ const ClientScreen = (props) => {
   return (
     <View style={styles.container}>
       <HeaderComp navigation={navigation} />
-      <CustomTextInput
-        icon={require('../../assets/icons/Search/search.png')}
-        type={search}
-        value={search}
-        onChangeText={setSearch}
-        placeholder="Search"
-        searchbaricon={require('../../assets/icons/Group.png')}
-      />
+      <View style={styles.input}>
+        <CustomTextInput
+          icon={require('../../assets/icons/Search/search.png')}
+          type={search}
+          value={search}
+          onChangeText={setSearch}
+          placeholder="Search"
+          searchbaricon={require('../../assets/icons/Group.png')}
+        />
+      </View>
 
       <View style={styles.centerContainer}>
         <View style={styles.lead}>
           <CustomText text="Client" customstyle={TextStyle.leadText} />
-          <CustomText text="See all" customstyle={TextStyle.SeeallText} />
         </View>
 
         <ScrollView style={{ padding: 20, flex: 1, }}>
@@ -48,6 +49,11 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: 4,
     width: "100%",
+  },
+  input: {
+    gap: 10,
+    paddingRight: 24,
+    paddingLeft: 24,
   },
   centerContainer: {
     flexGrow: 1

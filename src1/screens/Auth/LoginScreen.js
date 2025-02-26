@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   View,
   Image,
@@ -10,9 +10,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Alert,TouchableOpacity
+  Alert, TouchableOpacity
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import CustomText from '../../components/CustomText';
 import CustomTextInput from '../../components/CustomTextInput';
 import CustomButton from '../../components/CustomButton';
@@ -21,18 +21,34 @@ import ButtonStyles from '../../styles/ButtonStyles';
 import { useDispatch } from 'react-redux';
 import { loginSuccess,updateCredential,loginUser } from '../../redux/actions/authActions'; // Import your login action
 import { useSelector } from "react-redux";
+import { getItem } from '../../api/storageServices';
 
 const LoginScreen = (props) => {
   const [customerId, setCustomerId] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isChecked, setIsChecked] = useState(false);
-  const {width} = useWindowDimensions();
+  const { width } = useWindowDimensions();
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const loginPlaceHolder = useSelector(state => state.auth.loginPlaceHolder);
   const loginValue = useSelector(state => state.auth.loginValue);
 
+  useEffect(() => {
+    const checkAuthToken = async () => {
+      try {
+        const user = await getItem('authToken');
+        if (user) {
+          props.navigation.navigate('HomeStackScreen'); // Use props.navigation instead of props.navigate
+        }
+      } catch (error) {
+        console.error("Error retrieving auth token:", error);
+      }
+    };
+  
+    checkAuthToken();
+  }, []); // Ensure dependencies are correct
+  
   // alert(JSON.stringify(loginPlaceHolder))
   // Validation and Login Handler
   const handleLogin = () => {
@@ -56,23 +72,23 @@ const updateCustomerId=(ele)=>{
 
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{ flex: 1 }}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}>
-        <ScrollView contentContainerStyle={{flexGrow: 1}}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.inner}>
               {/* Logo */}
-              <View style={{flex: 1, justifyContent: 'center'}}>
+              <View style={{ flex: 1, justifyContent: 'center' }}>
                 <Image
-                 source={require('../../assets/images/Logo.png')}
+                  source={require('../../assets/images/Logo.png')}
                   style={styles.logo}
                 />
               </View>
 
               {/* Login Header */}
-              <View style={{flex: 0.7}}>
+              <View style={{ flex: 0.7 }}>
                 <CustomText
                   text="Login to your Account"
                   customstyle={TextStyle.heading}
@@ -104,24 +120,32 @@ const updateCustomerId=(ele)=>{
                 />
               </View>
 
-              <View style={{flex: 3, alignItems: 'center'}}>
+              <View style={{ flex: 3, alignItems: 'center' }}>
                 {/* Checkbox */}
                 <View style={styles.checkboxContainer}>
                   <Pressable
                     style={[styles.checkbox, isChecked && styles.checked]}
                     onPress={() => setIsChecked(!isChecked)}>
-                    {isChecked && <CustomText customstyle={styles.checkmark} text="✓"></CustomText>}
+                    {isChecked && (
+                      <Image
+                        source={require("../../assets/icons/check.png")} // Use your checked icon here
+                        style={styles.checkIcon}
+                      />
+                    )}
                   </Pressable>
                   <CustomText customstyle={styles.rememberMe} text="Remember me"></CustomText>
                 </View>
 
                 {/* Sign In Button */}
+                <View style={{paddingRight:10 , paddingLeft:10}}>
                 <CustomButton
                   title="Sign in"
-                  customStyle={{width: width - 30}}
+                  customStyle={{ width: width - 30 }}
                   textStyles={ButtonStyles.blueButtonText}
                   onPress={handleLogin}
                 />
+                </View>
+                
 
                 {/* Forgot Password */}
                 <View>
@@ -163,6 +187,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 20,
     justifyContent: 'flex-start',
+    width: '100%',
+    paddingHorizontal: 10,
   },
   checkboxContainer: {
     flexDirection: 'row',
@@ -188,9 +214,15 @@ const styles = StyleSheet.create({
   checked: {
     backgroundColor: '#2B2162',
   },
+  checkIcon: {
+    width: 14,
+    height: 10,
+    tintColor: "#fff", // Optional: Adjust icon color
+    resizeMode: "contain",
+  },
   checkmark: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: 'bold',
   },
 });
