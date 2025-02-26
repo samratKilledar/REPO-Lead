@@ -19,16 +19,12 @@ import CustomTextInput from '../../components/CustomTextInput';
 import CustomButton from '../../components/CustomButton';
 import TextStyle from '../../styles/TextStyle';
 import ButtonStyles from '../../styles/ButtonStyles';
-<<<<<<< HEAD
-import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, updateCredential } from '../../redux/actions/authActions';
 import Loader from '../../styles/Loader';
-=======
 import { useDispatch } from 'react-redux';
 import { loginSuccess,updateCredential,loginUser } from '../../redux/actions/authActions'; // Import your login action
 import { useSelector } from "react-redux";
 import { getItem } from '../../api/storageServices';
->>>>>>> UATLead
 
 const LoginScreen = (props) => {
   const [loading, setLoading] = useState(false);
@@ -39,9 +35,6 @@ const LoginScreen = (props) => {
   const loginPlaceHolder = useSelector(state => state.auth.loginPlaceHolder);
   const loginValue = useSelector(state => state.auth.loginValue);
 
-<<<<<<< HEAD
-  // Login Handler
-=======
   useEffect(() => {
     const checkAuthToken = async () => {
       try {
@@ -59,7 +52,6 @@ const LoginScreen = (props) => {
   
   // alert(JSON.stringify(loginPlaceHolder))
   // Validation and Login Handler
->>>>>>> UATLead
   const handleLogin = () => {
     if (!loginValue.customerId || !loginValue.email || !loginValue.password) {
       Alert.alert('Lead', 'All fields are required!');
