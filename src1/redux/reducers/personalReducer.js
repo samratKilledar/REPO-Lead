@@ -71,35 +71,34 @@
 
 //New Code 
 const initialState = {
-  firstName: '',
-  lastName: '',
-  mobileNo: '',
-  emailId: '',
-  whatsappNo: '',
-  addressLine1: '',
-  addressLine2: '',
-  pincode: '',
-  leadService: '',
-  city: '',
-  state: '',
-  country: '',
-  loading: false,
-  error: null,
+  isSubmitted: false,
+  personalPlaceHolder: {
+    firstName: "First Name",
+    lastName: "Last Name",
+    email: "Email",
+    phone: "Phone Number",
+  },
+  personalValue: {
+    firstName: "Akhil",
+    lastName: "Tamgaonkar",
+    email: "abc@gmail.com",
+    phone: "00000000000",
+  },
 };
 
 const personalReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'UPDATE_FIELD':
-      return { ...state, [action.payload.field]: action.payload.value };
+    case "PERSONAL_SUBMIT_SUCCESS":
+      return { ...state, isSubmitted: true };
 
-    case 'SUBMIT_REQUEST':
-      return { ...state, loading: true, error: null };
-
-    case 'SUBMIT_SUCCESS':
-      return { ...initialState, loading: false }; // Reset form on success
-
-    case 'SUBMIT_FAILURE':
-      return { ...state, loading: false, error: action.payload };
+    case "CHANGE_PERSONAL_FIELD":
+      return {
+        ...state,
+        personalValue: {
+          ...state.personalValue, // Keep previous values
+          ...action.payload, // Update only provided fields
+        },
+      };
 
     default:
       return state;
@@ -107,4 +106,3 @@ const personalReducer = (state = initialState, action) => {
 };
 
 export default personalReducer;
-
