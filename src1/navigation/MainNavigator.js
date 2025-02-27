@@ -252,7 +252,7 @@ const MainNavigator = () => {
           }}
         />
 
-        {/* <Tab.Screen
+        <Tab.Screen
           name="AddTask"
           component={AddTask}
           options={{
@@ -260,8 +260,8 @@ const MainNavigator = () => {
               <CustomTabButton {...props} onPress={() => navigation.navigate('AddTask')} />
             ),
           }}
-        /> */}
-        <Tab.Screen
+        />
+        {/* <Tab.Screen
           name="LeadAddPersonal"
           component={LeadAddPersonal}
           options={{
@@ -269,7 +269,7 @@ const MainNavigator = () => {
               <CustomTabButton {...props} onPress={() => navigation.navigate('LeadAddPersonal')} />
             ),
           }}
-        />
+        /> */}
 
         <Tab.Screen
           name="Client"
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
   },
 
   labelFocused: {
-    color: 'blue',
+    color: 'pink',
     fontWeight: 'bold',
   },
   icon: {
