@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import { View, StyleSheet, ScrollView, } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import Dropdown from "../../components/Dropdown";
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from "../../components/StepperComp";
+import { fetchPriority } from "../../redux/actions/dropDownAction";
+import { useDispatch, useSelector } from "react-redux";
 
 const LeadAddPersonal = () => {
+  const dispatch = useDispatch();
+  const { priorityList } = useSelector((state) => state.priority);
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [mobileNo, setMobileNo] = useState('');
@@ -19,10 +24,24 @@ const LeadAddPersonal = () => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [country, setCountry] = useState('');
+ 
+  const [formattedPriorityList, setFormattedPriorityList] = useState([]);
 
   const steps = ["Personal", "Occupation", "Services"];
   const currentStep = 1;
-
+  useEffect(() => {
+      dispatch(fetchPriority()); // Fetch priority data when component mounts
+    }, [dispatch]);
+  
+    useEffect(() => {
+      if (priorityList?.length) {
+        const formattedData = priorityList.map((item) => ({
+          label: item.value01, // Use value01 as the display label
+          value: item.id.toString(), // Convert id to string for dropdown compatibility
+        }));
+        setFormattedPriorityList(formattedData);
+      }
+    }, [priorityList]);
 
   return (
     <View style={styles.container}>
@@ -47,13 +66,10 @@ const LeadAddPersonal = () => {
             onChangeText={setLastName}
           />
           <Dropdown
-            label="Lead Service"
+            label="Lead Sources"
             selectedValue={leadService}
             onValueChange={setLeadService}
-            options={[
-              { label: "John Doe", value: "John Doe" },
-              { label: "Jane Smith", value: "Jane Smith" },
-            ]}
+            options={formattedPriorityList}
             zIndex={3000}
           />
           <CustomTextInput

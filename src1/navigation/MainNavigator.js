@@ -251,12 +251,21 @@ const MainNavigator = () => {
           }}
         />
 
-        <Tab.Screen
+        {/* <Tab.Screen
           name="AddTask"
           component={AddTask}
           options={{
             tabBarButton: (props) => (
               <CustomTabButton {...props} onPress={() => navigation.navigate('AddTask')} />
+            ),
+          }}
+        /> */}
+        <Tab.Screen
+          name="LeadAddPersonal"
+          component={LeadAddPersonal}
+          options={{
+            tabBarButton: (props) => (
+              <CustomTabButton {...props} onPress={() => navigation.navigate('LeadAddPersonal')} />
             ),
           }}
         />

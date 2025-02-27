@@ -1,5 +1,163 @@
-import React, { useState } from "react";
+// import React, { useState } from "react";
+// import { View, StyleSheet, ScrollView } from "react-native";
+// import Dropdown from "../../components/Dropdown";
+// import NavigationHeaderBack from "../../components/NavigationHeaderBack";
+// import CustomTextInput from "../../components/CustomTextInput";
+// import CustomButton from "../../components/CustomButton";
+// import ButtonStyles from "../../styles/ButtonStyles";
+
+// const AddTask = (props) => {
+//   const [title, setTitle] = useState('');
+//   const [type, setType] = useState(null);
+//   const [assign, setAssign] = useState(null);
+//   const [client, setClient] = useState(null);
+//   const [dueDate, setDueDate] = useState('');
+//   const [priority, setPriority] = useState('nulll');
+//   const [service, setService] = useState('');
+//   const [startDate, setStartDate] = useState('');
+//   const [reminderDate, setReminderDate] = useState('');
+//   const [attachment, setAttachment] = useState('');
+//   const [remark, setRemark] = useState('');
+//   const goBackCall = () => {
+//     props.navigation.goBack();
+//   };
+
+//   return (
+
+//     <View style={styles.container}>
+//       <View style={{ flex: 0.1 }}>
+//         <NavigationHeaderBack text="Add Task" onPress={goBackCall} />
+//       </View>
+//       <ScrollView
+//         style={{ flex: 1, marginBottom: 60 }}
+//         contentContainerStyle={{ paddingBottom: 20 }}
+//         keyboardShouldPersistTaps="handled"
+//       >
+//         <View style={styles.centerContainer}>
+//           <CustomTextInput
+//             type={title}
+//             value={title}
+//             placeholder="Title"
+//             onChangeText={setTitle}
+//           />
+//           <Dropdown
+//             label="Type"
+//             selectedValue={type}
+//             onValueChange={setType}
+//             options={[
+//               { label: "Lead", value: "Lead" },
+//               { label: "Client", value: "client" },
+//             ]}
+//             zIndex={4000}
+//           />
+//           <Dropdown
+//             label="Task Assign To"
+//             selectedValue={assign}
+//             onValueChange={setAssign}
+//             options={[
+//               { label: "Mr.Akshat", value: "akshat" },
+//               { label: "Mr.Paresh", value: "paresh" },
+//               { label: "Mr.Rajesh", value: "paresh" },
+//               { label: "Mr.Subhash", value: "subhash" },
+//             ]}
+//             zIndex={3000}
+//           />
+//           <Dropdown
+//             label="Client"
+//             selectedValue={client}
+//             onValueChange={setClient}
+//             options={[
+//               { label: "Mahesh Pawar", value: "mahesh pawar" },
+//               { label: "Sonali Thakur", value: "sonali takur" },
+//               { label: "Raj Sharma", value: "raj sharma" },
+//               { label: "Virendra Kambli", value: "virendra kambli" },
+//             ]}
+//             zIndex={2000}
+//           />
+//           <CustomTextInput
+//             followupicon={require('../../assets/icons/Calendar/calendar.png')}
+//             type={dueDate}
+//             value={dueDate}
+//             placeholder="Due Date"
+//             onChangeText={setDueDate}
+//           />
+//           <Dropdown
+//             label="Priority"
+//             selectedValue={priority}
+//             onValueChange={setPriority}
+//             options={[
+//               { label: "High", value: "high" },
+//               { label: "Mid", value: "mid" },
+//               { label: "Low", value: "low" },
+
+//             ]}
+//             zIndex={1000}
+//           />
+//           <CustomTextInput
+//             type={service}
+//             value={service}
+//             placeholder="Service Request"
+//             onChangeText={setService}
+//           />
+//           <CustomTextInput
+//             followupicon={require('../../assets/icons/Calendar/calendar.png')}
+//             type={startDate}
+//             value={setStartDate}
+//             placeholder="Start Date"
+//             onChangeText={setStartDate}
+//           />
+//           <CustomTextInput
+//             followupicon={require('../../assets/icons/Calendar/calendar.png')}
+//             type={reminderDate}
+//             value={reminderDate}
+//             placeholder="Reminder Date"
+//             onChangeText={setReminderDate}
+//           />
+//           <CustomTextInput
+//             followupicon={require('../../assets/icons/Scan/scan.png')}
+//             type={attachment}
+//             value={attachment}
+//             placeholder="Attachment"
+//             onChangeText={setAttachment}
+//           />
+//           <CustomTextInput
+//             type={remark}
+//             value={remark}
+//             placeholder="Remark"
+//             onChangeText={setRemark}
+//           />
+//           <CustomButton title="Submit" customStyle={ButtonStyles.blueButton} textStyles={ButtonStyles.blueButtonText} />
+//         </View>
+//       </ScrollView>
+//     </View>
+
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     paddingRight: 10,
+//     paddingLeft: 8,
+//     paddingTop: 15,
+//     backgroundColor: "#FFFFFF",
+//     gap: 20,
+//   },
+//   centerContainer: {
+//     flex: 0.7,
+//     gap: 12,
+//     zIndex: 1,
+//     paddingRight: 10,
+//     paddingLeft: 5,
+//   },
+// });
+
+// export default AddTask;
+
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPriority } from "../../redux/actions/dropDownAction";
 import Dropdown from "../../components/Dropdown";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import CustomTextInput from "../../components/CustomTextInput";
@@ -7,23 +165,41 @@ import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 
 const AddTask = (props) => {
+  const dispatch = useDispatch();
+  const { priorityList } = useSelector((state) => state.priority); // Get priority list from Redux
+
   const [title, setTitle] = useState('');
   const [type, setType] = useState(null);
   const [assign, setAssign] = useState(null);
   const [client, setClient] = useState(null);
   const [dueDate, setDueDate] = useState('');
-  const [priority, setPriority] = useState('nulll');
+  const [priority, setPriority] = useState(null);
   const [service, setService] = useState('');
   const [startDate, setStartDate] = useState('');
   const [reminderDate, setReminderDate] = useState('');
   const [attachment, setAttachment] = useState('');
   const [remark, setRemark] = useState('');
+  const [formattedPriorityList, setFormattedPriorityList] = useState([]);
+
+  useEffect(() => {
+    dispatch(fetchPriority()); // Fetch priority data when component mounts
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (priorityList?.length) {
+      const formattedData = priorityList.map((item) => ({
+        label: item.value01, // Use value01 as the display label
+        value: item.id.toString(), // Convert id to string for dropdown compatibility
+      }));
+      setFormattedPriorityList(formattedData);
+    }
+  }, [priorityList]);
+
   const goBackCall = () => {
     props.navigation.goBack();
   };
 
   return (
-
     <View style={styles.container}>
       <View style={{ flex: 0.1 }}>
         <NavigationHeaderBack text="Add Task" onPress={goBackCall} />
@@ -57,7 +233,7 @@ const AddTask = (props) => {
             options={[
               { label: "Mr.Akshat", value: "akshat" },
               { label: "Mr.Paresh", value: "paresh" },
-              { label: "Mr.Rajesh", value: "paresh" },
+              { label: "Mr.Rajesh", value: "rajesh" },
               { label: "Mr.Subhash", value: "subhash" },
             ]}
             zIndex={3000}
@@ -85,12 +261,7 @@ const AddTask = (props) => {
             label="Priority"
             selectedValue={priority}
             onValueChange={setPriority}
-            options={[
-              { label: "High", value: "high" },
-              { label: "Mid", value: "mid" },
-              { label: "Low", value: "low" },
-
-            ]}
+            options={formattedPriorityList} // Use transformed priority data
             zIndex={1000}
           />
           <CustomTextInput
@@ -102,7 +273,7 @@ const AddTask = (props) => {
           <CustomTextInput
             followupicon={require('../../assets/icons/Calendar/calendar.png')}
             type={startDate}
-            value={setStartDate}
+            value={startDate}
             placeholder="Start Date"
             onChangeText={setStartDate}
           />
@@ -130,7 +301,6 @@ const AddTask = (props) => {
         </View>
       </ScrollView>
     </View>
-
   );
 };
 
@@ -153,3 +323,4 @@ const styles = StyleSheet.create({
 });
 
 export default AddTask;
+
