@@ -19,7 +19,6 @@ import CustomTextInput from '../../components/CustomTextInput';
 import CustomButton from '../../components/CustomButton';
 import TextStyle from '../../styles/TextStyle';
 import ButtonStyles from '../../styles/ButtonStyles';
-import { loginUser, updateCredential } from '../../redux/actions/authActions';
 import Loader from '../../styles/Loader';
 import { useDispatch } from 'react-redux';
 import { loginSuccess,updateCredential,loginUser } from '../../redux/actions/authActions'; // Import your login action
