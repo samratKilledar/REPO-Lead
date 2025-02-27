@@ -179,13 +179,13 @@ const styles = StyleSheet.create({
   },
   inner: {
     flex: 1,
-    width: '100%',
+   // width: '100%',
     alignItems: 'center',
   },
   logo: {
     width: 380,
     height: 81.23,
-    marginBottom: 10,
+   // marginBottom: 10,
   },
   box: {
     flex: 1,
