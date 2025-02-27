@@ -28,11 +28,13 @@ const HoriCardcomp = () => {
               </View>
       </View>
 
+      <View style={{marginRight : 70}}>
       <View style={cardstyle.project}>
               <View style={{paddingRight:50, padding:10}}>
               <CustomText customstyle={TextStyle.textNum} text = {"1523"}/>
               <CustomText customstyle={TextStyle.textLabel} text = {"Total Pending"}/>
               </View>
+      </View>
       </View>
     </ScrollView>
   );
@@ -43,10 +45,10 @@ export default HoriCardcomp;
 const style = StyleSheet.create({
   scrollContainer: {
     flexDirection: "row",
-    paddingHorizontal: 20, 
+    paddingHorizontal: 20,
   },
   space: {
     gap: 10,
-    marginRight: 16, // Space between cards
+    marginRight: 16,
   },
 });

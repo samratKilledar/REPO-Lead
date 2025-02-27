@@ -86,7 +86,7 @@ const style = StyleSheet.create({
     top: 15,
     paddingTop: 12,
     paddingBottom: 24,
-    gap: 24,
+    gap: 20,
   },
   container1: {
     flex: 1,
@@ -94,13 +94,13 @@ const style = StyleSheet.create({
   container2: {
     paddingRight: 24,
     paddingLeft: 24,
-    gap: 24,
+    gap: 15,
     marginBottom: 10,
   },
   container3: {
     paddingRight: 24,
     paddingLeft: 24,
-    gap: 12,
+    gap: 10,
     marginBottom: 10,
   },
 });
