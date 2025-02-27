@@ -8,6 +8,7 @@ const API_URLS = {
   clientFollowUp: "https://opticalerp.in:85/api/udc/getvaluesbytype?type=Clients",
   taskpriority: "https://opticalerp.in:85/api/udc/getvaluesbytype?type=Priority",
   service: "https://opticalerp.in:85/api/udc/getvaluesbytype?type=Services",
+  leadsource: "https://opticalerp.in:85/api/udc/getvaluesbytype?type=Lead%20Source",
 };
 
 // ✅ Fetch Status List Based on Type

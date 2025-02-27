@@ -5,6 +5,7 @@ import CustomTextInput from '../../components/CustomTextInput';
 import Dropdown from "../../components/Dropdown";
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from "../../components/StepperComp";
+import StatusDropdown from '../../components/StatusDropdown';
 
 const LeadAddPersonal = () => {
   const [firstName, setFirstName] = useState('');
@@ -46,16 +47,15 @@ const LeadAddPersonal = () => {
             placeholder="Last Name"
             onChangeText={setLastName}
           />
-          <Dropdown
-            label="Lead Service"
-            selectedValue={leadService}
-            onValueChange={setLeadService}
-            options={[
-              { label: "John Doe", value: "John Doe" },
-              { label: "Jane Smith", value: "Jane Smith" },
-            ]}
-            zIndex={3000}
-          />
+
+           <StatusDropdown
+        label= "Lead Source" 
+        selectedValue={leadService} 
+        onValueChange={setLeadService}
+         apiType="leadsource" 
+          zIndex={3000} // Higher than Dropdown 2
+          elevation={6}
+       />
           <CustomTextInput
             value={mobileNo}
             placeholder="Mobile No"
@@ -105,7 +105,7 @@ const LeadAddPersonal = () => {
             ]}
             zIndex={4000}
           />
-          <Dropdown
+          <Dropdown 
             label="Country"
             selectedValue={country}
             onValueChange={setCountry}
