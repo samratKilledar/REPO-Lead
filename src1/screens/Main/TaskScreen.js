@@ -99,6 +99,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#2B2162",
     marginTop: 4,
   },
+  scrollViewContent: {
+    paddingBottom: 60, // Adds padding at the bottom to avoid cut-off content
+  },
   inactiveTabIndicator: {
     width: 160,
     height: 2,
@@ -109,9 +112,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1, // Ensure content takes up available space
     gap: 24,
-  },
-  scrollViewContent: {
-    paddingBottom: 60, // Adds padding at the bottom to avoid cut-off content
   },
   cardWrapper: {
     marginBottom: 30,

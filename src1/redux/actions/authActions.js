@@ -15,7 +15,7 @@ export const loginUser = () => async (dispatch, getState) => {
     const {loginValue} = getState().auth; // Get loginValue from Redux
     //  alert(JSON.stringify(loginValue))
     const data = await loginUserApiCall(loginValue); // API call
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
     setItem('authToken',data); // Store token
 
     dispatch({ type: LOGIN_SUCCESS}); // Dispatch success action

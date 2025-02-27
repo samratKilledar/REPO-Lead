@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
-import forgotPassReducer from './forgotPassReducer';
-import dropDownReducer from './dropDownReducer'; 
+import statusReducer from './statusReducer';
 export default combineReducers({
   auth: authReducer,
-  forgotPassReducer: forgotPassReducer,
-  priority:dropDownReducer,
+  status: statusReducer,
 });

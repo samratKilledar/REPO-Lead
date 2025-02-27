@@ -5,8 +5,12 @@ import CustomTextInput from '../../components/CustomTextInput';
 import Dropdown from "../../components/Dropdown";
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from "../../components/StepperComp";
+<<<<<<< HEAD
 import { fetchPriority } from "../../redux/actions/dropDownAction";
 import { useDispatch, useSelector } from "react-redux";
+=======
+import StatusDropdown from '../../components/StatusDropdown';
+>>>>>>> DropDownApi
 
 const LeadAddPersonal = () => {
   const dispatch = useDispatch();
@@ -65,13 +69,15 @@ const LeadAddPersonal = () => {
             placeholder="Last Name"
             onChangeText={setLastName}
           />
-          <Dropdown
-            label="Lead Sources"
-            selectedValue={leadService}
-            onValueChange={setLeadService}
-            options={formattedPriorityList}
-            zIndex={3000}
-          />
+
+           <StatusDropdown
+        label= "Lead Source" 
+        selectedValue={leadService} 
+        onValueChange={setLeadService}
+         apiType="leadsource" 
+          zIndex={3000} // Higher than Dropdown 2
+          elevation={6}
+       />
           <CustomTextInput
             value={mobileNo}
             placeholder="Mobile No"
@@ -121,7 +127,7 @@ const LeadAddPersonal = () => {
             ]}
             zIndex={4000}
           />
-          <Dropdown
+          <Dropdown 
             label="Country"
             selectedValue={country}
             onValueChange={setCountry}

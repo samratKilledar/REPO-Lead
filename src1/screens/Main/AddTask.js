@@ -1,10 +1,12 @@
 // import React, { useState } from "react";
 // import { View, StyleSheet, ScrollView } from "react-native";
 // import Dropdown from "../../components/Dropdown";
+// import DateTimePicker from "@react-native-community/datetimepicker";
 // import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 // import CustomTextInput from "../../components/CustomTextInput";
 // import CustomButton from "../../components/CustomButton";
 // import ButtonStyles from "../../styles/ButtonStyles";
+// import StatusDropdown from "../../components/StatusDropdown";
 
 // const AddTask = (props) => {
 //   const [title, setTitle] = useState('');
@@ -48,7 +50,8 @@
 //               { label: "Lead", value: "Lead" },
 //               { label: "Client", value: "client" },
 //             ]}
-//             zIndex={4000}
+//             zIndex={4000} // Highest
+//             elevation={8}
 //           />
 //           <Dropdown
 //             label="Task Assign To"
@@ -60,7 +63,8 @@
 //               { label: "Mr.Rajesh", value: "paresh" },
 //               { label: "Mr.Subhash", value: "subhash" },
 //             ]}
-//             zIndex={3000}
+//             zIndex={3000} // Above Client Dropdown
+//             elevation={7}
 //           />
 //           <Dropdown
 //             label="Client"
@@ -72,7 +76,8 @@
 //               { label: "Raj Sharma", value: "raj sharma" },
 //               { label: "Virendra Kambli", value: "virendra kambli" },
 //             ]}
-//             zIndex={2000}
+//             zIndex={2000} // Above text input, but below Task Assign To
+//             elevation={6}
 //           />
 //           <CustomTextInput
 //             followupicon={require('../../assets/icons/Calendar/calendar.png')}
@@ -81,17 +86,14 @@
 //             placeholder="Due Date"
 //             onChangeText={setDueDate}
 //           />
-//           <Dropdown
+      
+//           <StatusDropdown
 //             label="Priority"
 //             selectedValue={priority}
 //             onValueChange={setPriority}
-//             options={[
-//               { label: "High", value: "high" },
-//               { label: "Mid", value: "mid" },
-//               { label: "Low", value: "low" },
-
-//             ]}
-//             zIndex={1000}
+//             apiType="taskpriority"
+//             zIndex={1000} // Lowest dropdown, below text input
+//             elevation={5} // Lower zIndex
 //           />
 //           <CustomTextInput
 //             type={service}
@@ -149,20 +151,22 @@
 //     zIndex: 1,
 //     paddingRight: 10,
 //     paddingLeft: 5,
+//     position: "relative",
 //   },
 // });
 
 // export default AddTask;
 
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPriority } from "../../redux/actions/dropDownAction";
+
+import React, { useState } from "react";
+import { View, StyleSheet, ScrollView, Platform } from "react-native";
 import Dropdown from "../../components/Dropdown";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
+import StatusDropdown from "../../components/StatusDropdown";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 const AddTask = (props) => {
   const dispatch = useDispatch();
@@ -173,30 +177,33 @@ const AddTask = (props) => {
   const [assign, setAssign] = useState(null);
   const [client, setClient] = useState(null);
   const [dueDate, setDueDate] = useState('');
-  const [priority, setPriority] = useState(null);
+  const [priority, setPriority] = useState('null');
   const [service, setService] = useState('');
   const [startDate, setStartDate] = useState('');
   const [reminderDate, setReminderDate] = useState('');
   const [attachment, setAttachment] = useState('');
   const [remark, setRemark] = useState('');
-  const [formattedPriorityList, setFormattedPriorityList] = useState([]);
-
-  useEffect(() => {
-    dispatch(fetchPriority()); // Fetch priority data when component mounts
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (priorityList?.length) {
-      const formattedData = priorityList.map((item) => ({
-        label: item.value01, // Use value01 as the display label
-        value: item.id.toString(), // Convert id to string for dropdown compatibility
-      }));
-      setFormattedPriorityList(formattedData);
-    }
-  }, [priorityList]);
-
+  
   const goBackCall = () => {
     props.navigation.goBack();
+  };
+
+  // Date Picker States
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [activeDateField, setActiveDateField] = useState(null); // Track which field is active
+ 
+  // Handle Date Selection
+  const handleDateChange = (event, date) => {
+    if (event.type === "set" && date) {
+      setSelectedDate(date);
+      const formattedDate = date.toISOString().split("T")[0]; // Format YYYY-MM-DD
+      // Set the selected date to the active field
+      if (activeDateField === "dueDate") setDueDate(formattedDate);
+      if (activeDateField === "startDate") setStartDate(formattedDate);
+      if (activeDateField === "reminderDate") setReminderDate(formattedDate);
+    }
+    setShowDatePicker(false);
   };
 
   return (
@@ -224,7 +231,8 @@ const AddTask = (props) => {
               { label: "Lead", value: "Lead" },
               { label: "Client", value: "client" },
             ]}
-            zIndex={4000}
+            zIndex={4000} // Highest
+            elevation={8}
           />
           <Dropdown
             label="Task Assign To"
@@ -236,7 +244,8 @@ const AddTask = (props) => {
               { label: "Mr.Rajesh", value: "rajesh" },
               { label: "Mr.Subhash", value: "subhash" },
             ]}
-            zIndex={3000}
+            zIndex={3000} // Above Client Dropdown
+            elevation={7}
           />
           <Dropdown
             label="Client"
@@ -248,42 +257,68 @@ const AddTask = (props) => {
               { label: "Raj Sharma", value: "raj sharma" },
               { label: "Virendra Kambli", value: "virendra kambli" },
             ]}
-            zIndex={2000}
+            zIndex={2000} // Above text input, but below Task Assign To
+            elevation={6}
           />
+
+          {/* 📅 Due Date */}
           <CustomTextInput
             followupicon={require('../../assets/icons/Calendar/calendar.png')}
             type={dueDate}
             value={dueDate}
             placeholder="Due Date"
             onChangeText={setDueDate}
+            onIconPress={() => {
+              setActiveDateField("dueDate");
+              setShowDatePicker(true);
+            }}
           />
-          <Dropdown
+
+          {/* Priority Dropdown */}
+          <StatusDropdown
             label="Priority"
             selectedValue={priority}
             onValueChange={setPriority}
-            options={formattedPriorityList} // Use transformed priority data
+            apiType="taskpriority"
             zIndex={1000}
+            elevation={5}
           />
+
+          {/* Service Request */}
           <CustomTextInput
             type={service}
             value={service}
             placeholder="Service Request"
             onChangeText={setService}
           />
+
+          {/* 📅 Start Date */}
           <CustomTextInput
             followupicon={require('../../assets/icons/Calendar/calendar.png')}
             type={startDate}
             value={startDate}
             placeholder="Start Date"
             onChangeText={setStartDate}
+            onIconPress={() => {
+              setActiveDateField("startDate");
+              setShowDatePicker(true);
+            }}
           />
+
+          {/* 📅 Reminder Date */}
           <CustomTextInput
             followupicon={require('../../assets/icons/Calendar/calendar.png')}
             type={reminderDate}
             value={reminderDate}
             placeholder="Reminder Date"
             onChangeText={setReminderDate}
+            onIconPress={() => {
+              setActiveDateField("reminderDate");
+              setShowDatePicker(true);
+            }}
           />
+
+          {/* Attachment */}
           <CustomTextInput
             followupicon={require('../../assets/icons/Scan/scan.png')}
             type={attachment}
@@ -291,15 +326,33 @@ const AddTask = (props) => {
             placeholder="Attachment"
             onChangeText={setAttachment}
           />
+
+          {/* Remark */}
           <CustomTextInput
             type={remark}
             value={remark}
             placeholder="Remark"
             onChangeText={setRemark}
           />
-          <CustomButton title="Submit" customStyle={ButtonStyles.blueButton} textStyles={ButtonStyles.blueButtonText} />
+
+          {/* Submit Button */}
+          <CustomButton
+            title="Submit"
+            customStyle={ButtonStyles.blueButton}
+            textStyles={ButtonStyles.blueButtonText}
+          />
         </View>
       </ScrollView>
+
+      {/* 🗓️ Date Picker Modal */}
+      {showDatePicker && (
+        <DateTimePicker
+          value={selectedDate}
+          mode="date"
+          display={Platform.OS === "ios" ? "spinner" : "default"}
+          onChange={handleDateChange}
+        />
+      )}
     </View>
   );
 };
@@ -319,8 +372,8 @@ const styles = StyleSheet.create({
     zIndex: 1,
     paddingRight: 10,
     paddingLeft: 5,
+    position: "relative",
   },
 });
 
 export default AddTask;
-

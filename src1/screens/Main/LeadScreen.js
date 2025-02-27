@@ -22,7 +22,7 @@ const LeadScreen = (props) => {
           <CustomText text="Lead" customstyle={TextStyle.leadText} />
         </View>
 
-        <ScrollView style={{ padding: 20, flex: 1, }}>
+        <ScrollView style={{ padding: 20, flex: 1,marginBottom: 60, }}>
           {leadsData.map((item) => (
             <LeadCard key={item.id} {...item} navigation={props.navigation} screenType="lead" />
 
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     backgroundColor: "grey",
   },
   centerContainer: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   lead: {
     flexDirection: "row",
