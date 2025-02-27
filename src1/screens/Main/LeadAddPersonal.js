@@ -483,27 +483,32 @@ const LeadAddPersonal = (props) => {
 };
 
 const styles = StyleSheet.create({
+
   container: {
+
     flex: 1,
+    //paddingHorizontal: 24,
     paddingTop: 15,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     gap: 18,
     marginBottom: 50,
-  },
-  header: {
+    },
+    header: {
     height: 50,
-  },
-  stepperContainer: {
+    },
+    stepperContainer: {
     height: 50,
     marginTop: 10,
-  },
-  centerContainer: {
+   },
+    centerContainer: {
     paddingBottom: 20,
     gap: 10,
-  },
-  scrollViewContent: {
+    paddingLeft:15,
+    paddingRight:15,
+    },
+    scrollViewContent: {
     flexGrow: 1,
-  },
+    },
 });
 
 export default LeadAddPersonal;
