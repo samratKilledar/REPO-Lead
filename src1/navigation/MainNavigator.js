@@ -204,6 +204,7 @@ const CustomTabButton = ({onPress}) => {
   );
 };
 
+
 const MainNavigator = () => {
   return (
     <View style={{ flex: 1, }}>

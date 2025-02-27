@@ -2,24 +2,32 @@
 
 // Base API URL
 const BASE_URL = 'https://yourapi.com/api/'; // Replace with your actual API
-import {api} from './api';
 // Function to get the auth token from AsyncStorage
 const getAuthToken = async () => {
   //   return await AsyncStorage.getItem('authToken');
 };
 
 // GET Request Function
-export const apiGet = async (endpoint, params = {}) => {
+export const apiGet = async (url,tokan) => {
   try {
-    // const token = await getAuthToken();
-    // const response = await axios.get(`${BASE_URL}${endpoint}`, {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //     'Content-Type': 'application/json',
-    //   },
-    //   params, // Send query parameters if needed
-    // });
-    // return response.data;
+    console.log(tokan+"=="+url)
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        // Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Authorization: tokan,
+
+      },
+    });
+    console.log("333+response"+JSON.stringify(response))
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    alert(JSON.stringify(response))
+    return await response.json();
   } catch (error) {
     console.error(
       `GET ${endpoint} Error:`,
@@ -30,12 +38,12 @@ export const apiGet = async (endpoint, params = {}) => {
 };
 
 // POST Request Function
-export const apiPost = async (endpoint, param = {}) => {
+export const apiPost = async (url, param = {}) => {
   const data = param.data;
   console.log(JSON.stringify(data) + '=sssssss=' + data.password);
 
   try {
-    const response = await fetch(api.authApi, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
