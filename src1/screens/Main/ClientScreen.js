@@ -10,6 +10,15 @@ const clintsData = [
   { id: "1", name: "Barbara Moore", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Follow Up", statusGradient: ["#246BFD", "#6F9EFF"], menuType: "follow" },
   { id: "2", name: "Pricilla Maureen", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Meeting Pending", statusGradient: ["#FACC15", "#FFE580"], menuType: "follow" },
   { id: "3", name: "Robert George", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Lead Win", statusGradient: ["#4ADE80", "#73FFA6"], menuType: "follow" },
+  { id: "3", name: "Robert George", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Lead Win", statusGradient: ["#4ADE80", "#73FFA6"], menuType: "follow" },
+  { id: "3", name: "Robert George", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Lead Win", statusGradient: ["#4ADE80", "#73FFA6"], menuType: "follow" },
+  { id: "3", name: "Robert George", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Lead Win", statusGradient: ["#4ADE80", "#73FFA6"], menuType: "follow" },
+  { id: "3", name: "Robert George", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Lead Win", statusGradient: ["#4ADE80", "#73FFA6"], menuType: "follow" },
+  { id: "3", name: "Robert George", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Lead Win", statusGradient: ["#4ADE80", "#73FFA6"], menuType: "follow" },
+  { id: "3", name: "Robert George", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Lead Win", statusGradient: ["#4ADE80", "#73FFA6"], menuType: "follow" },
+  { id: "3", name: "Robert George", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Lead Win", statusGradient: ["#4ADE80", "#73FFA6"], menuType: "follow" },
+  { id: "3", name: "Robert George", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Lead Win", statusGradient: ["#4ADE80", "#73FFA6"], menuType: "follow" },
+
 ];
 
 const ClientScreen = (props) => {
@@ -34,7 +43,7 @@ const ClientScreen = (props) => {
           <CustomText text="Client" customstyle={TextStyle.leadText} />
         </View>
 
-        <ScrollView style={{ padding: 20, flex: 1, }}>
+        <ScrollView style={{ padding: 20, flex: 1,marginBottom: 60 }}>
           {clintsData.map((item) => (
             <LeadCard key={item.id} {...item} navigation={props.navigation} screenType="client" />
           ))}
@@ -56,7 +65,7 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
   },
   centerContainer: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   lead: {
     flexDirection: "row",

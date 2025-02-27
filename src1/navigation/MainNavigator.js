@@ -57,10 +57,7 @@ const HomeStackScreen = ({navigation, route}) => {
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
-      <HomeStack.Screen
-        name="CloseAccountScreen"
-        component={CloseAccountScreen}
-      />
+      <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen} />
       <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
     </HomeStack.Navigator>
   );
@@ -73,14 +70,12 @@ const LeadStackScreen = ({navigation, route}) => {
     <HomeStack.Navigator screenOptions={{headerShown: false}}>
       <HomeStack.Screen name="Lead" component={LeadScreen} />
       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
-      <HomeStack.Screen
-        name="EditProfileScreen"
-        component={EditProfileScreen}
-      />
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen}/>
       <HomeStack.Screen name="LeadDetails" component={LeadDetails} />
       <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
+      <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
     </HomeStack.Navigator>
   );
 };
@@ -118,6 +113,7 @@ const ClientStackScreen = ({navigation, route}) => {
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
       <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
+      <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
     </HomeStack.Navigator>
   );
 };

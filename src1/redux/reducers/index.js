@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
-import dropDownReducer from './dropDownReducer';
+import statusReducer from './statusReducer';
 export default combineReducers({
   auth: authReducer,
-  dropdown: dropDownReducer,
+  status: statusReducer,
 });
