@@ -21,7 +21,7 @@ import TextStyle from '../../styles/TextStyle';
 import ButtonStyles from '../../styles/ButtonStyles';
 import Loader from '../../styles/Loader';
 import { useDispatch } from 'react-redux';
-import { loginSuccess,updateCredential,loginUser } from '../../redux/actions/authActions'; // Import your login action
+import { getReadAllLead,updateCredential,loginUser } from '../../redux/actions/authActions'; // Import your login action
 import { useSelector } from "react-redux";
 import { getItem } from '../../api/storageServices';
 
@@ -35,11 +35,16 @@ const LoginScreen = (props) => {
   const loginValue = useSelector(state => state.auth.loginValue);
 
   useEffect(() => {
+    dispatch(getReadAllLead)
+
     const checkAuthToken = async () => {
       try {
+
         const user = await getItem('authToken');
         if (user) {
-          props.navigation.navigate('HomeStackScreen'); // Use props.navigation instead of props.navigate
+          navigation.replace('HomeStack'); // Navigate to HomeStack on success
+          // Use props.navigation instead of props.navigate\
+          // alert("sss")
         }
       } catch (error) {
         console.error("Error retrieving auth token:", error);
