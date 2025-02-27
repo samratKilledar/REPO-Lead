@@ -1,12 +1,16 @@
-import {apiPost} from './apiClient';
+import {apiGet, apiPost} from './apiClient';
+import {api} from './api';
+import { getItem } from '../api/storageServices';
 
 // Login API
 export const loginUserApiCall = async data => {
   console.log('inside function' + JSON.stringify(data));
-  return await apiPost('auth/login', {data});
+  return await apiPost(api.authApi, {data});
 };
 
 // Register API
-export const registerUser = async userData => {
-  return await apiPost('auth/register', userData);
+export const readAllLead = async userData => {
+    console.log(2222)
+    console.log(getItem("authToken"))
+    return await apiGet(api.getAllLeadApi,getItem(authToken));
 };
