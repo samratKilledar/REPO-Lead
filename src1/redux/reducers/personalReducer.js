@@ -69,20 +69,28 @@
 
 // export default leadReducer;
 
-//New Code 
+//New Code Eve --> 
 const initialState = {
   isSubmitted: false,
   personalPlaceHolder: {
     firstName: "First Name",
     lastName: "Last Name",
-    email: "Email",
-    phone: "Phone Number",
+    emailId: "Email Id",
+    MobileNo: "Mobile No",
+    WhatsappNo: "Whatsapp No",
+    addressLine1: "Address Line 1",
+    addressLine2: "Address Line 2",
+    pincode: "Pincode",
   },
   personalValue: {
     firstName: "Akhil",
     lastName: "Tamgaonkar",
     email: "abc@gmail.com",
     phone: "00000000000",
+    whatsapp: "00000000000",
+    addressLine1: "Address Line 1",
+    addressLine2: "Address Line 2",
+    pincode: "123456",
   },
 };
 

@@ -73,14 +73,16 @@
 //   }
 // };
 
+//Eve --> 
+
 export const PERSONAL_SUBMIT_SUCCESS = 'PERSONAL_SUBMIT_SUCCESS';
 export const CHANGE_PERSONAL_FIELD = 'CHANGE_PERSONAL_FIELD';
 
 // Async Action for Submitting Personal Details
 export const submitPersonalDetails = () => {
   return async (dispatch, getState) => {
-    const { personalValue } = getState().LeadAddPersonalReducer; // Get personalValue from Redux
-    console.log(personalValue);
+    const { personalValue } = getState().personalReducer; // Get personalValue from Redux
+    // console.log(personalValue);
 
     try {
       const response = await fetch('https://opticalerp.in:85/api/lead/create/create', {
@@ -92,8 +94,12 @@ export const submitPersonalDetails = () => {
         body: JSON.stringify({
           firstName: personalValue.firstName,
           lastName: personalValue.lastName,
-          email: personalValue.email,
-          phone: personalValue.phone,
+
+          emailId: personalValue.emailId,
+          Mobileno: personalValue.Mobileno,
+          WhatsappNo: personalValue.WhatsappNo,
+          addressLine1: personalValue.addressLine1,  
+          addressLine2: personalValue.addressLine2,
         }),
       });
 
@@ -121,3 +127,4 @@ export const updatePersonalField = (data) => ({
   type: CHANGE_PERSONAL_FIELD,
   payload: data,
 });
+
