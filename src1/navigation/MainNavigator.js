@@ -37,6 +37,8 @@ import LeadAddPersonal from '../screens/Main/LeadAddPersonal';
 import LoginScreen from '../screens/Auth/LoginScreen';
 import LogoutScreen from '../screens/Auth/LogoutScreen';
 import HeaderComp from '../components/HeaderComp';
+import ClientAddServices from '../screens/Main/ClientAddServices';
+import LeadLast from '../screens/Main/LeadLast';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -57,10 +59,7 @@ const HomeStackScreen = ({navigation, route}) => {
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
-      <HomeStack.Screen
-        name="CloseAccountScreen"
-        component={CloseAccountScreen}
-      />
+      <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen} />
       <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
     </HomeStack.Navigator>
   );
@@ -73,14 +72,14 @@ const LeadStackScreen = ({navigation, route}) => {
     <HomeStack.Navigator screenOptions={{headerShown: false}}>
       <HomeStack.Screen name="Lead" component={LeadScreen} />
       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
-      <HomeStack.Screen
-        name="EditProfileScreen"
-        component={EditProfileScreen}
-      />
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen}/>
       <HomeStack.Screen name="LeadDetails" component={LeadDetails} />
       <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
+      <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
+      <HomeStack.Screen name="LeadAddOccupation" component={LeadAddOccupation} />
+      <HomeStack.Screen name="LeadLast" component={LeadLast} />
     </HomeStack.Navigator>
   );
 };
@@ -116,8 +115,11 @@ const ClientStackScreen = ({navigation, route}) => {
       />
       <HomeStack.Screen name="ClientDetails" component={ClientDetails} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
-      <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
+      <HomeStack.Screen name="ClientAddServices" component={ClientAddServices} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
+      {/* <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
+      <HomeStack.Screen name="LeadAddOccupation" component={LeadAddOccupation} />
+      <HomeStack.Screen name="LeadLast" component={LeadLast} /> */}
     </HomeStack.Navigator>
   );
 };
@@ -133,6 +135,7 @@ const TaskStackScreen = ({navigation, route}) => {
       />
       <HomeStack.Screen name="AddTask" component={AddTask} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
+      {/* <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} /> */}
       <HomeStack.Screen
         name="EditProfileScreen"
         component={EditProfileScreen}
@@ -176,7 +179,7 @@ const CustomTabButton = ({onPress}) => {
               style={styles.option}
               onPress={() => {
                 setModalVisible(false);
-                navigation.navigate('LeadAddPersonal');
+               navigation.navigate('Lead', { screen: 'LeadAddPersonal' });
               }}>
               <Text style={styles.optionText}>Lead</Text>
               <Image
@@ -189,7 +192,7 @@ const CustomTabButton = ({onPress}) => {
               style={styles.option}
               onPress={() => {
                 setModalVisible(false);
-                navigation.navigate('AddTask');
+                navigation.navigate('Task' , {screen: 'AddTask'} );
               }}>
               <Text style={styles.optionText}>Task</Text>
               <Image
@@ -275,7 +278,6 @@ const MainNavigator = () => {
             ),
           }}
         />
-
         <Tab.Screen
           name="Client"
           component={ClientStackScreen}
@@ -357,7 +359,7 @@ const styles = StyleSheet.create({
   },
 
   labelFocused: {
-    color: 'blue',
+    color: '#2B2162',
     fontWeight: 'bold',
   },
   // icon: {

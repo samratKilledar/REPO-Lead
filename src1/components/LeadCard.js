@@ -32,7 +32,7 @@ const LeadCard = (props) => {
     setModalVisible(false);
   };
   const editProfile = () => {
-    props.navigation.navigate("EditProfileScreen")
+    props.navigation.navigate("LeadAddPersonal")
     setMenuVisible(false);
     setModalVisible(false)
   }

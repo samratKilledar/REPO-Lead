@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet , TouchableOpacity } from "react-native";
 import Dropdown from "../../components/Dropdown";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import { useNavigation } from "@react-navigation/native";
+import StatusDropdown from "../../components/StatusDropdown";
 
 const AddFollowUP = (props) => {
   const [title, setTitle] = useState('');
@@ -15,10 +17,37 @@ const AddFollowUP = (props) => {
   const [meetSchedule, setMeetSchedule] = useState('');
   const [scheduleTime, setScheduleTime] = useState('');
   const [remark, setRemark] = useState('');
+ 
   const navigation = useNavigation();
   const goBackCall = () => {
     navigation.popToTop();
   };
+
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showTimePicker, setShowTimePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Store date
+  const [selectedTime, setSelectedTime] = useState(new Date());
+  const handleDateChange = (event, date) => {
+    if (event.type === "set" && date) {
+      setSelectedDate(date);
+      setMeetSchedule(date.toISOString().split("T")[0]); // Format YYYY-MM-DD
+    }
+    setShowDatePicker(false);
+  };
+
+  // ⏰ Handle Time Selection
+  const handleTimeChange = (event, time) => {
+    if (event.type === "set" && time) {
+      setSelectedTime(time);
+      const hours = time.getHours();
+      const minutes = time.getMinutes().toString().padStart(2, "0");
+      const ampm = hours >= 12 ? "PM" : "AM";
+      const formattedHours = (hours % 12 || 12).toString().padStart(2, "0");
+      setScheduleTime(`${formattedHours}:${minutes} ${ampm}`); // Format HH:MM AM/PM
+    }
+    setShowTimePicker(false);
+  };
+  
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.1, marginLeft: 5, }}>
@@ -32,26 +61,14 @@ const AddFollowUP = (props) => {
           placeholder="Title"
           onChangeText={setTitle}
         />
-        <Dropdown
-          label="Status"
-          selectedValue={type}
-          onValueChange={setType}
-          options={[
-            { label: "Insurance Under Process", value: "Insurance Under Process" },
-            { label: "Mandate Approved", value: "Mandate Approved" },
-            { label: "Demat Under Process", value: "Demat Under Process" },
-            { label: "Mandate Pending", value: "Mandate Pending" },
-            { label: "Case Declined", value: "Case Declined" },
-            { label: "Reject", value: "client" },
-            { label: "Payment Pending", value: "Payment Pending" },
-            { label: "Task Completed", value: "Task Completed" },
-            { label: "Document Recived & Under Process", value: "Document Recived & Under Process" },
-            { label: "Policy Issues", value: "Policy Issues" },
-            { label: "Insurance Pending", value: "Insurance Pending" },
-            { label: "Waiting For Documents", value: "Waiting For Documents" },
-            { label: "Conversation Pending", value: "Conversation Pending" },
-          ]}
-          zIndex={2000}
+      
+        <StatusDropdown 
+         label="Status" 
+         selectedValue={type} 
+         onValueChange={setType} 
+         apiType="followUp" 
+         zIndex={2000} // Higher than Dropdown 2
+       elevation={6}// Explicitly setting zIndex
         />
         <Dropdown
           label="Assign"
@@ -63,7 +80,8 @@ const AddFollowUP = (props) => {
             { label: "Mr.Rajesh", value: "paresh" },
             { label: "Mr.Subhash", value: "subhash" },
           ]}
-          zIndex={1000} // Lowest zIndex
+          zIndex={1000} // Lower than Dropdown 1
+          elevation={4}
         />
         <CustomTextInput
           followupicon={require('../../assets/icons/Scan/scan.png')}
@@ -73,19 +91,40 @@ const AddFollowUP = (props) => {
           onChangeText={setTitle}
         />
         <CustomTextInput
-          followupicon={require('../../assets/icons/Calendar/calendar.png')}
+          followupicon={require("../../assets/icons/Calendar/calendar.png")}
           type={meetSchedule}
           value={meetSchedule}
           placeholder="Next Meeting schedule on"
           onChangeText={setMeetSchedule}
+          onIconPress={() => setShowDatePicker(true)} // Open Date Picker on icon click
         />
+        {showDatePicker && (
+          <DateTimePicker
+            value={selectedDate}
+            mode="date"
+            display={Platform.OS === "ios" ? "spinner" : "default"}
+            onChange={handleDateChange}
+          />
+        )}
+
+        {/* ⏰ TIME PICKER INPUT */}
         <CustomTextInput
-          followupicon={require('../../assets/icons/Calendar/calendar.png')}
+          followupicon={require("../../assets/icons/Calendar/calendar.png")} // Clock Icon
           type={scheduleTime}
           value={scheduleTime}
           placeholder="Schedule Time"
           onChangeText={setScheduleTime}
+          onIconPress={() => setShowTimePicker(true)} // Open Time Picker on icon click
         />
+        {showTimePicker && (
+          <DateTimePicker
+            value={selectedTime}
+            mode="time"
+            display={Platform.OS === "ios" ? "spinner" : "default"}
+            is24Hour={false} // Use 12-hour format
+            onChange={handleTimeChange}
+          />
+        )}
         <CustomTextInput
           type={remark}
           value={remark}
@@ -113,7 +152,10 @@ const styles = StyleSheet.create({
     zIndex: 1,
     paddingRight: 5,
     paddingLeft: 12,
+    position: "relative",
   },
 });
 
 export default AddFollowUP;
+
+

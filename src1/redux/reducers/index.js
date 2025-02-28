@@ -7,10 +7,9 @@
 
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
-import personalReducer from './personalReducer';
-
+// import statusReducer from './statusReducer';
 export default combineReducers({
   auth: authReducer,
-  leadPersonal: personalReducer,
+  // status: statusReducer,
 });
 

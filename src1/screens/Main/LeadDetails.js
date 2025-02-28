@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
   leadStatusText: {
     color: '#2B2162',
     fontSize: 14,
-    lineHeight: 15,
+    lineHeight: 16,
   },
   insuranceCard: {
     marginTop: 30,

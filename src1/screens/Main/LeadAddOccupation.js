@@ -87,21 +87,24 @@ import CustomTextInput from "../../components/CustomTextInput";
 import Dropdown from "../../components/Dropdown";
 import Stepper from "../../components/StepperComp";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
-import {updateOccupation,updateTypeOfWork,updateMonthlyIncome} from "../../redux/actions/OccupationAction";
+import StatusDropdown from "../../components/StatusDropdown";
 
 const LeadAddOccupation = (props) => {
-  const dispatch = useDispatch();
-  const { occupation, typeOfWork, monthlyIncome } = useSelector(
-    (state) => state.leadOccupationReducer
-  );
-
+  const [typeOfWork, setTypeOfWork] = useState("");
+  const [type, setType] = useState(null);
+  const [monthlyIncome, setMonthlyIncome] = useState("");
   const steps = ["Personal", "Occupation", "Services"];
   const currentStep = 2;
-
+  const leadLastHandle = () => {
+    props.navigation.navigate("LeadLast")
+  }
+  const goBackCall = () => {
+    props.navigation.goBack();
+  };
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.1 }}>
-        <NavigationHeaderBack text="Add Lead" />
+        <NavigationHeaderBack text="Add Lead" onPress={goBackCall}/>
       </View>
 
       <View style={styles.stepperContainer1}>
@@ -109,20 +112,14 @@ const LeadAddOccupation = (props) => {
       </View>
 
       <View style={styles.centerContainer}>
-        <Dropdown
+        <StatusDropdown
           label="Occupation"
-          selectedValue={occupation}
-          onValueChange={(value) => dispatch(updateOccupation(value))}
-          options={[
-            { label: "Software Engineer", value: "software_engineer" },
-            { label: "Doctor", value: "doctor" },
-            { label: "Teacher", value: "teacher" },
-            { label: "Business Owner", value: "business_owner" },
-            { label: "Freelancer", value: "freelancer" },
-          ]}
+          selectedValue={type}
+          onValueChange={setType}
+         apiType="occupation" 
           zIndex={2000}
         />
-
+        
         <CustomTextInput
           value={typeOfWork}
           placeholder="Type of Work"
@@ -134,8 +131,7 @@ const LeadAddOccupation = (props) => {
           placeholder="Monthly Income"
           onChangeText={(text) => dispatch(updateMonthlyIncome(text))}
         />
-
-        <CustomButton title="NEXT" customStyle={{ width: -30 }} />
+        <CustomButton title="NEXT" customStyle={{ width: -30 }} onPress={leadLastHandle}/>
       </View>
     </View>
   );
