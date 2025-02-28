@@ -172,7 +172,7 @@ const CustomTabButton = ({onPress}) => {
               style={styles.option}
               onPress={() => {
                 setModalVisible(false);
-                navigation.navigate('LeadAddPersonal');
+               navigation.navigate('Lead', { screen: 'LeadStackScreen' });
               }}>
               <Text style={styles.optionText}>Lead</Text>
               <Image
