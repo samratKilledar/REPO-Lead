@@ -147,6 +147,8 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     gap: 10,
     position:'relative',
+    paddingLeft: 15,
+    paddingRight: 15,
   },
   scrollViewContent: {
     flexGrow: 1,
