@@ -6,9 +6,11 @@ import CustomText from "../../components/CustomText";
 import TextStyle from "../../styles/TextStyle";
 import LeadCard from "../../components/LeadCard";
 import { useNavigation } from "@react-navigation/native";
+
 const tasksData = [
   { id: "1", name: "Add Account", phone: "Jonh Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"], menuType: "status" },
   { id: "2", name: "Close Account", phone: "John Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"], menuType: "status" },
+ 
 ];
 const tasks2Data = [
   { id: "1", name: "Close Account", phone: "Jonh Smith", dateTime: "02 Feb 2025 - 12.00 PM", leadstatus: "Mandate Approved", statusGradient: ["#246BFD", "#6F9EFF"], menuType: "status" },
@@ -50,7 +52,6 @@ const TaskScreen = (props) => {
                 <View style={[styles.progressLine, { backgroundColor: index === 0 ? "#246BFD" : "#FF4F4F" }]} />
               </View>
             ))}
-
           </ScrollView>
         ) : (
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -60,7 +61,6 @@ const TaskScreen = (props) => {
                 <View style={[styles.progressLine, { backgroundColor: index === 0 ? "#246BFD" : "#FF4F4F" }]} />
               </View>
             ))}
-
           </ScrollView>
         )}
       </View>
@@ -85,7 +85,6 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingVertical: 10,
     paddingHorizontal: 24,
-
   },
   tab: {
     width: '50%',
@@ -111,9 +110,9 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   contentContainer: {
+    flex: 1, // Ensure content takes up available space
     gap: 24,
   },
-
   cardWrapper: {
     marginBottom: 30,
     paddingHorizontal: 15,
@@ -124,7 +123,6 @@ const styles = StyleSheet.create({
     marginTop: -40,
     width: "200",
     marginLeft: 30,
-
   },
 });
 

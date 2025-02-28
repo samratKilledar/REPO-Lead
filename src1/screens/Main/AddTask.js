@@ -169,6 +169,9 @@ import StatusDropdown from "../../components/StatusDropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 const AddTask = (props) => {
+  const dispatch = useDispatch();
+  const { priorityList } = useSelector((state) => state.priority); // Get priority list from Redux
+
   const [title, setTitle] = useState('');
   const [type, setType] = useState(null);
   const [assign, setAssign] = useState(null);
@@ -238,7 +241,7 @@ const AddTask = (props) => {
             options={[
               { label: "Mr.Akshat", value: "akshat" },
               { label: "Mr.Paresh", value: "paresh" },
-              { label: "Mr.Rajesh", value: "paresh" },
+              { label: "Mr.Rajesh", value: "rajesh" },
               { label: "Mr.Subhash", value: "subhash" },
             ]}
             zIndex={3000} // Above Client Dropdown

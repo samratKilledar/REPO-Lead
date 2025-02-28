@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import { View, StyleSheet, ScrollView, } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
@@ -8,6 +8,9 @@ import Stepper from "../../components/StepperComp";
 import StatusDropdown from '../../components/StatusDropdown';
 
 const LeadAddPersonal = () => {
+  const dispatch = useDispatch();
+  const { priorityList } = useSelector((state) => state.priority);
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [mobileNo, setMobileNo] = useState('');
@@ -20,10 +23,24 @@ const LeadAddPersonal = () => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [country, setCountry] = useState('');
+ 
+  const [formattedPriorityList, setFormattedPriorityList] = useState([]);
 
   const steps = ["Personal", "Occupation", "Services"];
   const currentStep = 1;
-
+  useEffect(() => {
+      dispatch(fetchPriority()); // Fetch priority data when component mounts
+    }, [dispatch]);
+  
+    useEffect(() => {
+      if (priorityList?.length) {
+        const formattedData = priorityList.map((item) => ({
+          label: item.value01, // Use value01 as the display label
+          value: item.id.toString(), // Convert id to string for dropdown compatibility
+        }));
+        setFormattedPriorityList(formattedData);
+      }
+    }, [priorityList]);
 
   return (
     <View style={styles.container}>
