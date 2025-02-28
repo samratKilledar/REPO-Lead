@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('Home'); // Navigate to Home Screen after 3 seconds
+      navigation.replace(''); // Navigate to Login Screen after 4 seconds
     }, 4000);
-  }, []);
+  }, [navigation]);
 
   return (
     <View style={styles.container}>

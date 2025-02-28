@@ -47,7 +47,7 @@ const HomeStackScreen = ({navigation, route}) => {
 
   return (
     <HomeStack.Navigator screenOptions={{headerShown: false}}>
-      <HomeStack.Screen name="SplashScreen" component={SplashScreen} />
+      {/* <HomeStack.Screen name="SplashScreen" component={SplashScreen} /> */}
       <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="UpcomingMeetings" component={UpcomingMeetings} />
       <HomeStack.Screen
