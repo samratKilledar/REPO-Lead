@@ -57,10 +57,7 @@ const HomeStackScreen = ({navigation, route}) => {
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
-      <HomeStack.Screen
-        name="CloseAccountScreen"
-        component={CloseAccountScreen}
-      />
+      <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen} />
       <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
     </HomeStack.Navigator>
   );
@@ -73,14 +70,12 @@ const LeadStackScreen = ({navigation, route}) => {
     <HomeStack.Navigator screenOptions={{headerShown: false}}>
       <HomeStack.Screen name="Lead" component={LeadScreen} />
       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
-      <HomeStack.Screen
-        name="EditProfileScreen"
-        component={EditProfileScreen}
-      />
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen}/>
       <HomeStack.Screen name="LeadDetails" component={LeadDetails} />
       <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
+      <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
     </HomeStack.Navigator>
   );
 };
@@ -118,6 +113,7 @@ const ClientStackScreen = ({navigation, route}) => {
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
       <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
+      <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
     </HomeStack.Navigator>
   );
 };
@@ -176,7 +172,7 @@ const CustomTabButton = ({onPress}) => {
               style={styles.option}
               onPress={() => {
                 setModalVisible(false);
-                navigation.navigate('LeadAddPersonal');
+               navigation.navigate('Lead', { screen: 'LeadStackScreen' });
               }}>
               <Text style={styles.optionText}>Lead</Text>
               <Image
@@ -204,32 +200,38 @@ const CustomTabButton = ({onPress}) => {
   );
 };
 
-
 const MainNavigator = () => {
   return (
-    <View style={{ flex: 1, }}>
+    <View style={{flex: 1}}>
       <Tab.Navigator
-        screenOptions={({ route }) => {
+        screenOptions={({route}) => {
           const routeName = getFocusedRouteNameFromRoute(route);
           return {
             tabBarShowLabel: false, // Hide default labels
-            tabBarStyle: routeName === 'Notifications' ? { display: 'none' } : styles.tabBarStyle,
+            tabBarStyle:
+              routeName === 'Notifications'
+                ? {display: 'none'}
+                : styles.tabBarStyle,
             headerShown: false,
           };
-        }}
-      >
+        }}>
         <Tab.Screen
           name="HomeStack"
           component={HomeStackScreen}
           options={{
-            tabBarIcon: ({ focused }) => (
+            tabBarIcon: ({focused}) => (
               <View style={styles.tabContainer}>
                 <Image
-                  source={focused ? require('../assets/icons/HomeBlue/homeBlue.png')
-                    : require('../assets/icons/HomeGray/home.png')}
+                  source={
+                    focused
+                      ? require('../assets/icons/HomeBlue/homeBlue.png')
+                      : require('../assets/icons/HomeGray/home.png')
+                  }
                   style={styles.icon}
                 />
-                <Text style={[styles.label, focused && styles.labelFocused]}>Home</Text>
+                <Text style={[styles.label, focused && styles.labelFocused]}>
+                  Home
+                </Text>
               </View>
             ),
           }}
@@ -239,14 +241,19 @@ const MainNavigator = () => {
           name="Lead"
           component={LeadStackScreen}
           options={{
-            tabBarIcon: ({ focused }) => (
+            tabBarIcon: ({focused}) => (
               <View style={styles.tabContainer}>
                 <Image
-                  source={focused ? require('../assets/icons/LeadLogoBlue/leadLogoBlue.png')
-                    : require('../assets/icons/LeadLogo/leadLogo.png')}
+                  source={
+                    focused
+                      ? require('../assets/icons/LeadLogoBlue/leadLogoBlue.png')
+                      : require('../assets/icons/LeadLogo/leadLogo.png')
+                  }
                   style={styles.icon}
                 />
-                <Text style={[styles.label, focused && styles.labelFocused]}>Lead</Text>
+                <Text style={[styles.label, focused && styles.labelFocused]}>
+                  Lead
+                </Text>
               </View>
             ),
           }}
@@ -256,8 +263,11 @@ const MainNavigator = () => {
           name="AddTask"
           component={AddTask}
           options={{
-            tabBarButton: (props) => (
-              <CustomTabButton {...props} onPress={() => navigation.navigate('AddTask')} />
+            tabBarButton: props => (
+              <CustomTabButton
+                {...props}
+               // onPress={() => navigation.navigate('AddTask')}
+              />
             ),
           }}
         />
@@ -266,14 +276,19 @@ const MainNavigator = () => {
           name="Client"
           component={ClientStackScreen}
           options={{
-            tabBarIcon: ({ focused }) => (
+            tabBarIcon: ({focused}) => (
               <View style={styles.tabContainer}>
                 <Image
-                  source={focused ? require('../assets/icons/ChatBlue/chatBlue.png')
-                    : require('../assets/icons/ClientChat/clientChat.png')}
+                  source={
+                    focused
+                      ? require('../assets/icons/ChatBlue/chatBlue.png')
+                      : require('../assets/icons/ClientChat/clientChat.png')
+                  }
                   style={styles.icon}
                 />
-                <Text style={[styles.label, focused && styles.labelFocused]}>Client</Text>
+                <Text style={[styles.label, focused && styles.labelFocused]}>
+                  Client
+                </Text>
               </View>
             ),
           }}
@@ -283,14 +298,19 @@ const MainNavigator = () => {
           name="Task"
           component={TaskStackScreen}
           options={{
-            tabBarIcon: ({ focused }) => (
+            tabBarIcon: ({focused}) => (
               <View style={styles.tabContainer}>
                 <Image
-                  source={focused ? require('../assets/icons/TaskBlue/taskBlue.png')
-                    : require('../assets/icons/Task/task.png')}
+                  source={
+                    focused
+                      ? require('../assets/icons/TaskBlue/taskBlue.png')
+                      : require('../assets/icons/Task/task.png')
+                  }
                   style={styles.icon}
                 />
-                <Text style={[styles.label, focused && styles.labelFocused]}>Task</Text>
+                <Text style={[styles.label, focused && styles.labelFocused]}>
+                  Task
+                </Text>
               </View>
             ),
           }}
@@ -305,14 +325,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: 60, // Increase height to prevent cutting
     paddingBottom: 10, // Adjust padding
-    paddingTop: 15, // Add top padding
+    paddingTop: 5, // Add top padding
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     backgroundColor: '#fff',
     elevation: 5,
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
   },
 
   tabContainer: {
@@ -322,28 +342,28 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    width: 26, // Slightly larger icons
-    height: 26,
+    width: 25, // Slightly larger icons
+    height: 25,
+    resizeMode: 'contain',
   },
 
   label: {
-    fontSize: 12,
+    fontSize: 11,
     color: 'gray',
-    //marginTop: 6, // Adjust label position
   },
 
   labelFocused: {
     color: 'blue',
     fontWeight: 'bold',
   },
-  icon: {
-    width: 25,
-    height: 25,
-    resizeMode: 'contain',
-    //marginBottom: -5,
-  },
+  // icon: {
+  //   width: 25,
+  //   height: 25,
+  //   resizeMode: 'contain',
+  //   //marginBottom: -5,
+  // },
   plusButton: {
-    top: -5,
+    top: -8,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -368,13 +388,13 @@ const styles = StyleSheet.create({
   modalContainer: {
     backgroundColor: '#FFFFFF',
     //width: width * 0.5,
-    width: 184,
+    width: 170,
     paddingVertical: 20,
-    borderRadius: 32,
+    borderRadius: 30,
     alignItems: 'center',
     position: 'absolute',
-    bottom: 90, // Positioned just above the FAB
-    elevation: 5,
+    bottom: 70, // Positioned just above the FAB
+    elevation: 15,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.2,
@@ -403,6 +423,7 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     //tintColor: '#4C4DDC',
+    resizeMode:"con"
   },
   triangle: {
     position: 'absolute',
@@ -420,24 +441,6 @@ const styles = StyleSheet.create({
     borderTopColor: 'white',
   },
 
-  tabContainer: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  
-  },
-  icon: {
-    width: 24,
-    height: 24,
-  },
-  label: {
-    fontSize: 12,
-    color: 'gray',
-    marginTop: 4,
-  },
-  labelFocused: {
-    color: 'blue',
-    fontWeight: 'bold',
-  },
 });
 
 export default MainNavigator;

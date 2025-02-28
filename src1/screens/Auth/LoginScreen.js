@@ -157,15 +157,64 @@ const LoginScreen = (props) => {
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, alignItems: 'center', backgroundColor: '#FFFFFF' },
-  inner: { flex: 1, width: '100%', alignItems: 'center' },
-  logo: { width: 380, height: 81.23, marginBottom: 10 },
-  box: { flex: 1, alignItems: 'center', gap: 20, justifyContent: 'flex-start', width: '100%', paddingHorizontal: 10 },
-  checkboxContainer: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 20 },
-  rememberMe: { fontWeight: '600', fontSize: 14, lineHeight: 19.6, letterSpacing: 0.2 },
-  checkbox: { width: 24, height: 24, borderWidth: 3, borderColor: '#2B2162', borderRadius: 8, alignItems: 'center', justifyContent: 'center' },
-  checked: { backgroundColor: '#2B2162' },
-  checkIcon: { width: 14, height: 10, tintColor: "#fff", resizeMode: "contain" },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#FFFFFF',
+  },
+  inner: {
+    flex: 1,
+   // width: '100%',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 380,
+    height: 81.23,
+   // marginBottom: 10,
+  },
+  box: {
+    flex: 1,
+    alignItems: 'center',
+    gap: 20,
+    justifyContent: 'flex-start',
+    width: '100%',
+    paddingHorizontal: 10,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginBottom: 20,
+  },
+  rememberMe: {
+    fontWeight: '600',
+    fontSize: 14,
+    lineHeight: 19.6,
+    letterSpacing: 0.2,
+  },
+  checkbox: {
+    width: 24,
+    height: 24,
+    borderWidth: 3,
+    borderColor: '#2B2162',
+    borderRadius: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  checked: {
+    backgroundColor: '#2B2162',
+  },
+  checkIcon: {
+    width: 14,
+    height: 10,
+    tintColor: "#fff", // Optional: Adjust icon color
+    resizeMode: "contain",
+  },
+  checkmark: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
 });
 
 export default LoginScreen;

@@ -43,7 +43,7 @@ const TaskScreen = (props) => {
       </View>
       <View style={styles.contentContainer}>
         {activeTab === "Lead Task" ? (
-          <ScrollView>
+          <ScrollView contentContainerStyle={styles.scrollViewContent}>
             {tasksData.map((item, index) => (
               <View key={item.id} style={styles.cardWrapper}>
                 <LeadCard {...item} navigation={props.navigation} screenType="task" />
@@ -53,7 +53,7 @@ const TaskScreen = (props) => {
 
           </ScrollView>
         ) : (
-          <ScrollView>
+          <ScrollView contentContainerStyle={styles.scrollViewContent}>
             {tasks2Data.map((item, index) => (
               <View key={item.id} style={styles.cardWrapper}>
                 <LeadCard {...item} navigation={props.navigation} screenType="task" />
@@ -100,6 +100,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#2B2162",
     marginTop: 4,
   },
+  scrollViewContent: {
+    paddingBottom: 60, // Adds padding at the bottom to avoid cut-off content
+  },
   inactiveTabIndicator: {
     width: 160,
     height: 2,
@@ -110,6 +113,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     gap: 24,
   },
+
   cardWrapper: {
     marginBottom: 30,
     paddingHorizontal: 15,

@@ -7,6 +7,7 @@ import Dropdown from '../../components/Dropdown';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import { useNavigation } from '@react-navigation/native';
+import StatusDropdown from '../../components/StatusDropdown';
 const LeadAddService = () => {
   const [services, setService] = useState('');
   const [Remark, setRemark] = useState(null);
@@ -43,20 +44,13 @@ const LeadAddService = () => {
           placeholder="Remark"
           onChangeText={setRemark}
         />
-        <Dropdown
-          label="Services"
-          selectedValue={services}
-          onValueChange={setService}
-          options={[
-            { label: "Insurance", value: "Insurance" },
-            { label: "Mutual Fund", value: "Mutual Fund" },
-            { label: "Demat", value: "Demat" },
-            { label: "SIP", value: "SIP" },
-
-
-          ]}
-          zIndex={2000}
-        />
+        <StatusDropdown
+            label="Services"
+            selectedValue={services}
+            onValueChange={setService}
+            apiType="service"
+            zIndex={1000} // Lower zIndex
+          />
         <CustomButton title="Submit" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
       </View>
       <View style={styles.insuranceCard}>

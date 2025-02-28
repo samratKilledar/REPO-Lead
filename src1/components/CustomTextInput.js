@@ -4,7 +4,7 @@ import InputStyle from "../styles/Inputstyle";
 import { useState } from "react";
 
 
-const CustomTextInput = ({ icon, followupicon,type, value, onChangeText, placeholder, secureTextEntry,searchbaricon }) => {
+const CustomTextInput = ({ icon, followupicon,type, value, onChangeText, placeholder, secureTextEntry,searchbaricon , onIconPress }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(secureTextEntry);
   return (
     <View style={InputStyle.container}>
@@ -33,7 +33,9 @@ const CustomTextInput = ({ icon, followupicon,type, value, onChangeText, placeho
       )}
       {searchbaricon && <Image source={searchbaricon} style={InputStyle.searchbaricon}/>}
       <View style={InputStyle.followup}>
-      {followupicon && <Image source={followupicon} style={InputStyle.followupicon} />}
+      {followupicon && (
+      <Pressable onPress={onIconPress}><Image source={followupicon} style={InputStyle.followupicon} /></Pressable>
+       )}
       </View>
     </View>
   );

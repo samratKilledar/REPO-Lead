@@ -1,11 +1,3 @@
-// import AsyncStorage from '@react-native-async-storage/async-storage';
-
-// Base API URL
-const BASE_URL = 'https://yourapi.com/api/'; // Replace with your actual API
-// Function to get the auth token from AsyncStorage
-const getAuthToken = async () => {
-  //   return await AsyncStorage.getItem('authToken');
-};
 
 // GET Request Function
 export const apiGet = async (url,tokan) => {
@@ -60,3 +52,5 @@ export const apiPost = async (url, param = {}) => {
     return await error.message;
   }
 };
+
+
