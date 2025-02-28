@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
   },
 
   labelFocused: {
-    color: 'pink',
+    color: '#2B2162',
     fontWeight: 'bold',
   },
   // icon: {

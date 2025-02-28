@@ -5,12 +5,7 @@ import CustomTextInput from '../../components/CustomTextInput';
 import Dropdown from "../../components/Dropdown";
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from "../../components/StepperComp";
-<<<<<<< HEAD
-import { fetchPriority } from "../../redux/actions/dropDownAction";
-import { useDispatch, useSelector } from "react-redux";
-=======
 import StatusDropdown from '../../components/StatusDropdown';
->>>>>>> DropDownApi
 
 const LeadAddPersonal = () => {
   const dispatch = useDispatch();
