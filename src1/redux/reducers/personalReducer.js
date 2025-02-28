@@ -71,43 +71,112 @@
 
 //New Code Eve --> 
 const initialState = {
-  isSubmitted: false,
-  personalPlaceHolder: {
-    firstName: "First Name",
-    lastName: "Last Name",
-    emailId: "Email Id",
-    MobileNo: "Mobile No",
-    WhatsappNo: "Whatsapp No",
-    addressLine1: "Address Line 1",
-    addressLine2: "Address Line 2",
-    pincode: "Pincode",
-  },
-  personalValue: {
-    firstName: "Akhil",
-    lastName: "Tamgaonkar",
-    email: "abc@gmail.com",
-    phone: "00000000000",
-    whatsapp: "00000000000",
-    addressLine1: "Address Line 1",
-    addressLine2: "Address Line 2",
-    pincode: "123456",
-  },
-};
+  firstNamePlaceholder: "",
+  lastNamePlaceholder: "",
+  leadSourceNamePlaceholder: "",
+  emailIdPlaceholder: "",
+  mobileNoPlaceholder: "",
+  whatsAppNoPlaceholder: "",
+  addressLine1Placeholder: "",
+  addressLine2Placeholder: "",
+  pincodePlaceholder: "",
+
+
+//Actual Vaues 
+  firstName: "",
+  lastName: "",
+  emailId: "",
+  mobileNo: "",
+  whatsAppNo: "",
+  addressLine1: "",
+  addressLine2: "",
+  pincode: "",
+
+// For dropdown
+  leadSourceName: [],
+  cityOption: [],
+  stateOption: [],
+  countryOption: [],
+}
 
 const personalReducer = (state = initialState, action) => {
   switch (action.type) {
     case "PERSONAL_SUBMIT_SUCCESS":
       return { ...state, isSubmitted: true };
 
-    case "CHANGE_PERSONAL_FIELD":
+    case "CHANGE_FIRST_NAME":
       return {
         ...state,
-        personalValue: {
-          ...state.personalValue, // Keep previous values
-          ...action.payload, // Update only provided fields
-        },
+        firstName: action.payload,
       };
 
+    case "CHANGE_LAST_NAME":
+      return {
+        ...state,
+        lastName: action.payload,
+      };
+
+    case "CHANGE_EMAIL":
+      return {
+        ...state,
+        email: action.payload,
+      };
+
+    case "CHANGE_MOBILENO":
+      return {
+        ...state,
+        mobileNo: action.payload,
+      };
+
+    case "CHANGE_WHATSAPPNO":
+      return {
+        ...state,
+        whatsAppNo: action.payload,
+      };
+
+    case "CHANGE_ADDRESS_LINE1":
+      return {
+        ...state,
+        addressLine1: action.payload,
+      };
+
+    case "CHANGE_ADDRESS_LINE2":
+      return {
+        ...state,
+        addressLine2: action.payload,
+      };
+
+    case "CHANGE_PINCODE":
+      return {
+        ...state,
+        pincode: action.payload,
+      };
+    
+  // for dropdown
+    case "CHANGE_LEAD_SOURCE":
+      return {
+        ...state,
+        leadSource: action.payload,
+      };
+      
+    case "CHANGE_CITY_OPTION":
+      return {
+        ...state,
+        cityOption: action.payload,
+      };
+    
+    case "CHANGE_STATE_OPTION":
+      return {
+        ...state,
+        stateOption: action.payload,
+      };
+    
+    case "CHANGE_COUNTRY_OPTION":
+      return {
+        ...state,
+        countryOption: action.payload,
+      };
+    
     default:
       return state;
   }
