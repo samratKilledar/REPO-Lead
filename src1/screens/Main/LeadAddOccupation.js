@@ -79,7 +79,7 @@
 // export default LeadAddOccupation;
 
 
-import React from "react";
+import React , { useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../components/CustomButton";

@@ -103,7 +103,7 @@ const LeadLast = (props) => {
             zIndex={1000} // Lower zIndex
           />
         <CustomTextInput
-          value={remark}
+          value={Remark}
           placeholder="Remark"
           onChangeText={setRemark}
         />
