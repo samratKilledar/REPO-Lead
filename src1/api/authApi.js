@@ -10,7 +10,11 @@ export const loginUserApiCall = async data => {
 
 // Register API
 export const readAllLead = async userData => {
-    console.log(2222)
     console.log(getItem("authToken"))
     return await apiGet(api.getAllLeadApi,getItem(authToken));
+};
+
+export const l = async userData => {
+  
+    return await apiGet(api.getAllLeadApi,getItem(userData));
 };
