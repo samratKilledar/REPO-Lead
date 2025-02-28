@@ -140,6 +140,7 @@ const LeadAddOccupation = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  //  paddingHorizontal: 24,
     paddingTop: 15,
     backgroundColor: "#FFFFFF",
     gap: 18,
@@ -149,12 +150,13 @@ const styles = StyleSheet.create({
     flex: 0.7,
     gap: 12,
     zIndex: 1,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft:20,
+    paddingRight:20,
   },
   stepperContainer1: {
     justifyContent: "space-evenly",
-  },
+    
+  }
 });
 
 export default LeadAddOccupation;
