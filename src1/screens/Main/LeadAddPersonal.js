@@ -7,10 +7,7 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from "../../components/StepperComp";
 import StatusDropdown from '../../components/StatusDropdown';
 
-const LeadAddPersonal = () => {
-  const dispatch = useDispatch();
-  const { priorityList } = useSelector((state) => state.priority);
-
+const LeadAddPersonal = (props) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [mobileNo, setMobileNo] = useState('');
@@ -24,28 +21,20 @@ const LeadAddPersonal = () => {
   const [state, setState] = useState('');
   const [country, setCountry] = useState('');
  
-  const [formattedPriorityList, setFormattedPriorityList] = useState([]);
-
   const steps = ["Personal", "Occupation", "Services"];
   const currentStep = 1;
-  useEffect(() => {
-      dispatch(fetchPriority()); // Fetch priority data when component mounts
-    }, [dispatch]);
-  
-    useEffect(() => {
-      if (priorityList?.length) {
-        const formattedData = priorityList.map((item) => ({
-          label: item.value01, // Use value01 as the display label
-          value: item.id.toString(), // Convert id to string for dropdown compatibility
-        }));
-        setFormattedPriorityList(formattedData);
-      }
-    }, [priorityList]);
+
+  const goBackCall = () => {
+    props.navigation.goBack();
+  };
+  const handleOccupation = () => {
+    props.navigation.navigate("LeadAddOccupation")
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <NavigationHeaderBack text="Add Lead" />
+        <NavigationHeaderBack text="Add Lead" onPress={goBackCall}/>
       </View>
 
       <View style={styles.stepperContainer}>
@@ -69,9 +58,9 @@ const LeadAddPersonal = () => {
         label= "Lead Source" 
         selectedValue={leadService} 
         onValueChange={setLeadService}
-         apiType="leadsource" 
-          zIndex={3000} // Higher than Dropdown 2
-          elevation={6}
+         apiType="leadSource" 
+          zIndex={4000} // Higher than Dropdown 2
+          elevation={8}
        />
           <CustomTextInput
             value={mobileNo}
@@ -98,40 +87,30 @@ const LeadAddPersonal = () => {
             placeholder="Address Line 2"
             onChangeText={setAddressLine2}
           />
-          <Dropdown
-            label="City"
-            selectedValue={city}
-            onValueChange={setCity}
-            options={[
-              { label: "Mumbai", value: "Mumbai" },
-              { label: "Pune", value: "Pune" },
-              { label: "Kolhapur", value: "Kolhapur" },
-              { label: "Hyderabad", value: "Telangana" },
-            ]}
-            zIndex={5000}
+          <StatusDropdown 
+          label="City"
+          selectedValue={city}
+          onValueChange={setCity}
+          apiType="city"
+          zIndex={3000}
+          elevation={7}
           />
-          <Dropdown
-            label="State"
-            selectedValue={state}
-            onValueChange={setState}
-            options={[
-              { label: "Mumbai", value: "Maharashtra" },
-              { label: "Pune", value: "Maharashtra" },
-              { label: "Kolhapur", value: "Maharashtra" },
-              { label: "Hyderabad", value: "Maharashtra" },
-            ]}
-            zIndex={4000}
+          <StatusDropdown 
+          label="State"
+          selectedValue={state}
+          onValueChange={setState}
+          apiType="state"
+          zIndex={2000}
+          elevation={6}
           />
-          <Dropdown 
-            label="Country"
-            selectedValue={country}
-            onValueChange={setCountry}
-            options={[
-              { label: "India", value: "India" },
-              { label: "USA", value: "USA" },
-              { label: "Australia", value: "Australia" },
-            ]}
-            zIndex={3000}
+        
+          <StatusDropdown 
+          label="Country"
+          selectedValue={country}
+          onValueChange={setCountry}
+          apiType="country"
+          zIndex={1000}
+          elevation={5}
           />
           <CustomTextInput
             value={pincode}
@@ -139,7 +118,7 @@ const LeadAddPersonal = () => {
             onChangeText={setPincode}
           />
 
-        <CustomButton title="Next" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
+        <CustomButton title="Next" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} onPress={handleOccupation}/>
         </View>
       </ScrollView>
     </View>
@@ -165,6 +144,7 @@ const styles = StyleSheet.create({
   centerContainer: {
     paddingBottom: 20,
     gap: 10,
+    position:'relative',
   },
   scrollViewContent: {
     flexGrow: 1,

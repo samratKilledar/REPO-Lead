@@ -8,7 +8,7 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import { useNavigation } from '@react-navigation/native';
 import StatusDropdown from '../../components/StatusDropdown';
-const LeadAddService = () => {
+const LeadAddServices = () => {
   const [services, setService] = useState('');
   const [Remark, setRemark] = useState(null);
   const navigation = useNavigation()
@@ -97,4 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LeadAddService;
+export default LeadAddServices;

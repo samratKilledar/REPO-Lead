@@ -37,6 +37,8 @@ import LeadAddPersonal from '../screens/Main/LeadAddPersonal';
 import LoginScreen from '../screens/Auth/LoginScreen';
 import LogoutScreen from '../screens/Auth/LogoutScreen';
 import HeaderComp from '../components/HeaderComp';
+import ClientAddServices from '../screens/Main/ClientAddServices';
+import LeadLast from '../screens/Main/LeadLast';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -76,6 +78,8 @@ const LeadStackScreen = ({navigation, route}) => {
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
+      <HomeStack.Screen name="LeadAddOccupation" component={LeadAddOccupation} />
+      <HomeStack.Screen name="LeadLast" component={LeadLast} />
     </HomeStack.Navigator>
   );
 };
@@ -102,9 +106,11 @@ const ClientStackScreen = ({navigation, route}) => {
       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen}/>
       <HomeStack.Screen name="ClientDetails" component={ClientDetails} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
-      <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
+      <HomeStack.Screen name="ClientAddServices" component={ClientAddServices} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
-      <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
+      {/* <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
+      <HomeStack.Screen name="LeadAddOccupation" component={LeadAddOccupation} />
+      <HomeStack.Screen name="LeadLast" component={LeadLast} /> */}
     </HomeStack.Navigator>
   );
 };
@@ -117,7 +123,11 @@ const TaskStackScreen = ({navigation, route}) => {
       <HomeStack.Screen name="CloseAccountScreen"component={CloseAccountScreen}/>
       <HomeStack.Screen name="AddTask" component={AddTask} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
-      <HomeStack.Screen name="EditProfileScreen"component={EditProfileScreen}/>
+      {/* <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} /> */}
+      <HomeStack.Screen
+        name="EditProfileScreen"
+        component={EditProfileScreen}
+      />
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
     </HomeStack.Navigator>
@@ -257,16 +267,6 @@ const MainNavigator = () => {
             ),
           }}
         />
-        {/* <Tab.Screen
-          name="LeadAddPersonal"
-          component={LeadAddPersonal}
-          options={{
-            tabBarButton: (props) => (
-              <CustomTabButton {...props} onPress={() => navigation.navigate('LeadAddPersonal')} />
-            ),
-          }}
-        /> */}
-
         <Tab.Screen
           name="Client"
           component={ClientStackScreen}
