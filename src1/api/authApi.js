@@ -18,3 +18,17 @@ export const l = async userData => {
   
     return await apiGet(api.getAllLeadApi,getItem(userData));
 };
+
+
+export const fetchDropdownData = async (apiType) => {
+    try {
+        const authToken = await getItem("authToken");
+        const apiUrl = api[apiType];
+        if (!apiUrl) throw new Error("Invalid API type");
+        
+        return await apiGet(apiUrl, authToken);
+    } catch (error) {
+        console.error(`Error fetching dropdown data for ${apiType}:`, error);
+        throw error;
+    }
+};

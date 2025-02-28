@@ -6,15 +6,15 @@ import TextStyle from '../../styles/TextStyle';
 import Dropdown from '../../components/Dropdown';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
-import Stepper from "../../components/StepperComp";
+import { useNavigation } from '@react-navigation/native';
 import StatusDropdown from '../../components/StatusDropdown';
-
-const LeadLast = (props) => {
-  const [assignto, setAssignto] = useState('');
+const ClientAddServices = () => {
   const [services, setService] = useState('');
   const [Remark, setRemark] = useState(null);
-  const steps = ["Personal", "Occupation", "Services"];
-  const currentStep = 3;
+  const navigation = useNavigation()
+  const goBackCall = () => {
+    navigation.popToTop();
+  };
   const cardData = [
     {
       id: 1,
@@ -31,44 +31,29 @@ const LeadLast = (props) => {
         "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type ...",
     },
   ];
-  const goBackCall = () => {
-    props.navigation.goBack();
-  };
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 0.1 }}>
-        <NavigationHeaderBack text="Add Services" onPress={goBackCall}/>
+      <View style={{ flex: 0.3 }}>
+        <NavigationHeaderBack text="Add Services" onPress={goBackCall} />
       </View>
       <View style={styles.centerContainer}>
-        <Stepper steps={steps} currentStep={currentStep} />
-        <Dropdown
-          label="Assign to"
-          selectedValue={assignto}
-          onValueChange={setAssignto}
-          options={[
-            { label: "John Doe", value: "John Doe" },
-            { label: "Jane Smith", value: "Jane Smith" },
-          ]}
-          zIndex={2000}
-        />
-          <StatusDropdown
-            label="Services"
-            selectedValue={services}
-            onValueChange={setService}
-            apiType="service"
-            zIndex={1000} // Lower zIndex
-          />
         <CustomTextInput
           type={Remark}
           value={setRemark}
           placeholder="Remark"
           onChangeText={setRemark}
         />
-        <CustomButton title="ADD" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
+        <StatusDropdown
+            label="Services"
+            selectedValue={services}
+            onValueChange={setService}
+            apiType="service"
+            zIndex={1000} // Lower zIndex
+          />
+        <CustomButton title="Submit" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
       </View>
       <View style={styles.insuranceCard}>
-        <Text style={styles.insuranceText}></Text>
         {cardData.map((item) => (
           <InsuranceCard
             key={item.id}
@@ -86,17 +71,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingRight: 24,
-    paddingLeft: 24,
+    paddingLeft: 10,
     paddingTop: 15,
     backgroundColor: "#FFFFFF",
-    gap: 15,
+    gap: 20,
   },
   centerContainer: {
     flex: 0.7,
     gap: 12,
     zIndex: 1,
   },
-
   insuranceCard: {
     marginTop: 30,
     marginRight: 10,
@@ -113,5 +97,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LeadLast;
-
+export default ClientAddServices;

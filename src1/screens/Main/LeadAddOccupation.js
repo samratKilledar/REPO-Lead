@@ -6,18 +6,24 @@ import TextStyle from "../../styles/TextStyle";
 import Dropdown from "../../components/Dropdown";
 import Stepper from "../../components/StepperComp";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
+import StatusDropdown from "../../components/StatusDropdown";
 
-const LeadAddOccupation = () => {
+const LeadAddOccupation = (props) => {
   const [typeOfWork, setTypeOfWork] = useState("");
   const [type, setType] = useState(null);
   const [monthlyIncome, setMonthlyIncome] = useState("");
   const steps = ["Personal", "Occupation", "Services"];
   const currentStep = 2;
-
+  const leadLastHandle = () => {
+    props.navigation.navigate("LeadLast")
+  }
+  const goBackCall = () => {
+    props.navigation.goBack();
+  };
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.1 }}>
-        <NavigationHeaderBack text="Add Lead" />
+        <NavigationHeaderBack text="Add Lead" onPress={goBackCall}/>
       </View>
       {/* Stepper Component
       <Stepper steps={steps} currentStep={currentStep} /> */}
@@ -25,19 +31,14 @@ const LeadAddOccupation = () => {
         <Stepper steps={steps} currentStep={currentStep} />
       </View>
       <View style={styles.centerContainer}>
-        <Dropdown
+        <StatusDropdown
           label="Occupation"
           selectedValue={type}
           onValueChange={setType}
-          options={[
-            { label: "Software Engineer", value: "software_engineer" },
-            { label: "Doctor", value: "doctor" },
-            { label: "Teacher", value: "teacher" },
-            { label: "Business Owner", value: "business_owner" },
-            { label: "Freelancer", value: "freelancer" },
-          ]}
+         apiType="occupation" 
           zIndex={2000}
         />
+        
         <CustomTextInput
           value={typeOfWork}
           placeholder="Type of Work"
@@ -48,7 +49,7 @@ const LeadAddOccupation = () => {
           placeholder="Monthly Income"
           onChangeText={setMonthlyIncome}
         />
-        <CustomButton title="NEXT" customStyle={{ width: -30 }} />
+        <CustomButton title="NEXT" customStyle={{ width: -30 }} onPress={leadLastHandle}/>
       </View>
     </View>
   );
