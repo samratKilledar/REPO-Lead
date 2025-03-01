@@ -1,165 +1,19 @@
-// import React, { useState } from "react";
-// import { View, StyleSheet, ScrollView } from "react-native";
-// import Dropdown from "../../components/Dropdown";
-// import DateTimePicker from "@react-native-community/datetimepicker";
-// import NavigationHeaderBack from "../../components/NavigationHeaderBack";
-// import CustomTextInput from "../../components/CustomTextInput";
-// import CustomButton from "../../components/CustomButton";
-// import ButtonStyles from "../../styles/ButtonStyles";
-// import StatusDropdown from "../../components/StatusDropdown";
-
-// const AddTask = (props) => {
-//   const [title, setTitle] = useState('');
-//   const [type, setType] = useState(null);
-//   const [assign, setAssign] = useState(null);
-//   const [client, setClient] = useState(null);
-//   const [dueDate, setDueDate] = useState('');
-//   const [priority, setPriority] = useState('nulll');
-//   const [service, setService] = useState('');
-//   const [startDate, setStartDate] = useState('');
-//   const [reminderDate, setReminderDate] = useState('');
-//   const [attachment, setAttachment] = useState('');
-//   const [remark, setRemark] = useState('');
-//   const goBackCall = () => {
-//     props.navigation.goBack();
-//   };
-
-//   return (
-
-//     <View style={styles.container}>
-//       <View style={{ flex: 0.1 }}>
-//         <NavigationHeaderBack text="Add Task" onPress={goBackCall} />
-//       </View>
-//       <ScrollView
-//         style={{ flex: 1, marginBottom: 60 }}
-//         contentContainerStyle={{ paddingBottom: 20 }}
-//         keyboardShouldPersistTaps="handled"
-//       >
-//         <View style={styles.centerContainer}>
-//           <CustomTextInput
-//             type={title}
-//             value={title}
-//             placeholder="Title"
-//             onChangeText={setTitle}
-//           />
-//           <Dropdown
-//             label="Type"
-//             selectedValue={type}
-//             onValueChange={setType}
-//             options={[
-//               { label: "Lead", value: "Lead" },
-//               { label: "Client", value: "client" },
-//             ]}
-//             zIndex={4000} // Highest
-//             elevation={8}
-//           />
-//           <Dropdown
-//             label="Task Assign To"
-//             selectedValue={assign}
-//             onValueChange={setAssign}
-//             options={[
-//               { label: "Mr.Akshat", value: "akshat" },
-//               { label: "Mr.Paresh", value: "paresh" },
-//               { label: "Mr.Rajesh", value: "paresh" },
-//               { label: "Mr.Subhash", value: "subhash" },
-//             ]}
-//             zIndex={3000} // Above Client Dropdown
-//             elevation={7}
-//           />
-//           <Dropdown
-//             label="Client"
-//             selectedValue={client}
-//             onValueChange={setClient}
-//             options={[
-//               { label: "Mahesh Pawar", value: "mahesh pawar" },
-//               { label: "Sonali Thakur", value: "sonali takur" },
-//               { label: "Raj Sharma", value: "raj sharma" },
-//               { label: "Virendra Kambli", value: "virendra kambli" },
-//             ]}
-//             zIndex={2000} // Above text input, but below Task Assign To
-//             elevation={6}
-//           />
-//           <CustomTextInput
-//             followupicon={require('../../assets/icons/Calendar/calendar.png')}
-//             type={dueDate}
-//             value={dueDate}
-//             placeholder="Due Date"
-//             onChangeText={setDueDate}
-//           />
-      
-//           <StatusDropdown
-//             label="Priority"
-//             selectedValue={priority}
-//             onValueChange={setPriority}
-//             apiType="taskpriority"
-//             zIndex={1000} // Lowest dropdown, below text input
-//             elevation={5} // Lower zIndex
-//           />
-//           <CustomTextInput
-//             type={service}
-//             value={service}
-//             placeholder="Service Request"
-//             onChangeText={setService}
-//           />
-//           <CustomTextInput
-//             followupicon={require('../../assets/icons/Calendar/calendar.png')}
-//             type={startDate}
-//             value={setStartDate}
-//             placeholder="Start Date"
-//             onChangeText={setStartDate}
-//           />
-//           <CustomTextInput
-//             followupicon={require('../../assets/icons/Calendar/calendar.png')}
-//             type={reminderDate}
-//             value={reminderDate}
-//             placeholder="Reminder Date"
-//             onChangeText={setReminderDate}
-//           />
-//           <CustomTextInput
-//             followupicon={require('../../assets/icons/Scan/scan.png')}
-//             type={attachment}
-//             value={attachment}
-//             placeholder="Attachment"
-//             onChangeText={setAttachment}
-//           />
-//           <CustomTextInput
-//             type={remark}
-//             value={remark}
-//             placeholder="Remark"
-//             onChangeText={setRemark}
-//           />
-//           <CustomButton title="Submit" customStyle={ButtonStyles.blueButton} textStyles={ButtonStyles.blueButtonText} />
-//         </View>
-//       </ScrollView>
-//     </View>
-
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingRight: 10,
-//     paddingLeft: 8,
-//     paddingTop: 15,
-//     backgroundColor: "#FFFFFF",
-//     gap: 20,
-//   },
-//   centerContainer: {
-//     flex: 0.7,
-//     gap: 12,
-//     zIndex: 1,
-//     paddingRight: 10,
-//     paddingLeft: 5,
-//     position: "relative",
-//   },
-// });
-
-// export default AddTask;
-
-
 import React, { useState } from "react";
-import { View, StyleSheet, ScrollView, Platform } from "react-native";
+import { View, StyleSheet, ScrollView, Platform,Alert } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  changeTaskName,
+  changeTaskType,
+  changeAssignedTo,
+  changeClientName,
+  changeDueDate,
+  changePriority,
+  changeServiceRequest,
+  changeStartDate,
+  changeReminderDate,
+  changeAttachmentName,
+  changeRemarks,
+} from "../../redux/actions/addTaskAction";
 import Dropdown from "../../components/Dropdown";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import CustomTextInput from "../../components/CustomTextInput";
@@ -169,18 +23,33 @@ import StatusDropdown from "../../components/StatusDropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 const AddTask = (props) => {
-  const [title, setTitle] = useState('');
-  const [type, setType] = useState(null);
-  const [assign, setAssign] = useState(null);
-  const [client, setClient] = useState(null);
-  const [dueDate, setDueDate] = useState('');
-  const [priority, setPriority] = useState('null');
-  const [service, setService] = useState('');
-  const [startDate, setStartDate] = useState('');
-  const [reminderDate, setReminderDate] = useState('');
-  const [attachment, setAttachment] = useState('');
-  const [remark, setRemark] = useState('');
-  
+  const dispatch = useDispatch();
+  const {
+    taskName,
+    taskType,
+    assignedTo,
+    clientName,
+    dueDate,
+    priority,
+    serviceRequest,
+    startDate,
+    reminderDate,
+    attachmentName,
+    remarks,
+  } = useSelector((state) => state.addTask);
+ const { 
+  taskNamePlaceholder,
+  taskTypePlaceholder,
+  assignedToPlaceholder,
+  clientNamePlaceholder,
+  dueDatePlaceholder,
+  priorityPlaceholder,
+  serviceRequestPlaceholder,
+  startDatePlaceholder,
+  reminderDatePlaceholder,
+  attachmentNamePlaceholder,
+  remarksPlaceholder,
+  } = useSelector((state) => state.addTask);
   const goBackCall = () => {
     props.navigation.goBack();
   };
@@ -188,20 +57,44 @@ const AddTask = (props) => {
   // Date Picker States
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [activeDateField, setActiveDateField] = useState(null); // Track which field is active
- 
+  const [activeDateField, setActiveDateField] = useState(null);
+
   // Handle Date Selection
   const handleDateChange = (event, date) => {
     if (event.type === "set" && date) {
-      setSelectedDate(date);
-      const formattedDate = date.toISOString().split("T")[0]; // Format YYYY-MM-DD
-      // Set the selected date to the active field
-      if (activeDateField === "dueDate") setDueDate(formattedDate);
-      if (activeDateField === "startDate") setStartDate(formattedDate);
-      if (activeDateField === "reminderDate") setReminderDate(formattedDate);
+      const formattedDate = date.toISOString().split("T")[0];
+      if (activeDateField === "dueDate") dispatch(changeDueDate(formattedDate));
+      if (activeDateField === "startDate") dispatch(changeStartDate(formattedDate));
+      if (activeDateField === "reminderDate") dispatch(changeReminderDate(formattedDate));
     }
     setShowDatePicker(false);
   };
+  const handleAddTask = () => {
+    const fields = [
+      { value: taskName, placeholder: taskNamePlaceholder },
+      { value:  taskType, placeholder: taskTypePlaceholder },
+      { value: assignedTo, placeholder: assignedToPlaceholder },
+      { value: clientName, placeholder: clientNamePlaceholder },
+      { value: dueDate, placeholder: dueDatePlaceholder },
+      { value: priority, placeholder: priorityPlaceholder },
+      { value: serviceRequest, placeholder: serviceRequestPlaceholder },
+      { value:  startDate, placeholder: startDatePlaceholder },
+      { value: reminderDate, placeholder: reminderDatePlaceholder },
+      { value: attachmentName, placeholder: attachmentNamePlaceholder },
+      { value:  remarks, placeholder: remarksPlaceholder }
+    ];
+    
+    for (const [key, value] of Object.entries(fields)) {
+      if (!value || value.trim() === "") {
+        Alert.alert("Validation Error", `${key.replace(/([A-Z])/g, " $1")} is required.`); 
+        return;
+      }
+    }
+
+    // If all validations pass, proceed with submission
+    Alert.alert("Success", "Follow-up added successfully.");
+        } ;
+  
 
   return (
     <View style={styles.container}>
@@ -215,134 +108,103 @@ const AddTask = (props) => {
       >
         <View style={styles.centerContainer}>
           <CustomTextInput
-            type={title}
-            value={title}
-            placeholder="Title"
-            onChangeText={setTitle}
+            value={taskName}
+            placeholder={taskNamePlaceholder}
+            onChangeText={(text) => dispatch(changeTaskName(text))}
           />
           <Dropdown
-            label="Type"
-            selectedValue={type}
-            onValueChange={setType}
-            options={[
-              { label: "Lead", value: "Lead" },
-              { label: "Client", value: "client" },
-            ]}
+            label={taskTypePlaceholder}
+            selectedValue={taskType}
+            onValueChange={(value) => dispatch(changeTaskType(value))}
+            options={[{ label: "Lead", value: "Lead" }, { label: "Client", value: "client" }]}
             zIndex={4000} // Highest
             elevation={8}
           />
           <Dropdown
-            label="Task Assign To"
-            selectedValue={assign}
-            onValueChange={setAssign}
+            label={assignedToPlaceholder}
+            selectedValue={assignedTo}
+            onValueChange={(value) => dispatch(changeAssignedTo(value))}
             options={[
               { label: "Mr.Akshat", value: "akshat" },
               { label: "Mr.Paresh", value: "paresh" },
-              { label: "Mr.Rajesh", value: "paresh" },
+              { label: "Mr.Rajesh", value: "rajesh" },
               { label: "Mr.Subhash", value: "subhash" },
             ]}
-            zIndex={3000} // Above Client Dropdown
+            zIndex={3000} // Highest
             elevation={7}
           />
           <Dropdown
-            label="Client"
-            selectedValue={client}
-            onValueChange={setClient}
+            label={clientNamePlaceholder}
+            selectedValue={clientName}
+            onValueChange={(value) => dispatch(changeClientName(value))}
             options={[
               { label: "Mahesh Pawar", value: "mahesh pawar" },
-              { label: "Sonali Thakur", value: "sonali takur" },
+              { label: "Sonali Thakur", value: "sonali thakur" },
               { label: "Raj Sharma", value: "raj sharma" },
               { label: "Virendra Kambli", value: "virendra kambli" },
             ]}
-            zIndex={2000} // Above text input, but below Task Assign To
+            zIndex={2000} // Highest
             elevation={6}
           />
-
-          {/* 📅 Due Date */}
           <CustomTextInput
             followupicon={require('../../assets/icons/Calendar/calendar.png')}
-            type={dueDate}
             value={dueDate}
-            placeholder="Due Date"
-            onChangeText={setDueDate}
+            placeholder={dueDatePlaceholder}
+            onChangeText={(text)=>dispatch(changeDueDate(text))}
             onIconPress={() => {
               setActiveDateField("dueDate");
               setShowDatePicker(true);
             }}
           />
-
-          {/* Priority Dropdown */}
-          <StatusDropdown
-            label="Priority"
-            selectedValue={priority}
-            onValueChange={setPriority}
-            apiType="taskpriority"
-            zIndex={1000}
-            elevation={5}
-          />
-
-          {/* Service Request */}
+           <StatusDropdown
+          label={ priorityPlaceholder}
+          selectedValue={priority}
+          onValueChange={(value) => dispatch(changePriority(value))}
+          apiType="taskPriority"
+          zIndex={1000}
+          elevation={5}
+        />
           <CustomTextInput
-            type={service}
-            value={service}
-            placeholder="Service Request"
-            onChangeText={setService}
+            value={serviceRequest}
+            placeholder={serviceRequestPlaceholder}
+            onChangeText={(text) => dispatch(changeServiceRequest(text))}
           />
-
-          {/* 📅 Start Date */}
           <CustomTextInput
-            followupicon={require('../../assets/icons/Calendar/calendar.png')}
-            type={startDate}
-            value={startDate}
-            placeholder="Start Date"
-            onChangeText={setStartDate}
-            onIconPress={() => {
-              setActiveDateField("startDate");
-              setShowDatePicker(true);
-            }}
-          />
-
-          {/* 📅 Reminder Date */}
-          <CustomTextInput
-            followupicon={require('../../assets/icons/Calendar/calendar.png')}
-            type={reminderDate}
-            value={reminderDate}
-            placeholder="Reminder Date"
-            onChangeText={setReminderDate}
-            onIconPress={() => {
-              setActiveDateField("reminderDate");
-              setShowDatePicker(true);
-            }}
-          />
-
-          {/* Attachment */}
+          followupicon={require("../../assets/icons/Calendar/calendar.png")}
+          value={startDate}
+          placeholder={startDatePlaceholder}
+          onChangeText={(text)=>dispatch(changeStartDate(text))}
+          onIconPress={() =>{
+            setActiveDateField("startDate");
+             setShowDatePicker(true)}}
+        />
+        <CustomTextInput
+          followupicon={require("../../assets/icons/Calendar/calendar.png")}
+          value={reminderDate}
+          placeholder={reminderDatePlaceholder}
+          onChangeText={(text)=>dispatch(changeReminderDate(text))}
+          onIconPress={() =>{
+            setActiveDateField("reminderDate");
+             setShowDatePicker(true)}}
+        />
           <CustomTextInput
             followupicon={require('../../assets/icons/Scan/scan.png')}
-            type={attachment}
-            value={attachment}
-            placeholder="Attachment"
-            onChangeText={setAttachment}
+            value={attachmentName}
+            placeholder={attachmentNamePlaceholder}
+            onChangeText={(text) => dispatch(changeAttachmentName(text))}
           />
-
-          {/* Remark */}
           <CustomTextInput
-            type={remark}
-            value={remark}
-            placeholder="Remark"
-            onChangeText={setRemark}
+            value={remarks}
+            placeholder={remarksPlaceholder}
+            onChangeText={(text) => dispatch(changeRemarks(text))}
           />
-
-          {/* Submit Button */}
           <CustomButton
             title="Submit"
             customStyle={ButtonStyles.blueButton}
-            textStyles={ButtonStyles.blueButtonText}
+            textStyles={ButtonStyles.blueButtonText} onPress={handleAddTask}
           />
         </View>
-      </ScrollView>
-
-      {/* 🗓️ Date Picker Modal */}
-      {showDatePicker && (
+        {showDatePicker && (
         <DateTimePicker
           value={selectedDate}
           mode="date"
@@ -350,27 +212,28 @@ const AddTask = (props) => {
           onChange={handleDateChange}
         />
       )}
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingRight: 10,
-    paddingLeft: 8,
-    paddingTop: 15,
-    backgroundColor: "#FFFFFF",
-    gap: 20,
-  },
-  centerContainer: {
-    flex: 0.7,
-    gap: 12,
-    zIndex: 1,
-    paddingRight: 10,
-    paddingLeft: 5,
-    position: "relative",
-  },
+        flex: 1,
+        paddingRight: 10,
+        paddingLeft: 8,
+        paddingTop: 15,
+        backgroundColor: "#FFFFFF",
+        gap: 20,
+      },
+      centerContainer: {
+        flex: 0.7,
+        gap: 12,
+        zIndex: 1,
+        paddingRight: 10,
+        paddingLeft: 5,
+        position: "relative",
+      },
 });
 
 export default AddTask;

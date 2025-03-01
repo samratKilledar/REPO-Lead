@@ -102,6 +102,3 @@ const styles = StyleSheet.create({
 });
 
 export default ClientAddServices;
-
-
-

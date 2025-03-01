@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'rea
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import TextStyle from '../../styles/TextStyle';
-import Dropdown from '../../components/Dropdown';
+import Dropdown from "../../components/Dropdown";
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import { useNavigation } from '@react-navigation/native';
@@ -11,7 +11,7 @@ import StatusDropdown from '../../components/StatusDropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateRemark, updateServices } from '../../redux/reducers/leadAddServiceReducer';
 
-const LeadAddService = () => {
+const LeadAddServices = () => {
   const dispatch = useDispatch();
   const remark = useSelector(state => state.leadAddService.remark);
   const services = useSelector(state => state.leadAddService.services);
@@ -101,7 +101,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LeadAddService;
-
-
-
+export default LeadAddServices;

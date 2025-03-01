@@ -4,25 +4,54 @@ import HoriCardcomp from '../../components/HoriCardcomp';
 import RectCardcomp from '../../components/RectCardcomp.js';
 import CustomText from '../../components/CustomText.js';
 import TextStyle from '../../styles/TextStyle.js';
-
+import {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+import {callAllDropDownAPI} from '../../redux/actions/HomeAction.js';
+import {getItem} from '../../api/storageServices';
 const meetingsData = [
-  { name: "Barbara Moore", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12:00 PM" },
-  { name: "Karlene Chaidez", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12:00 PM" },
-  { name: "Russell Copeland", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12:00 PM" },
-  { name: "Joseph Collins", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12:00 PM" },
+  {
+    name: 'Barbara Moore',
+    phone: '+91 9876543210',
+    dateTime: '02 Feb 2025 - 12:00 PM',
+  },
+  {
+    name: 'Karlene Chaidez',
+    phone: '+91 9876543210',
+    dateTime: '02 Feb 2025 - 12:00 PM',
+  },
+  {
+    name: 'Russell Copeland',
+    phone: '+91 9876543210',
+    dateTime: '02 Feb 2025 - 12:00 PM',
+  },
+  {
+    name: 'Joseph Collins',
+    phone: '+91 9876543210',
+    dateTime: '02 Feb 2025 - 12:00 PM',
+  },
 ];
 
-const HomeScreen = ({ navigation }) => {
-  const NavigateToLeadDetails = (props) => {
-    props.navigation.navigate("LeadDetails")
-  }
-  const NavigatetoCloseAccountScreen = (props) => {
-    props.navigation.navigate("CloseAccountScreen")
-  }
+const HomeScreen = ({navigation}) => {
+  const dispatch = useDispatch();
 
+  const NavigateToLeadDetails = props => {
+    props.navigation.navigate('LeadDetails');
+  };
+  const NavigatetoCloseAccountScreen = props => {
+    props.navigation.navigate('CloseAccountScreen');
+  };
+
+  useEffect(() => {
+  readData();
+   
+  });
+const readData=async()=>{
+  const storedData = await getItem('authToken');
+  dispatch(callAllDropDownAPI(JSON.stringify(storedData)));
+}
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <Headercomp navigation={navigation} />
       <ScrollView style={style.container} showsVerticalScrollIndicator={false}>
         <View style={{ marginBottom: 90 }}>
@@ -30,37 +59,55 @@ const HomeScreen = ({ navigation }) => {
             <HoriCardcomp />
           </View>
 
-          <View style={{ marginTop: 25 }}>
+          <View style={{marginTop: 25}}>
             <View style={style.textlayout}>
-              <View style={{ flex: 5, justifyContent: "flex-start" }}>
-                <CustomText customstyle={TextStyle.upComingUp} text={"Upcoming Meetings"} />
+              <View style={{flex: 5, justifyContent: 'flex-start'}}>
+                <CustomText
+                  customstyle={TextStyle.upComingUp}
+                  text={'Upcoming Meetings'}
+                />
               </View>
-              <TouchableOpacity onPress={() => navigation.navigate("UpcomingMeetings")}>
-                <View style={{ flex: 1 }}>
-
-                  <CustomText customstyle={TextStyle.SeeallText} text={"See All"} />
+              <TouchableOpacity
+                onPress={() => navigation.navigate('UpcomingMeetings')}>
+                <View style={{flex: 1}}>
+                  <CustomText
+                    customstyle={TextStyle.SeeallText}
+                    text={'See All'}
+                  />
                 </View>
               </TouchableOpacity>
-
             </View>
           </View>
 
-          <RectCardcomp props={meetingsData} onPress={NavigateToLeadDetails}
-            navigation={navigation} />
+          <RectCardcomp
+            props={meetingsData}
+            onPress={NavigateToLeadDetails}
+            navigation={navigation}
+          />
 
           <View style={style.textlayout}>
-            <View style={{ flex: 5, justifyContent: "flex-start" }}>
-              <CustomText customstyle={TextStyle.upComingUp} text={"Upcoming Tasks"} />
+            <View style={{flex: 5, justifyContent: 'flex-start'}}>
+              <CustomText
+                customstyle={TextStyle.upComingUp}
+                text={'Upcoming Tasks'}
+              />
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate("UpcomingTask")}>
-              <View style={{ flex: 1 }}>
-                <CustomText customstyle={TextStyle.SeeallText} text={"See All"} />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('UpcomingTask')}>
+              <View style={{flex: 1}}>
+                <CustomText
+                  customstyle={TextStyle.SeeallText}
+                  text={'See All'}
+                />
               </View>
             </TouchableOpacity>
           </View>
 
-          <RectCardcomp props={meetingsData} onPress={NavigatetoCloseAccountScreen}
-            navigation={navigation} />
+          <RectCardcomp
+            props={meetingsData}
+            onPress={NavigatetoCloseAccountScreen}
+            navigation={navigation}
+          />
         </View>
       </ScrollView>
     </View>
@@ -77,9 +124,8 @@ const style = StyleSheet.create({
     gap: 12,
     paddingRight: 24,
     paddingLeft: 24,
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 1,
     paddingTop: 20,
   },
 });
-

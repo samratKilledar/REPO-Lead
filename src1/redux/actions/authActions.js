@@ -1,5 +1,5 @@
-import {loginUserApiCall,readAllLead} from '../../api/authApi';
-import { setItem } from '../../api/storageServices';
+import {loginUserApiCall, readAllLead} from '../../api/authApi';
+import {setItem, getItem} from '../../api/storageServices';
 
 // Action Types
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -8,17 +8,21 @@ export const LOGOUT = 'LOGOUT';
 export const CHANGE_USER_CREDENTIAL = 'CHANGE_USER_CREDENTIAL';
 export const READ_ALL_LEAD = 'READ_ALL_LEAD';
 export const READ_ALL_LEAD_FAIL = 'READ_ALL_LEAD_FAIL';
-
+export const LOGIN_CLICK = 'LOGIN_CLICK';
 // ✅ Corrected loginUser function
 export const loginUser = () => async (dispatch, getState) => {
   try {
     const {loginValue} = getState().auth; // Get loginValue from Redux
+    dispatch({type: LOGIN_CLICK});
     //  alert(JSON.stringify(loginValue))
     const data = await loginUserApiCall(loginValue); // API call
-    // alert(JSON.stringify(data));
-    setItem('authToken',data); // Store token
-
-    dispatch({ type: LOGIN_SUCCESS}); // Dispatch success action
+    if (data.token != null) {
+      //alert(JSON.stringify(data));
+      setItem('authToken', data.token); // Store token
+      dispatch({type: LOGIN_SUCCESS}); // Dispatch success action
+    } else {
+      dispatch({type: LOGIN_FAILURE, payload: error.message}); // Dispatch failure action
+    }
   } catch (error) {
     dispatch({type: LOGIN_FAILURE, payload: error.message}); // Dispatch failure action
   }
@@ -42,21 +46,16 @@ export const updateCredential = data => ({
   payload: data,
 });
 
-export const getReadAllLead=async()=> {
+export const getReadAllLead = async () => {
   try {
     //  alert(JSON.stringify(loginValue))
-    console.log(1111)
+    console.log(1111);
     const data = await readAllLead(); // API call
     //alert(JSON.stringify(data));
     //setItem('authToken',data); // Store token
-    alert(data)
-    dispatch({ type: READ_ALL_LEAD,payload:data}); // Dispatch success action
+    alert("===>"+data);
+    dispatch({type: READ_ALL_LEAD, payload: data}); // Dispatch success action
   } catch (error) {
     dispatch({type: READ_ALL_LEAD_FAIL, payload: error.message}); // Dispatch failure action
   }
-}
-
-
-export const editProfile = () =>{
-  
-}
+};

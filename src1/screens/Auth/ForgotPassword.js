@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {
-  View,
+  View,Alert,
   Image,
   StyleSheet,
   KeyboardAvoidingView,
@@ -15,11 +15,28 @@ import CustomTextInput from '../../components/CustomTextInput';
 import CustomButton from '../../components/CustomButton';
 import TextStyle from '../../styles/TextStyle';
 import ButtonStyles from '../../styles/ButtonStyles';
+import { emailSuccess, updateForgotPassEmail,forgotPassUser } from '../../redux/actions/forgotPassAction';
+import { useDispatch, useSelector } from 'react-redux';
 // import {useNavigation} from '@react-navigation/native';
 
 const ForgotPassword = props => {
   const [email, setEmail] = useState('');
   // const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const emailPlaceHolder = useSelector(state => state.forgotPassReducer.emailPlaceHolder);
+  const emailValue = useSelector(state => state.forgotPassReducer.emailValue);
+  const handleEmail=()=>{
+    if(!emailValue?.email || emailValue.email.trim() === ""){
+      Alert.alert('Users', 'Email is required');
+      return;
+    } else if (!/\S+@\S+\.\S+/.test(emailValue.email)) {
+          Alert.alert('Error', 'Enter a valid email address!');
+          return;
+    }else{
+      dispatch(forgotPassUser())
+    }
+  };
+
   const goBackCall=()=>{
     props.navigation.goBack();
   }
@@ -52,9 +69,9 @@ const ForgotPassword = props => {
               />
               <CustomTextInput
                 icon={require('../../assets/icons/Message/message.png')}
-                value={email}
-                onChangeText={setEmail}
-                placeholder="Email"
+                value={emailValue.email}
+                onChangeText={(text)=> dispatch(updateForgotPassEmail({ email: text }))}
+                placeholder={emailPlaceHolder.email}
                 keyboardType="email-address"
               />
             </View>
@@ -65,7 +82,8 @@ const ForgotPassword = props => {
                 title="Continue"
                 customStyle={[ButtonStyles.blueButton]}
                 textStyles={ButtonStyles.blueButtonText}
-                onPress={() => props.navigation.navigate('ResetPassword')}
+                // onPress={() => props.navigation.navigate('ResetPassword')}
+                onPress={handleEmail}
               />
             </View>
           </View>

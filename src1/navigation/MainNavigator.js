@@ -38,6 +38,8 @@ import LoginScreen from '../screens/Auth/LoginScreen';
 import LogoutScreen from '../screens/Auth/LogoutScreen';
 import HeaderComp from '../components/HeaderComp';
 import ClientAddServices from '../screens/Main/ClientAddServices';
+import LeadLast from '../screens/Main/LeadLast';
+import SplashScreen from '../screens/Main/SplashScreen';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -47,6 +49,7 @@ const HomeStackScreen = ({navigation, route}) => {
 
   return (
     <HomeStack.Navigator screenOptions={{headerShown: false}}>
+      {/* <HomeStack.Screen name="SplashScreen" component={SplashScreen} /> */}
       <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="UpcomingMeetings" component={UpcomingMeetings} />
       <HomeStack.Screen
@@ -77,6 +80,8 @@ const LeadStackScreen = ({navigation, route}) => {
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
+      <HomeStack.Screen name="LeadAddOccupation" component={LeadAddOccupation} />
+      <HomeStack.Screen name="LeadLast" component={LeadLast} />
     </HomeStack.Navigator>
   );
 };
@@ -87,10 +92,7 @@ const LogoutStackScreen = ({navigation, route}) => {
   return (
     <HomeStack.Navigator screenOptions={{headerShown: false}}>
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
-      <HomeStack.Screen
-        name="EditProfileScreen"
-        component={EditProfileScreen}
-      />
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen}/>
       <HomeStack.Screen name="LoginScreen" component={LoginScreen} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
     </HomeStack.Navigator>
@@ -102,19 +104,15 @@ const ClientStackScreen = ({navigation, route}) => {
   return (
     <HomeStack.Navigator screenOptions={{headerShown: false}}>
       <HomeStack.Screen name="Client" component={ClientScreen} />
-      <HomeStack.Screen
-        name="ClientAddFollowUp"
-        component={ClientAddFollowUP}
-      />
-      <HomeStack.Screen
-        name="EditProfileScreen"
-        component={EditProfileScreen}
-      />
+      <HomeStack.Screen name="ClientAddFollowUp"component={ClientAddFollowUP}/>
+      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen}/>
       <HomeStack.Screen name="ClientDetails" component={ClientDetails} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
       <HomeStack.Screen name="ClientAddServices" component={ClientAddServices} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
+      <HomeStack.Screen name="LeadAddOccupation" component={LeadAddOccupation} />
+      <HomeStack.Screen name="LeadLast" component={LeadLast} />
     </HomeStack.Navigator>
   );
 };
@@ -124,17 +122,16 @@ const TaskStackScreen = ({navigation, route}) => {
   return (
     <HomeStack.Navigator screenOptions={{headerShown: false}}>
       <HomeStack.Screen name="Task" component={TaskScreen} />
-      <HomeStack.Screen
-        name="CloseAccountScreen"
-        component={CloseAccountScreen}
-      />
+      <HomeStack.Screen name="CloseAccountScreen"component={CloseAccountScreen}/>
       <HomeStack.Screen name="AddTask" component={AddTask} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
+      {/* <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} /> */}
       <HomeStack.Screen
         name="EditProfileScreen"
         component={EditProfileScreen}
       />
       <HomeStack.Screen name="Notifications" component={Notifications} />
+      <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
     </HomeStack.Navigator>
   );
 };
@@ -186,7 +183,7 @@ const CustomTabButton = ({onPress}) => {
               style={styles.option}
               onPress={() => {
                 setModalVisible(false);
-                navigation.navigate('AddTask');
+                navigation.navigate('Task' , {screen: 'AddTask'});
               }}>
               <Text style={styles.optionText}>Task</Text>
               <Image
@@ -272,7 +269,6 @@ const MainNavigator = () => {
             ),
           }}
         />
-
         <Tab.Screen
           name="Client"
           component={ClientStackScreen}
@@ -354,7 +350,7 @@ const styles = StyleSheet.create({
   },
 
   labelFocused: {
-    color: 'blue',
+    color: '#2B2162',
     fontWeight: 'bold',
   },
   // icon: {
