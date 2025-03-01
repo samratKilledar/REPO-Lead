@@ -58,17 +58,17 @@ const initialState = {
     isAuthenticated: false,
 
     // Placeholder text for each field
-    taskName: "Title",
-    taskType: "Type",
-    assignedTo: "Task Assigned To",
-    clientName: "Client",
-    dueDate: "Due Date",
-    priority: "Priority",
-    serviceRequest: "Service Request",
-    startDate: "Start Date",
-    reminderDate: "Reminder Date",
-    attachmentName: "Attachment",
-    remarks: "Remark",
+    taskNamePlaceholder: "Title",
+    taskTypePlaceholder: "Type",
+    assignedToPlaceholder: "Task Assigned To",
+    clientNamePlaceholder: "Client",
+    dueDatePlaceholder: "Due Date",
+    priorityPlaceholder: "Priority",
+    serviceRequestPlaceholder: "Service Request",
+    startDatePlaceholder: "Start Date",
+    reminderDatePlaceholder: "Reminder Date",
+    attachmentNamePlaceholder: "Attachment",
+    remarksPlaceholder: "Remark",
 
     taskName: "",
     taskType: "",
@@ -83,7 +83,7 @@ const initialState = {
     remarks: "",
 
     // Separate dropdown lists for each field
-    typeOptions: [],
+    typeOptions: ["Sanika", "Pranjli"],
     assignOptions: [],
     clientOptions: [],
     priorityOptions: [],
