@@ -37,6 +37,7 @@ const AddTask = (props) => {
     attachmentName,
     remarks,
   } = useSelector((state) => state.addTask);
+
  const { 
   taskNamePlaceholder,
   taskTypePlaceholder,
@@ -50,6 +51,7 @@ const AddTask = (props) => {
   attachmentNamePlaceholder,
   remarksPlaceholder,
   } = useSelector((state) => state.addTask);
+  
   const goBackCall = () => {
     props.navigation.goBack();
   };
