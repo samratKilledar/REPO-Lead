@@ -6,6 +6,8 @@ import addFollowUpReducer from './addFollowUpReducer';
 import addTaskReducer from './addTaskReducer';
 import editProfileReducer from './editProfileReducer';
 import leadAddServiceReducer from './leadAddServiceReducer';
+import personalReducer from './personalReducer';
+import lastReducer from './lastReducer';
 export default combineReducers({
   auth: authReducer,
   homeReducer: homeReducer,
@@ -13,4 +15,7 @@ export default combineReducers({
   addTask:addTaskReducer,
   editProfile: editProfileReducer,
   leadAddService: leadAddServiceReducer,
+  personalReducer : personalReducer,
+  lastReducer: lastReducer,
 });
+
