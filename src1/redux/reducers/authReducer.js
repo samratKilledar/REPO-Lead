@@ -8,9 +8,9 @@ const initialState = {
     password: "Password"
   },
   loginValue: {
-    customerId: "",
-    email: "",
-    password: ""
+    customerId: "Root",
+    email: "Supra@admin.com",
+    password: "Admin@123"
   },
 };
 

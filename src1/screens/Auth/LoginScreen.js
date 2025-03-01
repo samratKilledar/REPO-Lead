@@ -454,7 +454,7 @@ const LoginScreen = props => {
                 </View>
 
                 {/* Sign In Button */}
-                <View style={{ paddingRight: 10, paddingLeft: 10 }}>
+                <View>
                   <CustomButton
                     title="Sign in"
                     customStyle={{ width: width - 30 }}
@@ -513,6 +513,12 @@ const styles = StyleSheet.create({
     gap: 10,
     marginBottom: 20,
   },
+    rememberMe: {
+    fontWeight: '600',
+    fontSize: 14,
+    lineHeight: 19.6,
+    letterSpacing: 0.2,
+  },
   checkbox: {
     width: 24,
     height: 24,
@@ -522,6 +528,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  checked: {
+        backgroundColor: '#2B2162',
+      },
+      checkIcon: {
+        width: 14,
+        height: 10,
+        tintColor: '#fff', // Optional: Adjust icon color
+        resizeMode: 'contain',
+      },
+      checkmark: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: 'bold',
+      },
 });
 
 export default LoginScreen;
