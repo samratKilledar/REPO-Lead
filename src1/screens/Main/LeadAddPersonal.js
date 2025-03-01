@@ -224,7 +224,7 @@ const LeadAddPersonal = ({ navigation }) => {
     city,
     state,
     country
-  } = useSelector(state => state.personal);
+  } = useSelector(state => state.personalReducer);
 
   const [leadService, setLeadService] = useState('');
 

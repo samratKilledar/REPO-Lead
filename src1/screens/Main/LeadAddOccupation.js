@@ -79,7 +79,8 @@
 // export default LeadAddOccupation;
 
 
-import React , { useState } from "react";
+// NEW IMPORTED REDUX
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../components/CustomButton";
@@ -88,23 +89,34 @@ import Dropdown from "../../components/Dropdown";
 import Stepper from "../../components/StepperComp";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import StatusDropdown from "../../components/StatusDropdown";
+import { updateMonthlyIncome, updateOccupation, updateTypeOfWork, fetchOccupations } from "../../redux/actions/OccupationAction";
 
 const LeadAddOccupation = (props) => {
+  const dispatch = useDispatch();
+  const occupations = useSelector((state) => state.occupations);
+
   const [typeOfWork, setTypeOfWork] = useState("");
   const [type, setType] = useState(null);
   const [monthlyIncome, setMonthlyIncome] = useState("");
   const steps = ["Personal", "Occupation", "Services"];
   const currentStep = 2;
+
+  useEffect(() => {
+    dispatch(fetchOccupations());
+  }, [dispatch]);
+
   const leadLastHandle = () => {
-    props.navigation.navigate("LeadLast")
-  }
+    props.navigation.navigate("LeadLast");
+  };
+
   const goBackCall = () => {
     props.navigation.goBack();
   };
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.1 }}>
-        <NavigationHeaderBack text="Add Lead" onPress={goBackCall}/>
+        <NavigationHeaderBack text="Add Lead" onPress={goBackCall} />
       </View>
 
       <View style={styles.stepperContainer1}>
@@ -115,23 +127,33 @@ const LeadAddOccupation = (props) => {
         <StatusDropdown
           label="Occupation"
           selectedValue={type}
-          onValueChange={setType}
-         apiType="occupation" 
+          onValueChange={(value) => {
+            setType(value);
+            dispatch(updateOccupation(value));
+          }}
+          apiType="occupation"
           zIndex={2000}
         />
-        
+
         <CustomTextInput
           value={typeOfWork}
           placeholder="Type of Work"
-          onChangeText={(text) => dispatch(updateTypeOfWork(text))}
+          onChangeText={(text) => {
+            setTypeOfWork(text);
+            dispatch(updateTypeOfWork(text));
+          }}
         />
 
         <CustomTextInput
           value={monthlyIncome}
           placeholder="Monthly Income"
-          onChangeText={(text) => dispatch(updateMonthlyIncome(text))}
+          onChangeText={(text) => {
+            setMonthlyIncome(text);
+            dispatch(updateMonthlyIncome(text));
+          }}
         />
-        <CustomButton title="NEXT" customStyle={{ width: -30 }} onPress={leadLastHandle}/>
+
+        <CustomButton title="NEXT" customStyle={{ width: -30 }} onPress={leadLastHandle} />
       </View>
     </View>
   );
@@ -140,7 +162,6 @@ const LeadAddOccupation = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  //  paddingHorizontal: 24,
     paddingTop: 15,
     backgroundColor: "#FFFFFF",
     gap: 18,
@@ -150,13 +171,12 @@ const styles = StyleSheet.create({
     flex: 0.7,
     gap: 12,
     zIndex: 1,
-    paddingLeft:20,
-    paddingRight:20,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   stepperContainer1: {
     justifyContent: "space-evenly",
-    
-  }
+  },
 });
 
 export default LeadAddOccupation;
