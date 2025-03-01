@@ -8,6 +8,8 @@ import editProfileReducer from './editProfileReducer';
 import leadAddServiceReducer from './leadAddServiceReducer';
 import personalReducer from './personalReducer';
 import lastReducer from './lastReducer';
+import occupationReducer from './occupationReducer';
+
 export default combineReducers({
   auth: authReducer,
   homeReducer: homeReducer,
@@ -17,5 +19,6 @@ export default combineReducers({
   leadAddService: leadAddServiceReducer,
   personalReducer : personalReducer,
   lastReducer: lastReducer,
+  occupationReducer: occupationReducer,
 });
 

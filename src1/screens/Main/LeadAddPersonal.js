@@ -237,8 +237,13 @@ const LeadAddPersonal = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <View style={{flex:0.4}}>
       <NavigationHeaderBack text="Add Lead" onPress={goBackCall} />
-      <Stepper steps={steps} currentStep={currentStep} />
+      </View>
+      
+      <View style={styles.stepperContainer}>
+         <Stepper steps={steps} currentStep={currentStep} />
+       </View>
 
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.centerContainer}>
@@ -323,7 +328,7 @@ const LeadAddPersonal = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
+    paddingTop: 50,
     backgroundColor: '#FFFFFF',
     gap: 18,
     marginBottom: 50,

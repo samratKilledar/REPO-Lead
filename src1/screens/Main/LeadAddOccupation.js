@@ -93,17 +93,13 @@ import { updateMonthlyIncome, updateOccupation, updateTypeOfWork, fetchOccupatio
 
 const LeadAddOccupation = (props) => {
   const dispatch = useDispatch();
-  const occupations = useSelector((state) => state.occupations);
+  const occupations = useSelector((state) => state.occupationReducer);
 
   const [typeOfWork, setTypeOfWork] = useState("");
   const [type, setType] = useState(null);
   const [monthlyIncome, setMonthlyIncome] = useState("");
   const steps = ["Personal", "Occupation", "Services"];
   const currentStep = 2;
-
-  useEffect(() => {
-    dispatch(fetchOccupations());
-  }, [dispatch]);
 
   const leadLastHandle = () => {
     props.navigation.navigate("LeadLast");

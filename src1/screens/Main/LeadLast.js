@@ -187,7 +187,10 @@ const LeadLast = (props) => {
 
   return (
     <View style={styles.container}>
+      <View style={{ flex: 0.1}}>
       <NavigationHeaderBack text="Add Services" onPress={goBackCall} />
+      </View>
+      
       <ScrollView contentContainerStyle={styles.centerContainer}>
         <Stepper steps={steps} currentStep={currentStep} />
         <Dropdown
