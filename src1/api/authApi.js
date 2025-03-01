@@ -20,12 +20,12 @@ export const l = async userData => {
 };
 
 
-export const fetchDropdownData = async (apiType) => {
+export const fetchDropdownDataApi = async (apiType) => {
     try {
         const authToken = await getItem("authToken");
         const apiUrl = api[apiType];
         if (!apiUrl) throw new Error("Invalid API type");
-        
+
         return await apiGet(apiUrl, authToken);
     } catch (error) {
         console.error(`Error fetching dropdown data for ${apiType}:`, error);
