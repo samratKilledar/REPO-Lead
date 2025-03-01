@@ -105,21 +105,15 @@ const ClientStackScreen = ({navigation, route}) => {
   return (
     <HomeStack.Navigator screenOptions={{headerShown: false}}>
       <HomeStack.Screen name="Client" component={ClientScreen} />
-      <HomeStack.Screen
-        name="ClientAddFollowUp"
-        component={ClientAddFollowUP}
-      />
-      <HomeStack.Screen
-        name="EditProfileScreen"
-        component={EditProfileScreen}
-      />
+      <HomeStack.Screen name="ClientAddFollowUp"component={ClientAddFollowUP}/>
+      <HomeStack.Screen name="EditProfileScreen"component={EditProfileScreen}/>
       <HomeStack.Screen name="ClientDetails" component={ClientDetails} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
       <HomeStack.Screen name="ClientAddServices" component={ClientAddServices} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
-      {/* <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
+      <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
       <HomeStack.Screen name="LeadAddOccupation" component={LeadAddOccupation} />
-      <HomeStack.Screen name="LeadLast" component={LeadLast} /> */}
+      <HomeStack.Screen name="LeadLast" component={LeadLast} />
     </HomeStack.Navigator>
   );
 };
