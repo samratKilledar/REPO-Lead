@@ -11,7 +11,8 @@ import {
   Platform,
   ScrollView,
   Alert, 
-  TouchableOpacity
+  TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import CustomText from '../../components/CustomText';
@@ -21,9 +22,11 @@ import TextStyle from '../../styles/TextStyle';
 import ButtonStyles from '../../styles/ButtonStyles';
 import Loader from '../../styles/Loader';
 import { useDispatch } from 'react-redux';
-import { getReadAllLead,updateCredential,loginUser } from '../../redux/actions/authActions'; // Import your login action
+import { getReadAllLead,updateCredential,loginUser } from '../../redux/actions/authActions'; 
 import { useSelector } from "react-redux";
 import { getItem } from '../../api/storageServices';
+import { PermissionsAndroid } from 'react-native';
+const { width, height } = Dimensions.get('window');
 
 const LoginScreen = (props) => {
   const [loading, setLoading] = useState(false);
@@ -35,24 +38,45 @@ const LoginScreen = (props) => {
   const loginValue = useSelector(state => state.auth.loginValue);
 
   useEffect(() => {
-    dispatch(getReadAllLead)
-
+    dispatch(getReadAllLead);
+  
     const checkAuthToken = async () => {
       try {
-
         const user = await getItem('authToken');
         if (user) {
-          navigation.replace('HomeStack'); // Navigate to HomeStack on success
-          // Use props.navigation instead of props.navigate\
-          // alert("sss")
+          navigation.replace('HomeStack');
         }
       } catch (error) {
         console.error("Error retrieving auth token:", error);
       }
     };
   
+    const requestPermissions = async () => {
+      try {
+        const granted = await PermissionsAndroid.requestMultiple([
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES, 
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        ]);
+  
+        if (
+          granted[PermissionsAndroid.PERMISSIONS.CAMERA] !== PermissionsAndroid.RESULTS.GRANTED ||
+          granted[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] !== PermissionsAndroid.RESULTS.GRANTED || // Check for Android 13+
+          granted[PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE] !== PermissionsAndroid.RESULTS.GRANTED ||
+          granted[PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE] !== PermissionsAndroid.RESULTS.GRANTED
+        ) {
+          Alert.alert("Permissions Required", "Please enable Camera and Gallery permissions from settings.");
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    };
+  
     checkAuthToken();
-  }, []); // Ensure dependencies are correct
+    requestPermissions();
+  }, []);
+  
   
   // alert(JSON.stringify(loginPlaceHolder))
   // Validation and Login Handler
@@ -80,7 +104,7 @@ const LoginScreen = (props) => {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.inner}>
-              
+
               {/* Logo */}
               <View style={{ flex: 1, justifyContent: 'center' }}>
                 <Image source={require('../../assets/images/Logo.png')} style={styles.logo} />
@@ -117,7 +141,7 @@ const LoginScreen = (props) => {
               </View>
 
               <View style={{ flex: 3, alignItems: 'center' }}>
-                
+
                 {/* Checkbox */}
                 <View style={styles.checkboxContainer}>
                   <Pressable style={[styles.checkbox, isChecked && styles.checked]} onPress={() => setIsChecked(!isChecked)}>
@@ -164,33 +188,25 @@ const styles = StyleSheet.create({
   },
   inner: {
     flex: 1,
-   // width: '100%',
     alignItems: 'center',
+    width: width * 0.9,
   },
   logo: {
-    width: 380,
+    width: width * 0.9,
     height: 81.23,
-   // marginBottom: 10,
+    resizeMode: 'contain'
   },
   box: {
     flex: 1,
     alignItems: 'center',
     gap: 20,
-    justifyContent: 'flex-start',
     width: '100%',
-    paddingHorizontal: 10,
   },
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
     marginBottom: 20,
-  },
-  rememberMe: {
-    fontWeight: '600',
-    fontSize: 14,
-    lineHeight: 19.6,
-    letterSpacing: 0.2,
   },
   checkbox: {
     width: 24,
@@ -200,20 +216,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  checked: {
-    backgroundColor: '#2B2162',
-  },
-  checkIcon: {
-    width: 14,
-    height: 10,
-    tintColor: "#fff", // Optional: Adjust icon color
-    resizeMode: "contain",
-  },
-  checkmark: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: 'bold',
   },
 });
 

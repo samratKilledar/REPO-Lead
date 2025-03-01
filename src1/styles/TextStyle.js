@@ -253,6 +253,7 @@ export default StyleSheet.create({
         fontSize: 20,
         lineHeight: 24,
         color: "#212121",
+        textAlign: "center",
     },
     nameText: {
         fontFamily: "Urbanist",

@@ -11,7 +11,7 @@ import StatusDropdown from '../../components/StatusDropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateRemark, updateServices } from '../../redux/reducers/leadAddServiceReducer';
 
-const LeadAddService = () => {
+const ClientAddServices = () => {
   const dispatch = useDispatch();
   const remark = useSelector(state => state.leadAddService.remark);
   const services = useSelector(state => state.leadAddService.services);
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LeadAddService;
+export default ClientAddServices;
 
 
 

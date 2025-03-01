@@ -33,7 +33,7 @@ const ClientDetails = (props) => {
     props.navigation.navigate("ClientAddFollowUp")
   }
   const addService = () => {
-    props.navigation.navigate("LeadAddServices")
+    props.navigation.navigate("ClientAddServices")
   }
   return (
     <View style={styles.container}>

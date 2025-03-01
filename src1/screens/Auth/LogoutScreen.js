@@ -341,7 +341,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: 'center',
     gap: 10,
-    marginTop: height * 0.02,
+    marginTop: height * 0.03,
   },
   bottomModalOverlay: {
     flex: 1,
@@ -354,6 +354,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: width * 0.05,
+    gap : 20,
   },
   modalScrollContent: {
     flexGrow: 1,

@@ -37,6 +37,7 @@ import LeadAddPersonal from '../screens/Main/LeadAddPersonal';
 import LoginScreen from '../screens/Auth/LoginScreen';
 import LogoutScreen from '../screens/Auth/LogoutScreen';
 import HeaderComp from '../components/HeaderComp';
+import ClientAddServices from '../screens/Main/ClientAddServices';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -111,7 +112,7 @@ const ClientStackScreen = ({navigation, route}) => {
       />
       <HomeStack.Screen name="ClientDetails" component={ClientDetails} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
-      <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
+      <HomeStack.Screen name="ClientAddServices" component={ClientAddServices} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
     </HomeStack.Navigator>
@@ -172,7 +173,7 @@ const CustomTabButton = ({onPress}) => {
               style={styles.option}
               onPress={() => {
                 setModalVisible(false);
-               navigation.navigate('Lead', { screen: 'LeadStackScreen' });
+               navigation.navigate('Lead', { screen: 'LeadAddPersonal' });
               }}>
               <Text style={styles.optionText}>Lead</Text>
               <Image

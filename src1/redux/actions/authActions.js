@@ -55,3 +55,8 @@ export const getReadAllLead=async()=> {
     dispatch({type: READ_ALL_LEAD_FAIL, payload: error.message}); // Dispatch failure action
   }
 }
+
+
+export const editProfile = () =>{
+  
+}
