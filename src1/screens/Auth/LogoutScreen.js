@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { View, Image, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, Dimensions } from 'react-native';
 import TextStyle from '../../styles/TextStyle';
@@ -173,31 +172,35 @@ const LogoutScreen = ({ navigation }) => {
         <Modal visible={modalVisible} animationType="slide" transparent={true}>
           <View style={styles.bottomModalOverlay}>
             <View style={styles.bottomModalContainer}>
-              <CustomText text={"UDC Service"} customstyle={TextStyle.modallText2} />
-              <Image source={require("../../assets/icons/Line.png")} style={styles.line} />
-              {/* Dropdown for Services */}
-              <Dropdown
-                label="Services"
-                selectedValue={Services}
-                onValueChange={setServices}
-                options={[
-                  { label: "Services", value: "Services" },
-                  { label: "Occupation", value: "Occupation" },
-                  { label: "Lead Source", value: "Lead Source" },
-                  { label: "Lead Status", value: "Lead Status" }
-                ]}
-              />
+              <ScrollView contentContainerStyle={styles.modalScrollContent}>
+                <CustomText text={"UDC Service"} customstyle={TextStyle.modallText2} />
+                <Image source={require("../../assets/icons/Line.png")} style={styles.line} />
+                {/* Dropdown for Services */}
+                <Dropdown
+                  label="Services"
+                  selectedValue={Services}
+                  onValueChange={setServices}
+                  options={[
+                    { label: "Services", value: "Services" },
+                    { label: "Occupation", value: "Occupation" },
+                    { label: "Lead Source", value: "Lead Source" },
+                    { label: "Lead Status", value: "Lead Status" }
+                  ]}
+                />
 
-              {/* Input for Service Name */}
-              <CustomTextInput
-                style={styles.input}
-                placeholder="Service Name"
-                value={serviceName}
-                onChangeText={setServiceName}
-              />
+                {/* Input for Service Name */}
+                <CustomTextInput
+                  style={styles.input}
+                  placeholder="Service Name"
+                  value={serviceName}
+                  onChangeText={setServiceName}
+                />
 
-              {/* Submit Button */}
-              <CustomButton title={"Add"} customStyle={{ width: width - 30 }} onPress={() => setModalVisible(false)} />
+                {/* Submit Button */}
+                <View style={styles.buttonContainer}>
+                  <CustomButton title={"Add"} customStyle={{ width: width - 30 }} onPress={() => setModalVisible(false)} />
+                </View>
+              </ScrollView>
             </View>
           </View>
         </Modal>
@@ -206,46 +209,50 @@ const LogoutScreen = ({ navigation }) => {
         <Modal visible={editModalVisible} animationType="slide" transparent={true}>
           <View style={styles.bottomModalOverlay}>
             <View style={styles.bottomModalContainer}>
-              <CustomText text={"Services"} customstyle={TextStyle.modallText2} />
-              <Image source={require("../../assets/icons/Line.png")} style={styles.line} />
-              <View style={{ gap: width * 0.01 }}>
-                {/* Insurance Section */}
-                <View style={styles.serviceItem}>
-                  <CustomText text={"Insurance"} customstyle={TextStyle.serviceText} />
-                  <View style={styles.iconContainer}>
-                    <TouchableOpacity onPress={() => { /* Handle edit action */ }}>
-                      <Image source={require("../../assets/icons/Edit/edit3x.png")} style={styles.smallIcon} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { /* Handle delete action */ }}>
-                      <Image source={require("../../assets/icons/cross.png")} style={styles.smallIcon} />
-                    </TouchableOpacity>
+              <ScrollView contentContainerStyle={styles.modalScrollContent}>
+                <CustomText text={"Services"} customstyle={TextStyle.modallText2} />
+                <Image source={require("../../assets/icons/Line.png")} style={styles.line} />
+                <View style={{ gap: width * 0.01 }}>
+                  {/* Insurance Section */}
+                  <View style={styles.serviceItem}>
+                    <CustomText text={"Insurance"} customstyle={TextStyle.serviceText} />
+                    <View style={styles.iconContainer}>
+                      <TouchableOpacity onPress={() => { /* Handle edit action */ }}>
+                        <Image source={require("../../assets/icons/Edit/edit3x.png")} style={styles.smallIcon} />
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={() => { /* Handle delete action */ }}>
+                        <Image source={require("../../assets/icons/cross.png")} style={styles.smallIcon} />
+                      </TouchableOpacity>
+                    </View>
                   </View>
+
+                  {/* Mutual Fund Section */}
+                  <View style={styles.serviceItem}>
+                    <CustomText text={"Mutual Fund"} customstyle={TextStyle.serviceText} />
+                    <View style={styles.iconContainer}>
+                      <TouchableOpacity onPress={() => { /* Handle edit action */ }}>
+                        <Image source={require("../../assets/icons/Edit/edit3x.png")} style={styles.smallIcon} />
+                      </TouchableOpacity>
+                      <TouchableOpacity onPress={() => { /* Handle delete action */ }}>
+                        <Image source={require("../../assets/icons/cross.png")} style={styles.smallIcon} />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+
+                  {/* Service Name Input */}
+                  <CustomTextInput
+                    style={styles.input}
+                    placeholder="Service Name"
+                    value={serviceName}
+                    onChangeText={setServiceName}
+                  />
                 </View>
 
-                {/* Mutual Fund Section */}
-                <View style={styles.serviceItem}>
-                  <CustomText text={"Mutual Fund"} customstyle={TextStyle.serviceText} />
-                  <View style={styles.iconContainer}>
-                    <TouchableOpacity onPress={() => { /* Handle edit action */ }}>
-                      <Image source={require("../../assets/icons/Edit/edit3x.png")} style={styles.smallIcon} />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { /* Handle delete action */ }}>
-                      <Image source={require("../../assets/icons/cross.png")} style={styles.smallIcon} />
-                    </TouchableOpacity>
-                  </View>
+                {/* Add Button */}
+                <View style={styles.buttonContainer}>
+                  <CustomButton title={"Add"} customStyle={{ width: width - 30 }} onPress={() => setEditModalVisible(false)} />
                 </View>
-
-                {/* Service Name Input */}
-                <CustomTextInput
-                  style={styles.input}
-                  placeholder="Service Name"
-                  value={serviceName}
-                  onChangeText={setServiceName}
-                />
-              </View>
-
-              {/* Add Button */}
-              <CustomButton title={"Add"} customStyle={{ width: width - 30 }} onPress={() => setEditModalVisible(false)} />
+              </ScrollView>
             </View>
           </View>
         </Modal>
@@ -334,7 +341,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: 'center',
     gap: 10,
-    marginTop: height * 0.02,
+    marginTop: height * 0.03,
   },
   bottomModalOverlay: {
     flex: 1,
@@ -342,13 +349,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   bottomModalContainer: {
-    height: height * 0.44,
+    height: height * 0.5, // Adjust height as needed
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: width * 0.05,
-    alignItems: 'center',
-    gap: 19,
+    gap : 20,
+  },
+  modalScrollContent: {
+    flexGrow: 1,
+    justifyContent: 'space-between',
+    paddingBottom: height * 0.02,
   },
   input: {
     width: '90%',
@@ -356,12 +367,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginVertical: height * 0.01,
   },
-  submitButton: {
-    backgroundColor: '#2E1A47',
-    paddingVertical: height * 0.015,
-    width: '90%',
+  buttonContainer: {
+    width: '100%',
     alignItems: 'center',
-    borderRadius: 10,
     marginTop: height * 0.02,
   },
   serviceItem: {
@@ -374,12 +382,13 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: "space-between",
+    gap: width * 0.02, // Add gap between icons
   },
   smallIcon: {
     width: width * 0.04,
     height: width * 0.04,
     resizeMode: 'contain',
-    marginHorizontal: width * 0.01,
   },
 });
 

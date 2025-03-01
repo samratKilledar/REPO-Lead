@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+
+const { width, height } = Dimensions.get('window');
 
 export default StyleSheet.create({
     //home page cards
@@ -36,12 +38,10 @@ export default StyleSheet.create({
 
     },
     arrow: {
-        width: 24,
-        height: 24,
-        maxWidth: 24,
-        aspectRatio: 1,
-        alignSelf: "flex-end",
-    },
+        width: width * 0.06,  
+        height: width * 0.06, 
+        resizeMode: "contain",
+      },
     //leads
 
     //profile logout page
@@ -49,20 +49,20 @@ export default StyleSheet.create({
         gap: 4,
         height: 32,
         paddingTop: 6,
-        paddingRight: 16,
+        paddingRight: width * 0.04, // 4% of screen width
         paddingBottom: 6,
-        paddingLeft: 16,
+        paddingLeft: width * 0.04,
         borderRadius: 100,
-        overflow: 'hidden',
+        overflow: 'hidden'
     },
     blue1: {
         flex: 0.6,
         gap: 4,
         height: 32,
         paddingTop: 6,
-        paddingRight: 16,
+        paddingRight: width * 0.04,
         paddingBottom: 6,
-        paddingLeft: 16,
+        paddingLeft: width * 0.04,
         borderRadius: 100,
         overflow: 'hidden',
     },

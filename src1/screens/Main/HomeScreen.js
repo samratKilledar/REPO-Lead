@@ -1,10 +1,4 @@
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
 import Headercomp from '../../components/HeaderComp.js';
 import HoriCardcomp from '../../components/HoriCardcomp';
 import RectCardcomp from '../../components/RectCardcomp.js';
@@ -60,8 +54,10 @@ const readData=async()=>{
     <View style={{flex: 1}}>
       <Headercomp navigation={navigation} />
       <ScrollView style={style.container} showsVerticalScrollIndicator={false}>
-        <View style={{marginBottom: 90}}>
-          <HoriCardcomp />
+        <View style={{ marginBottom: 90 }}>
+          <View style={{ marginTop: 30, MarginBottom: 30 }}>
+            <HoriCardcomp />
+          </View>
 
           <View style={{marginTop: 25}}>
             <View style={style.textlayout}>
