@@ -39,6 +39,7 @@ import LogoutScreen from '../screens/Auth/LogoutScreen';
 import HeaderComp from '../components/HeaderComp';
 import ClientAddServices from '../screens/Main/ClientAddServices';
 import LeadLast from '../screens/Main/LeadLast';
+import SplashScreen from '../screens/Main/SplashScreen';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -48,6 +49,7 @@ const HomeStackScreen = ({navigation, route}) => {
 
   return (
     <HomeStack.Navigator screenOptions={{headerShown: false}}>
+      {/* <HomeStack.Screen name="SplashScreen" component={SplashScreen} /> */}
       <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="UpcomingMeetings" component={UpcomingMeetings} />
       <HomeStack.Screen
