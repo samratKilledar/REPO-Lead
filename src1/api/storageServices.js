@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const setItem = async (key, value) => {
   try {
     const jsonValue = JSON.stringify(value);
+   // alert(key+"=========>"+jsonValue)
     await AsyncStorage.setItem(key, jsonValue);
   } catch (error) {
     console.error('Error saving data:', error);
@@ -14,12 +15,13 @@ export const setItem = async (key, value) => {
 export const getItem = async (key) => {
   try {
     const jsonValue = await AsyncStorage.getItem(key);
-    return jsonValue != null ? JSON.parse(jsonValue) : null;
+    return jsonValue ? JSON.parse(jsonValue) : null;
   } catch (error) {
     console.error('Error retrieving data:', error);
     return null;
   }
 };
+
 
 // Function to remove data from AsyncStorage
 export const removeItem = async (key) => {

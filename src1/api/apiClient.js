@@ -2,7 +2,7 @@
 // GET Request Function
 export const apiGet = async (url,tokan) => {
   try {
-    console.log(tokan+"=="+url)
+    console.log(JSON.stringify(tokan)+"=="+url)
 
     const response = await fetch(url, {
       method: 'GET',
@@ -13,12 +13,12 @@ export const apiGet = async (url,tokan) => {
 
       },
     });
-    console.log("333+response"+JSON.stringify(response))
+   // console.log("333+response"+JSON.stringify(response))
 
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    alert(JSON.stringify(response))
+    //alert(JSON.stringify(response))
     return await response.json();
   } catch (error) {
     console.error(
@@ -32,8 +32,8 @@ export const apiGet = async (url,tokan) => {
 // POST Request Function
 export const apiPost = async (url, param = {}) => {
   const data = param.data;
-  console.log(JSON.stringify(data) + '=sssssss=' + data.password);
-
+  console.log(JSON.stringify(data) + '=ssss------------------sss=' + data.customerId);
+  //{"customerId":"Root","email":"Supra@admin.com","password":"Admin@123"}=ssss------------------sss=Root
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -46,9 +46,11 @@ export const apiPost = async (url, param = {}) => {
         Password: data.password,
       }),
     });
-    console.log('======>' + JSON.stringify(response));
+    console.log('===s===>' + JSON.stringify(response));
     return await response.json();
   } catch (error) {
+    console.log('===errrrrrrror===>' + JSON.stringify(error));
+
     return await error.message;
   }
 };
