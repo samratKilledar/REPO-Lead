@@ -108,9 +108,9 @@ const ClientStackScreen = ({navigation, route}) => {
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
       <HomeStack.Screen name="ClientAddServices" component={ClientAddServices} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
-      {/* <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
+      <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
       <HomeStack.Screen name="LeadAddOccupation" component={LeadAddOccupation} />
-      <HomeStack.Screen name="LeadLast" component={LeadLast} /> */}
+      <HomeStack.Screen name="LeadLast" component={LeadLast} />
     </HomeStack.Navigator>
   );
 };

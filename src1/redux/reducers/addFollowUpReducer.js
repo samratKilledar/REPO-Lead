@@ -2,13 +2,13 @@ const initialState = {
     isAuthenticated: false,
 
     // Placeholder text for each field
-    title: "Title",
-    followupStatus: "Status",
-    assignedTo: "Assign",
-    attachmentUrl: "Attachment",
-    followupDate: "Next Meeting schedule on",
-    followupTime: "Schedule Time",
-    remark: "Remark",
+    titlePlaceholder: "Title",
+    followupStatusPlaceholder: "Status",
+    assignedToPlaceholder: "Assign",
+    attachmentUrlPlaceholder: "Attachment",
+    followupDatePlaceholder: "Next Meeting schedule on",
+    followupTimePlaceholder: "Schedule Time",
+    remarkPlaceholder: "Remark",
 
     // Actual values (user input)
     title: "",
