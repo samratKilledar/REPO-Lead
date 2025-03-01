@@ -257,8 +257,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Alert,
+  Alert, 
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Added AsyncStorage
@@ -267,14 +268,13 @@ import CustomTextInput from '../../components/CustomTextInput';
 import CustomButton from '../../components/CustomButton';
 import TextStyle from '../../styles/TextStyle';
 import ButtonStyles from '../../styles/ButtonStyles';
-import {
-  getReadAllLead,
-  updateCredential,
-  loginUser,
-} from '../../redux/actions/authActions';
-import { getItem } from '../../api/storageServices';
-import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../styles/Loader';
+import { useDispatch } from 'react-redux';
+import { getReadAllLead,updateCredential,loginUser } from '../../redux/actions/authActions'; 
+import { useSelector } from "react-redux";
+import { getItem } from '../../api/storageServices';
+import { PermissionsAndroid } from 'react-native';
+const { width, height } = Dimensions.get('window');
 
 const LoginScreen = props => {
   const [loading, setLoading] = useState(false);
@@ -286,28 +286,47 @@ const LoginScreen = props => {
   const loginValue = useSelector(state => state.auth.loginValue);
 
   useEffect(() => {
+    dispatch(getReadAllLead);
+  
     const checkAuthToken = async () => {
       try {
         const user = await getItem('authToken');
-        if (
-          user != 'Network request failed' &&
-          user != null &&
-          user != 'null' &&
-          user != '' &&
-          user != undefined
-        ) {
-          navigation.navigate('Main');
-          setLoading(false);
+        if (user) {
+          navigation.replace('HomeStack');
         }
       } catch (error) {
         console.error('Error retrieving auth token:', error);
       }
     };
+    const requestPermissions = async () => {
+      try {
+        const granted = await PermissionsAndroid.requestMultiple([
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES, 
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+        ]);
+  
+        if (
+          granted[PermissionsAndroid.PERMISSIONS.CAMERA] !== PermissionsAndroid.RESULTS.GRANTED ||
+          granted[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] !== PermissionsAndroid.RESULTS.GRANTED || // Check for Android 13+
+          granted[PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE] !== PermissionsAndroid.RESULTS.GRANTED ||
+          granted[PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE] !== PermissionsAndroid.RESULTS.GRANTED
+        ) {
+          Alert.alert("Permissions Required", "Please enable Camera and Gallery permissions from settings.");
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    };
 
+    requestPermissions();
     checkAuthToken();
     loadRememberedCredentials(); // Load stored credentials when the screen loads
   }, []);
 
+
+  
   // Load saved login credentials if "Remember Me" was checked
   const loadRememberedCredentials = async () => {
     try {
@@ -343,7 +362,9 @@ const LoginScreen = props => {
     }
   };
 
-  // Handle Login
+
+  // alert(JSON.stringify(loginPlaceHolder))
+  // Validation and Login Handler
   const handleLogin = () => {
     if (!loginValue.customerId || !loginValue.email || !loginValue.password) {
       Alert.alert('Lead', 'All fields are required!');
@@ -473,30 +494,24 @@ const styles = StyleSheet.create({
   inner: {
     flex: 1,
     alignItems: 'center',
+    width: width * 0.9,
   },
   logo: {
-    width: 380,
+    width: width * 0.9,
     height: 81.23,
+    resizeMode: 'contain'
   },
   box: {
     flex: 1,
     alignItems: 'center',
     gap: 20,
-    justifyContent: 'flex-start',
     width: '100%',
-    paddingHorizontal: 10,
   },
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
     marginBottom: 20,
-  },
-  rememberMe: {
-    fontWeight: '600',
-    fontSize: 14,
-    lineHeight: 19.6,
-    letterSpacing: 0.2,
   },
   checkbox: {
     width: 24,
@@ -506,15 +521,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  checked: {
-    backgroundColor: '#2B2162',
-  },
-  checkIcon: {
-    width: 14,
-    height: 10,
-    tintColor: '#fff',
-    resizeMode: 'contain',
   },
 });
 

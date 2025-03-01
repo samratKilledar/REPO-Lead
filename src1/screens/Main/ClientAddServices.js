@@ -8,9 +8,13 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import { useNavigation } from '@react-navigation/native';
 import StatusDropdown from '../../components/StatusDropdown';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateRemark, updateServices } from '../../redux/reducers/leadAddServiceReducer';
+
 const ClientAddServices = () => {
-  const [services, setService] = useState('');
-  const [Remark, setRemark] = useState(null);
+  const dispatch = useDispatch();
+  const remark = useSelector(state => state.leadAddService.remark);
+  const services = useSelector(state => state.leadAddService.services);
   const navigation = useNavigation()
   const goBackCall = () => {
     navigation.popToTop();
@@ -38,19 +42,19 @@ const ClientAddServices = () => {
         <NavigationHeaderBack text="Add Services" onPress={goBackCall} />
       </View>
       <View style={styles.centerContainer}>
-        <CustomTextInput
-          type={Remark}
-          value={setRemark}
+      <CustomTextInput
+          type={remark}
+          value={remark}
           placeholder="Remark"
-          onChangeText={setRemark}
+          onChangeText={(text) => dispatch(updateRemark(text))}
         />
         <StatusDropdown
-            label="Services"
-            selectedValue={services}
-            onValueChange={setService}
-            apiType="service"
-            zIndex={1000} // Lower zIndex
-          />
+          label="Services"
+          selectedValue={services}
+          onValueChange={(value) => dispatch(updateServices(value))}
+          apiType="service"
+          zIndex={1000}
+        />
         <CustomButton title="Submit" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
       </View>
       <View style={styles.insuranceCard}>

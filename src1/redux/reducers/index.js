@@ -1,11 +1,16 @@
+// index.js
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import homeReducer from './homeReducer';
 import addFollowUpReducer from './addFollowUpReducer';
 import addTaskReducer from './addTaskReducer';
+import editProfileReducer from './editProfileReducer';
+import leadAddServiceReducer from './leadAddServiceReducer';
 export default combineReducers({
   auth: authReducer,
   homeReducer: homeReducer,
   addFollowUp : addFollowUpReducer,
   addTask:addTaskReducer,
+  editProfile: editProfileReducer,
+  leadAddService: leadAddServiceReducer,
 });
