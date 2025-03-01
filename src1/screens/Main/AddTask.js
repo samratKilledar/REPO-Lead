@@ -52,6 +52,7 @@ const AddTask = (props) => {
   remarksPlaceholder,
   } = useSelector((state) => state.addTask);
   
+  
   const goBackCall = () => {
     props.navigation.goBack();
   };
