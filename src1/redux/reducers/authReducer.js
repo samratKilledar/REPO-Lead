@@ -33,6 +33,23 @@ const authReducer = (state = initialState, action) => {
               }
           };
 
+      // ✅ Store dropdown data
+      case 'FETCH_DROPDOWN_SUCCESS':
+          return {
+              ...state,
+              dropdowns: {
+                  ...state.dropdowns,
+                  [action.payload.apiType]: action.payload.data,
+              },
+          };
+
+      // ✅ Handle dropdown errors
+      case 'FETCH_DROPDOWN_FAIL':
+          return {
+              ...state,
+              error: action.payload,
+          };
+
       default:
           return state;
   }
