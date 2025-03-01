@@ -81,6 +81,7 @@ export const CHANGE_FIRST_NAME = "CHANGE_FIRST_NAME";
 export const CHANGE_LAST_NAME = "CHANGE_LAST_NAME";
 export const CHANGE_EMAIL_ID = "CHANGE_EMAIL_ID";
 export const CHANGE_MOBILENO = "CHANGE_MOBILENO";
+export const CHANGE_WHATSAPPNO = "CHANGE_WHATSAPPNO";
 export const CHANGE_ADDRESS_LINE1 = "CHANGE_ADDRESSLINE1";
 export const CHANGE_ADDRESS_LINE2 = "CHANGE_ADDRESSLINE2";
 export const CHANGE_PINCODE = "CHANGE_PINCODE";
@@ -159,6 +160,11 @@ export const updateemailId = (data) =>({
 
 export const updateMobileno = (data) =>({
   type: CHANGE_MOBILENO,
+  payload: data,
+});
+
+export const updatewhatsappNo = (data) =({
+  type: CHANGE_WHATSAPPNO,
   payload: data,
 });
 

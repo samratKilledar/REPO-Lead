@@ -116,7 +116,7 @@ const personalReducer = (state = initialState, action) => {
         lastName: action.payload,
       };
 
-    case "CHANGE_EMAIL":
+    case "CHANGE_EMAIL_ID":
       return {
         ...state,
         email: action.payload,
