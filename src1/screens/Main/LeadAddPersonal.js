@@ -291,18 +291,21 @@ const LeadAddPersonal = ({ navigation }) => {
             selectedValue={city}
             onValueChange={(value) => dispatch(updateCity(value))}
             apiType="city"
+            zIndex={3000}
           />
           <StatusDropdown
             label="State"
             selectedValue={state}
             onValueChange={(value) => dispatch(updateState(value))}
             apiType="state"
+            zIndex={2000}
           />
           <StatusDropdown
             label="Country"
             selectedValue={country}
             onValueChange={(value) => dispatch(updateCountry(value))}
             apiType="country"
+            zIndex={1000}
           />
           <CustomTextInput
             value={pincode}
