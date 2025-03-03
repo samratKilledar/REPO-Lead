@@ -17,4 +17,5 @@ export const api={
 
     //add Task API
     addTask:"https://opticalerp.in:85/api/taskdetails/create",
+   // UpcomingMeetingsList:"https://opticalerp.in:85/api/lead/getlist/get-all"
 }

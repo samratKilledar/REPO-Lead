@@ -1,62 +1,53 @@
-import React, { useEffect, useState } from "react"; 
-import { Platform } from "react-native";  
-import Dropdown from "./Dropdown";
-import { fetchDropdownData } from "../api/authApi";
+import React, { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
+import Dropdown from './Dropdown';
 
-const StatusDropdown = ({ label, selectedValue, onValueChange, apiType, zIndex }) => {
-    const [formattedStatusList, setFormattedStatusList] = useState([]);
+const StatusDropdown = ({ label, selectedValue, onValueChange, apiType, zIndex, listData }) => {
+  const [selectedValue1, setSelectedValue] = useState(null);
 
-    // Function to format first five dropdowns (followUp, taskPriority, etc.)
-    const formatStandardDropdown = (data) => {
-        return (data?.result || data || []).map((item) => ({
-            label: item.value01 || item.name || item.description || "Unknown",  // More fallback options
-            value: item.id ? item.id.toString() : "0",
-        }));
-    };
+  useEffect(() => {
+    console.log("Selected Value:", selectedValue1);
+  }, [selectedValue1]); 
 
-    // Function to format country, state, city dropdowns
-    const formatLocationDropdown = (data) => {
-        return (data || []).map((item) => ({
-            label: item.countryName || item.stateName || item.cityName || item.name || "Unknown",
-            value: item.id ? item.id.toString() : "0",
-        }));
-    };
+  // Conditionally format options based on `apiType`
+  const formattedOptions = listData?.map(item => {
+    if (apiType === 'city') {
+      return {
+        label: item.cityName, // Display city name
+        value: item.id, // City ID as value
+        isActive: item.isActive
+      };
+    } 
+    else  if (apiType === 'State') {
+      return {
+        label: item.stateName, // Display city name
+        value: item.id, // City ID as value
+        isActive: item.isActive
+      };
+    }
+    else if (apiType === 'Country') {
+      return {
+        label: item.countryName, // Display country name
+        value: item.countryId, // Country ID as value
+      };
+    } else {
+      return {
+        label: item.value01, // Default display text
+        value: item.id.toString(), // Default value
+        extraData: item.value02, // Extra data if needed
+      };
+    }
+  }) || [];
 
-    useEffect(() => {
-        const getDropdownData = async () => {
-            try {
-                console.log(`Fetching data for: ${apiType}`);
-                const data = await fetchDropdownData(apiType);
-                console.log("Raw API Response:", data);
-
-                let formattedData = [];
-
-                if (["country", "state", "city"].includes(apiType)) {
-                    formattedData = formatLocationDropdown(data);
-                } else {
-                    formattedData = formatStandardDropdown(data);
-                }
-
-                console.log("Formatted Data:", formattedData);
-                setFormattedStatusList(formattedData);
-            } catch (error) {
-                console.error(`Error loading ${apiType} data:`, error);
-            }
-        };
-        getDropdownData();
-    }, [apiType]);
-
-    return (
-        <Dropdown
-            label={label}
-            selectedValue={selectedValue}
-            onValueChange={onValueChange}
-            options={formattedStatusList}
-            zIndex={zIndex || 2000}
-            elevation={5}
-            modal={Platform.OS === "android"}
-        />
-    );
+  return (
+    <Dropdown
+      label={label}
+      selectedValue={selectedValue1}
+      onValueChange={setSelectedValue}
+      options={formattedOptions}
+      zIndex={2000}
+    />
+  );
 };
 
 export default StatusDropdown;

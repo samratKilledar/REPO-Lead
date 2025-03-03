@@ -15,9 +15,15 @@ const Dropdown = ({ label, selectedValue, onValueChange, options, zIndex }) => {
         items={options}
         placeholder={label}
         style={[styles.dropdown, open ? styles.dropdownOpen : null]}
-        dropDownContainerStyle={[styles.dropDownBox, open ? styles.dropDownBoxOpen : null]}
+        dropDownContainerStyle={[
+          styles.dropDownBox,
+          open ? styles.dropDownBoxOpen : null,
+        ]}
         textStyle={[styles.labelStyle, open ? styles.labelStyleOpen : null]}
         listItemContainerStyle={styles.listItem}
+        
+        listMode="MODAL" // 👈 Add this line
+        
         ArrowUpIconComponent={() => (
           <Image
             source={require("../assets/icons/ArrowUp/arrowup.png")}
@@ -30,7 +36,6 @@ const Dropdown = ({ label, selectedValue, onValueChange, options, zIndex }) => {
             style={styles.icon}
           />
         )}
-        
       />
     </View>
   );
@@ -88,12 +93,3 @@ const styles = StyleSheet.create({
 });
 
 export default Dropdown;
-
-
-
-
-
-
-
-
-

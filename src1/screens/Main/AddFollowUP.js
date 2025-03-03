@@ -184,12 +184,13 @@ const AddFollowUP = (props) => {
     title, followupStatus, assignedTo, attachmentUrl, followupDate, 
     followupTime, remark, statusOptions, assignOptions 
   } = useSelector(state => state.addFollowUp);
-
+  //alert(followupStatus)
   const { 
     titlePlaceholder, followupStatusPlaceholder, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder, 
     followupTimePlaceholder, remarkPlaceholder
   } = useSelector(state => state.addFollowUp);
-
+  const followUpList= useSelector(state => state.homeReducer);
+  alert(JSON.stringify(followUpList))
   const goBackCall = () => {
     navigation.popToTop();
   };
@@ -282,18 +283,14 @@ const validateAndSubmit = () => {
           apiType="followUp"
           zIndex={2000}
           elevation={6}
+          listData={followUpList.followUp}
         />
        
         <Dropdown
           label={assignedToPlaceholder}
           selectedValue={assignedTo}
           onValueChange={(value) => dispatch(changeAssignedTo(value))}
-          options={[
-              { label: "Mr.Akshat", value: "akshat" },
-              { label: "Mr.Paresh", value: "paresh" },
-              { label: "Mr.Rajesh", value: "paresh" },
-              { label: "Mr.Subhash", value: "subhash" },
-          ]}
+          listData={followUpList.followUp}
           zIndex={1000}
           elevation={4}
         />

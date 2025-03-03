@@ -2,8 +2,7 @@
 // GET Request Function
 export const apiGet = async (url,tokan) => {
   try {
-    console.log(JSON.stringify(tokan)+"=="+url)
-
+  
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -13,18 +12,18 @@ export const apiGet = async (url,tokan) => {
 
       },
     });
-   // console.log("333+response"+JSON.stringify(response))
+    console.log(url+"---------------------s------------------------------")
 
     if (!response.ok) {
+      //alert(11)
+      console.error("HTTP error! Status:"+ response.status);
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     //alert(JSON.stringify(response))
     return await response.json();
   } catch (error) {
-    console.error(
-      `GET ${endpoint} Error:`,
-      error.response?.data || error.message,
-    );
+    console.error(`GET ${endpoint} Error:`,error.response?.data || error.message,
+);
     throw error;
   }
 };
