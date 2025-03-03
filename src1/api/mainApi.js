@@ -1,4 +1,4 @@
-import {apiGet, apiPost} from './apiClient';
+import {apiGet, apiPost , addfollowUpApiPost} from './apiClient';
 import {api} from './api';
 
 
@@ -39,3 +39,9 @@ export const occupation = async authToken => {
     //console.log("ss------ssss"+authToken)
     return await apiGet(api.occupation,authToken);
 };
+export const addFollowUpApiCall = async (formData) => {
+    console.log("📩 Inside addFollowUpApiCall:", JSON.stringify(formData));
+        return await addfollowUpApiPost(api.addFollowUP, {data: formData});
+};
+  
+  

@@ -128,7 +128,7 @@ const LeadAddOccupation = (props) => {
             dispatch(updateOccupation(value));
           }}
           apiType="occupation"
-          zIndex={2000}
+          zIndex={1000}
         />
 
         <CustomTextInput
@@ -158,7 +158,7 @@ const LeadAddOccupation = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
+    paddingTop: 10,
     backgroundColor: "#FFFFFF",
     gap: 18,
     marginBottom: 50,

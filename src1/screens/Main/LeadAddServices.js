@@ -38,7 +38,7 @@ const LeadAddServices = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 0.3 }}>
+      <View style={{ flex: 0.2 }}>
         <NavigationHeaderBack text="Add Services" onPress={goBackCall} />
       </View>
       <View style={styles.centerContainer}>
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 24,
     paddingLeft: 10,
-    paddingTop: 15,
+    paddingTop: 20,
     backgroundColor: "#FFFFFF",
     gap: 20,
   },

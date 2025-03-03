@@ -202,6 +202,7 @@ const LeadLast = (props) => {
             { label: 'Jane Smith', value: 'Jane Smith' }
           ]}
           zIndex={2000}
+          elevation={8}
         />
         {servicesLoading ? (
           <Text>Loading Services...</Text>
@@ -214,6 +215,7 @@ const LeadLast = (props) => {
             onValueChange={(value) => dispatch(updateServices(value))}
             apiType="service"
             zIndex={1000}
+            elevation={6}
           />
         )}
         <CustomTextInput
@@ -237,7 +239,7 @@ const styles = StyleSheet.create({
       flex: 1,
       paddingRight: 24,
       paddingLeft: 24,
-      paddingTop: 15,
+      paddingTop: 10,
       backgroundColor: '#FFFFFF',
       gap: 15,
     },
@@ -245,6 +247,7 @@ const styles = StyleSheet.create({
       flex: 0.7,
       gap: 12,
       zIndex: 1,
+      position: "relative",
     },
     insuranceCard: {
       marginTop: 30,

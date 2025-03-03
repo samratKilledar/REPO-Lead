@@ -27,7 +27,7 @@ const CloseAccountScreen = () => {
 
       <View style={styles.centralcontainer}>
         {/* Adjust flex to give enough space */}
-        <View style={{ flex: 0.3, gap: 16, flexDirection: "row" }} >
+        <View style={{ flex: 0.3, flexDirection: "row" }} >
           <NavigationHeaderBack text="Close Account" onPress={goBackCall} />
           <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
             <Image
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
     gap: 32,
     paddingLeft: 5,
     paddingRight: 5,
-    paddingTop: 35,
+    paddingTop: 32,
     marginBottom: 150,
   },
   detailsContainer: {

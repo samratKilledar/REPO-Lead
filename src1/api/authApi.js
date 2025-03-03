@@ -34,7 +34,7 @@
 //     }
 // };
 
-import {apiGet, apiPost} from './apiClient';
+import { apiGet, apiPost} from './apiClient';
 import {api} from './api';
 import { getItem } from '../api/storageServices';
 
@@ -69,3 +69,26 @@ export const fetchDropdownData = async (apiType) => {
         throw error;
     }
 };
+
+
+
+// export const addFollowUpApiCall = async (formData) => {
+//     try {
+//         const authToken = await getItem("authToken"); // Retrieve token from storage
+//         if (!authToken) {
+//             throw new Error("Authentication token not found.");
+//         }
+
+//         console.log("🔄 Sending AddFollowUp Data:", formData);
+
+//         const response = await apiPost(api.addFollowUP, { data: formData }, authToken);
+        
+//         console.log("✅ FollowUp Submission Response:", response);
+//         return response; // Return the API response
+
+//     } catch (error) {
+//         console.error("❌ AddFollowUp API Error:", error.message);
+//         throw error; // Propagate the error for handling in UI
+//     }
+// };
+

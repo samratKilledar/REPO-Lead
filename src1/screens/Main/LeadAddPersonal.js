@@ -237,7 +237,7 @@ const LeadAddPersonal = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={{flex:0.4}}>
+      <View style={{flex:0.1 , marginLeft:10}}>
       <NavigationHeaderBack text="Add Lead" onPress={goBackCall} />
       </View>
       
@@ -262,6 +262,8 @@ const LeadAddPersonal = ({ navigation }) => {
             selectedValue={leadService}
             onValueChange={setLeadService}
             apiType="leadSource"
+            zIndex={4000} // Higher than Dropdown 2
+           elevation={8}
           />
           <CustomTextInput
             value={mobileNo}
@@ -296,18 +298,24 @@ const LeadAddPersonal = ({ navigation }) => {
             selectedValue={city}
             onValueChange={(value) => dispatch(updateCity(value))}
             apiType="city"
+            zIndex={3000}
+           elevation={7}
           />
           <StatusDropdown
             label="State"
             selectedValue={state}
             onValueChange={(value) => dispatch(updateState(value))}
             apiType="state"
+            zIndex={2000}
+           elevation={6}
           />
           <StatusDropdown
             label="Country"
             selectedValue={country}
             onValueChange={(value) => dispatch(updateCountry(value))}
             apiType="country"
+            zIndex={1000}
+           elevation={5}
           />
           <CustomTextInput
             value={pincode}
@@ -328,7 +336,7 @@ const LeadAddPersonal = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: 10,
     backgroundColor: '#FFFFFF',
     gap: 18,
     marginBottom: 50,
@@ -345,6 +353,7 @@ const styles = StyleSheet.create({
     gap: 10,
     paddingLeft: 15,
     paddingRight: 15,
+    position: "relative",
   },
   scrollViewContent: {
     flexGrow: 1,

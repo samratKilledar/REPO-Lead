@@ -55,4 +55,36 @@ export const apiPost = async (url, param = {}) => {
   }
 };
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+export const addfollowUpApiPost = async (url, param = {}) => {
+  const formData = param.data;
+  console.log("🔄 Sending Data:", JSON.stringify(formData));
 
+  try {
+    // 🔑 Retrieve token from AsyncStorage
+     let token = await AsyncStorage.getItem('authToken');
+        console.log("🔑 Retrieved Token:", token);
+
+        if (!token) {
+            alert("❌ No authentication token found! Please log in again.");
+            return { success: false, message: "Authentication token missing" }; 
+        }
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`, // ✅ Include authentication token
+      },
+      body: JSON.stringify(formData), // ✅ Send full form data dynamically
+    });
+
+    const result = await response.json();
+    console.log("✅ API Response:", JSON.stringify(result));
+
+    return result;
+  } catch (error) {
+    console.error("❌ API Request Failed:", error);
+    return { success: false, message: error.message || "Request failed" };
+  }
+};
