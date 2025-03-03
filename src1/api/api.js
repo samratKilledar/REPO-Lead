@@ -13,4 +13,5 @@ export const api={
     city:"https://opticalerp.in:85/api/cascadecountrycitystate/getcities",
     state:"https://opticalerp.in:85/api/cascadecountrycitystate/getstates",
     occupation:"https://opticalerp.in:85/api/udc/getvaluesbytype?type=Occupation",
+   // UpcomingMeetingsList:"https://opticalerp.in:85/api/lead/getlist/get-all"
 }

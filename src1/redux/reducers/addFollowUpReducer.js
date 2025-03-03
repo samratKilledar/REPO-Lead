@@ -1,3 +1,6 @@
+import {
+    CHANGE_FOLLOWUP_STATUS
+} from "../actions/addFollowUpActions"
 const initialState = {
     isAuthenticated: false,
 

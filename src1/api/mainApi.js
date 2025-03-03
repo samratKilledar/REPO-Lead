@@ -39,3 +39,10 @@ export const occupation = async authToken => {
     //console.log("ss------ssss"+authToken)
     return await apiGet(api.occupation,authToken);
 };
+
+export const getAllLeadApi= async authToken=>{
+    // console.log("ss------ssss"+authToken)
+    return await apiGet(api.getAllLeadApi,authToken);
+}
+
+
