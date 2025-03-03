@@ -45,3 +45,10 @@ export const addFollowUpApiCall = async (formData) => {
 };
   
   
+
+export const getAllLeadApi= async authToken=>{
+    // console.log("ss------ssss"+authToken)
+    return await apiGet(api.getAllLeadApi,authToken);
+}
+
+

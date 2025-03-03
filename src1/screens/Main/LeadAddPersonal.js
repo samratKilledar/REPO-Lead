@@ -225,6 +225,12 @@ const LeadAddPersonal = ({ navigation }) => {
     state,
     country
   } = useSelector(state => state.personalReducer);
+  const { 
+    titlePlaceholder, followupStatusPlaceholder, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder, 
+    followupTimePlaceholder, remarkPlaceholder
+  } = useSelector(state => state.addFollowUp);
+  const dropDown= useSelector(state => state.homeReducer);
+  alert(JSON.stringify(dropDown.state ))
 
   const [leadService, setLeadService] = useState('');
 
@@ -245,7 +251,7 @@ const LeadAddPersonal = ({ navigation }) => {
          <Stepper steps={steps} currentStep={currentStep} />
        </View>
 
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent} >
         <View style={styles.centerContainer}>
           <CustomTextInput
             value={firstName}
@@ -264,7 +270,12 @@ const LeadAddPersonal = ({ navigation }) => {
             apiType="leadSource"
             zIndex={4000} // Higher than Dropdown 2
            elevation={8}
+            listData={dropDown.leadSource}
           />
+          
+          
+
+
           <CustomTextInput
             value={mobileNo}
             placeholder="Mobile No"
@@ -293,29 +304,49 @@ const LeadAddPersonal = ({ navigation }) => {
             placeholder="Address Line 2"
             onChangeText={(value) => dispatch(updateAddressLine2(value))}
           />
-          <StatusDropdown
+          {/* <StatusDropdown
             label="City"
             selectedValue={city}
             onValueChange={(value) => dispatch(updateCity(value))}
             apiType="city"
-            zIndex={3000}
-           elevation={7}
-          />
-          <StatusDropdown
+            listData={dropDown.city}
+          /> */}
+         <StatusDropdown
+          label="City"
+          selectedValue={city}
+          onValueChange={(value) => dispatch(updateAddressLine2(value))}
+          apiType="city"
+          zIndex={3000}
+          elevation={7}
+          listData={dropDown.city}
+        />
+
+      <StatusDropdown
+           label="State"
+           selectedValue={state}
+           onValueChange={(value) => dispatch(updateState(value))}
+           apiType="State"
+           listData={dropDown.state}
+           zIndex={2000} // Higher than Dropdown 2
+           elevation={6}// Explicitly setting zIndex
+        />
+
+          {/* <StatusDropdown
             label="State"
             selectedValue={state}
             onValueChange={(value) => dispatch(updateState(value))}
             apiType="state"
-            zIndex={2000}
-           elevation={6}
-          />
-          <StatusDropdown
+            listData={dropDown.state}
+            zIndex={2000} // Higher than Dropdown 2
+                   elevation={6}// Explicitly setting zIndex
+          /> */}
+          {/* <StatusDropdown
             label="Country"
             selectedValue={country}
             onValueChange={(value) => dispatch(updateCountry(value))}
-            apiType="country"
-            zIndex={1000}
-           elevation={5}
+            apiType="Country"
+            listData={dropDown.country}
+
           />
           <CustomTextInput
             value={pincode}
@@ -327,7 +358,7 @@ const LeadAddPersonal = ({ navigation }) => {
             title="Next"
             customStyle={styles.nextButton}
             onPress={handleOccupation}
-          />
+          /> */}
         </View>
       </ScrollView>
     </View>

@@ -51,33 +51,58 @@ const LoginScreen = props => {
         console.error('Error retrieving auth token:', error);
       }
     };
-    const requestPermissions = async () => {
-      try {
-        const granted = await PermissionsAndroid.requestMultiple([
-          PermissionsAndroid.PERMISSIONS.CAMERA,
-          PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES, 
-          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-        ]);
   
-        if (
-          granted[PermissionsAndroid.PERMISSIONS.CAMERA] !== PermissionsAndroid.RESULTS.GRANTED ||
-          granted[PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES] !== PermissionsAndroid.RESULTS.GRANTED || // Check for Android 13+
-          granted[PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE] !== PermissionsAndroid.RESULTS.GRANTED ||
-          granted[PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE] !== PermissionsAndroid.RESULTS.GRANTED
-        ) {
-          Alert.alert("Permissions Required", "Please enable Camera and Gallery permissions from settings.");
-        }
-      } catch (err) {
-        console.warn(err);
-      }
-    };
 
     requestPermissions();
     checkAuthToken();
     loadRememberedCredentials(); // Load stored credentials when the screen loads
   }, []);
 
+  const requestPermissions = async () => {
+    try {
+      if (Platform.OS === 'android') {
+        const permissions = [];
+  
+        // Camera permission (required on all Android versions)
+        permissions.push(PermissionsAndroid.PERMISSIONS.CAMERA);
+  
+        if (Platform.Version >= 33) {
+          // Android 13+ (API 33+)
+          permissions.push(
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_AUDIO
+          );
+        } else {
+          // Android 12 and below
+          permissions.push(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
+        }
+  
+        // Request permissions
+        const grantedPermissions = await PermissionsAndroid.requestMultiple(permissions);
+  
+        // Check if all permissions are granted
+        let allPermissionsGranted = true;
+        for (const permission of permissions) {
+          if (grantedPermissions[permission] !== PermissionsAndroid.RESULTS.GRANTED) {
+            console.log(`❌ Permission NOT granted: ${permission}`);
+            allPermissionsGranted = false;
+          } else {
+            console.log(`✅ Permission granted: ${permission}`);
+          }
+        }
+  
+        if (allPermissionsGranted) {
+          console.log("🎉 All permissions successfully granted!");
+        } else {
+          Alert.alert("Permissions Required", "Some permissions were denied. Please enable them in settings.");
+        }
+      }
+    } catch (err) {
+      console.warn("Error requesting permissions:", err);
+    }
+  };
+  
 
   
   // Load saved login credentials if "Remember Me" was checked
