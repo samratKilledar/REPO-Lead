@@ -39,3 +39,9 @@ export const occupation = async authToken => {
     //console.log("ss------ssss"+authToken)
     return await apiGet(api.occupation,authToken);
 };
+
+export const addTaskApiCall= async data => {
+    console.log('inside function' + JSON.stringify(data));
+    return await apiPost(api.addTask, {data});
+  };
+  

@@ -54,5 +54,34 @@ export const apiPost = async (url, param = {}) => {
     return await error.message;
   }
 };
+// export const apiPost = async (url, param = {}) => {
+//   const data = param.data;
+//   console.log("Data being sent to API:", JSON.stringify(data));
+
+//   try {
+//     const token = await getItem('authToken'); // Fetch token from storage
+
+//     const response = await fetch(url, {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization': `Bearer ${token}`, // Add authentication token
+//         'tenant': data.customerId,
+//       },
+//       body: JSON.stringify(data),
+//     });
+
+//     const responseData = await response.json();
+//     console.log("API Response:", responseData);
+
+//     return responseData;
+//   } catch (error) {
+//     console.error("Error while making API request:", error);
+//     return error.message;
+//   }
+// };
+
+
+
 
 

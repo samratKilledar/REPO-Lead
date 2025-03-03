@@ -21,6 +21,8 @@ import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 import StatusDropdown from "../../components/StatusDropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { submitTask } from "../../redux/actions/addTaskAction";
+
 
 const AddTask = (props) => {
   const dispatch = useDispatch();
@@ -87,15 +89,27 @@ const AddTask = (props) => {
       { value:  remarks, placeholder: remarksPlaceholder }
     ];
     
-    for (const [key, value] of Object.entries(fields)) {
-      if (!value || value.trim() === "") {
+    // for (const [key, value] of Object.entries(fields)) { 
+    //   if (!value || value.trim() === "") {
+    //     Alert.alert("Validation Error", `${key.replace(/([A-Z])/g, " $1")} is required.`); 
+    //     return;
+    //   }
+    // }
+    
+    // if (Object.values(fields).every(value => value && value.trim() !== "")) {
+    //   Alert.alert("Success", "Follow-up added successfully.");
+    //   dispatch(submitTask());
+    // }
+    for (const [key, value] of Object.entries(fields)) { 
+      if (!value) { // Removed .trim() check
         Alert.alert("Validation Error", `${key.replace(/([A-Z])/g, " $1")} is required.`); 
         return;
       }
     }
-
-    // If all validations pass, proceed with submission
-    Alert.alert("Success", "Follow-up added successfully.");
+    
+    Alert.alert("Success", "Task added successfully.");
+    dispatch(submitTask());
+    
         } ;
   
 

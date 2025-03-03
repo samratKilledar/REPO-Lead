@@ -127,6 +127,12 @@ const LeadCard = (props) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
+            <TouchableOpacity
+              style={styles.modalCloseLine}
+              onPress={() => setModalVisible(false)}
+            >
+              <View style={styles.closeLine} />
+            </TouchableOpacity>
             <Text style={styles.modalTitle}>Status</Text>
 
             {statusOptions.map((option, index) => (
@@ -136,7 +142,9 @@ const LeadCard = (props) => {
                 onPress={() => setSelectedStatus(option)}
               >
                 <Text style={styles.radioText}>{option}</Text>
-                <View style={selectedStatus === option ? styles.radioSelected : styles.radioUnselected} />
+                <View style={selectedStatus === option ? styles.radioSelected : styles.radioUnselected} >
+                  {selectedStatus === option && <View style={styles.radioInnerCircle} />}
+                </View>
               </TouchableOpacity>
             ))}
 
@@ -256,6 +264,14 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     padding: 20,
   },
+  closeLine: {
+    width: 90,
+    height: 5,
+    backgroundColor: "#ccc",
+    borderRadius: 10,
+    marginLeft: 130,
+    marginBottom: 10
+  },
   modalTitle: {
     fontFamily: 'Urbanist',
     fontSize: 24,
@@ -277,7 +293,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
     textAlign: "center",
-    //marginBottom: 10,
     lineHeight: 21.6,
   },
   radioUnselected: {
@@ -291,6 +306,16 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
+    borderWidth: 3,
+    borderColor: "#2B2162",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  radioInnerCircle: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
     backgroundColor: "#2B2162",
   },
 

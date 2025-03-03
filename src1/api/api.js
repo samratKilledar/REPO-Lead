@@ -1,6 +1,7 @@
 export const api={
     authApi:"https://opticalerp.in:85/api/tokens/gettoken",
     forgotPasswordApi:"https://opticalerp.in:85/api/users/forgotpassword/forgot-password",
+    createPass:"https://opticalerp.in:85/api/currentuser/changepassword/change-password",
     getAllLeadApi:"https://opticalerp.in:85/api/lead/getlist/get-all",
 
     //all drop down API
@@ -13,4 +14,7 @@ export const api={
     city:"https://opticalerp.in:85/api/cascadecountrycitystate/getcities",
     state:"https://opticalerp.in:85/api/cascadecountrycitystate/getstates",
     occupation:"https://opticalerp.in:85/api/udc/getvaluesbytype?type=Occupation",
+
+    //add Task API
+    addTask:"https://opticalerp.in:85/api/taskdetails/create",
 }
