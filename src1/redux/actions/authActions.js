@@ -9,6 +9,8 @@ export const CHANGE_USER_CREDENTIAL = 'CHANGE_USER_CREDENTIAL';
 export const READ_ALL_LEAD = 'READ_ALL_LEAD';
 export const READ_ALL_LEAD_FAIL = 'READ_ALL_LEAD_FAIL';
 export const LOGIN_CLICK = 'LOGIN_CLICK';
+
+
 // ✅ Corrected loginUser function
 export const loginUser = () => async (dispatch, getState) => {
   try {

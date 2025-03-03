@@ -198,7 +198,7 @@ const LogoutScreen = ({ navigation }) => {
 
                 {/* Submit Button */}
                 <View style={styles.buttonContainer}>
-                  <CustomButton title={"Add"} customStyle={{ width: width - 30 }} onPress={() => setModalVisible(false)} />
+                  <CustomButton title={"Add"} customStyle={{ width: width * 0.9, alignSelf: 'center' }} onPress={() => setModalVisible(false)} />
                 </View>
               </ScrollView>
             </View>
@@ -250,7 +250,7 @@ const LogoutScreen = ({ navigation }) => {
 
                 {/* Add Button */}
                 <View style={styles.buttonContainer}>
-                  <CustomButton title={"Add"} customStyle={{ width: width - 30 }} onPress={() => setEditModalVisible(false)} />
+                  <CustomButton title={"Add"} customStyle={{width: width * 0.9, alignSelf: 'center'}} onPress={() => setEditModalVisible(false)} />
                 </View>
               </ScrollView>
             </View>
@@ -376,18 +376,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '90%',
+    width: '100%', 
     marginVertical: height * 0.01,
+    paddingHorizontal: width * 0.05, 
   },
   iconContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: "space-between",
-    gap: width * 0.02, // Add gap between icons
+    justifyContent: 'flex-end', 
+    gap: width * 0.05, 
   },
   smallIcon: {
-    width: width * 0.04,
-    height: width * 0.04,
+    width: width * 0.05, 
+    height: width * 0.05,
     resizeMode: 'contain',
   },
 });

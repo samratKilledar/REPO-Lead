@@ -34,7 +34,7 @@
 //     }
 // };
 
-import {apiGet, apiPost} from './apiClient';
+import {apiGet, apiPost, apiPut,postApi} from './apiClient';
 import {api} from './api';
 import { getItem } from '../api/storageServices';
 
@@ -69,3 +69,22 @@ export const fetchDropdownData = async (apiType) => {
         throw error;
     }
 };
+
+
+export const udcSheetApiCall = async data => {
+    console.log('inside function' + JSON.stringify(data));
+    return await apiPost(api.udcSheetApi, {data});
+};
+
+export const editProfileApiCall = async data => {
+    console.log('inside function' + JSON.stringify(data));
+    return await apiPut(api.editProfileApi, {data});
+};
+
+export const leadAddServiceApiCall = async data => {
+    console.log('inside function' + JSON.stringify(data));
+    return await postApi(api.leadAddServiceApi, {data});
+};
+
+
+  

@@ -1,11 +1,18 @@
-import { 
-    UPDATE_FIRSTNAME, 
-    UPDATE_LASTNAME, 
-    UPDATE_EMAIL, 
-    UPDATE_PHONENUMBER, 
-    UPDATE_GENDER ,
-    UPDATE_DATE
-} from "../reducers/editProfileReducer";
+import {editProfileApiCall} from '../../api/authApi';
+import {setItem, getItem} from '../../api/storageServices';
+
+
+// Action Types
+export const UPDATE_FIRSTNAME = "UPDATE_FIRSTNAME";
+export const UPDATE_LASTNAME = "UPDATE_LASTNAME";
+export const UPDATE_EMAIL = "UPDATE_EMAIL";
+export const UPDATE_PHONENUMBER = "UPDATE_PHONENUMBER";
+export const UPDATE_GENDER = "UPDATE_GENDER";
+export const UPDATE_PROFILE_FAILURE = "UPDATE_PROFILE_FAILURE";
+export const UPDATE_DATE = "UPDATE_DATE";
+export const UPDATE_CLICK ="UPDATE_CLICK";
+export const UPDATE_SUCCESS ="UPDATE_SUCCESS";
+export const UPDATE_FAILURE = "UPDATE_FAILURE";
 
 
 
@@ -38,3 +45,28 @@ export const updateDate = (date) => ({
     type: UPDATE_DATE,
     payload: date,
 });
+
+export const updateSuccess = userData => ({
+  type: UPDATE_SUCCESS,
+  payload: userData,
+});
+
+
+
+export const editProfileUser = () => async (dispatch, getState) => {
+  try {
+    const { firstname,lastname,email,phonenumber,gender,date} = getState().editProfileApi; // Get loginValue from Redux
+    dispatch({type: UPDATE_CLICK});
+
+    const data = await editProfileApiCall( firstname,lastname,email,phonenumber,gender,date);
+    if (data.success){
+        dispatch({type: UPDATE_SUCCESS }); 
+    } else {
+          dispatch({type: UPDATE_FAILURE, payload: data.message}); // Dispatch failure action
+        }
+      } catch (error) {
+        dispatch({type: UPDATE_FAILURE, payload: error.message}); // Dispatch failure action
+      }
+};
+
+
