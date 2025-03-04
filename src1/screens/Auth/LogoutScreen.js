@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, Dimensions } from 'react-native';
+import { View, Image, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, Dimensions , TouchableWithoutFeedback} from 'react-native';
 import TextStyle from '../../styles/TextStyle';
 import CustomText from '../../components/CustomText';
 import CustomButton from "../../components/CustomButton";
@@ -143,6 +143,7 @@ const LogoutScreen = ({ navigation }) => {
 
         {/* Logout Modal (Bottom Modal) */}
         <Modal visible={logoutVisible} animationType="slide" transparent={true}>
+        <TouchableWithoutFeedback onPress={() => setLogoutVisible(false)}>
           <View style={styles.bottomModalOverlay}>
             <View style={styles.bottomModalContainer}>
               <CustomText text={"Logout"} customstyle={TextStyle.modallText} />
@@ -166,10 +167,12 @@ const LogoutScreen = ({ navigation }) => {
               </View>
             </View>
           </View>
+          </TouchableWithoutFeedback>
         </Modal>
 
         {/* Add UDC Service Modal (Bottom Modal) */}
         <Modal visible={modalVisible} animationType="slide" transparent={true}>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
           <View style={styles.bottomModalOverlay}>
             <View style={styles.bottomModalContainer}>
               <ScrollView contentContainerStyle={styles.modalScrollContent}>
@@ -203,10 +206,12 @@ const LogoutScreen = ({ navigation }) => {
               </ScrollView>
             </View>
           </View>
+          </TouchableWithoutFeedback>
         </Modal>
 
         {/* Edit Services Modal (Bottom Modal) */}
         <Modal visible={editModalVisible} animationType="slide" transparent={true}>
+        <TouchableWithoutFeedback onPress={() => setEditModalVisible(false)}>
           <View style={styles.bottomModalOverlay}>
             <View style={styles.bottomModalContainer}>
               <ScrollView contentContainerStyle={styles.modalScrollContent}>
@@ -255,6 +260,7 @@ const LogoutScreen = ({ navigation }) => {
               </ScrollView>
             </View>
           </View>
+          </TouchableWithoutFeedback>
         </Modal>
       </View>
     </ScrollView>

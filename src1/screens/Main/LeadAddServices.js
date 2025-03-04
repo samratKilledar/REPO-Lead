@@ -3,7 +3,7 @@ import { View, StyleSheet, Dimensions, ScrollView , Image} from 'react-native'; 
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
-import InsuranceCard from '../../components/InsuranceCard';
+import InsuranceCardDel from '../../components/InsuranceCardDel';
 import { useNavigation } from '@react-navigation/native';
 import StatusDropdown from '../../components/StatusDropdown';
 import { useDispatch, useSelector } from 'react-redux';
@@ -61,7 +61,7 @@ const LeadAddServices = () => {
           type={remark}
           value={remark}
           placeholder="Remark"
-          onChangeText={(text) => dispatch(updateRemark(text))}
+          onChangeText={(text) => dispatch(updateRemark(text))} 
         />
         <StatusDropdown
           label="Services"
@@ -80,7 +80,7 @@ const LeadAddServices = () => {
       <ScrollView style={styles.scrollViewContainer}>
         <View style={styles.insuranceCard}>
           {cardData.map((item) => (
-            <InsuranceCard
+            <InsuranceCardDel
               key={item.id}
               title={item.title}
               date={item.date}
@@ -99,22 +99,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.05, 
     paddingTop: height * 0.02, 
     // backgroundColor: "#FFFFFF",
+   
   },
   headerContainer: {
     flex: 0.2, 
     justifyContent: 'center',
+    
   },
   centerContainer: {
     flex: 0.4, 
-    gap: height * 0.02,
+    gap: height * 0.04,
     zIndex: 1,
     marginBottom: height * 0.08,
+    
   },
   scrollViewContainer: {
     flex: 0.5,
+    
   },
   insuranceCard: {
-    gap: height * 0.02,
+    gap: height * 0.03,
+    flex: 1,
+    paddingBottom: height * 0.05,
+    paddingTop : 60,
+    marginBottom : 40,
   },
   nextButtonText: {
     fontSize: width * 0.04,

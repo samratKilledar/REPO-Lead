@@ -56,7 +56,7 @@ export default StyleSheet.create({
         overflow: 'hidden'
     },
     blue1: {
-        flex: 0.6,
+        flex: 0.5,
         gap: 4,
         height: 32,
         paddingTop: 6,
@@ -67,7 +67,7 @@ export default StyleSheet.create({
         overflow: 'hidden',
     },
     red1: {
-        flex: 0.3,
+        flex: 0.5,
         gap: 4,
         height: 32,
         paddingTop: 6,
@@ -90,7 +90,7 @@ export default StyleSheet.create({
         overflow: 'hidden',
     },
     green2: {
-        flex: 0.3,
+        flex: 0.5,
         height: 32,
         borderRadius: 100,
         paddingTop: 6,
@@ -101,7 +101,7 @@ export default StyleSheet.create({
         overflow: 'hidden',
     },
     yellow2: {
-        flex: 0.4,
+        flex: 0.9,
         height: 32,
         borderRadius: 100,
         paddingTop: 6,
@@ -124,6 +124,9 @@ export default StyleSheet.create({
         borderRadius: 20,
         padding: 28,
         backgroundColor: "#FFFFFF",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
     },
     Inside: {
         // width : 288,
