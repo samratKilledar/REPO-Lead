@@ -96,7 +96,7 @@ const EditProfileScreen = (props) => {
         }
 
         Alert.alert("Success", "Profile updated successfully!");
-        dispatch(editProfileUser());
+        
     };
 
     return (

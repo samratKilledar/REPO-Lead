@@ -21,8 +21,8 @@ const UpcomingTask = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, top: 15, paddingTop: 12, paddingBottom: 24, gap: 24, marginTop: 13 }}>
-      <View style={{ flex: 0.7, marginLeft: 5 }}>
+    <View style={{ flex: 1, top: 10,paddingBottom: 24, gap: 24, marginTop: 13 }}>
+      <View style={{ flex: 0.7, marginLeft: 8 }}>
         <Navigation text={"Upcoming Task"} onPress={goBackCall} />
       </View>
       <View style={{ flex: 9, marginBottom: 90 }}>

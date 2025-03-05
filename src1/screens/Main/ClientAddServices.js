@@ -1,24 +1,39 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, Dimensions, ScrollView , Image} from 'react-native'; // Import ScrollView
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
-import TextStyle from '../../styles/TextStyle';
-import Dropdown from '../../components/Dropdown';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
-import InsuranceCard from '../../components/InsuranceCard';
+import InsuranceCardDel from '../../components/InsuranceCardDel';
 import { useNavigation } from '@react-navigation/native';
 import StatusDropdown from '../../components/StatusDropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateRemark, updateServices } from '../../redux/reducers/leadAddServiceReducer';
 
+const { width, height } = Dimensions.get('window'); 
+
 const ClientAddServices = () => {
   const dispatch = useDispatch();
   const remark = useSelector(state => state.leadAddService.remark);
   const services = useSelector(state => state.leadAddService.services);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
   const goBackCall = () => {
     navigation.popToTop();
   };
+
+  const handleSubmit = () => {
+    if (!remark || !services) {
+      alert("All fields are required!");
+      return;
+    }
+
+    const leadServiceData = {
+      remark,
+      services,
+    };
+
+    dispatch(leadServiceData);
+  };
+
   const cardData = [
     {
       id: 1,
@@ -38,15 +53,15 @@ const ClientAddServices = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 0.3 }}>
+      <View style={styles.headerContainer}>
         <NavigationHeaderBack text="Add Services" onPress={goBackCall} />
       </View>
       <View style={styles.centerContainer}>
-      <CustomTextInput
+        <CustomTextInput
           type={remark}
           value={remark}
           placeholder="Remark"
-          onChangeText={(text) => dispatch(updateRemark(text))}
+          onChangeText={(text) => dispatch(updateRemark(text))} 
         />
         <StatusDropdown
           label="Services"
@@ -55,18 +70,25 @@ const ClientAddServices = () => {
           apiType="service"
           zIndex={1000}
         />
-        <CustomButton title="Submit" customStyle={{ width: -30 }} textStyles={styles.nextButtonText} />
+        <CustomButton
+          title="Submit"
+          customStyle={{ width: width * 0.9 }} // Responsive width
+          textStyles={styles.nextButtonText}
+          onPress={handleSubmit}
+        />
       </View>
-      <View style={styles.insuranceCard}>
-        {cardData.map((item) => (
-          <InsuranceCard
-            key={item.id}
-            title={item.title}
-            date={item.date}
-            description={item.description}
-          />
-        ))}
-      </View>
+      <ScrollView style={styles.scrollViewContainer}>
+        <View style={styles.insuranceCard}>
+          {cardData.map((item) => (
+            <InsuranceCardDel
+              key={item.id}
+              title={item.title}
+              date={item.date}
+              description={item.description}
+            />
+          ))}
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -74,30 +96,36 @@ const ClientAddServices = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingRight: 24,
-    paddingLeft: 10,
-    paddingTop: 15,
-    backgroundColor: "#FFFFFF",
-    gap: 20,
+    paddingHorizontal: width * 0.05, 
+    paddingTop: height * 0.02, 
+    // backgroundColor: "#FFFFFF",
+
+  },
+  headerContainer: {
+    flex: 0.2, 
+    justifyContent: 'center',
+
   },
   centerContainer: {
-    flex: 0.7,
-    gap: 12,
+    flex: 0.4, 
+    gap: height * 0.04,
     zIndex: 1,
+    marginBottom: height * 0.08,
+    
+  },
+  scrollViewContainer: {
+    flex: 0.5,
+    
   },
   insuranceCard: {
-    marginTop: 30,
-    marginRight: 10,
-    marginLeft: 5,
-    marginBottom: 30,
-    gap: 24,
+    gap: height * 0.03,
+    flex: 1,
+    paddingBottom: height * 0.05,
+    paddingTop : 60,
+    marginBottom : 40,
   },
-  insuranceText: {
-    fontFamily: "Urbanist",
-    fontWeight: 700,
-    fontSize: 18,
-    lineHeight: 21.6,
-    color: "#212121",
+  nextButtonText: {
+    fontSize: width * 0.04,
   },
 });
 

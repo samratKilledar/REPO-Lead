@@ -2,8 +2,7 @@
 // GET Request Function
 export const apiGet = async (url,tokan) => {
   try {
-    console.log(JSON.stringify(tokan)+"=="+url)
-
+  
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -13,18 +12,18 @@ export const apiGet = async (url,tokan) => {
 
       },
     });
-   // console.log("333+response"+JSON.stringify(response))
+    console.log(url+"---------------------s------------------------------")
 
     if (!response.ok) {
+      //alert(11)
+      console.error("HTTP error! Status:"+ response.status);
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     //alert(JSON.stringify(response))
     return await response.json();
   } catch (error) {
-    console.error(
-      `GET ${endpoint} Error:`,
-      error.response?.data || error.message,
-    );
+    console.error(`GET ${endpoint} Error:`,error.response?.data || error.message,
+);
     throw error;
   }
 };
@@ -44,63 +43,6 @@ export const apiPost = async (url, param = {}) => {
       body: JSON.stringify({
         email: data.email,
         Password: data.password,
-      }),
-    });
-    console.log('===s===>' + JSON.stringify(response));
-    return await response.json();
-  } catch (error) {
-    console.log('===errrrrrrror===>' + JSON.stringify(error));
-
-    return await error.message;
-  }
-};
-
-
-
-export const apiPut = async (url, param = {}) => {
-  const data = param.data;
-  console.log(JSON.stringify(data) + '=== PUT Request ===');
-
-  try {
-    const response = await fetch(url, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        tenant: data.customerId,
-      },
-      body: JSON.stringify({
-        firstname: data.firstname,
-        lastname: data.lastname,
-        email: data.email,
-        phonenumber: data.phonenumber,
-        gender: data.gender,
-        date: data.date,
-      }),
-    });
-
-    console.log('=== PUT Response ===' + JSON.stringify(response));
-    return await response.json();
-  } catch (error) {
-    console.log('=== PUT Error ===' + JSON.stringify(error));
-    return error.message;
-  }
-};
-
-
-export const postApi = async (url, param = {}) => {
-  const data = param.data;
-  console.log(JSON.stringify(data) + '=ssss------------------sss=' + data.customerId);
-  //{"customerId":"Root","email":"Supra@admin.com","password":"Admin@123"}=ssss------------------sss=Root
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        tenant: data.customerId,
-      },
-      body: JSON.stringify({
-        remark: data.remark,
-        services: data.services,
       }),
     });
     console.log('===s===>' + JSON.stringify(response));

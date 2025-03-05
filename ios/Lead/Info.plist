@@ -51,7 +51,6 @@
 <string>App needs access to your camera</string>
 <key>NSPhotoLibraryUsageDescription</key>
 <string>App needs access to your gallery</string>
-
 	<false/>
 </dict>
 </plist>

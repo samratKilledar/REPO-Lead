@@ -1,7 +1,3 @@
-import {editProfileApiCall} from '../../api/authApi';
-import {setItem, getItem} from '../../api/storageServices';
-
-
 // Action Types
 export const UPDATE_FIRSTNAME = "UPDATE_FIRSTNAME";
 export const UPDATE_LASTNAME = "UPDATE_LASTNAME";
@@ -53,20 +49,6 @@ export const updateSuccess = userData => ({
 
 
 
-export const editProfileUser = () => async (dispatch, getState) => {
-  try {
-    const { firstname,lastname,email,phonenumber,gender,date} = getState().editProfileApi; // Get loginValue from Redux
-    dispatch({type: UPDATE_CLICK});
 
-    const data = await editProfileApiCall( firstname,lastname,email,phonenumber,gender,date);
-    if (data.success){
-        dispatch({type: UPDATE_SUCCESS }); 
-    } else {
-          dispatch({type: UPDATE_FAILURE, payload: data.message}); // Dispatch failure action
-        }
-      } catch (error) {
-        dispatch({type: UPDATE_FAILURE, payload: error.message}); // Dispatch failure action
-      }
-};
 
 

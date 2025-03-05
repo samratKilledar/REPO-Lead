@@ -57,12 +57,12 @@ export const l = async userData => {
 };
 
 
-export const fetchDropdownData = async (apiType) => {
+export const fetchDropdownDataApi = async (apiType) => {
     try {
         const authToken = await getItem("authToken");
         const apiUrl = api[apiType];
         if (!apiUrl) throw new Error("Invalid API type");
-        
+
         return await apiGet(apiUrl, authToken);
     } catch (error) {
         console.error(`Error fetching dropdown data for ${apiType}:`, error);
@@ -70,21 +70,3 @@ export const fetchDropdownData = async (apiType) => {
     }
 };
 
-
-export const udcSheetApiCall = async data => {
-    console.log('inside function' + JSON.stringify(data));
-    return await apiPost(api.udcSheetApi, {data});
-};
-
-export const editProfileApiCall = async data => {
-    console.log('inside function' + JSON.stringify(data));
-    return await apiPut(api.editProfileApi, {data});
-};
-
-export const leadAddServiceApiCall = async data => {
-    console.log('inside function' + JSON.stringify(data));
-    return await postApi(api.leadAddServiceApi, {data});
-};
-
-
-  

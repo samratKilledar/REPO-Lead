@@ -19,8 +19,8 @@ const UpcomingMeetings = ({ navigation }) => {
     navigation.goBack();
   };
   return (
-    <View style={{ flex: 1, top: 15, paddingTop: 12, paddingBottom: 24, gap: 24, marginTop: 13, }}>
-      <View style={{ flex: 0.7, marginLeft: 5 }}>
+    <View style={{ flex: 1,  paddingTop: 10, paddingBottom: 24, gap: 24, marginTop: 13, }}>
+      <View style={{ flex: 0.7, marginLeft: 8 }}>
         <Navigation text={"Upcoming Meetings"} onPress={goBackCall} />
       </View>
       <View style={{ flex: 9, marginBottom: 90 }}>

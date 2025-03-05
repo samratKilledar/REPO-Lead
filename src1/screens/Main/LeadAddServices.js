@@ -7,7 +7,7 @@ import InsuranceCardDel from '../../components/InsuranceCardDel';
 import { useNavigation } from '@react-navigation/native';
 import StatusDropdown from '../../components/StatusDropdown';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateRemark, updateServices, leadAddServiceUser } from '../../redux/reducers/leadAddServiceReducer';
+import { updateRemark, updateServices } from '../../redux/reducers/leadAddServiceReducer';
 
 const { width, height } = Dimensions.get('window'); 
 
@@ -31,7 +31,7 @@ const LeadAddServices = () => {
       services,
     };
 
-    dispatch(leadAddServiceUser(leadServiceData));
+    dispatch(leadServiceData);
   };
 
   const cardData = [

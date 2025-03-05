@@ -36,6 +36,12 @@ const LeadAddPersonal = ({ navigation }) => {
     state,
     country
   } = useSelector(state => state.personalReducer);
+  const { 
+    titlePlaceholder, followupStatusPlaceholder, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder, 
+    followupTimePlaceholder, remarkPlaceholder
+  } = useSelector(state => state.addFollowUp);
+  const dropDown= useSelector(state => state.homeReducer);
+  alert(JSON.stringify(dropDown.state ))
 
   const [leadService, setLeadService] = useState('');
 
@@ -171,6 +177,9 @@ const styles = StyleSheet.create({
   centerContainer: {
     paddingBottom: 20,
     gap: 10,
+    paddingLeft: 15,
+    paddingRight: 15,
+    position: "relative",
     paddingHorizontal: 15, 
   },
   scrollViewContent: {
