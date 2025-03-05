@@ -99,12 +99,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.05, 
     paddingTop: height * 0.02, 
     // backgroundColor: "#FFFFFF",
-   
+
   },
   headerContainer: {
     flex: 0.2, 
     justifyContent: 'center',
-    
+
   },
   centerContainer: {
     flex: 0.4, 
