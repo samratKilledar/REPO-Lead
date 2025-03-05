@@ -12,6 +12,7 @@ import occupationReducer from './occupationReducer';
 import forgotPassReducer from './forgotPassReducer';
 import createPassReducer from './createPassReducer';
 
+import occupationReducer from './occupationReducer';
 export default combineReducers({
   auth: authReducer,
   forgotPassReducer:forgotPassReducer,
@@ -23,6 +24,7 @@ export default combineReducers({
   leadAddService: leadAddServiceReducer,
   personalReducer : personalReducer,
   lastReducer: lastReducer,
+  personalReducer: personalReducer,
   occupationReducer: occupationReducer,
 });
 
