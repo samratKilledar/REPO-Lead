@@ -1,4 +1,4 @@
-import {apiGet, apiPost , addfollowUpApiPost} from './apiClient';
+import {apiGet} from './apiClient';
 import {api} from './api';
 
 
@@ -39,16 +39,32 @@ export const occupation = async authToken => {
     //console.log("ss------ssss"+authToken)
     return await apiGet(api.occupation,authToken);
 };
-export const addFollowUpApiCall = async (formData) => {
-    console.log("📩 Inside addFollowUpApiCall:", JSON.stringify(formData));
-        return await addfollowUpApiPost(api.addFollowUP, {data: formData});
-};
+export const getAllLeadApi= async authToken=>{
+    //console.log("ss------ssss"+authToken)
+    return await apiGet(api.getAllLeadApi,authToken);
+}
+export const upComingTask= async authToken=>{
+    //console.log("ss---sameeeeee---ssss"+authToken)
+    return await apiGet(api.upComingTask,authToken);
+}
+export const leadDetail= async authToken=>{
+    //console.log("ss--lead---ssss"+authToken)
+    return await apiGet(api.leadDetail,authToken);
+}
+export const client= async authToken=>{
+    console.log("ss--clientttad---ssss"+authToken)
+    return await apiGet(api.client,authToken);
+}
+export const clientDetail= async authToken=>{
+    console.log("ss--clientttad---ssss"+authToken)
+    return await apiGet(api.clientDetail,authToken);
+}
+
+
+
   
   
 
-export const getAllLeadApi= async authToken=>{
-    // console.log("ss------ssss"+authToken)
-    return await apiGet(api.getAllLeadApi,authToken);
-}
+
 
 

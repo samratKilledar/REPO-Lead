@@ -1,152 +1,101 @@
-// const initialState = {
-//     isAuthenticated: false,
-//     addTaskPlaceHolder: {
-//      title: "Title",
-//      type: "Type",
-//      assign:"Task Assign To",
-//      client:"Client",
-//      dueDate:"Due Date",
-//      priority:"Priority",
-//      service:"Service Request",
-//      startDate:"Start Date",
-//      reminderDate:"Reminder Date",
-//      attachment:"Attachment",
-//      remark:"Remark",
-//     },
-//     addTaskPlaceValue: {
-//       title: "",
-//       type: {},
-//       assign:{},
-//       client:{},
-//       dueDate:"null",
-//       priority:{},
-//       service:"",
-//       startDate:"null",
-//       reminderDate:"null",
-//       attachment:"",
-//       remark:"",
-//     },
-//     dropdowns: {},  // ✅ Added to store dropdown data
-//     //error: null,    // ✅ Added to store error messages
-//   };
-  
-//   const addTaskReducer = (state = initialState, action) => {
-//     switch (action.type) {
-//         case 'SUBMIT_SUCCESS':
-//             return { ...state, isAuthenticated: true };
-    
-  
-//         case 'CHANGE_TASK_CREDENTIAL':
-//             return { 
-//                 ...state, 
-//                 loginValue: { 
-//                     ...state.loginValue,  // Keep previous values
-//                     ...action.payload     // Update only the fields provided
-//                 } 
-//             };
-
-  
-//         default:
-//             return state;
-//     }
-//   };
-  
-//   export default addTaskReducer;
 
 
-const initialState = {
+import { 
+    SUBMIT_CLICK, 
+    SUBMIT_SUCCESS, 
+    SUBMIT_FAILURE,
+    CHANGE_TITLE,
+    CHANGE_FOLLOWUP_STATUS,
+    CHANGE_ASSIGNED_TO,
+    CHANGE_ATTACHMENT,
+    CHANGE_FOLLOWUP_DATE,
+    CHANGE_FOLLOWUP_TIME,
+    CHANGE_REMARK,
+    SET_STATUS_OPTIONS,
+    SET_ASSIGNED_TO_OPTIONS
+} from "../actions/addFollowUpActions"; 
+
+const initialState = { 
     isAuthenticated: false,
+    isLoading: false,  // 🔄 Tracks loading state
+    error: null,  // ❌ Tracks API errors
 
     // Placeholder text for each field
-    taskNamePlaceholder: "Title",
-    taskTypePlaceholder: "Type",
-    assignedToPlaceholder: "Task Assigned To",
-    clientNamePlaceholder: "Client",
-    dueDatePlaceholder: "Due Date",
-    priorityPlaceholder: "Priority",
-    serviceRequestPlaceholder: "Service Request",
-    startDatePlaceholder: "Start Date",
-    reminderDatePlaceholder: "Reminder Date",
-    attachmentNamePlaceholder: "Attachment",
-    remarksPlaceholder: "Remark",
+    titlePlaceholder: "Title",
+    followupStatusPlaceholder: "Status",
+    assignedToPlaceholder: "Assign",
+    attachmentUrlPlaceholder: "Attachment",
+    followupDatePlaceholder: "Next Meeting schedule on",
+    followupTimePlaceholder: "Schedule Time",
+    remarkPlaceholder: "Remark",
 
-    taskName: "",
-    taskType: "",
+    // Actual values (user input)
+    title: "",
+    followupStatus: "",
     assignedTo: "",
-    clientName: "",
-    dueDate: "2025-02-28T14:01:17.017Z",
-    priority: "",
-    serviceRequest: "",
-    startDate: "2025-02-28T14:01:17.017Z",
-    reminderDate: "2025-02-28T14:01:17.017Z",
-    attachmentName: "",
-    remarks: "",
+    attachmentUrl: "",
+    followupDate: "2025-02-28T14:01:17.017Z",
+    followupTime: "2025-02-28T14:01:17.017Z",
+    remark: "",
 
-    // Separate dropdown lists for each field
-    typeOptions: ["Sanika", "Pranjli"],
+    // Dropdown lists for fields
+    statusOptions: [],
     assignOptions: [],
-    clientOptions: [],
-    priorityOptions: [],
-    serviceOptions: [],
 };
 
-const addTaskReducer = (state = initialState, action) => {
+const addFollowUpReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'SUBMIT_SUCCESS':
-            return { ...state, isAuthenticated: true };
+        case "SUBMIT_CLICK":
+            return { ...state, isLoading: true, error: null };
 
-        case 'CHANGE_TASK_NAME':
-            return { ...state, taskName: action.payload };
+        case "SUBMIT_SUCCESS":
+            return { 
+                ...state, 
+                isAuthenticated: true, 
+                isLoading: false, 
+                error: null,
+                title: "",
+                followupStatus: "",
+                assignedTo: "",
+                attachmentUrl: "",
+                followupDate: "",
+                followupTime: "",
+                remark: ""
+            };
 
-        case 'CHANGE_TASK_TYPE':
-            return { ...state, taskType: action.payload };
+        case "SUBMIT_FAILURE":
+            return { ...state, isAuthenticated: false, isLoading: false, error: action.payload };
 
-        case 'CHANGE_ASSIGNED_TO':
+        case CHANGE_TITLE:
+            return { ...state, title: action.payload };
+
+        case CHANGE_FOLLOWUP_STATUS:
+            return { ...state, followupStatus: action.payload };
+           
+        case CHANGE_ASSIGNED_TO:
             return { ...state, assignedTo: action.payload };
 
-        case 'CHANGE_CLIENT_NAME':
-            return { ...state, clientName: action.payload };
+        case CHANGE_ATTACHMENT:
+            return { ...state, attachmentUrl: action.payload };
 
-        case 'CHANGE_DUE_DATE':
-            return { ...state, dueDate: action.payload };
+        case CHANGE_FOLLOWUP_DATE:
+            return { ...state, followupDate: action.payload };
 
-        case 'CHANGE_PRIORITY':
-            return { ...state, priority: action.payload };
+        case CHANGE_FOLLOWUP_TIME:
+            return { ...state, followupTime: action.payload };
 
-        case 'CHANGE_SERVICE_REQUEST':
-            return { ...state, serviceRequest: action.payload };
+        case CHANGE_REMARK:
+            return { ...state, remark: action.payload };
 
-        case 'CHANGE_START_DATE':
-            return { ...state, startDate: action.payload };
+        case SET_STATUS_OPTIONS:
+            return { ...state, statusOptions: action.payload };
 
-        case 'CHANGE_REMINDER_DATE':
-            return { ...state, reminderDate: action.payload };
-
-        case 'CHANGE_ATTACHMENT_NAME':
-            return { ...state, attachmentName: action.payload };
-
-        case 'CHANGE_REMARKS':
-            return { ...state, remarks: action.payload };
-
-        case 'SET_TASK_TYPE_OPTIONS':
-            return { ...state, typeOptions: action.payload };
-
-        case 'SET_ASSIGNED_TO_OPTIONS':
+        case SET_ASSIGNED_TO_OPTIONS:
             return { ...state, assignOptions: action.payload };
-
-        case 'SET_CLIENT_NAME_OPTIONS':
-            return { ...state, clientOptions: action.payload };
-
-        case 'SET_PRIORITY_OPTIONS':
-            return { ...state, priorityOptions: action.payload };
-
-        case 'SET_SERVICE_REQUEST_OPTIONS':
-            return { ...state, serviceOptions: action.payload };
 
         default:
             return state;
     }
 };
 
-export default addTaskReducer;
-
+export default addFollowUpReducer;

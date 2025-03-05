@@ -97,7 +97,7 @@ const ClientAddFollowUP = (props) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 0.1, marginLeft: 8 }}>
+      <View style={{ flex: 0.1, marginLeft: 5 }}>
         <NavigationHeaderBack text="Add Follow-Up" onPress={goBackCall} />
       </View>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 15,
     paddingLeft: 5,
-    paddingTop: 10,
+    paddingTop: 13,
     backgroundColor: "#FFFFFF",
     gap: 20,
   },
