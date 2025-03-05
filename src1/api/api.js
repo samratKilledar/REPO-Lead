@@ -1,6 +1,7 @@
 export const api={
     authApi:"https://opticalerp.in:85/api/tokens/gettoken",
     forgotPasswordApi:"https://opticalerp.in:85/api/users/forgotpassword/forgot-password",
+    createPass:"https://opticalerp.in:85/api/currentuser/changepassword/change-password",
     getAllLeadApi:"https://opticalerp.in:85/api/lead/getlist/get-all",
 
     //all drop down API
@@ -16,6 +17,8 @@ export const api={
 
     //AddFollowUP
     addFollowUP: "https://opticalerp.in:85/api/followupdetails/create/create",
+    //add Task API
+    addTask:"https://opticalerp.in:85/api/taskdetails/create",
    // UpcomingMeetingsList:"https://opticalerp.in:85/api/lead/getlist/get-all"
    upComingTask: "https://opticalerp.in:85/api/taskdetails/getlist",
    leadDetail:"https://opticalerp.in:85/api/lead/getbyleadid",

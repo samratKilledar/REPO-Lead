@@ -1,4 +1,23 @@
-
+import {
+    SUBMIT_SUCCESS,
+    SUBMIT_FAILURE,
+    SUBMIT_TASK,
+    CHANGE_TASK_NAME,
+    CHANGE_TASK_TYPE,
+    CHANGE_ASSIGNED_TO,
+    CHANGE_CLIENT_NAME,
+    CHANGE_DUE_DATE,
+    CHANGE_PRIORITY,
+    CHANGE_SERVICE_REQUEST,
+    CHANGE_START_DATE,
+    CHANGE_REMINDER_DATE,
+    CHANGE_ATTACHMENT_NAME,
+    CHANGE_REMARKS,
+    SET_TASK_TYPE_OPTIONS,
+    SET_ASSIGNED_TO_OPTIONS,
+    SET_CLIENT_NAME_OPTIONS,
+    SET_PRIORITY_OPTIONS
+} from "../actions/addTaskAction";
 
 import { 
     SUBMIT_CLICK, 
@@ -33,14 +52,21 @@ const initialState = {
     title: "",
     followupStatus: "",
     assignedTo: "",
-    attachmentUrl: "",
-    followupDate: "2025-02-28T14:01:17.017Z",
-    followupTime: "2025-02-28T14:01:17.017Z",
-    remark: "",
+    clientName: "",
+    dueDate: "",
+    priority: "",
+    serviceRequest: "",
+    startDate: "",
+    reminderDate: "",
+    attachmentName: "",
+    remarks: "",
 
-    // Dropdown lists for fields
-    statusOptions: [],
+    // Separate dropdown lists for each field
+    typeOptions: ["Sanika", "Pranjali"],
     assignOptions: [],
+    clientOptions: [],
+    priorityOptions: [],
+
 };
 
 const addFollowUpReducer = (state = initialState, action) => {
@@ -48,50 +74,50 @@ const addFollowUpReducer = (state = initialState, action) => {
         case "SUBMIT_CLICK":
             return { ...state, isLoading: true, error: null };
 
-        case "SUBMIT_SUCCESS":
-            return { 
-                ...state, 
-                isAuthenticated: true, 
-                isLoading: false, 
-                error: null,
-                title: "",
-                followupStatus: "",
-                assignedTo: "",
-                attachmentUrl: "",
-                followupDate: "",
-                followupTime: "",
-                remark: ""
-            };
+        case CHANGE_TASK_NAME:
+            return { ...state, taskName: action.payload };
 
-        case "SUBMIT_FAILURE":
-            return { ...state, isAuthenticated: false, isLoading: false, error: action.payload };
+        case CHANGE_TASK_TYPE:
+            return { ...state, taskType: action.payload };
 
-        case CHANGE_TITLE:
-            return { ...state, title: action.payload };
-
-        case CHANGE_FOLLOWUP_STATUS:
-            return { ...state, followupStatus: action.payload };
-           
         case CHANGE_ASSIGNED_TO:
             return { ...state, assignedTo: action.payload };
 
-        case CHANGE_ATTACHMENT:
-            return { ...state, attachmentUrl: action.payload };
+        case CHANGE_CLIENT_NAME:
+            return { ...state, clientName: action.payload };
 
-        case CHANGE_FOLLOWUP_DATE:
-            return { ...state, followupDate: action.payload };
+        case CHANGE_DUE_DATE:
+            return { ...state, dueDate: action.payload };
 
-        case CHANGE_FOLLOWUP_TIME:
-            return { ...state, followupTime: action.payload };
+        case CHANGE_PRIORITY:
+            return { ...state, priority: action.payload };
 
-        case CHANGE_REMARK:
-            return { ...state, remark: action.payload };
+        case CHANGE_SERVICE_REQUEST:
+            return { ...state, serviceRequest: action.payload };
 
-        case SET_STATUS_OPTIONS:
-            return { ...state, statusOptions: action.payload };
+        case CHANGE_START_DATE:
+            return { ...state, startDate: action.payload };
+
+        case CHANGE_REMINDER_DATE:
+            return { ...state, reminderDate: action.payload };
+
+        case CHANGE_ATTACHMENT_NAME:
+            return { ...state, attachmentName: action.payload };
+
+        case CHANGE_REMARKS:
+            return { ...state, remarks: action.payload };
+
+        case SET_TASK_TYPE_OPTIONS:
+            return { ...state, typeOptions: action.payload };
 
         case SET_ASSIGNED_TO_OPTIONS:
             return { ...state, assignOptions: action.payload };
+
+        case SET_CLIENT_NAME_OPTIONS:
+            return { ...state, clientOptions: action.payload };
+
+        case SET_PRIORITY_OPTIONS:
+            return { ...state, priorityOptions: action.payload };
 
         default:
             return state;

@@ -15,7 +15,7 @@ import CustomTextInput from '../../components/CustomTextInput';
 import CustomButton from '../../components/CustomButton';
 import TextStyle from '../../styles/TextStyle';
 import ButtonStyles from '../../styles/ButtonStyles';
-import { emailSuccess, updateForgotPassEmail,forgotPassUser } from '../../redux/actions/forgotPassAction';
+import {  updateForgotPassEmail,forgotPassUser } from '../../redux/actions/forgotPassAction';
 import { useDispatch, useSelector } from 'react-redux';
 // import {useNavigation} from '@react-navigation/native';
 
@@ -33,6 +33,7 @@ const ForgotPassword = props => {
           Alert.alert('Error', 'Enter a valid email address!');
           return;
     }else{
+      props.navigation.navigate('ResetPassword');
       dispatch(forgotPassUser())
     }
   };

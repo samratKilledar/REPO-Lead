@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   
   // Service Request Wrapper 
   serviceRequestWrapper: {
-    width: 220,
+    //width: 220,
     padding: 2,
     borderRadius: 10,
     marginRight: 2,
