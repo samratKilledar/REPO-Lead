@@ -273,9 +273,6 @@ const LeadAddPersonal = ({ navigation }) => {
             listData={dropDown.leadSource}
           />
           
-          
-
-
           <CustomTextInput
             value={mobileNo}
             placeholder="Mobile No"
@@ -331,22 +328,14 @@ const LeadAddPersonal = ({ navigation }) => {
            elevation={6}// Explicitly setting zIndex
         />
 
-          {/* <StatusDropdown
-            label="State"
-            selectedValue={state}
-            onValueChange={(value) => dispatch(updateState(value))}
-            apiType="state"
-            listData={dropDown.state}
-            zIndex={2000} // Higher than Dropdown 2
-                   elevation={6}// Explicitly setting zIndex
-          /> */}
-          {/* <StatusDropdown
+          <StatusDropdown
             label="Country"
             selectedValue={country}
             onValueChange={(value) => dispatch(updateCountry(value))}
             apiType="Country"
             listData={dropDown.country}
-
+            zIndex={1000} // Higher than Dropdown 2
+           elevation={5}// Explicitly setting zIndex
           />
           <CustomTextInput
             value={pincode}
@@ -358,7 +347,7 @@ const LeadAddPersonal = ({ navigation }) => {
             title="Next"
             customStyle={styles.nextButton}
             onPress={handleOccupation}
-          /> */}
+          />
         </View>
       </ScrollView>
     </View>

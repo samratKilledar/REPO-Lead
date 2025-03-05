@@ -19,38 +19,24 @@ import {
     SET_PRIORITY_OPTIONS
 } from "../actions/addTaskAction";
 
-import { 
-    SUBMIT_CLICK, 
-    SUBMIT_SUCCESS, 
-    SUBMIT_FAILURE,
-    CHANGE_TITLE,
-    CHANGE_FOLLOWUP_STATUS,
-    CHANGE_ASSIGNED_TO,
-    CHANGE_ATTACHMENT,
-    CHANGE_FOLLOWUP_DATE,
-    CHANGE_FOLLOWUP_TIME,
-    CHANGE_REMARK,
-    SET_STATUS_OPTIONS,
-    SET_ASSIGNED_TO_OPTIONS
-} from "../actions/addFollowUpActions"; 
-
-const initialState = { 
+const initialState = {
     isAuthenticated: false,
-    isLoading: false,  // 🔄 Tracks loading state
-    error: null,  // ❌ Tracks API errors
 
     // Placeholder text for each field
-    titlePlaceholder: "Title",
-    followupStatusPlaceholder: "Status",
-    assignedToPlaceholder: "Assign",
-    attachmentUrlPlaceholder: "Attachment",
-    followupDatePlaceholder: "Next Meeting schedule on",
-    followupTimePlaceholder: "Schedule Time",
-    remarkPlaceholder: "Remark",
+    taskNamePlaceholder: "Title",
+    taskTypePlaceholder: "Type",
+    assignedToPlaceholder: "Task Assigned To",
+    clientNamePlaceholder: "Client",
+    dueDatePlaceholder: "Due Date",
+    priorityPlaceholder: "Priority",
+    serviceRequestPlaceholder: "Service Request",
+    startDatePlaceholder: "Start Date",
+    reminderDatePlaceholder: "Reminder Date",
+    attachmentNamePlaceholder: "Attachment",
+    remarksPlaceholder: "Remark",
 
-    // Actual values (user input)
-    title: "",
-    followupStatus: "",
+    taskName: "",
+    taskType: "",
     assignedTo: "",
     clientName: "",
     dueDate: "",
@@ -69,10 +55,10 @@ const initialState = {
 
 };
 
-const addFollowUpReducer = (state = initialState, action) => {
+const addTaskReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "SUBMIT_CLICK":
-            return { ...state, isLoading: true, error: null };
+        case 'SUBMIT_SUCCESS':
+            return { ...state, isAuthenticated: true };
 
         case CHANGE_TASK_NAME:
             return { ...state, taskName: action.payload };
@@ -124,4 +110,4 @@ const addFollowUpReducer = (state = initialState, action) => {
     }
 };
 
-export default addFollowUpReducer;
+export default addTaskReducer;

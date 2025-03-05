@@ -24,81 +24,6 @@ const CloseAccountScreen = () => {
   return (
 
     <View style={styles.container}>
-<<<<<<< HEAD
-
-      <View style={styles.centralcontainer}>
-        {/* Adjust flex to give enough space */}
-        <View style={{ flex: 0.3, flexDirection: "row" }} >
-          <NavigationHeaderBack text="Close Account" onPress={goBackCall} />
-          <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
-            <Image
-              source={require('../../assets/icons/MoreCircle.png')}
-              style={{ width: 28, height: 28 }}
-            />
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.detailsContainer}>
-          <DetailItem icon={require('../../assets/icons/Work/work.png')} label="Task Name" detail="Close Account" />
-          <DetailItem icon={require('../../assets/icons/ProfileGrey/profileGrey.png')} label="Task Owner" detail="John Smith" />
-          <DetailItem icon={require('../../assets/icons/ShieldDone.png')} label="Priority" detail="Medium" />
-          <DetailItem icon={require('../../assets/icons/Bag/bag.png')} label="Progress" detail="50%" />
-          <DetailItem icon={require('../../assets/icons/LSTIckSquare/lsTickSquare.png')} label="Lead Status" detail="Under Process" />
-          <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label="Due Date" detail="Feb 14, 2025" />
-          <DetailItem icon={require('../../assets/icons/Service.png')} label="Service Request" detail="Account close once redemption amt credited to his account." />
-          <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label="Start Date" detail="Feb 21, 2025" />
-          <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label="Reminder Date" detail="Feb 15, 2025" />
-          <DetailItem icon={require('../../assets/icons/Remarks.png')} label="Remarks" detail="Query raised- 11310957" />
-        </View>
-      </View>
-      {menuVisible && (
-        <View style={styles.menuBox}>
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Edit clicked")}>
-            <Image source={require("../../assets/icons/Edit/edit.png")} style={styles.menuIcon} />
-            <Text style={styles.menuText}>Edit</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => setModalVisible(true)}>
-            <Image source={require("../../assets/icons/LSTIckSquare/lsTickSquare.png")} style={styles.menuIcon} />
-            <Text style={styles.menuText}>Status</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Delete clicked")}>
-            <Image source={require("../../assets/icons/Delete/delete.png")} style={styles.menuIcon} />
-            <Text style={styles.menuText}>Delete</Text>
-          </TouchableOpacity>
-        </View>
-      )}
-      {/* Bottom Pop-up Modal */}
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Status</Text>
-
-            {statusOptions.map((option, index) => (
-              <TouchableOpacity
-                key={index}
-                style={styles.radioButton}
-                onPress={() => setSelectedStatus(option)}
-              >
-                <Text style={styles.radioText}>{option}</Text>
-                <View style={selectedStatus === option ? styles.radioSelected : styles.radioUnselected} />
-              </TouchableOpacity>
-            ))}
-
-            <CustomButton
-              title="Submit"
-              customstyle={ButtonStyles.blueButton} textStyles={ButtonStyles.blueButtonText}
-              onPress={() => {
-                console.log("Selected Status:", selectedStatus);
-                setModalVisible(false);
-              }}
-            >
-            </CustomButton>
-=======
       <ScrollView>
         <View style={styles.centralcontainer}>
           <View style={{ flex: 0.3, gap: 16, flexDirection: "row", }} >
@@ -109,7 +34,6 @@ const CloseAccountScreen = () => {
                 style={{ width: 28, height: 28 }}
               />
             </TouchableOpacity>
->>>>>>> TaskApi
           </View>
 
           {/* Adjust flex to give enough space */}

@@ -22,7 +22,7 @@ const Dropdown = ({ label, selectedValue, onValueChange, options, zIndex }) => {
         textStyle={[styles.labelStyle, open ? styles.labelStyleOpen : null]}
         listItemContainerStyle={styles.listItem}
         
-        listMode="MODAL" // 👈 Add this line
+       // listMode="MODAL" // 👈 Add this line
         
         ArrowUpIconComponent={() => (
           <Image
