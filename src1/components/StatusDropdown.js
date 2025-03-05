@@ -45,7 +45,9 @@ const StatusDropdown = ({ label, selectedValue, onValueChange, apiType, zIndex, 
       selectedValue={selectedValue1}
       onValueChange={setSelectedValue}
       options={formattedOptions}
-      zIndex={2000}
+      zIndex={zIndex || 2000}
+    elevation={5}
+    modal={Platform.OS === "android"}
     />
   );
 };
