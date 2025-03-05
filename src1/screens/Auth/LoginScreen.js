@@ -235,7 +235,7 @@ const LoginScreen = props => {
                 <View>
                   <CustomButton
                     title="Sign in"
-                    customStyle={{  width: width * 0.9}}
+                    customStyle={{width: width * 0.9, alignSelf: 'center'}}
                     textStyles={ButtonStyles.blueButtonText}
                     onPress={handleLogin}
                   />

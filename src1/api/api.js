@@ -3,6 +3,7 @@ export const api={
     forgotPasswordApi:"https://opticalerp.in:85/api/users/forgotpassword/forgot-password",
     createPass:"https://opticalerp.in:85/api/currentuser/changepassword/change-password",
     getAllLeadApi:"https://opticalerp.in:85/api/lead/getlist/get-all",
+    
 
     //all drop down API
     followUp: "https://opticalerp.in:85/api/udc/getvaluesbytype?type=Leads",
