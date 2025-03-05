@@ -217,27 +217,6 @@ const AddFollowUP = (props) => {
     setShowTimePicker(false);
   };
 
-  // const validateAndSubmit = () => {
-  //   const fields = [
-  //     { value: title, placeholder: titlePlaceholder },
-  //     { value: followupStatus, placeholder: followupStatusPlaceholder },
-  //     { value: assignedTo, placeholder: assignedToPlaceholder },
-  //     { value: attachmentUrl, placeholder: attachmentUrlPlaceholder },
-  //     { value: followupDate, placeholder: followupDatePlaceholder },
-  //     { value: followupTime, placeholder: followupTimePlaceholder },
-  //     { value: remark, placeholder: remarkPlaceholder }
-  //   ];
-    
-  //   for (const [key, value] of Object.entries(fields)) {
-  //     if (!value || value.trim() === "") {
-  //       Alert.alert("Validation Error", `${key.replace(/([A-Z])/g, " $1")} is required.`); 
-  //       return;
-  //     }
-  //   }
-
-  //   // If all validations pass, proceed with submission
-  //   Alert.alert("Success", "Follow-up added successfully.");
-  // };
 
 const validateAndSubmit = () => {
   const fields = [

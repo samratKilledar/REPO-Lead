@@ -33,7 +33,7 @@ const StatusDropdown = ({ label, selectedValue, onValueChange, apiType, zIndex, 
     } else {
       return {
         label: item.value01, // Default display text
-        value: item.id.toString(), // Default value
+        // value: item.id.toString(), // Default value
         extraData: item.value02, // Extra data if needed
       };
     }
