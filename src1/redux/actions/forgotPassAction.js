@@ -3,7 +3,7 @@ export const CHANGE_EMAIL_CREDENTIAL = 'CHANGE_EMAIL_CREDENTIAL';
 
 export const forgotPassUser = () => {
   return async (dispatch, getState) => {
-    const { emailValue } = getState().forgotPassReducer; // Get loginValue from Redux
+    const { emailValue } = getState().forgotPassReducer; 
     console.log(emailValue.email)
     try {
       const response = await fetch('https://opticalerp.in:85/api/users/forgotpassword/forgot-password', {

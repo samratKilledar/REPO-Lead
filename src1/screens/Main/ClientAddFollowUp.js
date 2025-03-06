@@ -20,7 +20,6 @@ const ClientAddFollowUP = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  // Get Redux state
   const { 
     title, followupStatus, assignedTo, attachmentUrl, followupDate, followupTime, remark,
     titlePlaceholder, followupStatusPlaceholder, assignedToPlaceholder, attachmentUrlPlaceholder, 
@@ -33,7 +32,6 @@ const ClientAddFollowUP = (props) => {
     navigation.popToTop();
   };
 
-  // Auto-Navigate back on Success ✅
   useEffect(() => {
     if (isAuthenticated) {
       Alert.alert("Success", "Follow-up added successfully!", [
@@ -41,14 +39,13 @@ const ClientAddFollowUP = (props) => {
       ]);
     }
   }, [isAuthenticated]);
-  // Show API error if exists ❌
+
   useEffect(() => {
     if (error) {
       Alert.alert("Error", error);
     }
   }, [error]);
 
-  // Date Picker Logic
   const [showDatePicker, setShowDatePicker] = React.useState(false);
   const [showTimePicker, setShowTimePicker] = React.useState(false);
   const handleDateChange = (event, date) => {
@@ -58,7 +55,6 @@ const ClientAddFollowUP = (props) => {
     setShowDatePicker(false);
   };
 
-  // Time Picker Logic
  const handleTimeChange = (event, time) => {
      if (event.type === "set" && time) {
        const hours = time.getHours();

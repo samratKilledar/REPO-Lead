@@ -17,8 +17,8 @@ const initialState = {
             return { 
                 ...state, 
                 emailValue: { 
-                    ...state.emailValue,  // Keep previous values
-                    ...action.payload     // Update only the fields provided
+                    ...state.emailValue, 
+                    ...action.payload   
                 } 
             };
   
@@ -26,6 +26,5 @@ const initialState = {
             return state;
     }
   };
-  
   export default forgotPassReducer;
   

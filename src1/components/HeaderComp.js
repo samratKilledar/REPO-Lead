@@ -1,30 +1,26 @@
 import React from 'react';
-import { View, StyleSheet, Image,TouchableOpacity, Dimensions } from 'react-native'; 
+import { View, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
-const HeaderComp = ({navigation})=>{
-
-  
-    return(
-            <View style={styles1.headerstyle}>
-            <Image source={require("../assets/images/Frame.png")}  style={styles1.frame}/>
+const HeaderComp = ({ navigation }) => {
+    return (
+        <View style={styles1.headerstyle}>
+            <Image source={require("../assets/images/Frame.png")} style={styles1.frame} />
             <View style={styles1.frameimage}>
                 <TouchableOpacity onPress={() => navigation.navigate('Notifications')} >
-                    <Image source={require("../assets/icons/Notification/notification2x.png")}  style={styles1.bell}/>
+                    <Image source={require("../assets/icons/Notification/notification2x.png")} style={styles1.bell} />
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigation.navigate('LogoutScreen')}>
-                <Image source={require("../assets/images/Avatar.png")}  style={styles1.avtar}/>
+                    <Image source={require("../assets/images/Avatar.png")} style={styles1.avtar} />
                 </TouchableOpacity>
             </View>
-            </View> 
+        </View>
     );
 };
 export default HeaderComp;
 
 const styles1 = StyleSheet.create({
-
-    headerstyle:{
-       // width: 428,
+    headerstyle: {
         height: 100,
         flexDirection: "row",
         justifyContent: "space-between",
@@ -34,11 +30,11 @@ const styles1 = StyleSheet.create({
         paddingBottom: 10,
         paddingLeft: 24,
     },
-    frame :{
-      width: 86.17,
-      height: 50,
+    frame: {
+        width: 86.17,
+        height: 50,
     },
-    frameimage :{
+    frameimage: {
         width: 96,
         height: 48,
         flexDirection: "row",
@@ -46,12 +42,12 @@ const styles1 = StyleSheet.create({
         gap: 20,
         marginRight: 2,
     },
-    bell :{
+    bell: {
         width: 28,
         height: 28,
         gap: 20,
     },
-    avtar:{
+    avtar: {
         width: 48,
         height: 48,
     },

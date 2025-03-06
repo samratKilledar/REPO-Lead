@@ -3,8 +3,7 @@ import { Dimensions, StyleSheet } from "react-native";
 const { width, height } = Dimensions.get('window');
 
 export default StyleSheet.create({
-    //home page cards
-    //project card
+
     project: {
         borderRadius: 20,
         borderWidth: 2,
@@ -14,9 +13,7 @@ export default StyleSheet.create({
         marginLeft: 10,
         padding: 20
     },
-    //Task Card List 
-    //upcoming task
-    //upcoming meetings
+
     task: {
         flexDirection: "row",
         borderRadius: 20,
@@ -30,7 +27,7 @@ export default StyleSheet.create({
         justifyContent: "space-between"
 
     },
-    //Auto Layout Vertical
+  
     Vertical: {
         width: 288,
         height: 80,
@@ -42,14 +39,12 @@ export default StyleSheet.create({
         height: width * 0.06, 
         resizeMode: "contain",
       },
-    //leads
 
-    //profile logout page
     green1: {
         gap: 4,
         height: 32,
         paddingTop: 6,
-        paddingRight: width * 0.04, // 4% of screen width
+        paddingRight: width * 0.04, 
         paddingBottom: 6,
         paddingLeft: width * 0.04,
         borderRadius: 100,
@@ -129,7 +124,6 @@ export default StyleSheet.create({
         alignItems: "center",
     },
     Inside: {
-        // width : 288,
         height: 140,
         gap: 8,
     },

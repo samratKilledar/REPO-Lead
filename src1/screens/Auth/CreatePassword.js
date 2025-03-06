@@ -75,7 +75,7 @@ const CreatePassword = props => {
         return false;
     } 
 
-    return true; // Validation passed
+    return true; 
 };
 
   const handleContinue = () =>{
@@ -114,7 +114,6 @@ const CreatePassword = props => {
                 />
               </View>
 
-              {/* Input Fields */}
               <View style={styles.inputContainer}>
                 <CustomText
                   text="Create Your New Password"
@@ -138,7 +137,6 @@ const CreatePassword = props => {
                 </View>
               </View>
 
-              {/* Continue Button */}
               <View style={styles.buttonContainer}>
                 <CustomButton
                   title="Continue"
@@ -149,7 +147,6 @@ const CreatePassword = props => {
                 />
               </View>
 
-              {/* Success Modal */}
               <Modal
                 animationType="fade"
                 transparent={true}
@@ -203,14 +200,7 @@ const styles = StyleSheet.create({
     flex: 3,
     resizeMode:'contain',
   },
-  sheildImage: {
-     //flex: 3,
-    // justifyContent: 'center', // Push the image to the bottom
-    // alignItems: 'center',
-    //resizeMode:'contain',
-  },
   inputContainer: {
-    // alignItems: 'center',
     width: '100%',
     marginTop: 20,
     flex: 2,
@@ -232,8 +222,6 @@ const styles = StyleSheet.create({
   modalContainer: {
     width: 340,
     paddingTop: 40,
-    // paddingHorizontal: 32,
-    // paddingBottom: 32,
     gap: 32,
     borderRadius: 24,
     backgroundColor: '#fff',

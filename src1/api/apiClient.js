@@ -1,4 +1,3 @@
-
 // GET Request Function
 export const apiGet = async (url,tokan) => {
   try {

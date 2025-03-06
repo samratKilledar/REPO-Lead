@@ -10,13 +10,10 @@ const RectCardcomp = ({ props, onPress, navigation }) => {
   return (
     <View>
       {props.map((item, index) => (
-        <TouchableOpacity
-          key={index}
-          onPress={() => onPress({ navigation })}
-        >
+        <TouchableOpacity key={index} onPress={() => onPress({ navigation })}>
           <View style={style.Frame1}>
-            <View style={[cardstyle.task, { width: width - 40 }]}> {/* Fixed width for the card */}
-              <View style={[cardstyle.Vertical, { flex: 1 }]}> {/* Allow text container to take remaining space */}
+            <View style={[cardstyle.task, { width: width - 40 }]}>
+              <View style={[cardstyle.Vertical, { flex: 1 }]}>
                 <CustomText customstyle={TextStyle.cardname} text={item.name} />
                 <CustomText customstyle={TextStyle.cardnum} text={item.phone} />
                 <CustomText customstyle={TextStyle.carddate} text={item.dateTime} />
@@ -24,7 +21,7 @@ const RectCardcomp = ({ props, onPress, navigation }) => {
               <View style={style.arrowcentre}>
                 <Image
                   source={require("../assets/icons/ArrowNext.png")}
-                  style={[cardstyle.arrow, { width: 24, height: 24 }]} // Fixed arrow size
+                  style={[cardstyle.arrow, { width: 24, height: 24 }]}
                 />
               </View>
             </View>
@@ -36,7 +33,6 @@ const RectCardcomp = ({ props, onPress, navigation }) => {
 };
 
 export default RectCardcomp;
-
 const style = StyleSheet.create({
   Frame1: {
     paddingLeft: 20,
@@ -45,6 +41,6 @@ const style = StyleSheet.create({
   },
   arrowcentre: {
     justifyContent: "center",
-    marginLeft: 10, // Add margin to separate arrow from text
+    marginLeft: 10,
   },
 });

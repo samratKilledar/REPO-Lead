@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import LeadAddservice from '../screens/Main/LeadAddServices' // Adjust the path as needed
-import LeadAddPersonal from '../screens/Main/LeadAddPersonal'; // Adjust the path as needed
-import LeadAddOccupation from '../screens/Main/LeadAddOccupation'; // Adjust the path as needed
-import LeadAdd from '../screens/Main/LeadLast'; // Adjust the path as needed
+import LeadAddservice from '../screens/Main/LeadAddServices' 
+import LeadAddPersonal from '../screens/Main/LeadAddPersonal'; 
+import LeadAddOccupation from '../screens/Main/LeadAddOccupation'; 
+import LeadAdd from '../screens/Main/LeadLast'; 
 
 const Stack = createStackNavigator();
 

@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   scrollViewContent: {
-    paddingBottom: 60, // Adds padding at the bottom to avoid cut-off content
+    paddingBottom: 60, 
   },
   inactiveTabIndicator: {
     width: 160,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   contentContainer: {
-    flex: 1, // Ensure content takes up available space
+    flex: 1, 
     gap: 24,
   },
   cardWrapper: {

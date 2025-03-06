@@ -3,11 +3,9 @@ const initialState = {
     typeOfWorkplaceholder: "",
     monthlyIncomeplaceholder: "",
 
-    //Actual Value
     typeOfWork: "",
     monthlyIncome: "",
 
-    //For dropdown
     occupationOptions: [],
   };
   

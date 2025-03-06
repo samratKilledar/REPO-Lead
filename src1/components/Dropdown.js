@@ -4,7 +4,6 @@ import DropDownPicker from "react-native-dropdown-picker";
 
 const Dropdown = ({ label, selectedValue, onValueChange, options, zIndex }) => {
   const [open, setOpen] = useState(false);
-
   return (
     <View style={[styles.container, { zIndex: zIndex }]}>
       <DropDownPicker
@@ -21,9 +20,7 @@ const Dropdown = ({ label, selectedValue, onValueChange, options, zIndex }) => {
         ]}
         textStyle={[styles.labelStyle, open ? styles.labelStyleOpen : null]}
         listItemContainerStyle={styles.listItem}
-        
-       // listMode="MODAL" // 👈 Add this line
-        
+        // listMode="MODAL" // 👈 Add this line    
         ArrowUpIconComponent={() => (
           <Image
             source={require("../assets/icons/ArrowUp/arrowup.png")}

@@ -33,10 +33,7 @@ const ResetPassword = props => {
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.innerContainer}>
-            {/* NavigationHeaderBack Header */}
-           
 
-            {/* Center Content */}
             <View style={styles.centerContainer}>
               <CustomText 
                 text="Code has been sent to" 
@@ -47,7 +44,6 @@ const ResetPassword = props => {
                 customstyle={styles.emailText} 
               />
 
-              {/* OTP Input Fields */}
               <View style={styles.otpContainer}>
                 {code.map((digit, index) => (
                   <TextInput
@@ -68,7 +64,6 @@ const ResetPassword = props => {
               />
             </View>
 
-            {/* Verify Button */}
             <View style={styles.buttonContainer}>
               <CustomButton
                 title="Verify"

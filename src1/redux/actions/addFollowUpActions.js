@@ -11,7 +11,6 @@ export const CHANGE_REMARK = "CHANGE_REMARK";
 export const SET_STATUS_OPTIONS = "SET_STATUS_OPTIONS";
 export const SET_ASSIGNED_TO_OPTIONS = "SET_ASSIGNED_TO_OPTIONS";
 
-
 export const changeTitle = (title) => ({ type: "CHANGE_TITLE", payload: title });
 export const changeFollowupStatus = (followupStatus) => ({ type: "CHANGE_FOLLOWUP_STATUS", payload: followupStatus });
 export const changeAssignedTo = (assignedTo) => ({ type: "CHANGE_ASSIGNED_TO", payload: assignedTo });

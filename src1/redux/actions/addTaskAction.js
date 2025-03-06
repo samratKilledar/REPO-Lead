@@ -42,16 +42,16 @@ export const setServiceRequestOptions = (options) => ({ type: SET_SERVICE_REQUES
 
 export const submitTask = () => async (dispatch, getState) => {
     try {
-      const taskData = getState().addTask; // Get task data from Redux
+      const taskData = getState().addTask; 
       dispatch({ type: SUBMIT_TASK });
   
-      const response = await addTaskApiCall(taskData); // API call
+      const response = await addTaskApiCall(taskData); 
       if (response.success) {
-        dispatch({ type: SUBMIT_SUCCESS }); // Dispatch success action
+        dispatch({ type: SUBMIT_SUCCESS }); 
       } else {
-        dispatch({ type: SUBMIT_FAILURE, payload: response.message }); // Dispatch failure action
+        dispatch({ type: SUBMIT_FAILURE, payload: response.message }); 
       }
     } catch (error) {
-      dispatch({ type: SUBMIT_FAILURE, payload: error.message }); // Dispatch failure action
+      dispatch({ type: SUBMIT_FAILURE, payload: error.message });
     }
 };

@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import {
-  View, Image, Text, TouchableOpacity, StyleSheet, Modal
-} from "react-native";
+import { View, Image, Text, TouchableOpacity, StyleSheet, Modal } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import CustomText from "./CustomText";
 import TextStyle from "../styles/TextStyle";
@@ -46,8 +44,6 @@ const LeadCard = (props) => {
     }
   };
 
-
-
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
@@ -91,7 +87,6 @@ const LeadCard = (props) => {
         </View>
       </View>
 
-      {/* Popup Menu */}
       {menuVisible && (
         <View style={styles.menuBox}>
           <TouchableOpacity style={styles.menuItem} onPress={editProfile}>
@@ -117,8 +112,6 @@ const LeadCard = (props) => {
           </TouchableOpacity>
         </View>
       )}
-
-      {/* Bottom Pop-up Modal */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -194,9 +187,7 @@ const styles = StyleSheet.create({
   },
   statusBadge: {
     borderRadius: 100,
-    //paddingVertical: 6,
     paddingTop: 6,
-    //paddingHorizontal: 16,
     paddingRight: 16,
     paddingBottom: 6,
     paddingLeft: 16,
@@ -223,7 +214,6 @@ const styles = StyleSheet.create({
     gap: 4,
   },
 
-  /* Menu Styles */
   menuBox: {
     position: "absolute",
     top: 30,
@@ -251,8 +241,6 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 14,
   },
-
-  /* Modal Styles */
   modalContainer: {
     flex: 1,
     justifyContent: "flex-end",
@@ -270,7 +258,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ccc",
     borderRadius: 10,
     marginLeft: 115,
-    justifyContent:"center",
+    justifyContent: "center",
     marginBottom: 10
   },
   modalTitle: {
@@ -312,7 +300,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
   radioInnerCircle: {
     width: 10,
     height: 10,
@@ -321,5 +308,4 @@ const styles = StyleSheet.create({
   },
 
 });
-
 export default LeadCard;

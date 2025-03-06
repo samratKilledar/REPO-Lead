@@ -1,10 +1,9 @@
-
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { creatNativeStackNavigator } from '@react-navigation/stack';
 import HomeScreen from '../screens/Main/HomeScreen';
 import UpcomingMeetings from '../screens/Main/UpcomingMeetings';
-import UpcomingTask from '../screens/Main/UpcomingTask'; 
+import UpcomingTask from '../screens/Main/UpcomingTask';
 
 const Stack = creatNativeStackNavigator();
 
@@ -17,5 +16,4 @@ const HomeNavigator = () => {
     </NavigationContainer>
   );
 };
-
 export default HomeNavigator;
