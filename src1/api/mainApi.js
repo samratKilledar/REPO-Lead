@@ -41,8 +41,17 @@ export const occupation = async authToken => {
 };
 
 export const getAllLeadApi= async authToken=>{
-    // console.log("ss------ssss"+authToken)
-    return await apiGet(api.getAllLeadApi,authToken);
+    //  console.log("ss-------->"+authToken)
+   return await apiGet(api.getAllLeadApi,authToken);
 }
 
+export const taskListResApi= async authToken=>{
+    //  console.log("ss---samrat---ssss"+authToken)
+    return await apiGet(api.taskList,authToken);
+}
+
+export const particularLeadDetailApi =async authToken=>{
+    // console.log("=====particularLeadDetailApi==="+authToken);
+    return await apiGet(api.particularLeadDetailApi, authToken);
+}
 

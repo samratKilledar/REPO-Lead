@@ -1,29 +1,28 @@
-
 // GET Request Function
-export const apiGet = async (url,tokan) => {
+export const apiGet = async (url, tokan) => {
   try {
-  
+    console.warn(url + '--------------------------request-------------------------'+url);
+    alert(11)
     const response = await fetch(url, {
       method: 'GET',
       headers: {
         // Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
         Authorization: tokan,
-
       },
     });
-    console.log(url+"---------------------s------------------------------")
-
+    console.log( '--------------------------resoponse-------------------------'+response);
     if (!response.ok) {
-      //alert(11)
-      console.error("HTTP error! Status:"+ response.status);
+      console.error(url + 'HTTP error! Status:' + response.status);
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     //alert(JSON.stringify(response))
     return await response.json();
   } catch (error) {
-    console.error(`GET ${endpoint} Error:`,error.response?.data || error.message,
-);
+    console.error(
+      `GET ${endpoint} Error:`,
+      error.response?.data || error.message,
+    );
     throw error;
   }
 };
@@ -31,8 +30,7 @@ export const apiGet = async (url,tokan) => {
 // POST Request Function
 export const apiPost = async (url, param = {}) => {
   const data = param.data;
-  console.log(JSON.stringify(data) + '=ssss------------------sss=' + data.customerId);
-  //{"customerId":"Root","email":"Supra@admin.com","password":"Admin@123"}=ssss------------------sss=Root
+console.log(JSON.stringify(data))
   try {
     const response = await fetch(url, {
       method: 'POST',
@@ -42,16 +40,20 @@ export const apiPost = async (url, param = {}) => {
       },
       body: JSON.stringify({
         email: data.email,
-        Password: data.password,
+        password: data.password,
       }),
     });
-    console.log('===s===>' + JSON.stringify(response));
-    return await response.json();
-  } catch (error) {
-    console.log('===errrrrrrror===>' + JSON.stringify(error));
 
-    return await error.message;
+    if (!response.ok) {
+      throw new Error(`HTTP Error! Status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('Success:', result);
+    return result;
+  } catch (error) {
+    console.error('Network request failed:', error.message);
+    return null;
   }
 };
-
 
