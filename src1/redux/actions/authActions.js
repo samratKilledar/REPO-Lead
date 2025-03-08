@@ -1,7 +1,6 @@
 import {loginUserApiCall, readAllLead} from '../../api/authApi';
 import {setItem, getItem} from '../../api/storageServices';
 
-// Action Types
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const LOGOUT = 'LOGOUT';
@@ -9,22 +8,22 @@ export const CHANGE_USER_CREDENTIAL = 'CHANGE_USER_CREDENTIAL';
 export const READ_ALL_LEAD = 'READ_ALL_LEAD';
 export const READ_ALL_LEAD_FAIL = 'READ_ALL_LEAD_FAIL';
 export const LOGIN_CLICK = 'LOGIN_CLICK';
-// ✅ Corrected loginUser function
+
 export const loginUser = () => async (dispatch, getState) => {
   try {
-    const {loginValue} = getState().auth; // Get loginValue from Redux
+    const {loginValue} = getState().auth; 
     dispatch({type: LOGIN_CLICK});
     //  alert(JSON.stringify(loginValue))
-    const data = await loginUserApiCall(loginValue); // API call
+    const data = await loginUserApiCall(loginValue);
     if (data.token != null) {
       //alert(JSON.stringify(data));
-      setItem('authToken', data.token); // Store token
-      dispatch({type: LOGIN_SUCCESS}); // Dispatch success action
+      setItem('authToken', data.token); 
+      dispatch({type: LOGIN_SUCCESS}); 
     } else {
-      dispatch({type: LOGIN_FAILURE, payload: error.message}); // Dispatch failure action
+      dispatch({type: LOGIN_FAILURE, payload: error.message}); 
     }
   } catch (error) {
-    dispatch({type: LOGIN_FAILURE, payload: error.message}); // Dispatch failure action
+    dispatch({type: LOGIN_FAILURE, payload: error.message}); 
   }
 };
 
@@ -54,8 +53,8 @@ export const getReadAllLead = async () => {
     //alert(JSON.stringify(data));
     //setItem('authToken',data); // Store token
     alert("===>"+data);
-    dispatch({type: READ_ALL_LEAD, payload: data}); // Dispatch success action
+    dispatch({type: READ_ALL_LEAD, payload: data});
   } catch (error) {
-    dispatch({type: READ_ALL_LEAD_FAIL, payload: error.message}); // Dispatch failure action
+    dispatch({type: READ_ALL_LEAD_FAIL, payload: error.message}); 
   }
 };

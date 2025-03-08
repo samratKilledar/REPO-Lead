@@ -7,34 +7,33 @@ const StatusDropdown = ({ label, selectedValue, onValueChange, apiType, zIndex, 
 
   useEffect(() => {
     console.log("Selected Value:", selectedValue1);
-  }, [selectedValue1]); 
+  }, [selectedValue1]);
 
-  // Conditionally format options based on `apiType`
   const formattedOptions = listData?.map(item => {
     if (apiType === 'city') {
       return {
-        label: item.cityName, // Display city name
-        value: item.id, // City ID as value
+        label: item.cityName,
+        value: item.id,
         isActive: item.isActive
       };
-    } 
-    else  if (apiType === 'State') {
+    }
+    else if (apiType === 'State') {
       return {
-        label: item.stateName, // Display city name
-        value: item.id, // City ID as value
+        label: item.stateName,
+        value: item.id,
         isActive: item.isActive
       };
     }
     else if (apiType === 'Country') {
       return {
-        label: item.countryName, // Display country name
-        value: item.countryId, // Country ID as value
+        label: item.countryName,
+        value: item.countryId,
       };
     } else {
       return {
-        label: item.value01, // Default display text
-        value: item.id.toString(), // Default value
-        extraData: item.value02, // Extra data if needed
+        label: item.value01,
+        // value: item.id.toString(),
+        extraData: item.value02,
       };
     }
   }) || [];
@@ -45,9 +44,10 @@ const StatusDropdown = ({ label, selectedValue, onValueChange, apiType, zIndex, 
       selectedValue={selectedValue1}
       onValueChange={setSelectedValue}
       options={formattedOptions}
-      zIndex={2000}
+      zIndex={zIndex || 2000}
+      elevation={5}
+      modal={Platform.OS === "android"}
     />
   );
 };
-
 export default StatusDropdown;

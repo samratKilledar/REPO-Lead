@@ -1,7 +1,9 @@
 export const api={
     authApi:"https://opticalerp.in:85/api/tokens/gettoken",
     forgotPasswordApi:"https://opticalerp.in:85/api/users/forgotpassword/forgot-password",
+    createPass:"https://opticalerp.in:85/api/currentuser/changepassword/change-password",
     getAllLeadApi:"https://opticalerp.in:85/api/lead/getlist/get-all",
+    
 
     //all drop down API
     followUp: "https://opticalerp.in:85/api/udc/getvaluesbytype?type=Leads",
@@ -15,6 +17,16 @@ export const api={
     occupation:"https://opticalerp.in:85/api/udc/getvaluesbytype?type=Occupation",
     taskList:"https://opticalerp.in:85/api/taskdetails/getlist",
     
-    particularLeadDetailApi:"https://opticalerp.in:85/api/lead/getbyleadid"
+    particularLeadDetailApi:"https://opticalerp.in:85/api/lead/getbyleadid",
 
+
+    //AddFollowUP screen 
+    addFollowUP: "https://opticalerp.in:85/api/followupdetails/create/create",
+    //add Task screen API
+    addTask:"https://opticalerp.in:85/api/taskdetails/create",
+   upComingTask: "https://opticalerp.in:85/api/taskdetails/getlist",
+   leadDetail:"https://opticalerp.in:85/api/lead/getbyleadid",
+   client:"https://opticalerp.in:85/api/client/getlist/get-all",
+   clientDetail:"https://opticalerp.in:85/api/client/get/",
+   // UpcomingMeetingsList:"https://opticalerp.in:85/api/lead/getlist/get-all"
 }

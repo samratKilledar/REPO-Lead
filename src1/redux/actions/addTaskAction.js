@@ -1,4 +1,9 @@
+import {addTaskApiCall, readAllLead} from '../../api/mainApi';
+import {setItem, getItem} from '../../api/storageServices';
+
 export const SUBMIT_SUCCESS = 'SUBMIT_SUCCESS';
+export const SUBMIT_FAILURE = 'SUBMIT_FAILURE';
+export const SUBMIT_TASK = 'SUBMIT_TASK';
 export const CHANGE_TASK_NAME = 'CHANGE_TASK_NAME';
 export const CHANGE_TASK_TYPE = 'CHANGE_TASK_TYPE';
 export const CHANGE_ASSIGNED_TO = 'CHANGE_ASSIGNED_TO';
@@ -33,3 +38,20 @@ export const setAssignedToOptions = (options) => ({ type: SET_ASSIGNED_TO_OPTION
 export const setClientNameOptions = (options) => ({ type: SET_CLIENT_NAME_OPTIONS, payload: options });
 export const setPriorityOptions = (options) => ({ type: SET_PRIORITY_OPTIONS, payload: options });
 export const setServiceRequestOptions = (options) => ({ type: SET_SERVICE_REQUEST_OPTIONS, payload: options });
+
+
+export const submitTask = () => async (dispatch, getState) => {
+    try {
+      const taskData = getState().addTask; 
+      dispatch({ type: SUBMIT_TASK });
+  
+      const response = await addTaskApiCall(taskData); 
+      if (response.success) {
+        dispatch({ type: SUBMIT_SUCCESS }); 
+      } else {
+        dispatch({ type: SUBMIT_FAILURE, payload: response.message }); 
+      }
+    } catch (error) {
+      dispatch({ type: SUBMIT_FAILURE, payload: error.message });
+    }
+};

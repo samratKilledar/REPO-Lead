@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image } from "react-native";
+import { View, Image,TouchableOpacity,StyleSheet } from "react-native";
 import CustomText from "./CustomText";
 import cardstyle from "../styles/cardstyle";
 import TextStyle from "../styles/TextStyle";
@@ -17,3 +17,4 @@ const InsuranceCard = ({ title, date, description, onDelete }) => {
 };
 
 export default InsuranceCard;
+

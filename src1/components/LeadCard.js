@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import {
-  View, Image, Text, TouchableOpacity, StyleSheet, Modal
-} from "react-native";
+import { View, Image, Text, TouchableOpacity, StyleSheet, Modal } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import CustomText from "./CustomText";
 import TextStyle from "../styles/TextStyle";
@@ -46,8 +44,6 @@ const LeadCard = (props) => {
     }
   };
 
-
-
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
@@ -91,7 +87,6 @@ const LeadCard = (props) => {
         </View>
       </View>
 
-      {/* Popup Menu */}
       {menuVisible && (
         <View style={styles.menuBox}>
           <TouchableOpacity style={styles.menuItem} onPress={editProfile}>
@@ -117,8 +112,6 @@ const LeadCard = (props) => {
           </TouchableOpacity>
         </View>
       )}
-
-      {/* Bottom Pop-up Modal */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -127,6 +120,12 @@ const LeadCard = (props) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
+            <TouchableOpacity
+              style={styles.modalCloseLine}
+              onPress={() => setModalVisible(false)}
+            >
+              <View style={styles.closeLine} />
+            </TouchableOpacity>
             <Text style={styles.modalTitle}>Status</Text>
 
             {statusOptions.map((option, index) => (
@@ -136,7 +135,9 @@ const LeadCard = (props) => {
                 onPress={() => setSelectedStatus(option)}
               >
                 <Text style={styles.radioText}>{option}</Text>
-                <View style={selectedStatus === option ? styles.radioSelected : styles.radioUnselected} />
+                <View style={selectedStatus === option ? styles.radioSelected : styles.radioUnselected} >
+                  {selectedStatus === option && <View style={styles.radioInnerCircle} />}
+                </View>
               </TouchableOpacity>
             ))}
 
@@ -186,9 +187,7 @@ const styles = StyleSheet.create({
   },
   statusBadge: {
     borderRadius: 100,
-    //paddingVertical: 6,
     paddingTop: 6,
-    //paddingHorizontal: 16,
     paddingRight: 16,
     paddingBottom: 6,
     paddingLeft: 16,
@@ -215,7 +214,6 @@ const styles = StyleSheet.create({
     gap: 4,
   },
 
-  /* Menu Styles */
   menuBox: {
     position: "absolute",
     top: 30,
@@ -243,8 +241,6 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 14,
   },
-
-  /* Modal Styles */
   modalContainer: {
     flex: 1,
     justifyContent: "flex-end",
@@ -255,6 +251,15 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: 20,
+  },
+  closeLine: {
+    width: 90,
+    height: 5,
+    backgroundColor: "#ccc",
+    borderRadius: 10,
+    marginLeft: 115,
+    justifyContent: "center",
+    marginBottom: 10
   },
   modalTitle: {
     fontFamily: 'Urbanist',
@@ -277,7 +282,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "700",
     textAlign: "center",
-    //marginBottom: 10,
     lineHeight: 21.6,
   },
   radioUnselected: {
@@ -291,9 +295,17 @@ const styles = StyleSheet.create({
     width: 20,
     height: 20,
     borderRadius: 10,
+    borderWidth: 3,
+    borderColor: "#2B2162",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  radioInnerCircle: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
     backgroundColor: "#2B2162",
   },
 
 });
-
 export default LeadCard;

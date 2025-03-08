@@ -1,4 +1,3 @@
-// index.js
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import homeReducer from './homeReducer';
@@ -9,9 +8,14 @@ import leadAddServiceReducer from './leadAddServiceReducer';
 import personalReducer from './personalReducer';
 import lastReducer from './lastReducer';
 import occupationReducer from './occupationReducer';
+import forgotPassReducer from './forgotPassReducer';
+import createPassReducer from './createPassReducer';
+
 
 export default combineReducers({
   auth: authReducer,
+  forgotPassReducer:forgotPassReducer,
+  createPass: createPassReducer,
   homeReducer: homeReducer,
   addFollowUp : addFollowUpReducer,
   addTask:addTaskReducer,

@@ -15,7 +15,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Added AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomText from '../../components/CustomText';
 import CustomTextInput from '../../components/CustomTextInput';
 import CustomButton from '../../components/CustomButton';
@@ -55,15 +55,13 @@ const LoginScreen = props => {
 
     requestPermissions();
     checkAuthToken();
-    loadRememberedCredentials(); // Load stored credentials when the screen loads
+    loadRememberedCredentials();
   }, []);
 
   const requestPermissions = async () => {
     try {
       if (Platform.OS === 'android') {
         const permissions = [];
-  
-        // Camera permission (required on all Android versions)
         permissions.push(PermissionsAndroid.PERMISSIONS.CAMERA);
   
         if (Platform.Version >= 33) {
@@ -77,11 +75,8 @@ const LoginScreen = props => {
           // Android 12 and below
           permissions.push(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
         }
-  
-        // Request permissions
+
         const grantedPermissions = await PermissionsAndroid.requestMultiple(permissions);
-  
-        // Check if all permissions are granted
         let allPermissionsGranted = true;
         for (const permission of permissions) {
           if (grantedPermissions[permission] !== PermissionsAndroid.RESULTS.GRANTED) {
@@ -103,9 +98,6 @@ const LoginScreen = props => {
     }
   };
   
-
-  
-  // Load saved login credentials if "Remember Me" was checked
   const loadRememberedCredentials = async () => {
     try {
       const storedCredentials = await AsyncStorage.getItem('loginCredentials');
@@ -113,14 +105,13 @@ const LoginScreen = props => {
       if (storedCredentials) {
         const { customerId, email, password } = JSON.parse(storedCredentials);
         dispatch(updateCredential({ customerId, email, password }));
-        setIsChecked(true); // Set checkbox to checked if credentials exist
+        setIsChecked(true);
       }
     } catch (error) {
       console.error('Error loading stored credentials:', error);
     }
   };
 
-  // Save login credentials if "Remember Me" is checked
   const saveCredentials = async () => {
     try {
       if (isChecked) {
@@ -132,15 +123,13 @@ const LoginScreen = props => {
         await AsyncStorage.setItem('loginCredentials', credentials);
         console.log("✅ Credentials Saved in Storage:", credentials); 
       } else {
-        await AsyncStorage.removeItem('loginCredentials'); // Clear saved data if unchecked
+        await AsyncStorage.removeItem('loginCredentials'); 
         console.log("❌ Credentials Removed from Storage"); 
       }
     } catch (error) {
       console.error('Error saving credentials:', error);
     }
   };
-
-
   // alert(JSON.stringify(loginPlaceHolder))
   // Validation and Login Handler
   const handleLogin = () => {
@@ -152,7 +141,7 @@ const LoginScreen = props => {
       return;
     } else {
       setLoading(true);
-      saveCredentials(); // Save credentials before logging in
+      saveCredentials();
       dispatch(loginUser());
     }
   };
@@ -165,7 +154,7 @@ const LoginScreen = props => {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.inner}>
-              {/* Logo */}
+            
               <View style={{ flex: 1, justifyContent: 'center' }}>
                 <Image
                   source={require('../../assets/images/Logo.png')}
@@ -173,7 +162,6 @@ const LoginScreen = props => {
                 />
               </View>
 
-              {/* Login Header */}
               <View style={{ flex: 0.7 }}>
                 <CustomText
                   text="Login to your Account"
@@ -181,7 +169,6 @@ const LoginScreen = props => {
                 />
               </View>
 
-              {/* Input & Button Box */}
               <View style={styles.box}>
                 <CustomTextInput
                   icon={require('../../assets/icons/Profile/profile.png')}
@@ -213,7 +200,7 @@ const LoginScreen = props => {
               </View>
 
               <View style={{ flex: 3, alignItems: 'center' }}>
-                {/* Checkbox */}
+               
                 <View style={styles.checkboxContainer}>
                   <Pressable
                     style={[styles.checkbox, isChecked && styles.checked]}
@@ -231,17 +218,15 @@ const LoginScreen = props => {
                   />
                 </View>
 
-                {/* Sign In Button */}
                 <View>
                   <CustomButton
                     title="Sign in"
-                    customStyle={{ width: width - 30 }}
+                    customStyle={{width: width * 0.9, alignSelf: 'center'}}
                     textStyles={ButtonStyles.blueButtonText}
                     onPress={handleLogin}
                   />
                 </View>
 
-                {/* Forgot Password */}
                 <View>
                   <TouchableOpacity
                     onPress={() => navigation.navigate('ForgotPassword')}>
@@ -257,7 +242,6 @@ const LoginScreen = props => {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      {/* Lottie Full-Screen Animation (Displayed when loading is true) */}
       {loading && <Loader />}
     </View>
   );
@@ -312,7 +296,7 @@ const styles = StyleSheet.create({
       checkIcon: {
         width: 14,
         height: 10,
-        tintColor: '#fff', // Optional: Adjust icon color
+        tintColor: '#fff',
         resizeMode: 'contain',
       },
       checkmark: {
@@ -321,6 +305,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
       },
 });
-
 export default LoginScreen;
 

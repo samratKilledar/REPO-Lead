@@ -1,20 +1,19 @@
 import React from 'react';
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
 import cardstyle from '../styles/cardstyle';
 import TextStyle from '../styles/TextStyle';
 import CustomText from './CustomText';
+
+const { width } = Dimensions.get('window');
 
 const RectCardcomp = ({ props, onPress, navigation }) => {
   return (
     <View>
       {props.map((item, index) => (
-        <TouchableOpacity
-          key={index}
-          onPress={() => onPress({ navigation })}
-        >
+        <TouchableOpacity key={index} onPress={() => onPress({ navigation })}>
           <View style={style.Frame1}>
-            <View style={cardstyle.task}>
-              <View style={cardstyle.Vertical}>
+            <View style={[cardstyle.task, { width: width - 40 }]}>
+              <View style={[cardstyle.Vertical, { flex: 1 }]}>
                 <CustomText customstyle={TextStyle.cardname} text={item.name} />
                 <CustomText customstyle={TextStyle.cardnum} text={item.phone} />
                 <CustomText customstyle={TextStyle.carddate} text={item.dateTime} />
@@ -22,7 +21,7 @@ const RectCardcomp = ({ props, onPress, navigation }) => {
               <View style={style.arrowcentre}>
                 <Image
                   source={require("../assets/icons/ArrowNext.png")}
-                  style={cardstyle.arrow}
+                  style={[cardstyle.arrow, { width: 24, height: 24 }]}
                 />
               </View>
             </View>
@@ -34,7 +33,6 @@ const RectCardcomp = ({ props, onPress, navigation }) => {
 };
 
 export default RectCardcomp;
-
 const style = StyleSheet.create({
   Frame1: {
     paddingLeft: 20,
@@ -42,7 +40,7 @@ const style = StyleSheet.create({
     paddingTop: 20,
   },
   arrowcentre: {
-    // alignItems: "center",
     justifyContent: "center",
+    marginLeft: 10,
   },
 });

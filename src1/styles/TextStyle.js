@@ -53,8 +53,8 @@ export default StyleSheet.create({
         textAlign: "center",
 
     },
-    //Task tab style
 
+    
     //lead task client task tab text
     tabText: {
         fontFamily: "Urbanist",

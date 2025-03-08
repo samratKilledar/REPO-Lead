@@ -11,24 +11,91 @@ import {
   Keyboard,
   Platform,
 } from 'react-native';
+import {
+  setNewPassword,
+  setConfirmNewPassword,
+  setAuthenticated,
+} from "../../redux/actions/createPassAction";
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import ButtonStyles from '../../styles/ButtonStyles';
 import CustomTextInput from '../../components/CustomTextInput';
 import TextStyle from '../../styles/TextStyle';
 import CustomButton from '../../components/CustomButton';
 import CustomText from '../../components/CustomText';
+import { useDispatch, useSelector } from "react-redux";
+import { submitPassword } from '../../redux/actions/createPassAction';
 
 const CreatePassword = props => {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  // const [password, setPassword] = useState('');
+  // const [confirmPassword, setConfirmPassword] = useState('');
+  const dispatch = useDispatch();
+  const {
+    newPassword,
+    confirmNewPassword,
+  } = useSelector((state) => state.createPass);
+
+  const {
+    newPasswordPlaceholder,
+    confirmNewPasswordPlaceholder,
+  } = useSelector((state) => state.createPass);
+
+  const validatePasswords = (newPassword, confirmNewPassword) => { 
+    if (!newPassword || !confirmNewPassword) {
+        alert("Both password fields are required.");
+        return false;
+    }
+
+    if (newPassword.length < 8) {
+        alert("Password must be at least 8 characters long.");
+        return false;
+    }
+
+    if (!/[A-Z]/.test(newPassword)) {
+        alert("Password must contain at least one uppercase letter.");
+        return false;
+    }
+
+    if (!/[a-z]/.test(newPassword)) {
+        alert("Password must contain at least one lowercase letter.");
+        return false;
+    }
+
+    if (!/\d/.test(newPassword)) {
+        alert("Password must contain at least one number.");
+        return false;
+    }
+
+    if (!/[@$!%*?&]/.test(newPassword)) {
+        alert("Password must contain at least one special character (@, $, !, %, *, ?, &).");
+        return false;
+    }
+
+    if (newPassword !== confirmNewPassword) {
+        alert("Passwords do not match.");
+        return false;
+    } 
+
+    return true; 
+};
+
+  const handleContinue = () =>{
+    if (validatePasswords(newPassword, confirmNewPassword)) {
+      console.log("Password successfully set!");
+      // Proceed with next steps (e.g., API call)
+      dispatch(submitPassword());
+    }
+  }
+  
   const [modalVisible, setModalVisible] = useState(false);
   const goBackCall = () => {
     props.navigation.goBack();
   };
+ 
   const closeModel = () => {
     setModalVisible(false);
     props.navigation.navigate('Login');
   };
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -47,7 +114,6 @@ const CreatePassword = props => {
                 />
               </View>
 
-              {/* Input Fields */}
               <View style={styles.inputContainer}>
                 <CustomText
                   text="Create Your New Password"
@@ -56,32 +122,31 @@ const CreatePassword = props => {
                 <View style={styles.inputBox}>
                   <CustomTextInput
                     icon={require('../../assets/icons/Exclude.png')}
-                    value={password}
-                    placeholder="Password"
-                    onChangeText={setPassword}
+                    value={newPassword}
+                    placeholder={newPasswordPlaceholder}
+                    onChangeText={(text) => dispatch(setNewPassword(text))}
                     secureTextEntry
                   />
                   <CustomTextInput
                     icon={require('../../assets/icons/Exclude.png')}
-                    value={confirmPassword}
-                    placeholder="Confirm Password"
-                    onChangeText={setConfirmPassword}
+                    value={confirmNewPassword}
+                    placeholder={confirmNewPasswordPlaceholder}
+                    onChangeText={(text) => dispatch(setConfirmNewPassword(text))}
                     secureTextEntry
                   />
                 </View>
               </View>
 
-              {/* Continue Button */}
               <View style={styles.buttonContainer}>
                 <CustomButton
                   title="Continue"
                   customStyle={[ButtonStyles.blueButton]}
                   textStyles={ButtonStyles.blueButtonText}
                   onPress={() => setModalVisible(true)}
+                  // onPress={handleContinue}
                 />
               </View>
 
-              {/* Success Modal */}
               <Modal
                 animationType="fade"
                 transparent={true}
@@ -132,15 +197,10 @@ const styles = StyleSheet.create({
   imageContainer: {
     alignItems: 'center',
     marginTop: 20,
-    flex: 1,
-  },
-  sheildImage: {
-    // flex: 3,
-    // justifyContent: 'center', // Push the image to the bottom
-    // alignItems: 'center',
+    flex: 3,
+    resizeMode:'contain',
   },
   inputContainer: {
-    // alignItems: 'center',
     width: '100%',
     marginTop: 20,
     flex: 2,
@@ -151,6 +211,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 0.7,
+    marginBottom:10,
   },
   modalBackground: {
     flex: 1,
@@ -161,8 +222,6 @@ const styles = StyleSheet.create({
   modalContainer: {
     width: 340,
     paddingTop: 40,
-    // paddingHorizontal: 32,
-    // paddingBottom: 32,
     gap: 32,
     borderRadius: 24,
     backgroundColor: '#fff',

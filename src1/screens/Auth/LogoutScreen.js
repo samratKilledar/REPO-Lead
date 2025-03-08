@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, Dimensions } from 'react-native';
+import { View, Image, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, Dimensions , TouchableWithoutFeedback} from 'react-native';
 import TextStyle from '../../styles/TextStyle';
 import CustomText from '../../components/CustomText';
 import CustomButton from "../../components/CustomButton";
@@ -61,7 +61,6 @@ const LogoutScreen = ({ navigation }) => {
           <CustomButton title={"Add UDC Service"} onPress={() => setModalVisible(true)} />
         </View>
 
-        {/* Services Card */}
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <CustomText text={"Services"} customstyle={TextStyle.serviceText} />
@@ -97,7 +96,6 @@ const LogoutScreen = ({ navigation }) => {
           </View>
         </View>
 
-        {/* Occupation Card */}
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <CustomText text={"Occupation"} customstyle={TextStyle.serviceText} />
@@ -141,8 +139,8 @@ const LogoutScreen = ({ navigation }) => {
           </GradientCard>
         </View>
 
-        {/* Logout Modal (Bottom Modal) */}
         <Modal visible={logoutVisible} animationType="slide" transparent={true}>
+        <TouchableWithoutFeedback onPress={() => setLogoutVisible(false)}>
           <View style={styles.bottomModalOverlay}>
             <View style={styles.bottomModalContainer}>
               <CustomText text={"Logout"} customstyle={TextStyle.modallText} />
@@ -166,16 +164,17 @@ const LogoutScreen = ({ navigation }) => {
               </View>
             </View>
           </View>
+          </TouchableWithoutFeedback>
         </Modal>
 
-        {/* Add UDC Service Modal (Bottom Modal) */}
         <Modal visible={modalVisible} animationType="slide" transparent={true}>
+        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
           <View style={styles.bottomModalOverlay}>
             <View style={styles.bottomModalContainer}>
               <ScrollView contentContainerStyle={styles.modalScrollContent}>
                 <CustomText text={"UDC Service"} customstyle={TextStyle.modallText2} />
                 <Image source={require("../../assets/icons/Line.png")} style={styles.line} />
-                {/* Dropdown for Services */}
+            
                 <Dropdown
                   label="Services"
                   selectedValue={Services}
@@ -188,7 +187,6 @@ const LogoutScreen = ({ navigation }) => {
                   ]}
                 />
 
-                {/* Input for Service Name */}
                 <CustomTextInput
                   style={styles.input}
                   placeholder="Service Name"
@@ -196,24 +194,23 @@ const LogoutScreen = ({ navigation }) => {
                   onChangeText={setServiceName}
                 />
 
-                {/* Submit Button */}
                 <View style={styles.buttonContainer}>
-                  <CustomButton title={"Add"} customStyle={{ width: width - 30 }} onPress={() => setModalVisible(false)} />
+                  <CustomButton title={"Add"} customStyle={{ width: width * 0.9, alignSelf: 'center' }} onPress={() => setModalVisible(false)} />
                 </View>
               </ScrollView>
             </View>
           </View>
+          </TouchableWithoutFeedback>
         </Modal>
 
-        {/* Edit Services Modal (Bottom Modal) */}
         <Modal visible={editModalVisible} animationType="slide" transparent={true}>
+        <TouchableWithoutFeedback onPress={() => setEditModalVisible(false)}>
           <View style={styles.bottomModalOverlay}>
             <View style={styles.bottomModalContainer}>
               <ScrollView contentContainerStyle={styles.modalScrollContent}>
                 <CustomText text={"Services"} customstyle={TextStyle.modallText2} />
                 <Image source={require("../../assets/icons/Line.png")} style={styles.line} />
                 <View style={{ gap: width * 0.01 }}>
-                  {/* Insurance Section */}
                   <View style={styles.serviceItem}>
                     <CustomText text={"Insurance"} customstyle={TextStyle.serviceText} />
                     <View style={styles.iconContainer}>
@@ -239,7 +236,6 @@ const LogoutScreen = ({ navigation }) => {
                     </View>
                   </View>
 
-                  {/* Service Name Input */}
                   <CustomTextInput
                     style={styles.input}
                     placeholder="Service Name"
@@ -248,13 +244,13 @@ const LogoutScreen = ({ navigation }) => {
                   />
                 </View>
 
-                {/* Add Button */}
                 <View style={styles.buttonContainer}>
-                  <CustomButton title={"Add"} customStyle={{ width: width - 30 }} onPress={() => setEditModalVisible(false)} />
+                  <CustomButton title={"Add"} customStyle={{width: width * 0.9, alignSelf: 'center'}} onPress={() => setEditModalVisible(false)} />
                 </View>
               </ScrollView>
             </View>
           </View>
+          </TouchableWithoutFeedback>
         </Modal>
       </View>
     </ScrollView>
@@ -349,7 +345,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   bottomModalContainer: {
-    height: height * 0.5, // Adjust height as needed
+    height: height * 0.5, 
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -376,18 +372,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '90%',
+    width: '100%', 
     marginVertical: height * 0.01,
+    paddingHorizontal: width * 0.05, 
   },
   iconContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: "space-between",
-    gap: width * 0.02, // Add gap between icons
+    justifyContent: 'flex-end', 
+    gap: width * 0.05, 
   },
   smallIcon: {
-    width: width * 0.04,
-    height: width * 0.04,
+    width: width * 0.05, 
+    height: width * 0.05,
     resizeMode: 'contain',
   },
 });

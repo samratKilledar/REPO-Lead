@@ -1,3 +1,15 @@
+import { 
+    UPDATE_FIRSTNAME, 
+    UPDATE_LASTNAME, 
+    UPDATE_EMAIL, 
+    UPDATE_PHONENUMBER, 
+    UPDATE_GENDER ,
+    UPDATE_DATE,
+    UPDATE_SUCCESS,
+    UPDATE_FAILURE,
+    UPDATE_PROFILE_FAILURE,
+} from "../actions/editProfileActions";
+
 const initialState = {
     isUpdating: false,
     firstname: "",
@@ -15,17 +27,11 @@ const initialState = {
     datePlaceholder: "Select Date",
 };
 
-// Action Types
-export const UPDATE_FIRSTNAME = "UPDATE_FIRSTNAME";
-export const UPDATE_LASTNAME = "UPDATE_LASTNAME";
-export const UPDATE_EMAIL = "UPDATE_EMAIL";
-export const UPDATE_PHONENUMBER = "UPDATE_PHONENUMBER";
-export const UPDATE_GENDER = "UPDATE_GENDER";
-export const UPDATE_PROFILE_FAILURE = "UPDATE_PROFILE_FAILURE";
-export const UPDATE_DATE = "UPDATE_DATE";
-
 const editProfileReducer = (state = initialState, action) => {
     switch (action.type) {
+        case UPDATE_SUCCESS:
+            return { ...state, isUpdating: true };
+
         case UPDATE_FIRSTNAME:
             return { ...state, firstname: action.payload };
 

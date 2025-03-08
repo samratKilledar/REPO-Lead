@@ -1,3 +1,12 @@
+import { 
+    UPDATE_REMARK, 
+    UPDATE_SERVICES,
+    SUBMIT_CLICK,
+    SUBMIT_SUCCESS,
+    SUBMIT_FAILURE,
+
+} from "../reducers/leadAddServiceReducer";
+
 const initialState = {
     isUpdating: false,
     remark: "",
@@ -7,13 +16,11 @@ const initialState = {
     ServicesPlaceholder: [],
 };
 
-// Action Types
-export const UPDATE_REMARK = "UPDATE_REMARK";
-export const UPDATE_SERVICES = "UPDATE_SERVICES";
-
-
 const leadAddServiceReducer = (state = initialState, action) => {
     switch (action.type) {
+        case SUBMIT_SUCCESS:
+            return { ...state, isUpdating: true };
+
         case UPDATE_REMARK:
             return { ...state, remark: action.payload };
 

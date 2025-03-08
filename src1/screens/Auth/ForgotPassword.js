@@ -15,7 +15,7 @@ import CustomTextInput from '../../components/CustomTextInput';
 import CustomButton from '../../components/CustomButton';
 import TextStyle from '../../styles/TextStyle';
 import ButtonStyles from '../../styles/ButtonStyles';
-import { emailSuccess, updateForgotPassEmail,forgotPassUser } from '../../redux/actions/forgotPassAction';
+import {  updateForgotPassEmail,forgotPassUser } from '../../redux/actions/forgotPassAction';
 import { useDispatch, useSelector } from 'react-redux';
 // import {useNavigation} from '@react-navigation/native';
 
@@ -33,6 +33,7 @@ const ForgotPassword = props => {
           Alert.alert('Error', 'Enter a valid email address!');
           return;
     }else{
+      props.navigation.navigate('ResetPassword');
       dispatch(forgotPassUser())
     }
   };
@@ -51,9 +52,7 @@ const ForgotPassword = props => {
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.innerContainer}>
-            {/* NavigationHeaderBack Header */}
 
-            {/* Lock Image Container */}
             <View style={styles.lockImageContainer}>
               <Image
                 source={require('../../assets/images/Lock/LockImage.png')}
@@ -61,7 +60,6 @@ const ForgotPassword = props => {
               />
             </View>
 
-            {/* Instruction Text & Input */}
             <View style={styles.instructionContainer}>
               <CustomText
                 text="Select which contact details should we use to reset your password"
@@ -76,7 +74,6 @@ const ForgotPassword = props => {
               />
             </View>
 
-            {/* Continue Button */}
             <View style={styles.buttonContainer}>
               <CustomButton
                 title="Continue"
@@ -106,7 +103,7 @@ const styles = StyleSheet.create({
   },
   lockImageContainer: {
     flex: 3,
-    justifyContent: 'center', // Push the image to the bottom
+    justifyContent: 'center',
     alignItems: 'center',
   },
   lockImage: {
