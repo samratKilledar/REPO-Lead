@@ -1,11 +1,10 @@
-
-import React, { useState } from "react";
-import { View, StyleSheet, Image, TextInput, Platform, ScrollView, Alert } from "react-native";
-import Dropdown from "../../components/Dropdown";
-import CustomTextInput from "../../components/CustomTextInput";
-import CustomButton from "../../components/CustomButton";
+import React, { useState, lazy, Suspense } from "react";
+import { View, StyleSheet, Image, TextInput, Platform, ScrollView, Alert, ActivityIndicator } from "react-native";
+// import Dropdown from "../../components/Dropdown";
+// import CustomTextInput from "../../components/CustomTextInput";
+// import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
-import NavigationHeaderBack from "../../components/NavigationHeaderBack";
+//import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,12 +15,16 @@ import {
     updatePhoneNumber, 
     updateGender,
     updateDate,
-    editProfileUser,
 } from "../../redux/actions/editProfileActions";
+
+// Lazy Load Components
+const Dropdown = lazy(() => import("../../components/Dropdown"));
+const CustomTextInput = lazy(() => import("../../components/CustomTextInput"));
+const CustomButton = lazy(() => import("../../components/CustomButton"));
+const NavigationHeaderBack = lazy(() => import("../../components/NavigationHeaderBack"));
 
 const EditProfileScreen = (props) => {
     const dispatch = useDispatch();
-    
     const firstname = useSelector(state => state.editProfile.firstname);
     const lastname = useSelector(state => state.editProfile.lastname);
     const email = useSelector(state => state.editProfile.email);
@@ -96,21 +99,28 @@ const EditProfileScreen = (props) => {
         }
 
         Alert.alert("Success", "Profile updated successfully!");
-        
+
     };
 
     return (
         <View style={styles.container}>
             <View style={{ flex: 0.1, marginLeft: 5 }}>
-                <NavigationHeaderBack text="Edit Profile" onPress={goBackCall} />
+                 <Suspense fallback={<NavigationHeaderBack/>}>
+                <NavigationHeaderBack text="Edit Profile" onPress={goBackCall} />  
+                </Suspense> 
             </View>
 
             <ScrollView style={styles.container1} showsVerticalScrollIndicator={false}>
                 <View style={styles.centerContainer}>
+                     <Suspense fallback={<CustomTextInput/>}>
                     <CustomTextInput value={firstname} placeholder={firstnamePlaceholder} onChangeText={(text) => dispatch(updateFirstname(text))} />
+                    </Suspense>
+                     <Suspense fallback={<CustomTextInput/>}>
                     <CustomTextInput value={lastname} placeholder={lastnamePlaceholder} onChangeText={(text) => dispatch(updateLastname(text))} />
+                    </Suspense>
+                    <Suspense fallback={<CustomTextInput/>}>
                     <CustomTextInput followupicon={require('../../assets/icons/Message.png')} value={email} placeholder={emailPlaceholder} onChangeText={(text) => dispatch(updateEmail(text))} />
-
+                    </Suspense>
                     <View style={styles.phoneInputContainer}>
                         <Image source={require('../../assets/icons/Country.png')} style={styles.flagIcon} />
                         <Image source={require('../../assets/icons/arrowDownblack.png')} style={styles.dropdownIcon} />
@@ -123,6 +133,7 @@ const EditProfileScreen = (props) => {
                         />
                     </View>
 
+                    <Suspense fallback={<Dropdown/>}>
                     <Dropdown
                         label={genderPlaceholder}
                         selectedValue={gender}
@@ -134,13 +145,15 @@ const EditProfileScreen = (props) => {
                         ]}
                         zIndex={2000}
                     />
-
+                     </Suspense>
+                   <Suspense fallback={<CustomTextInput/>}>
                     <CustomTextInput
                         followupicon={require('../../assets/icons/Calendar/calendar.png')}
                         value={date}
                         placeholder={datePlaceholder}
                         onIconPress={() => setShowDatePicker(true)}
                     />
+                    </Suspense>
                     {showDatePicker && (
                         <DateTimePicker
                             value={selectedDate}
@@ -149,6 +162,7 @@ const EditProfileScreen = (props) => {
                             onChange={handleDateChange}
                         />
                     )}
+                    <Suspense fallback={<CustomTextInput/>}>
                     <CustomTextInput
                         followupicon={require('../../assets/icons/Scan/scan.png')}
                         type={attachment} 
@@ -156,12 +170,16 @@ const EditProfileScreen = (props) => {
                         placeholder="Profile Photo"
                         onIconPress={handleImagePick}
                     />
+                    </Suspense>
+                    <Suspense fallback={<CustomButton/>}>
                     <CustomButton
                         title="Update"
                         customStyle={ButtonStyles.blueButton} 
                         textStyles={ButtonStyles.blueButtonText} 
                         onPress={handleUpdateProfile} 
                     />
+                    </Suspense>
+                   
                 </View>
             </ScrollView>
         </View>
@@ -221,16 +239,3 @@ const styles = StyleSheet.create({
 });
 
 export default EditProfileScreen;
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -199,8 +199,8 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     alignItems: 'center',
-    marginTop: 20,
-    flex: 3,
+    //marginTop: 20,
+    flex: 2,
     resizeMode:'contain',
   },
   sheildImage: {
@@ -212,8 +212,8 @@ const styles = StyleSheet.create({
   inputContainer: {
     // alignItems: 'center',
     width: '100%',
-    marginTop: 20,
-    flex: 2,
+   // marginTop: 20,
+    flex: 3,
   },
   inputBox: {
     width: '100%',

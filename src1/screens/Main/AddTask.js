@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { lazy,useState,Suspense } from "react";
 import { View, StyleSheet, ScrollView, Platform,Alert } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,18 +14,23 @@ import {
   changeAttachmentName,
   changeRemarks,
 } from "../../redux/actions/addTaskAction";
-import Dropdown from "../../components/Dropdown";
-import NavigationHeaderBack from "../../components/NavigationHeaderBack";
-import CustomTextInput from "../../components/CustomTextInput";
-import CustomButton from "../../components/CustomButton";
+//import Dropdown from "../../components/Dropdown";
+//import NavigationHeaderBack from "../../components/NavigationHeaderBack";
+//import CustomTextInput from "../../components/CustomTextInput";
+//import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 import StatusDropdown from "../../components/StatusDropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { submitTask } from "../../redux/actions/addTaskAction";
+const NavigationHeaderBack = lazy(() => import('../../components/NavigationHeaderBack'));
+const CustomTextInput = lazy(() => import('../../components/CustomTextInput'));
+const CustomButton = lazy(() => import('../../components/CustomButton'));
+const Dropdown = lazy(() => import('../../components/Dropdown'));
 
 
 const AddTask = (props) => {
   const dispatch = useDispatch();
+
   const {
     taskName,
     taskType,
@@ -116,7 +121,9 @@ const AddTask = (props) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.1 }}>
+      <Suspense fallback={<NavigationHeaderBack/>}>
         <NavigationHeaderBack text="Add Task" onPress={goBackCall} />
+       </Suspense>
       </View>
       <ScrollView
         style={{ flex: 1, marginBottom: 60 }}
@@ -124,11 +131,14 @@ const AddTask = (props) => {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.centerContainer}>
+          <Suspense fallback={<CustomTextInput/>}>
           <CustomTextInput
             value={taskName}
             placeholder={taskNamePlaceholder}
             onChangeText={(text) => dispatch(changeTaskName(text))}
           />
+          </Suspense>
+          <Suspense fallback={<Dropdown/>}>
           <Dropdown
             label={taskTypePlaceholder}
             selectedValue={taskType}
@@ -137,6 +147,8 @@ const AddTask = (props) => {
             zIndex={4000} // Highest
             elevation={8}
           />
+          </Suspense>
+          <Suspense fallback={<Dropdown/>}>
           <Dropdown
             label={assignedToPlaceholder}
             selectedValue={assignedTo}
@@ -150,6 +162,8 @@ const AddTask = (props) => {
             zIndex={3000} // Highest
             elevation={7}
           />
+          </Suspense>
+          <Suspense fallback={<Dropdown/>}>
           <Dropdown
             label={clientNamePlaceholder}
             selectedValue={clientName}
@@ -163,6 +177,8 @@ const AddTask = (props) => {
             zIndex={2000} // Highest
             elevation={6}
           />
+          </Suspense>
+          <Suspense fallback={<CustomTextInput/>}>
           <CustomTextInput
             followupicon={require('../../assets/icons/Calendar/calendar.png')}
             value={dueDate}
@@ -173,6 +189,7 @@ const AddTask = (props) => {
               setShowDatePicker(true);
             }}
           />
+          </Suspense>
            <StatusDropdown
           label={ priorityPlaceholder}
           selectedValue={priority}
@@ -181,11 +198,14 @@ const AddTask = (props) => {
           zIndex={1000}
           elevation={5}
         />
+        <Suspense fallback={<CustomTextInput/>}>
           <CustomTextInput
             value={serviceRequest}
             placeholder={serviceRequestPlaceholder}
             onChangeText={(text) => dispatch(changeServiceRequest(text))}
           />
+          </Suspense>
+          <Suspense fallback={<CustomTextInput/>}>
           <CustomTextInput
           followupicon={require("../../assets/icons/Calendar/calendar.png")}
           value={startDate}
@@ -195,6 +215,8 @@ const AddTask = (props) => {
             setActiveDateField("startDate");
              setShowDatePicker(true)}}
         />
+        </Suspense>
+        <Suspense fallback={<CustomTextInput/>}>
         <CustomTextInput
           followupicon={require("../../assets/icons/Calendar/calendar.png")}
           value={reminderDate}
@@ -204,22 +226,29 @@ const AddTask = (props) => {
             setActiveDateField("reminderDate");
              setShowDatePicker(true)}}
         />
+         </Suspense>
+         <Suspense fallback={<CustomTextInput/>}>
           <CustomTextInput
             followupicon={require('../../assets/icons/Scan/scan.png')}
             value={attachmentName}
             placeholder={attachmentNamePlaceholder}
             onChangeText={(text) => dispatch(changeAttachmentName(text))}
           />
-          <CustomTextInput
+          </Suspense>
+         <Suspense fallback={<CustomTextInput/>}>
+            <CustomTextInput
             value={remarks}
             placeholder={remarksPlaceholder}
             onChangeText={(text) => dispatch(changeRemarks(text))}
           />
+           </Suspense>
+           <Suspense fallback={<CustomButton/>}>
           <CustomButton
             title="Submit"
             customStyle={ButtonStyles.blueButton}
             textStyles={ButtonStyles.blueButtonText} onPress={handleAddTask}
           />
+          </Suspense>
         </View>
         {showDatePicker && (
         <DateTimePicker
