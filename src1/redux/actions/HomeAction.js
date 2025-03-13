@@ -17,16 +17,16 @@ export const callAllDropDownAPI = storedData => {
     try {
       const [
         followUpRes,
-        // clientFollowUpRes,
-        // taskPriorityRes,
-        // serviceRes,
-        // leadSourceRes,
-        // countryRes,
-        // cityRes,
-        // stateRes,
-        // occupationRes,
-        // getAllLeadApiRes,
-        // taskListRes,
+        clientFollowUpRes,
+        taskPriorityRes,
+        serviceRes,
+        leadSourceRes,
+        countryRes,
+        cityRes,
+        stateRes,
+        occupationRes,
+        //getAllLeadApiRes,
+       //  taskListRes,
         // particularLeadDetailApiRes
       ] = await Promise.all([
         followUp(storedData),
@@ -38,24 +38,25 @@ export const callAllDropDownAPI = storedData => {
         city(storedData),
         state(storedData),
         occupation(storedData),
-        getAllLeadApi(storedData),
-        taskListResApi(storedData),
-        particularLeadDetailApi(storedData)
+      //  getAllLeadApi(storedData),
+       //  taskListResApi(storedData),
+        // particularLeadDetailApi(storedData)
       ]);
-      console.log('Dropdown API Response:==>'+ followUpRes);
-      console.log('Another API Response:', clientFollowUpRes);
-      console.log('Third API Response:', taskPriorityRes);
-      console.log('Dropdown API Response:', serviceRes);
-      console.log('Another API Response:', leadSourceRes);
-      console.log('Dropdown API Response:', countryRes);
-      console.log('Another API Response:', cityRes);
-      console.log('Third API Response:', stateRes);
-      console.log('Third API Response:', getAllLeadApiRes);
-      console.log("=========ddddd=======>"+taskListRes)
-      console.log("=========particularLeadDetailApiRes=======>"+particularLeadDetailApiRes)
+      console.log('1.followUp API Response:==>'+ JSON.stringify(followUpRes));
+      console.log('2.clientFollowUp API Response:==>'+ JSON.stringify(clientFollowUpRes));
+      console.log('3.taskPriority API Response:'+ JSON.stringify(taskPriorityRes));
+      console.log('4.service API Response:'+ JSON.stringify(serviceRes));
+      console.log('5.leadSourceRes API Response:'+ JSON.stringify(leadSourceRes));
+      console.log('6.country API Response:'+ JSON.stringify(countryRes));
+      console.log('7.cityRes API Response', JSON.stringify(cityRes));
+      console.log('8.stateRes API Response:',  JSON.stringify(stateRes));
+      console.log('9.occupationRes API Response:',  JSON.stringify(occupationRes));
+     // console.log('10.getAllLeadApi API Response:',  JSON.stringify(getAllLeadApiRes));
+     // console.log('11.taskListResApi API Response:',  JSON.stringify(taskListRes));
+      // console.log("=========particularLeadDetailApiRes=======>"+particularLeadDetailApiRes)
 
-      console.log('Third getAllLeadApi Response:--------------------->', JSON.stringify(getAllLeadApiRes));
-
+      // console.log('Third getAllLeadApi Response:--------------------->', JSON.stringify(getAllLeadApiRes));
+      
       dispatch({
         type: FETCH_DROPDOWN_SUCCESS,
         payload: {
@@ -68,9 +69,9 @@ export const callAllDropDownAPI = storedData => {
           cityRes,
           stateRes,
           occupationRes,
-          getAllLeadApiRes,
-          taskListRes,
-          particularLeadDetailApiRes
+          //getAllLeadApiRes,
+          // taskListRes,
+          // particularLeadDetailApiRes
         },
       });
     } catch (error) {

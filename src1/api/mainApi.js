@@ -1,4 +1,4 @@
-import {apiGet , apiPost} from './apiClient';
+import {apiGet , apiPost,apiPostLead} from './apiClient';
 import {api} from './api';
 
 // Register API
@@ -40,7 +40,7 @@ export const occupation = async authToken => {
 };
 export const getAllLeadApi= async authToken=>{
     //  console.log("ss-------->"+authToken)
-   return await apiGet(api.getAllLeadApi,authToken);
+   return await apiGet(api.getAllLeadApi);
 }
 export const upComingTask= async authToken=>{
     //console.log("ss---sameeeeee---ssss"+authToken)
@@ -62,6 +62,11 @@ export const addTaskApiCall= async data => {
     console.log('inside function' + JSON.stringify(data));
     return await apiPost(api.addTask, {data});
 }; 
+
+export const leadAPISubmit = async (data,tenantId) =>{
+    console.log(tenantId+'inside function' + JSON.stringify(data));
+    return await apiPostLead(api.leadSubmit, data,tenantId);
+}
 
 
 

@@ -8,12 +8,16 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import { fetchServices, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
+import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
+import { state } from '../../api/mainApi';
 
 const LeadLast = (props) => {
   const dispatch = useDispatch();
-  const { assignto, services, remark, servicesLoading, servicesError } = useSelector((state) => state.lastReducer);
-
+  const { assignto, services, remark, servicesName,  } = useSelector((state) => state.lastReducer);
+  // const {service1} = useSelector((state)=> state.homeReducer)
+  // alert(service1)
+  const service1= useSelector(state => state.homeReducer);
+  //alert(JSON.stringify(service1.service)) 
   const steps = ['Personal', 'Occupation', 'Services'];
   const currentStep = 3;
 
@@ -33,7 +37,7 @@ const LeadLast = (props) => {
   ]);
 
   useEffect(() => {
-    dispatch(fetchServices());
+   // dispatch(fetchServices());
   }, [dispatch]);
 
   const goBackCall = () => {
@@ -41,7 +45,7 @@ const LeadLast = (props) => {
   };
 
   const handleSubmit = () => {
-    if (!assignto || services.length === 0) {
+    if (services.length === 0) {
       Alert.alert('Error', "Please select 'Assign to' and 'Services'");
       return;
     }
@@ -55,7 +59,8 @@ const LeadLast = (props) => {
 
     setCards((prevCards) => [...prevCards, newCard]);
 
-    Alert.alert('Success', 'Lead submitted successfully');
+    dispatch(leadSubmitAllData())
+   // Alert.alert('Success', 'Lead submitted successfully');
   };
 
   const handleDeleteCard = (id) => {
@@ -71,7 +76,7 @@ const LeadLast = (props) => {
         <Stepper steps={steps} currentStep={currentStep} />
       </View>
       <View style={styles.centerContainer}>
-        <StatusDropdown
+        <Dropdown
           label="Assign to"
           selectedValue={assignto}
           onValueChange={(value) => dispatch(updateAssignTo(value))}
@@ -81,17 +86,22 @@ const LeadLast = (props) => {
           ]}
           zIndex={4000}
         />
-        {servicesLoading ? (
-          <Text>Loading Services...</Text>
-        ) : (
-          <StatusDropdown
+      
+          {/* <StatusDropdown
             label="Services"
-            selectedValue={services}
-            onValueChange={(value) => dispatch(updateServices([value]))} 
+            selectedValue={service1.service}
+            // onValueChange={(value) => dispatch(updateServices([value]))} 
             apiType="service"
             zIndex={2000}
-          />
-        )}
+          /> */}
+        
+        <StatusDropdown
+                label={servicesName}
+                selectedValue={service1.services}
+                onValueChange={(value) => dispatch(updateServices(value))}
+                apiType="leadSource"
+                listData={service1.service}
+              />
         <CustomTextInput
           value={remark}
           placeholder="Remark"
@@ -101,14 +111,14 @@ const LeadLast = (props) => {
         <ScrollView contentContainerStyle={styles.insuranceCardContainer}>
         <View style={styles.insuranceCard}>
           <Text style={styles.insuranceText}>Interested Services</Text>
-          {cardData.map((item) => (
+          {/* {props.cardData.map((item) => (
             <InsuranceCard
               key={item.id}
               title={item.title}
               date={item.date}
               description={item.description}
             />
-          ))}
+          ))} */}
         </View>
           {/* {cards.map((item) => (
             <View key={item.id} style={styles.cardContainer}>

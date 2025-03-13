@@ -29,7 +29,7 @@ const homeReducer = (state = initialState, action) => {
         followUp: action.payload.followUpRes,
         clientFollowUp: action.payload.clientFollowUpRes,
         taskPriority: action.payload.taskPriority,
-        service: action.payload.service,
+        service: action.payload.serviceRes,
         leadSource: action.payload.leadSourceRes,
         country: action.payload.countryRes,
         city: action.payload.cityRes,
@@ -38,7 +38,7 @@ const homeReducer = (state = initialState, action) => {
         getAllLeadApi:action.payload.getAllLeadApiRes,
         taskList:action.payload.taskListRes
       };
-
+  
     case FETCH_DROPDOWN_FAILURE:
       return {
         ...state,
