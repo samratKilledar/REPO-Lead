@@ -79,7 +79,6 @@ const EditProfileScreen = (props) => {
         });
     };
 
-
     const handleUpdateProfile = () => {
         if (!firstname || !lastname || !email || !phonenumber || !gender || !date) {
             Alert.alert("Error", "All fields are required!");

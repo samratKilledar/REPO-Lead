@@ -52,9 +52,7 @@ const ForgotPassword = props => {
       <ScrollView contentContainerStyle={{flexGrow: 1}}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.innerContainer}>
-            {/* NavigationHeaderBack Header */}
 
-            {/* Lock Image Container */}
             <View style={styles.lockImageContainer}>
               <Image
                 source={require('../../assets/images/Lock/LockImage.png')}
@@ -62,7 +60,6 @@ const ForgotPassword = props => {
               />
             </View>
 
-            {/* Instruction Text & Input */}
             <View style={styles.instructionContainer}>
               <CustomText
                 text="Select which contact details should we use to reset your password"
@@ -77,7 +74,6 @@ const ForgotPassword = props => {
               />
             </View>
 
-            {/* Continue Button */}
             <View style={styles.buttonContainer}>
               <CustomButton
                 title="Continue"
@@ -107,7 +103,7 @@ const styles = StyleSheet.create({
   },
   lockImageContainer: {
     flex: 3,
-    justifyContent: 'center', // Push the image to the bottom
+    justifyContent: 'center',
     alignItems: 'center',
   },
   lockImage: {

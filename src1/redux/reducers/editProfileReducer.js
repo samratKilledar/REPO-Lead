@@ -10,7 +10,6 @@ import {
     UPDATE_PROFILE_FAILURE,
 } from "../actions/editProfileActions";
 
-
 const initialState = {
     isUpdating: false,
     firstname: "",
@@ -27,9 +26,6 @@ const initialState = {
     genderPlaceholder: ["Select Gender"],
     datePlaceholder: "Select Date",
 };
-
-
-
 
 const editProfileReducer = (state = initialState, action) => {
     switch (action.type) {

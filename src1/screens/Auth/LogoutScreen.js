@@ -61,7 +61,6 @@ const LogoutScreen = ({ navigation }) => {
           <CustomButton title={"Add UDC Service"} onPress={() => setModalVisible(true)} />
         </View>
 
-        {/* Services Card */}
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <CustomText text={"Services"} customstyle={TextStyle.serviceText} />
@@ -97,7 +96,6 @@ const LogoutScreen = ({ navigation }) => {
           </View>
         </View>
 
-        {/* Occupation Card */}
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <CustomText text={"Occupation"} customstyle={TextStyle.serviceText} />
@@ -141,7 +139,6 @@ const LogoutScreen = ({ navigation }) => {
           </GradientCard>
         </View>
 
-        {/* Logout Modal (Bottom Modal) */}
         <Modal visible={logoutVisible} animationType="slide" transparent={true}>
         <TouchableWithoutFeedback onPress={() => setLogoutVisible(false)}>
           <View style={styles.bottomModalOverlay}>
@@ -170,7 +167,6 @@ const LogoutScreen = ({ navigation }) => {
           </TouchableWithoutFeedback>
         </Modal>
 
-        {/* Add UDC Service Modal (Bottom Modal) */}
         <Modal visible={modalVisible} animationType="slide" transparent={true}>
         <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
           <View style={styles.bottomModalOverlay}>
@@ -178,7 +174,7 @@ const LogoutScreen = ({ navigation }) => {
               <ScrollView contentContainerStyle={styles.modalScrollContent}>
                 <CustomText text={"UDC Service"} customstyle={TextStyle.modallText2} />
                 <Image source={require("../../assets/icons/Line.png")} style={styles.line} />
-                {/* Dropdown for Services */}
+            
                 <Dropdown
                   label="Services"
                   selectedValue={Services}
@@ -191,7 +187,6 @@ const LogoutScreen = ({ navigation }) => {
                   ]}
                 />
 
-                {/* Input for Service Name */}
                 <CustomTextInput
                   style={styles.input}
                   placeholder="Service Name"
@@ -199,7 +194,6 @@ const LogoutScreen = ({ navigation }) => {
                   onChangeText={setServiceName}
                 />
 
-                {/* Submit Button */}
                 <View style={styles.buttonContainer}>
                   <CustomButton title={"Add"} customStyle={{ width: width * 0.9, alignSelf: 'center' }} onPress={() => setModalVisible(false)} />
                 </View>
@@ -209,7 +203,6 @@ const LogoutScreen = ({ navigation }) => {
           </TouchableWithoutFeedback>
         </Modal>
 
-        {/* Edit Services Modal (Bottom Modal) */}
         <Modal visible={editModalVisible} animationType="slide" transparent={true}>
         <TouchableWithoutFeedback onPress={() => setEditModalVisible(false)}>
           <View style={styles.bottomModalOverlay}>
@@ -218,7 +211,6 @@ const LogoutScreen = ({ navigation }) => {
                 <CustomText text={"Services"} customstyle={TextStyle.modallText2} />
                 <Image source={require("../../assets/icons/Line.png")} style={styles.line} />
                 <View style={{ gap: width * 0.01 }}>
-                  {/* Insurance Section */}
                   <View style={styles.serviceItem}>
                     <CustomText text={"Insurance"} customstyle={TextStyle.serviceText} />
                     <View style={styles.iconContainer}>
@@ -244,7 +236,6 @@ const LogoutScreen = ({ navigation }) => {
                     </View>
                   </View>
 
-                  {/* Service Name Input */}
                   <CustomTextInput
                     style={styles.input}
                     placeholder="Service Name"
@@ -253,7 +244,6 @@ const LogoutScreen = ({ navigation }) => {
                   />
                 </View>
 
-                {/* Add Button */}
                 <View style={styles.buttonContainer}>
                   <CustomButton title={"Add"} customStyle={{width: width * 0.9, alignSelf: 'center'}} onPress={() => setEditModalVisible(false)} />
                 </View>
@@ -355,7 +345,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   bottomModalContainer: {
-    height: height * 0.5, // Adjust height as needed
+    height: height * 0.5, 
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,

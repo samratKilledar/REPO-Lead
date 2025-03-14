@@ -72,7 +72,7 @@ const ClientAddServices = () => {
         />
         <CustomButton
           title="Submit"
-          customStyle={{ width: width * 0.9 }} // Responsive width
+          customStyle={{ width: width * 0.9 }} 
           textStyles={styles.nextButtonText}
           onPress={handleSubmit}
         />
@@ -98,8 +98,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: width * 0.05, 
     paddingTop: height * 0.02, 
-    // backgroundColor: "#FFFFFF",
-
   },
   headerContainer: {
     flex: 0.2, 

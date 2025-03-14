@@ -15,10 +15,10 @@ import {
 
 const initialState = { 
     isAuthenticated: false,
-    isLoading: false,  // 🔄 Tracks loading state
-    error: null,  // ❌ Tracks API errors
+    isLoading: false, 
+    error: null,  
 
-    // Placeholder text for each field
+
     titlePlaceholder: "Title",
     followupStatusPlaceholder: "Status",
     assignedToPlaceholder: "Assign",
@@ -27,7 +27,6 @@ const initialState = {
     followupTimePlaceholder: "Schedule Time",
     remarkPlaceholder: "Remark",
 
-    // Actual values (user input)
     title: "",
     followupStatus: "",
     assignedTo: "",
@@ -36,7 +35,6 @@ const initialState = {
     followupTime: "2025-02-28T14:01:17.017Z",
     remark: "",
 
-    // Dropdown lists for fields
     statusOptions: [],
     assignOptions: [],
 };

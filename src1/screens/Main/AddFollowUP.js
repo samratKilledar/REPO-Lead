@@ -1,9 +1,9 @@
-import React , {useEffect,useState} from "react";
-import { View, StyleSheet, Alert , ScrollView , KeyboardAvoidingView} from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, Alert, ScrollView, KeyboardAvoidingView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { 
-  changeTitle, changeFollowupStatus, changeAssignedTo, changeAttachment, 
-  changeFollowupDate, changeFollowupTime, changeRemark 
+import {
+  changeTitle, changeFollowupStatus, changeAssignedTo, changeAttachment,
+  changeFollowupDate, changeFollowupTime, changeRemark
 } from "../../redux/actions/addFollowUpActions";
 import Dropdown from "../../components/Dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -15,28 +15,26 @@ import { useNavigation } from "@react-navigation/native";
 import StatusDropdown from "../../components/StatusDropdown";
 import { submitFollowUp } from "../../redux/actions/addFollowUpActions";
 
-
 const AddFollowUP = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  // Get Redux state
-  const { 
+  const {
     title, followupStatus, assignedTo, attachmentUrl, followupDate, followupTime, remark,
-    isLoading, error, isAuthenticated 
+    isLoading, error, isAuthenticated
   } = useSelector(state => state.addFollowUp);
   //alert(followupStatus)
-  const { 
-    titlePlaceholder, followupStatusPlaceholder, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder, 
+  const {
+    titlePlaceholder, followupStatusPlaceholder, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder,
     followupTimePlaceholder, remarkPlaceholder
   } = useSelector(state => state.addFollowUp);
-  const followUpList= useSelector(state => state.homeReducer);
+
+  const followUpList = useSelector(state => state.homeReducer);
   alert(JSON.stringify(followUpList))
   const goBackCall = () => {
     navigation.popToTop();
   };
 
-  // Auto-Navigate back on Success ✅
   useEffect(() => {
     if (isAuthenticated) {
       Alert.alert("Success", "Follow-up added successfully!", [
@@ -44,14 +42,12 @@ const AddFollowUP = (props) => {
       ]);
     }
   }, [isAuthenticated]);
-  // Show API error if exists ❌
   useEffect(() => {
     if (error) {
       Alert.alert("Error", error);
     }
   }, [error]);
 
-  // Date Picker Logic
   const [showDatePicker, setShowDatePicker] = React.useState(false);
   const [showTimePicker, setShowTimePicker] = React.useState(false);
   const handleDateChange = (event, date) => {
@@ -61,17 +57,16 @@ const AddFollowUP = (props) => {
     setShowDatePicker(false);
   };
 
-  // Time Picker Logic
- const handleTimeChange = (event, time) => {
-     if (event.type === "set" && time) {
-       const hours = time.getHours();
-       const minutes = time.getMinutes().toString().padStart(2, "0");
-       const ampm = hours >= 12 ? "PM" : "AM";
-       const formattedHours = (hours % 12 || 12).toString().padStart(2, "0");
-       dispatch(changeFollowupTime(`${formattedHours}:${minutes} ${ampm}`));
-     }
-     setShowTimePicker(false);
-   };
+  const handleTimeChange = (event, time) => {
+    if (event.type === "set" && time) {
+      const hours = time.getHours();
+      const minutes = time.getMinutes().toString().padStart(2, "0");
+      const ampm = hours >= 12 ? "PM" : "AM";
+      const formattedHours = (hours % 12 || 12).toString().padStart(2, "0");
+      dispatch(changeFollowupTime(`${formattedHours}:${minutes} ${ampm}`));
+    }
+    setShowTimePicker(false);
+  };
 
   const validateAndSubmit = () => {
     console.log("🚀 validateAndSubmit called in validSubmit !");
@@ -84,10 +79,10 @@ const AddFollowUP = (props) => {
       { value: followupTime, placeholder: followupTimePlaceholder },
       { value: remark, placeholder: remarkPlaceholder }
     ];
-  
+
     for (const field of fields) {
       const fieldValue = field.value ? String(field.value).trim() : "";
-  
+
       if (!fieldValue) {
         console.log(`⚠️ Validation failed for: ${field.placeholder}`);
         Alert.alert("Validation Error", `${field.placeholder} is required.`);
@@ -96,7 +91,7 @@ const AddFollowUP = (props) => {
     }
     dispatch(submitFollowUp());
   };
-  
+
 
   return (
     <View style={styles.container}>
@@ -104,87 +99,87 @@ const AddFollowUP = (props) => {
         <NavigationHeaderBack text="Add Follow-Up" onPress={goBackCall} />
       </View>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
-      <View style={styles.centerContainer}>
-        <CustomTextInput
-          value={title}
-          placeholder={titlePlaceholder}
-          onChangeText={(text) => dispatch(changeTitle(text))}
-        />
+        <ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
+          <View style={styles.centerContainer}>
+            <CustomTextInput
+              value={title}
+              placeholder={titlePlaceholder}
+              onChangeText={(text) => dispatch(changeTitle(text))}
+            />
 
-        <StatusDropdown
-          label={followupStatusPlaceholder}
-          selectedValue={followupStatus}
-          onValueChange={(value) => dispatch(changeFollowupStatus(value))}
-          apiType="followUp"
-          zIndex={2000}
-          elevation={6}
-          listData={followUpList.followUp}
-        />
-       
-        <Dropdown
-          label={assignedToPlaceholder}
-          selectedValue={assignedTo}
-          onValueChange={(value) => dispatch(changeAssignedTo(value))}
-          listData={followUpList.followUp}
-          zIndex={1000}
-          elevation={4}
-        />
+            <StatusDropdown
+              label={followupStatusPlaceholder}
+              selectedValue={followupStatus}
+              onValueChange={(value) => dispatch(changeFollowupStatus(value))}
+              apiType="followUp"
+              zIndex={2000}
+              elevation={6}
+              listData={followUpList.followUp}
+            />
 
-        <CustomTextInput
-          followupicon={require('../../assets/icons/Scan/scan.png')}
-          value={attachmentUrl}
-          placeholder={attachmentUrlPlaceholder}
-          onChangeText={(text) => dispatch(changeAttachment(text))}
-        />
+            <Dropdown
+              label={assignedToPlaceholder}
+              selectedValue={assignedTo}
+              onValueChange={(value) => dispatch(changeAssignedTo(value))}
+              listData={followUpList.followUp}
+              zIndex={1000}
+              elevation={4}
+            />
 
-        <CustomTextInput
-          followupicon={require("../../assets/icons/Calendar/calendar.png")}
-          value={followupDate}
-          placeholder={followupDatePlaceholder}
-          onChangeText={(text) => dispatch(changeFollowupDate(text))}
-          onIconPress={() => setShowDatePicker(true)}
-        />
-        {showDatePicker && (
-          <DateTimePicker
-            value={new Date()}
-            mode="date"
-            display="default"
-            onChange={handleDateChange}
-          />
-        )}
+            <CustomTextInput
+              followupicon={require('../../assets/icons/Scan/scan.png')}
+              value={attachmentUrl}
+              placeholder={attachmentUrlPlaceholder}
+              onChangeText={(text) => dispatch(changeAttachment(text))}
+            />
 
-        <CustomTextInput
-          followupicon={require("../../assets/icons/Calendar/calendar.png")}
-          value={followupTime}
-          placeholder={followupTimePlaceholder}
-          onChangeText={(text) => dispatch(changeFollowupTime(text))}
-          onIconPress={() => setShowTimePicker(true)}
-        />
-        {showTimePicker && (
-          <DateTimePicker
-            value={new Date()}
-            mode="time"
-            display="default"
-            is24Hour={false}
-            onChange={handleTimeChange}
-          />
-        )}
+            <CustomTextInput
+              followupicon={require("../../assets/icons/Calendar/calendar.png")}
+              value={followupDate}
+              placeholder={followupDatePlaceholder}
+              onChangeText={(text) => dispatch(changeFollowupDate(text))}
+              onIconPress={() => setShowDatePicker(true)}
+            />
+            {showDatePicker && (
+              <DateTimePicker
+                value={new Date()}
+                mode="date"
+                display="default"
+                onChange={handleDateChange}
+              />
+            )}
 
-        <CustomTextInput
-          value={remark}
-          placeholder={remarkPlaceholder}
-          onChangeText={(text) => dispatch(changeRemark(text))}
-        />
+            <CustomTextInput
+              followupicon={require("../../assets/icons/Calendar/calendar.png")}
+              value={followupTime}
+              placeholder={followupTimePlaceholder}
+              onChangeText={(text) => dispatch(changeFollowupTime(text))}
+              onIconPress={() => setShowTimePicker(true)}
+            />
+            {showTimePicker && (
+              <DateTimePicker
+                value={new Date()}
+                mode="time"
+                display="default"
+                is24Hour={false}
+                onChange={handleTimeChange}
+              />
+            )}
 
-        <CustomButton 
-          title="Submit" 
-          customStyle={ButtonStyles.blueButton} 
-          textStyles={ButtonStyles.blueButtonText} 
-          onPress={validateAndSubmit}
-        />
-      </View>
-      </ScrollView>
+            <CustomTextInput
+              value={remark}
+              placeholder={remarkPlaceholder}
+              onChangeText={(text) => dispatch(changeRemark(text))}
+            />
+
+            <CustomButton
+              title="Submit"
+              customStyle={ButtonStyles.blueButton}
+              textStyles={ButtonStyles.blueButtonText}
+              onPress={validateAndSubmit}
+            />
+          </View>
+        </ScrollView>
       </KeyboardAvoidingView>
     </View>
   );

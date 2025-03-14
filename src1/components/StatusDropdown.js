@@ -1,53 +1,67 @@
-import React, { useEffect, useState } from 'react';
-import { Platform } from 'react-native';
-import Dropdown from './Dropdown';
+import React, { useEffect, useState } from "react";
+import { Platform } from "react-native";
+import Dropdown from "./Dropdown";
 
 const StatusDropdown = ({ label, selectedValue, onValueChange, apiType, zIndex, listData }) => {
-  const [selectedValue1, setSelectedValue] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(selectedValue || null);
 
   useEffect(() => {
-    console.log("Selected Value:", selectedValue1);
-  }, [selectedValue1]); 
+    console.log("Selected Item:", selectedItem);
+  }, [selectedItem]);
 
-  // Conditionally format options based on `apiType`
-  const formattedOptions = listData?.map(item => {
-    if (apiType === 'city') {
-      return {
-        label: item.cityName, // Display city name
-        value: item.id, // City ID as value
-        isActive: item.isActive
-      };
-    } 
-    else  if (apiType === 'State') {
-      return {
-        label: item.stateName, // Display city name
-        value: item.id, // City ID as value
-        isActive: item.isActive
-      };
+  useEffect(() => {
+    if (selectedValue !== selectedItem) {
+      setSelectedItem(selectedValue);
     }
-    else if (apiType === 'Country') {
-      return {
-        label: item.countryName, // Display country name
-        value: item.countryId, // Country ID as value
-      };
-    } else {
-      return {
-        label: item.value01, // Default display text
-        // value: item.id.toString(), // Default value
-        extraData: item.value02, // Extra data if needed
-      };
-    }
-  }) || [];
+  }, [selectedValue]);
+
+  const formattedOptions =
+    listData?.map((item) => {
+      if (apiType === "city") {
+        return {
+          label: item.cityName,
+          value: { id: item.id, name: item.cityName }, 
+          isActive: item.isActive,
+        };
+      } else if (apiType === "state") {
+        return {
+          label: item.stateName,
+          value: { id: item.id, name: item.stateName },
+          isActive: item.isActive,
+        };
+      } else if (apiType === "country") {
+        return {
+          label: item.countryName,
+          value: { id: item.id, name: item.countryName, isdCode: item.isdCode },
+          isActive: item.isActive,
+        };
+      } else if (apiType === "service") {
+        return {
+          label: item.value01,
+          value: { id: item.id, name: item.value01 },
+        };
+      } else {
+        return {
+          label: item.value01,
+          value: { id: item.id?.toString() || "", name: item.value01, extraData: item.value02 },
+        };
+      }
+    }) || [];
 
   return (
     <Dropdown
       label={label}
-      selectedValue={selectedValue1}
-      onValueChange={setSelectedValue}
+      selectedValue={selectedItem}
+      onValueChange={(newValue) => {
+        setSelectedItem(newValue); 
+        if (onValueChange) {
+          onValueChange(newValue); 
+        }
+      }}
       options={formattedOptions}
       zIndex={zIndex || 2000}
-    elevation={5}
-    modal={Platform.OS === "android"}
+      elevation={5}
+      modal={Platform.OS === "android"}
     />
   );
 };

@@ -1,78 +1,176 @@
-// import { createAsyncThunk } from "@reduxjs/toolkit";
+import { leadAPISubmit } from "../../api/mainApi";
 
-// // Async action for submitting the lead data to an API
-// export const addLead = createAsyncThunk("lead/addLead", async (leadData, { rejectWithValue }) => {
-//   try {
-//     const response = await fetch("https://opticalerp.in:85/swagger/index.html#/Lead/Lead_Create", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify(leadData),
-//     });
+export const SUBMIT_SUCCESS = "SUBMIT_SUCCESS";
+export const SUBMIT_FAILURE = "SUBMIT_FAILURE";
 
-//     if (!response.ok) {
-//       throw new Error("Failed to submit lead");
-//     }
-//     return await response.json();
-//   } catch (error) {
-//     return rejectWithValue(error.message);
-//   }
-// });
-
-// // Action for saving services data locally before submission
-// export const saveServicesData = (data) => ({
-//   type: "lead/saveServicesData",
-//   payload: data,
-// });
-
-//New one 01-03
 export const UPDATE_ASSIGNTO = "UPDATE_ASSIGNTO";
 export const UPDATE_SERVICES = "UPDATE_SERVICES";
-export const UPDATE_REMARK = "UPDATE_REMARK"; 
-// API Call Function
-// const fetchServicesAPI = async () => {
-//   try {
-//     const response = await fetch(
-//       "https://opticalerp.in:85/api/udc/getvaluesbytype?type=Services"
-//     );
-//     if (!response.ok) {
-//       throw new Error(`HTTP Error! Status: ${response.status}`);
-//     }
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     throw new Error(error.message);
-//   }
-// };
+export const UPDATE_REMARK = "UPDATE_REMARK";
+export const UPDATE_FIRSTNAME = "UPDATE_FIRSTNAME";
+export const UPDATE_LASTNAME = "UPDATE_LASTNAME";
+export const UPDATE_LEADSOURCES = "UPDATE_LEADSOURCES";
+export const UPDATE_MOBILENO = "UPDATE_MOBILENO";
+export const UPDATE_EMAILID = "UPDATE_EMAILID";
+export const UPDATE_WHATSAPPNO = "UPDATE_WHATSAPPNO";
+export const UPDATE_ADDRESSLINE1 = "UPDATE_ADDRESSLINE1";
+export const UPDATE_ADDRESSLINE2 = "UPDATE_ADDRESSLINE2";
+export const UPDATE_CITY = "UPDATE_CITY";
+export const UPDATE_STATE = "UPDATE_STATE";
+export const UPDATE_COUNTRY = "UPDATE_COUNTRY";
+export const UPDATE_PINCODE = "UPDATE_PINCODE";
+export const UPDATE_OCCUPATION = "UPDATE_OCCUPATION";
+export const UPDATE_TYPEOFWORK = "UPDATE_TYPEOFWORK";
+export const UPDATE_MONTHLYINCOME = "UPDATE_MONTHLYINCOME";
 
-// Action Creator for Fetching Services Dropdown
-export const fetchServices = () => async (dispatch) => {
-  dispatch({ type: FETCH_SERVICES_REQUEST });
-
-  try {
-    const data = await fetchServicesAPI(); // Fetch data from API
-    dispatch({ type: FETCH_SERVICES_SUCCESS, payload: data });
-  } catch (error) {
-    dispatch({ type: FETCH_SERVICES_FAILURE, payload: error.message });
-  }
-};
-
-// Action Creator for AssignTo Dropdown
-export const updateAssignTo = (assignto) => ({
-  type: "UPDATE_ASSIGNTO",
-  payload: assignto,
+export const updateFirstName = (firstName) => ({
+  type: UPDATE_FIRSTNAME,
+  payload: firstName,
 });
 
-// Action Creator for Services Dropdown
+export const updateLastName = (lastName) => ({
+  type: UPDATE_LASTNAME,
+  payload: lastName,
+});
+
+export const updateLeadSources = (leadSources) => ({
+  type: UPDATE_LEADSOURCES,
+  payload: leadSources,
+});
+
+export const updateMobileNo = (mobileNo) => ({
+  type: UPDATE_MOBILENO,
+  payload: mobileNo,
+});
+
+export const updateEmailId = (emailId) => ({
+  type: UPDATE_EMAILID,
+  payload: emailId,
+});
+
+export const updateWhatsAppNo = (whatsAppNo) => ({
+  type: UPDATE_WHATSAPPNO,
+  payload: whatsAppNo,
+});
+
+export const updateAddressLine1 = (addressLine1) => ({
+  type: UPDATE_ADDRESSLINE1,
+  payload: addressLine1,
+});
+
+export const updateAddressLine2 = (addressLine2) => ({
+  type: UPDATE_ADDRESSLINE2,
+  payload: addressLine2,
+});
+
+export const updateCity = (city) => ({
+  type: UPDATE_CITY,
+  payload: city,
+});
+
+export const updateState = (state) => ({
+  type: UPDATE_STATE,
+  payload: state,
+});
+
+export const updateCountry = (country) => ({
+  type: UPDATE_COUNTRY,
+  payload: country,
+});
+
+export const updatePincode = (pincode) => ({
+  type: UPDATE_PINCODE,
+  payload: pincode,
+});
+
+export const updateOccupation = (occupation) => ({
+  type: UPDATE_OCCUPATION,
+  payload: occupation,
+});
+
+export const updateTypeOfWork = (typeOfWork) => ({
+  type: UPDATE_TYPEOFWORK,
+  payload: typeOfWork,
+});
+
+export const updateMonthlyIncome = (monthlyIncome) => ({
+  type: UPDATE_MONTHLYINCOME,
+  payload: monthlyIncome,
+});
+
+export const updateAssignTo = (assignTo) => ({
+  type: UPDATE_ASSIGNTO,
+  payload: assignTo,
+});
+
 export const updateServices = (services) => ({
-  type: "UPDATE_SERVICES",
+  type: UPDATE_SERVICES,
   payload: services,
 });
 
-// Action Creator for Remark Field
 export const updateRemark = (remark) => ({
-  type: "UPDATE_REMARK",
+  type: UPDATE_REMARK,
   payload: remark,
+});
+
+export const leadSubmitAllData= () => async (dispatch, getState) => {
+  try {
+
+    const alldata= getState().lastReducer; 
+    const tenantId=getState().auth;
+    alert(JSON.stringify(alldata)+"---"+tenantId.loginValue.customerId)
+   // dispatch({type: SUBMIT_ALL_LEAD_DATA});
+   
+     const data = await leadAPISubmit(alldata,tenantId.customerId);
+    // if (data.token != null) {
+    //   //alert(JSON.stringify(data));
+    //   setItem('authToken', data.token); 
+    //   dispatch({type: LOGIN_SUCCESS}); 
+    // } else {
+    //   dispatch({type: LOGIN_FAILURE, payload: error.message}); 
+    // }
+  } catch (error) {
+    dispatch({type: LOGIN_FAILURE, payload: error.message}); 
+  }
+}
+
+
+
+export const submitSuccess = () => ({ type: SUBMIT_SUCCESS });
+
+export const submitFailure = (error) => ({
+  type: SUBMIT_FAILURE,
+  payload: error,
 });
 
 
 
+
+
+
+
+
+
+
+// export const submitLeadLast = () => async (dispatch, getState) => {
+//   console.log("🎯 Inside Submit Action");
+
+//   try {
+//     const { remark, assignto, services } = getState().lastReducer;
+
+//     const data = { remark, assignto, services };
+//     console.log("📤 Submitting Lead Data:", JSON.stringify(data));
+
+//     const response = await leadLastApiCall(data);
+
+//     if (response.success) {
+//       console.log("✅ Lead Submitted Successfully:", response.data);
+//       dispatch({ type: SUBMIT_SUCCESS });
+//     } else {
+//       console.log("❌ Submission Failed:", response.message);
+//       dispatch({ type: SUBMIT_FAILURE, payload: response.message });
+//     }
+//   } catch (error) {
+//     console.log("🚨 Submission Error:", error.message);
+//     dispatch({ type: SUBMIT_FAILURE, payload: error.message });
+//   }
+// };

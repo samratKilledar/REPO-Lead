@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image';
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
     setTimeout(() => {
-     // navigation.replace(''); // Navigate to Login Screen after 4 seconds
+         // navigation.replace(''); // Navigate to Login Screen after 4 seconds
     }, 4000);
   }, [navigation]);
 
