@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { View, StyleSheet, Image, TextInput, Platform, ScrollView, Alert } from "react-native";
 import Dropdown from "../../components/Dropdown";
@@ -76,7 +75,6 @@ const EditProfileScreen = (props) => {
         });
     };
 
-
     const handleUpdateProfile = () => {
         if (!firstname || !lastname || !email || !phonenumber || !gender || !date) {
             Alert.alert("Error", "All fields are required!");
@@ -95,8 +93,7 @@ const EditProfileScreen = (props) => {
             return;
         }
 
-        Alert.alert("Success", "Profile updated successfully!");
-        
+        Alert.alert("Success", "Profile updated successfully!"); 
     };
 
     return (

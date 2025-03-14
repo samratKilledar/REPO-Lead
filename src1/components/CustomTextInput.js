@@ -9,7 +9,7 @@ const CustomTextInput = ({ icon, followupicon,type, value, onChangeText, placeho
   return (
     <View style={InputStyle.container}>
       {icon && <Image source={icon} style={InputStyle.icon} />}
-
+      
       <TextInput
         type={type}
         style={InputStyle.input}

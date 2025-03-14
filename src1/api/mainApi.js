@@ -1,6 +1,5 @@
-import {apiGet , apiPost} from './apiClient';
+import {apiGet , apiPost, leadLastapiPost} from './apiClient';
 import {api} from './api';
-
 
 // Register API
 export const followUp = async authToken => {
@@ -39,7 +38,6 @@ export const occupation = async authToken => {
     //console.log("ss------ssss"+authToken)
     return await apiGet(api.occupation,authToken);
 };
-
 export const getAllLeadApi= async authToken=>{
     //console.log("ss------ssss"+authToken)
     return await apiGet(api.getAllLeadApi,authToken);
@@ -63,14 +61,27 @@ export const clientDetail= async authToken=>{
 export const addTaskApiCall= async data => {
     console.log('inside function' + JSON.stringify(data));
     return await apiPost(api.addTask, {data});
-  }; 
+}; 
+export const leadLastApiCall = async (data) => {
+    console.log("📡 Sending request to server with data:", data);
 
+    // Prepare parameters
+    const param = {
+        customerId: "Root",   // 🔹 Required tenant/customerId
+        assignto: data.assignto,  // 🔹 Assign `assignto` directly
+        remark: data.remark,      // 🔹 Assign `remark` directly
+        services: data.services,  // 🔹 Assign `services` (assuming an array or string)
+    };
 
+    try {
+        // Call API using apiPost
+        const response = await apiPost(api.leadLast, { data: param });
 
-  
-  
-
-
-
-
+        console.log("✅ Server Response:", response);
+        return response;
+    } catch (error) {
+        console.log("🚨 API Error:", error.response?.data || error.message);
+        return { success: false, message: error.response?.data || error.message };
+    }
+};
 

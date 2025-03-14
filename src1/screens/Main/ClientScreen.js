@@ -6,6 +6,7 @@ import HeaderComp from "../../components/HeaderComp";
 import TextStyle from "../../styles/TextStyle";
 import CustomText from "../../components/CustomText";
 import CustomTextInput from "../../components/CustomTextInput";
+
 const clintsData = [
   { id: "1", name: "Barbara Moore", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Follow Up", statusGradient: ["#246BFD", "#6F9EFF"], menuType: "follow" },
   { id: "2", name: "Pricilla Maureen", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Meeting Pending", statusGradient: ["#FACC15", "#FFE580"], menuType: "follow" },
@@ -17,8 +18,11 @@ const ClientScreen = (props) => {
   const [search, setSearch] = useState('');
   return (
     <View style={styles.container}>
+      
       <HeaderComp navigation={navigation} />
+     
       <View style={styles.input}>
+         
         <CustomTextInput
           icon={require('../../assets/icons/Search/search.png')}
           type={search}

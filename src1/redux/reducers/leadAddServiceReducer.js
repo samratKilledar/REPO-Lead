@@ -7,8 +7,6 @@ import {
 
 } from "../reducers/leadAddServiceReducer";
 
-
-
 const initialState = {
     isUpdating: false,
     remark: "",
@@ -17,8 +15,6 @@ const initialState = {
     RemarkPlaceholder: "firstName",
     ServicesPlaceholder: [],
 };
-
-
 
 const leadAddServiceReducer = (state = initialState, action) => {
     switch (action.type) {

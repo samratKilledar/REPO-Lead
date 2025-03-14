@@ -37,7 +37,6 @@ const LeadDetails = (props) => {
   }
   return (
     <View style={styles.container}>
-      {/* Navigation Header (Fixed at the Top) */}
       <View style={{ flexDirection: "row",  paddingRight: 28, marginLeft: 8 }}>
         <NavigationHeaderBack text="Barbara Moore" onPress={goBackCall} />
         <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
@@ -47,8 +46,6 @@ const LeadDetails = (props) => {
           />
         </TouchableOpacity>
       </View>
-  
-      {/* Scrollable Section */}
       
       <ScrollView style={styles.centralcontainer}>
         <View style={styles.detailsContainer}>
@@ -75,7 +72,6 @@ const LeadDetails = (props) => {
         </View>
         </View>
 
-        {/* Interested Services */}
         <View style={styles.insuranceCard}>
           <Text style={styles.insuranceText}>Interested Services</Text>
           {cardData.map((item) => (
@@ -88,8 +84,6 @@ const LeadDetails = (props) => {
           ))}
         </View>
       </ScrollView>
-
-      {/* Menu Box (Optional, if visible) */}
       {menuVisible && (
         <View style={styles.menuBox}>
           <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Edit clicked")}>

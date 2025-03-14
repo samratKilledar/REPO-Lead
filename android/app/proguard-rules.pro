@@ -8,3 +8,8 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
+-keep class com.facebook.imagepipeline.** { *; }
+-keep class com.facebook.imagepipeline.nativecode.** { *; }
+-keep class com.facebook.imagepipeline.image.CloseableAnimatedImage { *; }
+-dontwarn com.facebook.imagepipeline.**
+

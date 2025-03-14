@@ -75,7 +75,7 @@ const CreatePassword = props => {
         return false;
     } 
 
-    return true; // Validation passed
+    return true;
 };
 
   const handleContinue = () =>{
@@ -138,7 +138,6 @@ const CreatePassword = props => {
                 </View>
               </View>
 
-              {/* Continue Button */}
               <View style={styles.buttonContainer}>
                 <CustomButton
                   title="Continue"
@@ -148,8 +147,7 @@ const CreatePassword = props => {
                   // onPress={handleContinue}
                 />
               </View>
-
-              {/* Success Modal */}
+              
               <Modal
                 animationType="fade"
                 transparent={true}

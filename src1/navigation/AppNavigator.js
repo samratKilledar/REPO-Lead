@@ -4,17 +4,17 @@ import AuthNavigator from './AuthNavigator';
 import MainNavigator from './MainNavigator';
 import { getItem } from '../api/storageServices';
 import { ActivityIndicator, View } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const isAuthenticated = useSelector(state=>state.auth.isAuthenticated)
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
   useEffect(() => {
     checkAuth();
-  }, [isAuthenticated]); 
+  }, [isAuthenticated]);
 
   useEffect(() => {
     checkAuth();
@@ -30,9 +30,6 @@ const AppNavigator = () => {
       setLoading(false);
     }
   };
-
-
-
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -43,7 +40,7 @@ const AppNavigator = () => {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {(user && user !== 'Network request failed' && user !== 'null' && user !== '' ) ? (
+      {(user && user !== 'Network request failed' && user !== 'null' && user !== '') ? (
         <Stack.Screen name="Main" component={MainNavigator} />
       ) : (
         <Stack.Screen name="Auth" component={AuthNavigator} />

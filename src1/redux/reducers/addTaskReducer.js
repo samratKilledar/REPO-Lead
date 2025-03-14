@@ -22,7 +22,6 @@ import {
 const initialState = {
     isAuthenticated: false,
 
-    // Placeholder text for each field
     taskNamePlaceholder: "Title",
     taskTypePlaceholder: "Type",
     assignedToPlaceholder: "Task Assigned To",
@@ -47,7 +46,6 @@ const initialState = {
     attachmentName: "",
     remarks: "",
 
-    // Separate dropdown lists for each field
     typeOptions: ["Sanika", "Pranjali"],
     assignOptions: [],
     clientOptions: [],

@@ -27,7 +27,7 @@ const Notifications = (props) => {
     props.navigation.goBack();
   };
   return (
-    <View style={{ flex: 1, paddingTop: 12, gap: 24, marginTop: 30 }}>
+    <View style={{ flex: 1, paddingTop: 20, gap: 24 }}>
       <View style={{ flex: 0.7, marginLeft: 5 }}>
         <Navigation text={"Notifications"} onPress={goBackCall} />
       </View>

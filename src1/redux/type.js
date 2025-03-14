@@ -1,3 +1,0 @@
-// export const LEAD_SUCCESS = "LEAD_SUCCESS";
-// export const LEAD_FAILURE = "LEAD_FAILURE";
-// export const UPDATE_LEAD_CREDENTIALS = "UPDATE_LEAD_CREDENTIALS";
