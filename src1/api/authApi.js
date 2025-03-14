@@ -34,7 +34,7 @@
 //     }
 // };
 
-import {apiGet, apiPost, apiPut,postApi} from './apiClient';
+import {apiGet, apiPost,apiPostForgotPass, apiPut,postApi} from './apiClient';
 import {api} from './api';
 import { getItem } from '../api/storageServices';
 
@@ -42,6 +42,38 @@ import { getItem } from '../api/storageServices';
 export const loginUserApiCall = async data => {
   console.log('inside function' + JSON.stringify(data));
   return await apiPost(api.authApi, {data});
+};
+//forgot Password
+export const forgotPassApiCall = async data => {
+    console.log('inside function' + JSON.stringify(data));
+    return await apiPostForgotPass(api.forgotPasswordApi, {data});
+  };
+
+  export const submitPasswordApiCall = async (newPassword, confirmNewPassword) => {  
+    const param = {
+        data:{
+            customerId: "Root", // Keep tenant as "Root"
+            password: newPassword,
+            confirmPassword: confirmNewPassword
+        },    
+    };
+
+    try {
+        console.log("📡 Sending request to server with data:", param);
+
+        const response = await apiPost(api.createPass, param, {
+            headers: {
+                "Content-Type": "application/json",
+                // "Authorization": `Bearer ${yourAuthToken}`,  // Add if required
+            },
+        });
+
+        console.log("✅ Server Response:", response);
+        return response;
+    } catch (error) {
+        console.log("🚨 API Error:", error.response?.data || error.message);
+        return { success: false, message: error.response?.data || error.message };
+    }
 };
 
 // Register API

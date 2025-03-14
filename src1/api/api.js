@@ -1,7 +1,8 @@
 export const api={
     authApi:"https://opticalerp.in:85/api/tokens/gettoken",
     forgotPasswordApi:"https://opticalerp.in:85/api/users/forgotpassword/forgot-password",
-    createPass:"https://opticalerp.in:85/api/currentuser/changepassword/change-password",
+    createPass:"https://opticalerp.in:85/api/users/resetpassword/reset-password",
+    profileDetails:"https://opticalerp.in:85/api/users/getbyidwithrole",
     getAllLeadApi:"https://opticalerp.in:85/api/lead/getlist/get-all",
     
 

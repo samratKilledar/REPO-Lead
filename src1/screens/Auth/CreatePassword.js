@@ -14,7 +14,7 @@ import {
 import {
   setNewPassword,
   setConfirmNewPassword,
-  setAuthenticated,
+  submitPassword,
 } from "../../redux/actions/createPassAction";
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import ButtonStyles from '../../styles/ButtonStyles';
@@ -23,7 +23,7 @@ import TextStyle from '../../styles/TextStyle';
 import CustomButton from '../../components/CustomButton';
 import CustomText from '../../components/CustomText';
 import { useDispatch, useSelector } from "react-redux";
-import { submitPassword } from '../../redux/actions/createPassAction';
+// import { submitPassword } from '../../redux/actions/createPassAction';
 
 const CreatePassword = props => {
   // const [password, setPassword] = useState('');
@@ -80,7 +80,7 @@ const CreatePassword = props => {
 
   const handleContinue = () =>{
     if (validatePasswords(newPassword, confirmNewPassword)) {
-      console.log("Password successfully set!");
+      //console.log("Password successfully set!");
       // Proceed with next steps (e.g., API call)
       dispatch(submitPassword());
     }
@@ -144,8 +144,8 @@ const CreatePassword = props => {
                   title="Continue"
                   customStyle={[ButtonStyles.blueButton]}
                   textStyles={ButtonStyles.blueButtonText}
-                  onPress={() => setModalVisible(true)}
-                  // onPress={handleContinue}
+                  //onPress={() => setModalVisible(true)}
+                   onPress={handleContinue}
                 />
               </View>
 

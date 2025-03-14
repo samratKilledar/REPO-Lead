@@ -25,18 +25,33 @@ const ForgotPassword = props => {
   const dispatch = useDispatch();
   const emailPlaceHolder = useSelector(state => state.forgotPassReducer.emailPlaceHolder);
   const emailValue = useSelector(state => state.forgotPassReducer.emailValue);
-  const handleEmail=()=>{
-    if(!emailValue?.email || emailValue.email.trim() === ""){
-      Alert.alert('Users', 'Email is required');
-      return;
+  const handleEmail = () => { 
+    if (!emailValue?.email || emailValue.email.trim() === "") {
+        Alert.alert('Users', 'Email is required');
+        return;
     } else if (!/\S+@\S+\.\S+/.test(emailValue.email)) {
-          Alert.alert('Error', 'Enter a valid email address!');
-          return;
-    }else{
-      props.navigation.navigate('ResetPassword');
-      dispatch(forgotPassUser())
+        Alert.alert('Error', 'Enter a valid email address!');
+        return;
     }
-  };
+
+    dispatch(forgotPassUser())
+        .then((response) => {
+            if (response.success) {
+                Alert.alert('Success', response.message, [
+                    {
+                        text: 'OK',
+                        onPress: () => props.navigation.navigate('ResetPassword') // ✅ Navigate on success
+                    }
+                ]);
+            } else {
+                Alert.alert('Error', response.message || 'Something went wrong!');
+            }
+        })
+        .catch((error) => {
+            Alert.alert('Error', error.message || 'An error occurred!');
+        });
+};
+
 
   const goBackCall=()=>{
     props.navigation.goBack();

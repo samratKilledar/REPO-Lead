@@ -34,7 +34,8 @@ const homeReducer = (state = initialState, action) => {
         city: action.payload.cityRes,
         state: action.payload.stateRes,
         occupation: action.payload.occupationRes,
-        getAllLeadApi:action.payload.getAllLeadApiRes
+        getAllLeadApi:action.payload.getAllLeadApiRes,
+        profileDetail:action.payload.profileDetailRes,
       };
 
     case FETCH_DROPDOWN_FAILURE:

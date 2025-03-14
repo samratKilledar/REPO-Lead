@@ -64,6 +64,21 @@ export const addTaskApiCall= async data => {
     console.log('inside function' + JSON.stringify(data));
     return await apiPost(api.addTask, {data});
   }; 
+  export const profileDetail = async (authToken) => {
+    console.log("📡 Fetching profile details...");
+    console.log("🔑 Token:", authToken); // Check if token is correctly passed
+
+    try {
+        const response = await apiGet(api.profileDetails, authToken,1);
+        console.log("✅ Server Response:", response); // Log the fetched data
+        return response;
+    } catch (error) {
+        console.error("🚨 Error fetching profile details:", error.message);
+        return { success: false, message: error.message };
+    }
+};
+
+
 
 
 
