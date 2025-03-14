@@ -15,6 +15,10 @@ export const api={
     city:"https://opticalerp.in:85/api/cascadecountrycitystate/getcities",
     state:"https://opticalerp.in:85/api/cascadecountrycitystate/getstates",
     occupation:"https://opticalerp.in:85/api/udc/getvaluesbytype?type=Occupation",
+    taskList:"https://opticalerp.in:85/api/taskdetails/getlist",
+    
+    particularLeadDetailApi:"https://opticalerp.in:85/api/lead/getbyleadid",
+
 
     //AddFollowUP screen 
     addFollowUP: "https://opticalerp.in:85/api/followupdetails/create/create",
@@ -25,4 +29,7 @@ export const api={
    client:"https://opticalerp.in:85/api/client/getlist/get-all",
    clientDetail:"https://opticalerp.in:85/api/client/get/",
    // UpcomingMeetingsList:"https://opticalerp.in:85/api/lead/getlist/get-all"
+
+
+   leadSubmit:"https://opticalerp.in:85/api/lead/create/create"
 }

@@ -1,4 +1,4 @@
-import {apiGet , apiPost} from './apiClient';
+import {apiGet , apiPost,apiPostLead} from './apiClient';
 import {api} from './api';
 
 // Register API
@@ -39,8 +39,8 @@ export const occupation = async authToken => {
     return await apiGet(api.occupation,authToken);
 };
 export const getAllLeadApi= async authToken=>{
-    //console.log("ss------ssss"+authToken)
-    return await apiGet(api.getAllLeadApi,authToken);
+    //  console.log("ss-------->"+authToken)
+   return await apiGet(api.getAllLeadApi);
 }
 export const upComingTask= async authToken=>{
     //console.log("ss---sameeeeee---ssss"+authToken)
@@ -63,6 +63,11 @@ export const addTaskApiCall= async data => {
     return await apiPost(api.addTask, {data});
 }; 
 
+export const leadAPISubmit = async (data,tenantId) =>{
+    console.log(tenantId+'inside function' + JSON.stringify(data));
+    return await apiPostLead(api.leadSubmit, data,tenantId);
+}
+
 
 
   
@@ -71,4 +76,13 @@ export const addTaskApiCall= async data => {
 
 
 
+export const taskListResApi= async authToken=>{
+    //  console.log("ss---samrat---ssss"+authToken)
+    return await apiGet(api.taskList,authToken);
+}
+
+export const particularLeadDetailApi =async authToken=>{
+    // console.log("=====particularLeadDetailApi==="+authToken);
+    return await apiGet(api.particularLeadDetailApi, authToken);
+}
 

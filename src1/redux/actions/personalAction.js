@@ -13,41 +13,42 @@ export const CHANGE_CITY_OPTION = "CHANGE_CITY_OPTION";
 export const CHANGE_STATE_OPTION = "CHANGE_STATE_OPTION";
 export const CHANGE_COUNTRY_OPTION = "CHANGE_COUNTRY_OPTION";
 
+
 export const submitPersonalDetails = () => {
-  return async (dispatch, getState) => {
-    const { personalValue } = getState().personalReducer;
-    // console.log(personalValue);
-    try {
-      const response = await fetch('https://opticalerp.in:85/api/lead/create/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'tenant': personalValue.email,
-        },
-        body: JSON.stringify({
-          firstName: personalValue.firstName,
-          lastName: personalValue.lastName,
+  // return async (dispatch, getState) => {
+  //   const { personalValue } = getState().personalReducer;
+  //   // console.log(personalValue);
+  //   try {
+  //     const response = await fetch('https://opticalerp.in:85/api/lead/create/create', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'tenant': personalValue.email,
+  //       },
+  //       body: JSON.stringify({
+  //         firstName: personalValue.firstName,
+  //         lastName: personalValue.lastName,
 
-          emailId: personalValue.emailId,
-          Mobileno: personalValue.Mobileno,
-          WhatsappNo: personalValue.WhatsappNo,
-          addressLine1: personalValue.addressLine1,
-          addressLine2: personalValue.addressLine2,
-        }),
-      });
+  //         emailId: personalValue.emailId,
+  //         Mobileno: personalValue.Mobileno,
+  //         WhatsappNo: personalValue.WhatsappNo,
+  //         addressLine1: personalValue.addressLine1,
+  //         addressLine2: personalValue.addressLine2,
+  //       }),
+  //     });
 
-      const data = await response.json();
-      alert(JSON.stringify(data));
+  //     const data = await response.json();
+  //     alert(JSON.stringify(data));
 
-      if (response.ok) {
-        dispatch({ type: PERSONAL_SUBMIT_SUCCESS, payload: data });
-      } else {
-        throw new Error(data.message || 'Failed to submit personal details!');
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
+  //     if (response.ok) {
+  //       dispatch({ type: PERSONAL_SUBMIT_SUCCESS, payload: data });
+  //     } else {
+  //       throw new Error(data.message || 'Failed to submit personal details!');
+  //     }
+  //   } catch (error) {
+  //     alert(error.message);
+  //   }
+  // };
 };
 
 export const personalSubmitSuccess = () => ({
@@ -69,7 +70,10 @@ export const updatelastName = (lastName) => ({
   payload: lastName,
 });
 
-export const updateemailId = (emailId) => ({
+
+
+
+export const updateemailId = (data) => ({
   type: CHANGE_EMAIL_ID,
   payload: emailId,
 });
