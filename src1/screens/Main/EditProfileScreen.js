@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 import React, { useState, lazy, Suspense } from "react";
 import { View, StyleSheet, Image, TextInput, Platform, ScrollView, Alert, ActivityIndicator } from "react-native";
 // import Dropdown from "../../components/Dropdown";
 // import CustomTextInput from "../../components/CustomTextInput";
 // import CustomButton from "../../components/CustomButton";
+=======
+import React, { useState } from "react";
+import { View, StyleSheet, Image, TextInput, Platform, ScrollView, Alert } from "react-native";
+import Dropdown from "../../components/Dropdown";
+import CustomTextInput from "../../components/CustomTextInput";
+import CustomButton from "../../components/CustomButton";
+>>>>>>> UATLead
 import ButtonStyles from "../../styles/ButtonStyles";
 //import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -79,7 +87,6 @@ const EditProfileScreen = (props) => {
         });
     };
 
-
     const handleUpdateProfile = () => {
         if (!firstname || !lastname || !email || !phonenumber || !gender || !date) {
             Alert.alert("Error", "All fields are required!");
@@ -98,8 +105,7 @@ const EditProfileScreen = (props) => {
             return;
         }
 
-        Alert.alert("Success", "Profile updated successfully!");
-
+        Alert.alert("Success", "Profile updated successfully!"); 
     };
 
     return (

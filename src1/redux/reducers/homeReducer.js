@@ -16,6 +16,7 @@ const initialState = {
   state: ['No Data Avialable'],
   occupation: ['No Data Avialable'],
   getAllLeadApi:['No Data Avialable'],
+  taskList:['No Data Avialable'],
 };
 
 const homeReducer = (state = initialState, action) => {
@@ -28,7 +29,7 @@ const homeReducer = (state = initialState, action) => {
         followUp: action.payload.followUpRes,
         clientFollowUp: action.payload.clientFollowUpRes,
         taskPriority: action.payload.taskPriority,
-        service: action.payload.service,
+        service: action.payload.serviceRes,
         leadSource: action.payload.leadSourceRes,
         country: action.payload.countryRes,
         city: action.payload.cityRes,
@@ -36,8 +37,9 @@ const homeReducer = (state = initialState, action) => {
         occupation: action.payload.occupationRes,
         getAllLeadApi:action.payload.getAllLeadApiRes,
         profileDetail:action.payload.profileDetailRes,
+        taskList:action.payload.taskListRes
       };
-
+  
     case FETCH_DROPDOWN_FAILURE:
       return {
         ...state,
@@ -52,6 +54,8 @@ const homeReducer = (state = initialState, action) => {
         state: ['No Data Avialable'],
         occupation: ['No Data Avialable'],
         getAllLeadApi:['No Data Avialable'],
+        taskList:['No Data Avialable'],
+        particularLeadDetailApi:['No Data Avialable']
       };
 
     default:

@@ -5,7 +5,6 @@ import cardstyle from "../styles/cardstyle";
 import TextStyle from "../styles/TextStyle";
 
 const { width, height } = Dimensions.get('window');
-
 const InsuranceCardDel = ({ title, date, description, onDelete }) => {
   return (
     <View style={cardstyle.Insurance}>
@@ -20,7 +19,6 @@ const InsuranceCardDel = ({ title, date, description, onDelete }) => {
     </View>
   );
 };
-
 export default InsuranceCardDel;
 
 const styles = StyleSheet.create({

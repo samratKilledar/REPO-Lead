@@ -8,8 +8,12 @@ import {
   city,
   state,
   occupation,
+<<<<<<< HEAD
   getAllLeadApi,taskListResApi,particularLeadDetailApi,
   profileDetail
+=======
+  getAllLeadApi,taskListResApi,particularLeadDetailApi
+>>>>>>> UATLead
 } from '../../api/mainApi';
 export const FETCH_DROPDOWN_SUCCESS = 'FETCH_DROPDOWN_SUCCESS';
 export const FETCH_DROPDOWN_FAILURE = 'FETCH_DROPDOWN_FAILURE';
@@ -26,7 +30,10 @@ export const callAllDropDownAPI = storedData => {
         cityRes,
         stateRes,
         occupationRes,
+<<<<<<< HEAD
         profileDetailRes,
+=======
+>>>>>>> UATLead
         //getAllLeadApiRes,
        //  taskListRes,
         // particularLeadDetailApiRes

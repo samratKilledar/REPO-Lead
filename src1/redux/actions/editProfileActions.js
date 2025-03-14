@@ -1,4 +1,3 @@
-// Action Types
 export const UPDATE_FIRSTNAME = "UPDATE_FIRSTNAME";
 export const UPDATE_LASTNAME = "UPDATE_LASTNAME";
 export const UPDATE_EMAIL = "UPDATE_EMAIL";
@@ -9,8 +8,6 @@ export const UPDATE_DATE = "UPDATE_DATE";
 export const UPDATE_CLICK ="UPDATE_CLICK";
 export const UPDATE_SUCCESS ="UPDATE_SUCCESS";
 export const UPDATE_FAILURE = "UPDATE_FAILURE";
-
-
 
 export const updateFirstname = (firstname) => ({
     type: UPDATE_FIRSTNAME,

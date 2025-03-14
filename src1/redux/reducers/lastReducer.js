@@ -1,127 +1,121 @@
-// import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { act } from "react";
+import { UPDATE_ASSIGNTO, 
+  UPDATE_SERVICES, 
+  UPDATE_REMARK,
+  UPDATE_FIRSTNAME,
+  UPDATE_LASTNAME,
+  UPDATE_LEADSOURCES,
+  UPDATE_MOBILENO,
+  UPDATE_EMAILID,
+  UPDATE_WHATSAPPNO,
+  UPDATE_ADDRESSLINE1,
+  UPDATE_ADDRESSLINE2,
+  UPDATE_CITY,
+  UPDATE_STATE,
+  UPDATE_COUNTRY,
+  UPDATE_PINCODE,
+  UPDATE_OCCUPATION,
+  UPDATE_TYPEOFWORK,
+  UPDATE_MONTHLYINCOME,
+  SUBMIT_SUCCESS, 
+  SUBMIT_FAILURE  } from "../actions/lastAction";
+import { occupation } from "../../api/mainApi";
 
-// // Async API call to submit the lead
-// export const addLead = createAsyncThunk("lead/addLead", async (leadData, { rejectWithValue }) => {
-//   try {
-//     const response = await fetch("https://api.example.com/leads", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify(leadData),
-//     });
-
-//     if (!response.ok) {
-//       throw new Error("Failed to submit lead");
-//     }
-//     return await response.json();
-//   } catch (error) {
-//     return rejectWithValue(error.message);
-//   }
-// });
-
-// // Lead slice
-// const leadSlice = createSlice({
-//   name: "lead",
-//   initialState: {
-//     personal: {},
-//     occupation: {},
-//     services: {},
-//     loading: false,
-//     error: null,
-//   },
-//   reducers: {
-//     saveServicesData: (state, action) => {
-//       state.services = action.payload;
-//     },
-//   },
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(addLead.pending, (state) => {
-//         state.loading = true;
-//         state.error = null;
-//       })
-//       .addCase(addLead.fulfilled, (state) => {
-//         state.loading = false;
-//       })
-//       .addCase(addLead.rejected, (state, action) => {
-//         state.loading = false;
-//         state.error = action.payload;
-//       });
-//   },
-// });
-
-// export const { saveServicesData } = leadSlice.actions;
-// export default leadSlice.reducer;
-
-
-// Updated according to action.js
-// import { createSlice } from "@reduxjs/toolkit";
-// import { addLead } from "../actions/lastAction";
-
-// const leadSlice = createSlice({
-//   name: "lead",
-//   initialState: {
-//     personal: {},
-//     occupation: {},
-//     services: {},
-//     loading: false,
-//     error: null,
-//   },
-//   reducers: {
-//     saveServicesData: (state, action) => {
-//       state.services = action.payload;
-//     },
-//   },
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(addLead.pending, (state) => {
-//         state.loading = true;
-//         state.error = null;
-//       })
-//       .addCase(addLead.fulfilled, (state) => {
-//         state.loading = false;
-//       })
-//       .addCase(addLead.rejected, (state, action) => {
-//         state.loading = false;
-//         state.error = action.payload;
-//       });
-//   },
-// });
-
-// export const { saveServicesData } = leadSlice.actions;
-// export default leadSlice.reducer;
-
-// AddserviceReducer.js
-
-import { UPDATE_ASSIGNTO, UPDATE_SERVICES, UPDATE_REMARK } from '../actions/lastAction'
 const initialState = {
-  remark: "",
+  firstName: "s",
+  lastName: "ss", 
+  leadSources: "",
+  leadName:"Lead Sources",
+  mobileNo:"7798417997",
+  emailId:"sam@gmail.com",
+  whatsAppNo:"779841779",
+  addressLine1:"2qe",
+  addressLine2:"wfqwac",
+  city:"",
+  cityName:"Select City",
+  state:"",
+  stateName:"Select State",
+  country:"",
+  countryName:"Select Country",
+  isdCode:"",
+  pincode:"415262",
+  occupation:"",
+  occupationName:"Occupation Name",
+  typeOfWork:"",
+  monthlyIncome:"34344",
+  assignTo:"",
+  services:"",
+  servicesName:"Services=",
+  remark:"ednkjnf"
 
-  // for Dropdown 
-  assignto: [],
-  services: [], // Array to store fetched services
-
+ 
 };
 
 const lastReducer = (state = initialState, action) => {
+  if(action.type =="UPDATE_SERVICES"){
+    alert(JSON.stringify(action.payload)+"===")
+  }
   switch (action.type) {
-    // case 'FETCH_SERVICES_REQUEST':
-    //   return { ...state, servicesLoading: true, servicesError: null };
+    case UPDATE_FIRSTNAME:
+      return { ...state, firstName: action.payload };
 
-    // case 'FETCH_SERVICES_SUCCESS':
-    //   return { ...state, servicesLoading: false, services: action.payload };
+    case UPDATE_LASTNAME:
+      return { ...state, lastName: action.payload };
 
-    // case 'FETCH_SERVICES_FAILURE':
-    //   return { ...state, servicesLoading: false, servicesError: action.payload };
+    case UPDATE_LEADSOURCES:
+      return { ...state, leadSources: action.payload.id, leadName:action.payload.name };
+
+    case UPDATE_MOBILENO:
+      return { ...state, mobileNo: action.payload };
+
+    case UPDATE_EMAILID:
+      return { ...state, emailId: action.payload };
+
+    case UPDATE_WHATSAPPNO:
+      return { ...state, whatsAppNo: action.payload };
+
+    case UPDATE_ADDRESSLINE1:
+      return { ...state, addressLine1: action.payload };
+
+    case UPDATE_ADDRESSLINE2:
+      return { ...state, addressLine2: action.payload };
+
+    case UPDATE_CITY:
+      return { ...state, city: action.payload.id, cityName:action.payload.name };
+
+    case UPDATE_STATE:
+      return { ...state, state: action.payload.state,stateName:action.payload.name };
+
+    case UPDATE_COUNTRY:
+      return { ...state, country: action.payload.id, countryName: action.payload.name,isdCode:action.payload.isdCode};
+
+    case UPDATE_PINCODE:
+      return { ...state, pincode: action.payload };
+
+    case UPDATE_OCCUPATION:
+      return { ...state, occupation: action.payload.id, occupationName: action.payload.name};
+
+    case UPDATE_TYPEOFWORK:
+      return { ...state, typeOfWork: action.payload };
+
+    case UPDATE_MONTHLYINCOME:
+      return { ...state, monthlyIncome: action.payload };
 
     case UPDATE_ASSIGNTO:
-      return { ...state, assignto: action.payload };
+      return { ...state, assignTo: action.payload };
 
     case UPDATE_SERVICES:
-      return { ...state, services: action.payload };
+      return { ...state, services: action.payload.id , servicesName:action.payload.name };
 
     case UPDATE_REMARK:
       return { ...state, remark: action.payload };
-      
+
+    case SUBMIT_SUCCESS:
+      return { ...state, isAuthenticated: true };
+
+    case SUBMIT_FAILURE:
+      return { ...state, isAuthenticated: false };
+
     default:
       return state;
   }

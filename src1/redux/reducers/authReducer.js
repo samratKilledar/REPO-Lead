@@ -26,12 +26,12 @@ const authReducer = (state = initialState, action) => {
           return { 
               ...state, 
               loginValue: { 
-                  ...state.loginValue,  // Keep previous values
-                  ...action.payload     // Update only the fields provided
+                  ...state.loginValue,  
+                  ...action.payload     
               }
           };
 
-      // ✅ Store dropdown data
+     
       case 'FETCH_DROPDOWN_SUCCESS':
           return {
               ...state,
@@ -41,7 +41,6 @@ const authReducer = (state = initialState, action) => {
               },
           };
 
-      // ✅ Handle dropdown errors
       case 'FETCH_DROPDOWN_FAIL':
           return {
               ...state,

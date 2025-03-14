@@ -11,7 +11,10 @@ const Dropdown = ({ label, selectedValue, onValueChange, options, zIndex }) => {
         open={open}
         setOpen={setOpen}
         value={selectedValue}
-        setValue={onValueChange}
+        setValue={(callback) => {
+          const newValue = callback(selectedValue); // Ensure correct value update
+          onValueChange(newValue); // Pass new value to parent component
+        }}
         items={options}
         placeholder={label}
         style={[styles.dropdown, open ? styles.dropdownOpen : null]}
@@ -21,9 +24,7 @@ const Dropdown = ({ label, selectedValue, onValueChange, options, zIndex }) => {
         ]}
         textStyle={[styles.labelStyle, open ? styles.labelStyleOpen : null]}
         listItemContainerStyle={styles.listItem}
-        
-       // listMode="MODAL" // 👈 Add this line
-        
+        listMode="MODAL" // Dropdown opens in a modal
         ArrowUpIconComponent={() => (
           <Image
             source={require("../assets/icons/ArrowUp/arrowup.png")}

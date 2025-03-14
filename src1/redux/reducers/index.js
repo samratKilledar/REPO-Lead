@@ -1,4 +1,3 @@
-// index.js
 import { combineReducers } from 'redux';
 import authReducer from './authReducer';
 import homeReducer from './homeReducer';
@@ -11,6 +10,7 @@ import lastReducer from './lastReducer';
 import occupationReducer from './occupationReducer';
 import forgotPassReducer from './forgotPassReducer';
 import createPassReducer from './createPassReducer';
+
 
 export default combineReducers({
   auth: authReducer,

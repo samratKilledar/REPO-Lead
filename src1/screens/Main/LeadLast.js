@@ -1,139 +1,5 @@
-// import React, { useEffect } from 'react';
-// import { View, Text, Alert, ScrollView } from 'react-native';
-// import { useDispatch, useSelector } from 'react-redux';
-// import CustomButton from '../../components/CustomButton';
-// import CustomTextInput from '../../components/CustomTextInput';
-// import Dropdown from '../../components/Dropdown';
-// import NavigationHeaderBack from '../../components/NavigationHeaderBack';
-// import InsuranceCard from '../../components/InsuranceCard';
-// import Stepper from '../../components/StepperComp';
-// import StatusDropdown from '../../components/StatusDropdown';
-// import { fetchServices, updateAssignTo, updateRemark } from '../../redux/actions/lastAction';
-// import { StyleSheet } from 'react-native';
-
-
-// const LeadLast = (props) => {
-//   const dispatch = useDispatch();
-//   const { assignto, services, remark, servicesLoading, servicesError } = useSelector((state) => state.last);
-
-//   const steps = ['Personal', 'Occupation', 'Services'];
-//   const currentStep = 3;
-
-//   useEffect(() => {
-//     dispatch(fetchServices());
-//   }, [dispatch]);
-
-//   const cardData = [
-//     {
-//       id: 1,
-//       title: 'Insurance',
-//       date: '10-01-2025',
-//       description: 'Lorem Ipsum is simply dummy text of the printing industry...'
-//     },
-//     {
-//       id: 2,
-//       title: 'Mutual Fund',
-//       date: '20-01-2025',
-//       description: "Lorem Ipsum has been the industry's standard dummy text..."
-//     }
-//   ];
-
-//   const goBackCall = () => {
-//     props.navigation.goBack();
-//   };
-
-//   const handleSubmit = () => {
-//     if (!assignto || !services) {
-//       Alert.alert('Error', "Please select 'Assign to' and 'Services'");
-//       return;
-//     }
-
-//     const formData = { assignto, services, remark };
-//     console.log('Form Data:', formData);
-//     Alert.alert('Success', 'Lead submitted successfully');
-//   };
-
-//   return (
-//     <View style={styles.container}>
-//       <View style={{ flex: 0.1 }}>
-//         <NavigationHeaderBack text="Add Services" onPress={goBackCall} />
-//       </View>
-//       <View style={styles.centerContainer}>
-//         <Stepper steps={steps} currentStep={currentStep} />
-//         <Dropdown
-//           label="Assign to"
-//           selectedValue={assignto}
-//           onValueChange={(value) => dispatch(updateAssignTo(value))}
-//           options={[
-//             { label: 'John Doe', value: 'John Doe' },
-//             { label: 'Jane Smith', value: 'Jane Smith' }
-//           ]}
-//           zIndex={2000}
-//         />
-//         {servicesLoading ? (
-//           <Text>Loading Services...</Text>
-//         ) : servicesError ? (
-//           <Text>Error: {servicesError}</Text>
-//         ) : (
-//           <StatusDropdown
-//             label="Services"
-//             selectedValue={services}
-//             onValueChange={(value) => dispatch(updateAssignTo(value))}
-//             apiType="service"
-//             zIndex={1000}
-//           />
-//         )}
-//         <CustomTextInput
-//           value={remark}
-//           placeholder="Remark"
-//           onChangeText={(value) => dispatch(updateRemark(value))}
-//         />
-//         <CustomButton title="Submit" onPress={handleSubmit} />
-//       </View>
-//       <View style={styles.insuranceCard}>
-//         {cardData.map((item) => (
-//           <InsuranceCard key={item.id} title={item.title} date={item.date} description={item.description} />
-//         ))}
-//       </View>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     paddingRight: 24,
-//     paddingLeft: 24,
-//     paddingTop: 15,
-//     backgroundColor: '#FFFFFF',
-//     gap: 15,
-//   },
-//   centerContainer: {
-//     flex: 0.7,
-//     gap: 12,
-//     zIndex: 1,
-//   },
-//   insuranceCard: {
-//     marginTop: 30,
-//     marginRight: 10,
-//     marginLeft: 5,
-//     marginBottom: 30,
-//     gap: 24,
-//   },
-//   insuranceText: {
-//     fontFamily: 'Urbanist',
-//     fontWeight: 700,
-//     fontSize: 18,
-//     lineHeight: 21.6,
-//     color: '#212121',
-//   },
-// });
-
-// export default LeadLast;
-
-
-import React, { useEffect } from 'react';
-import { View, Text, Alert, ScrollView, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, Alert, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
@@ -142,20 +8,20 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import { fetchServices, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
+import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
+import { state } from '../../api/mainApi';
 
 const LeadLast = (props) => {
   const dispatch = useDispatch();
-  const { assignto, services, remark, servicesLoading, servicesError } = useSelector((state) => state.lastReducer);
-
+  const { assignto, services, remark, servicesName,  } = useSelector((state) => state.lastReducer);
+  // const {service1} = useSelector((state)=> state.homeReducer)
+  // alert(service1)
+  const service1= useSelector(state => state.homeReducer);
+  //alert(JSON.stringify(service1.service)) 
   const steps = ['Personal', 'Occupation', 'Services'];
   const currentStep = 3;
 
-  useEffect(() => {
-    dispatch(fetchServices());
-  }, [dispatch]);
-
-  const cardData = [
+  const [cards, setCards] = useState([
     {
       id: 1,
       title: 'Insurance',
@@ -167,32 +33,49 @@ const LeadLast = (props) => {
       title: 'Mutual Fund',
       date: '20-01-2025',
       description: "Lorem Ipsum has been the industry's standard dummy text..."
-    }
-  ];
+    },
+  ]);
+
+  useEffect(() => {
+   // dispatch(fetchServices());
+  }, [dispatch]);
 
   const goBackCall = () => {
-    props.navigation.goBack();
+    props.navigation.goBack("LeadAddOccupation");
   };
 
   const handleSubmit = () => {
-    if (!assignto || !services) {
+    if (services.length === 0) {
       Alert.alert('Error', "Please select 'Assign to' and 'Services'");
       return;
     }
 
-    const formData = { assignto, services, remark };
-    console.log('Form Data:', formData);
-    Alert.alert('Success', 'Lead submitted successfully');
+    const newCard = {
+      id: Date.now(),
+      title: services[0],
+      date: new Date().toLocaleDateString(),
+      description: remark
+    };
+
+    setCards((prevCards) => [...prevCards, newCard]);
+
+    dispatch(leadSubmitAllData())
+   // Alert.alert('Success', 'Lead submitted successfully');
+  };
+
+  const handleDeleteCard = (id) => {
+    setCards((prevCards) => prevCards.filter((card) => card.id !== id));
   };
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 0.1}}>
-      <NavigationHeaderBack text="Add Services" onPress={goBackCall} />
+      <View style={{ flex: 0.1, marginLeft: 5 }}>
+        <NavigationHeaderBack text="Add Services" onPress={goBackCall} />
       </View>
-      
-      <ScrollView contentContainerStyle={styles.centerContainer}>
+      <View style={styles.stepperContainer}>
         <Stepper steps={steps} currentStep={currentStep} />
+      </View>
+      <View style={styles.centerContainer}>
         <Dropdown
           label="Assign to"
           selectedValue={assignto}
@@ -201,69 +84,108 @@ const LeadLast = (props) => {
             { label: 'John Doe', value: 'John Doe' },
             { label: 'Jane Smith', value: 'Jane Smith' }
           ]}
-          zIndex={2000}
-          elevation={8}
+          zIndex={4000}
         />
-        {servicesLoading ? (
-          <Text>Loading Services...</Text>
-        ) : servicesError ? (
-          <Text>Error: {servicesError}</Text>
-        ) : (
-          <StatusDropdown
+      
+          {/* <StatusDropdown
             label="Services"
-            selectedValue={services}
-            onValueChange={(value) => dispatch(updateServices(value))}
+            selectedValue={service1.service}
+            // onValueChange={(value) => dispatch(updateServices([value]))} 
             apiType="service"
-            zIndex={1000}
-            elevation={6}
-          />
-        )}
+            zIndex={2000}
+          /> */}
+        
+        <StatusDropdown
+                label={servicesName}
+                selectedValue={service1.services}
+                onValueChange={(value) => dispatch(updateServices(value))}
+                apiType="leadSource"
+                listData={service1.service}
+              />
         <CustomTextInput
           value={remark}
           placeholder="Remark"
           onChangeText={(value) => dispatch(updateRemark(value))}
         />
         <CustomButton title="Submit" onPress={handleSubmit} />
+        <ScrollView contentContainerStyle={styles.insuranceCardContainer}>
         <View style={styles.insuranceCard}>
-          {cardData.map((item) => (
-            <InsuranceCard key={item.id} title={item.title} date={item.date} description={item.description} />
-          ))}
+          <Text style={styles.insuranceText}>Interested Services</Text>
+          {/* {props.cardData.map((item) => (
+            <InsuranceCard
+              key={item.id}
+              title={item.title}
+              date={item.date}
+              description={item.description}
+            />
+          ))} */}
         </View>
-      </ScrollView>
+          {/* {cards.map((item) => (
+            <View key={item.id} style={styles.cardContainer}>
+              <InsuranceCard
+                title={item.title}
+                date={item.date}
+                description={item.description}
+              />
+              <TouchableOpacity
+                style={styles.deleteButton}
+                onPress={() => handleDeleteCard(item.id)}
+              >
+                <Image
+                  source={require('../../assets/icons/Delete/delete.png')}
+                  style={styles.deleteIcon}
+                />
+              </TouchableOpacity>
+            </View>
+          ))} */}
+        </ScrollView>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      paddingRight: 24,
-      paddingLeft: 24,
-      paddingTop: 10,
-      backgroundColor: '#FFFFFF',
-      gap: 15,
-    },
-    centerContainer: {
-      flex: 0.7,
-      gap: 12,
-      zIndex: 1,
-      position: "relative",
-    },
-    insuranceCard: {
-      marginTop: 30,
-      marginRight: 10,
-      marginLeft: 5,
-      marginBottom: 30,
-      gap: 24,
-    },
-    insuranceText: {
-      fontFamily: 'Urbanist',
-      fontWeight: 700,
-      fontSize: 18,
-      lineHeight: 21.6,
-      color: '#212121',
-    },
-  });
+  container: {
+    flex: 1,
+    paddingTop: 10,
+    backgroundColor: '#FFFFFF',
+    gap: 18,
+    zIndex: -1,
+  },
+  centerContainer: {
+    flex: 1,
+    gap: 12,
+    zIndex: 1,
+    paddingLeft: 15,
+    paddingRight: 15,
+  },
+  stepperContainer: {
+    marginBottom: 10,
+  },
+  insuranceCardContainer: {
+    marginRight: 10,
+    marginLeft: 5,
+    gap: 24,
+    marginBottom: 16,
+    padding: 6,
+    paddingBottom: 100,
+  },
+  cardContainer: {
+    position: 'relative',
+  },
+  deleteButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+    zIndex: 1,
+  },
+  deleteIcon: {
+    width: 25,
+    height: 25,
+    top: 20,
+    right: 20,
+  },
+});
 
 export default LeadLast;
-  
+

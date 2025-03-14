@@ -78,16 +78,13 @@ export const forgotPassApiCall = async data => {
 
 // Register API
 export const readAllLead = async userData => {
-
     console.log(getItem("authToken"))
     return await apiGet(api.getAllLeadApi,getItem(authToken));
 };
 
-export const l = async userData => {
-  
-    return await apiGet(api.getAllLeadApi,getItem(userData));
-};
-
+// export const l = async userData => {
+//     return await apiGet(api.getAllLeadApi,getItem(userData));
+// };
 
 export const fetchDropdownDataApi = async (apiType) => {
     try {

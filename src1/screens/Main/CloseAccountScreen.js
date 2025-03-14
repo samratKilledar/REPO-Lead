@@ -36,7 +36,6 @@ const CloseAccountScreen = () => {
             </TouchableOpacity>
           </View>
 
-          {/* Adjust flex to give enough space */}
           <View style={styles.detailsContainer}>
             <DetailItem icon={require('../../assets/icons/Work/work.png')} label="Task Name" detail="Close Account" />
             <DetailItem icon={require('../../assets/icons/ProfileGrey/profileGrey.png')} label="Task Owner" detail="John Smith" />
@@ -48,10 +47,7 @@ const CloseAccountScreen = () => {
             <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label="Start Date" detail="Feb 21, 2025" />
             <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label="Reminder Date" detail="Feb 15, 2025" />
             <DetailItem icon={require('../../assets/icons/Remarks.png')} label="Remarks" detail="Query raised- 11310957" />
-
           </View>
-
-
         </View>
         {menuVisible && (
           <View style={styles.menuBox}>
@@ -69,7 +65,7 @@ const CloseAccountScreen = () => {
             </TouchableOpacity>
           </View>
         )}
-        {/* Bottom Pop-up Modal */}
+        
         <Modal
           animationType="slide"
           transparent={true}
@@ -108,15 +104,11 @@ const CloseAccountScreen = () => {
                 }}
               >
               </CustomButton>
-
             </View>
-
           </View>
         </Modal>
       </ScrollView>
     </View>
-
-
   );
 };
 
@@ -174,7 +166,6 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 14,
   },
-  //modal status style 
   modalContainer: {
     flex: 1,
     justifyContent: "flex-end",
