@@ -209,9 +209,9 @@
 import React , {lazy,Suspense,useEffect,useState} from "react";
 import { View, StyleSheet, Alert , ScrollView , KeyboardAvoidingView} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { 
-  changeTitle, changeFollowupStatus, changeAssignedTo, changeAttachment, 
-  changeFollowupDate, changeFollowupTime, changeRemark 
+import {
+  changeTitle, changeFollowupStatus, changeAssignedTo, changeAttachment,
+  changeFollowupDate, changeFollowupTime, changeRemark
 } from "../../redux/actions/addFollowUpActions";
 //import Dropdown from "../../components/Dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -232,23 +232,22 @@ const AddFollowUP = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  // Get Redux state
-  const { 
+  const {
     title, followupStatus, assignedTo, attachmentUrl, followupDate, followupTime, remark,
-    isLoading, error, isAuthenticated 
+    isLoading, error, isAuthenticated
   } = useSelector(state => state.addFollowUp);
   //alert(followupStatus)
-  const { 
-    titlePlaceholder, followupStatusPlaceholder, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder, 
+  const {
+    titlePlaceholder, followupStatusPlaceholder, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder,
     followupTimePlaceholder, remarkPlaceholder
   } = useSelector(state => state.addFollowUp);
-  const followUpList= useSelector(state => state.homeReducer);
+
+  const followUpList = useSelector(state => state.homeReducer);
   alert(JSON.stringify(followUpList))
   const goBackCall = () => {
     navigation.popToTop();
   };
 
-  // Auto-Navigate back on Success ✅
   useEffect(() => {
     if (isAuthenticated) {
       Alert.alert("Success", "Follow-up added successfully!", [
@@ -256,14 +255,12 @@ const AddFollowUP = (props) => {
       ]);
     }
   }, [isAuthenticated]);
-  // Show API error if exists ❌
   useEffect(() => {
     if (error) {
       Alert.alert("Error", error);
     }
   }, [error]);
 
-  // Date Picker Logic
   const [showDatePicker, setShowDatePicker] = React.useState(false);
   const [showTimePicker, setShowTimePicker] = React.useState(false);
   const handleDateChange = (event, date) => {
@@ -273,17 +270,16 @@ const AddFollowUP = (props) => {
     setShowDatePicker(false);
   };
 
-  // Time Picker Logic
- const handleTimeChange = (event, time) => {
-     if (event.type === "set" && time) {
-       const hours = time.getHours();
-       const minutes = time.getMinutes().toString().padStart(2, "0");
-       const ampm = hours >= 12 ? "PM" : "AM";
-       const formattedHours = (hours % 12 || 12).toString().padStart(2, "0");
-       dispatch(changeFollowupTime(`${formattedHours}:${minutes} ${ampm}`));
-     }
-     setShowTimePicker(false);
-   };
+  const handleTimeChange = (event, time) => {
+    if (event.type === "set" && time) {
+      const hours = time.getHours();
+      const minutes = time.getMinutes().toString().padStart(2, "0");
+      const ampm = hours >= 12 ? "PM" : "AM";
+      const formattedHours = (hours % 12 || 12).toString().padStart(2, "0");
+      dispatch(changeFollowupTime(`${formattedHours}:${minutes} ${ampm}`));
+    }
+    setShowTimePicker(false);
+  };
 
   const validateAndSubmit = () => {
     console.log("🚀 validateAndSubmit called in validSubmit !");
@@ -296,10 +292,10 @@ const AddFollowUP = (props) => {
       { value: followupTime, placeholder: followupTimePlaceholder },
       { value: remark, placeholder: remarkPlaceholder }
     ];
-  
+
     for (const field of fields) {
       const fieldValue = field.value ? String(field.value).trim() : "";
-  
+
       if (!fieldValue) {
         console.log(`⚠️ Validation failed for: ${field.placeholder}`);
          Alert.alert("Validation Error", `${field.placeholder} is required.`);
@@ -308,7 +304,7 @@ const AddFollowUP = (props) => {
     }
     dispatch(submitFollowUp());
   };
-  
+
 
   return (
     <View style={styles.container}>

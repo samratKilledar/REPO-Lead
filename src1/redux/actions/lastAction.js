@@ -1,4 +1,4 @@
-import { leadLastApiCall } from "../../api/mainApi";
+import { leadAPISubmit } from "../../api/mainApi";
 
 export const SUBMIT_SUCCESS = "SUBMIT_SUCCESS";
 export const SUBMIT_FAILURE = "SUBMIT_FAILURE";
@@ -112,6 +112,29 @@ export const updateRemark = (remark) => ({
   payload: remark,
 });
 
+export const leadSubmitAllData= () => async (dispatch, getState) => {
+  try {
+
+    const alldata= getState().lastReducer; 
+    const tenantId=getState().auth;
+    alert(JSON.stringify(alldata)+"---"+tenantId.loginValue.customerId)
+   // dispatch({type: SUBMIT_ALL_LEAD_DATA});
+   
+     const data = await leadAPISubmit(alldata,tenantId.customerId);
+    // if (data.token != null) {
+    //   //alert(JSON.stringify(data));
+    //   setItem('authToken', data.token); 
+    //   dispatch({type: LOGIN_SUCCESS}); 
+    // } else {
+    //   dispatch({type: LOGIN_FAILURE, payload: error.message}); 
+    // }
+  } catch (error) {
+    dispatch({type: LOGIN_FAILURE, payload: error.message}); 
+  }
+}
+
+
+
 export const submitSuccess = () => ({ type: SUBMIT_SUCCESS });
 
 export const submitFailure = (error) => ({
@@ -123,30 +146,6 @@ export const submitFailure = (error) => ({
 
 
 
-export const submitLeadLast = () => async (dispatch, getState) => {
-  console.log("in a actions start");
-  try {
-    const { remark, assignTo, services } = getState().lastReducer;
-
-    const Leaddata = {
-      remark,
-      assignTo,
-      services,
-    };
-    console.log("Submitting LeadLast Data:", JSON.stringify(Leaddata));
-    
-    const data = await leadLastApiCall(Leaddata); 
-    if (data.token != null) {
-      setItem('authToken', response.token); 
-      console.log("submit actionc");
-      dispatch({type: SUBMIT_SUCCESS}); 
-    } else {
-      dispatch({type: SUBMIT_FAILURE, payload: "Invalid token"}); 
-    }
-  } catch (error) {
-    dispatch({type: SUBMIT_FAILURE, payload: error.message}); 
-  }
-};
 
 
 

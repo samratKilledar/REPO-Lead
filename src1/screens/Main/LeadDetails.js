@@ -46,7 +46,7 @@ const LeadDetails = (props) => {
           />
         </TouchableOpacity>
       </View>
-      
+  
       <ScrollView style={styles.centralcontainer}>
         <View style={styles.detailsContainer}>
           <DetailItem icon={require('../../assets/icons/ProfileGrey/profileGrey.png')} label="Name" detail="Rajiv Sharma" />
@@ -84,6 +84,7 @@ const LeadDetails = (props) => {
           ))}
         </View>
       </ScrollView>
+
       {menuVisible && (
         <View style={styles.menuBox}>
           <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Edit clicked")}>
@@ -174,6 +175,5 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 14,
   },
-
 });
 export default LeadDetails;

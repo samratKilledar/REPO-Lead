@@ -9,11 +9,11 @@ import {
   city,
   state,
   occupation,
-  getAllLeadApi,taskListResApi,particularLeadDetailApi,
   upComingTask,
   leadDetail,
   client,
   clientDetail,
+  getAllLeadApi,taskListResApi,particularLeadDetailApi
 } from '../../api/mainApi';
 export const FETCH_DROPDOWN_SUCCESS = 'FETCH_DROPDOWN_SUCCESS';
 export const FETCH_DROPDOWN_FAILURE = 'FETCH_DROPDOWN_FAILURE';
@@ -73,7 +73,7 @@ export const callAllDropDownAPI = storedData => {
       console.log('Third API Response:', leadDetailRes);
       console.log('Third API Response:', clientRes);
       console.log('Third API Response:', clientDetailRes);
-
+      
       dispatch({
         type: FETCH_DROPDOWN_SUCCESS,
         payload: {

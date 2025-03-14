@@ -97,10 +97,8 @@ const ClientDetails = (props) => {
           </TouchableOpacity>
         </View>
       )}
-    </View>
-    
+    </View>    
   );
-  
 };
 
 const styles = StyleSheet.create({

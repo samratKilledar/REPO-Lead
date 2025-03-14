@@ -1,4 +1,4 @@
-import {apiGet , apiPost, leadLastapiPost} from './apiClient';
+import {apiGet , apiPost,apiPostLead} from './apiClient';
 import {api} from './api';
 
 // Register API
@@ -39,8 +39,8 @@ export const occupation = async authToken => {
     return await apiGet(api.occupation,authToken);
 };
 export const getAllLeadApi= async authToken=>{
-    //console.log("ss------ssss"+authToken)
-    return await apiGet(api.getAllLeadApi,authToken);
+    //  console.log("ss-------->"+authToken)
+   return await apiGet(api.getAllLeadApi);
 }
 export const upComingTask= async authToken=>{
     //console.log("ss---sameeeeee---ssss"+authToken)
@@ -62,26 +62,21 @@ export const addTaskApiCall= async data => {
     console.log('inside function' + JSON.stringify(data));
     return await apiPost(api.addTask, {data});
 }; 
-export const leadLastApiCall = async (data) => {
-    console.log("📡 Sending request to server with data:", data);
 
-    // Prepare parameters
-    const param = {
-        customerId: "Root",   // 🔹 Required tenant/customerId
-        assignto: data.assignto,  // 🔹 Assign `assignto` directly
-        remark: data.remark,      // 🔹 Assign `remark` directly
-        services: data.services,  // 🔹 Assign `services` (assuming an array or string)
-    };
+export const leadAPISubmit = async (data,tenantId) =>{
+    console.log(tenantId+'inside function' + JSON.stringify(data));
+    return await apiPostLead(api.leadSubmit, data,tenantId);
+}
 
-    try {
-        // Call API using apiPost
-        const response = await apiPost(api.leadLast, { data: param });
 
-        console.log("✅ Server Response:", response);
-        return response;
-    } catch (error) {
-        console.log("🚨 API Error:", error.response?.data || error.message);
-        return { success: false, message: error.response?.data || error.message };
-    }
-};
+
+export const taskListResApi= async authToken=>{
+    //  console.log("ss---samrat---ssss"+authToken)
+    return await apiGet(api.taskList,authToken);
+}
+
+export const particularLeadDetailApi =async authToken=>{
+    // console.log("=====particularLeadDetailApi==="+authToken);
+    return await apiGet(api.particularLeadDetailApi, authToken);
+}
 

@@ -9,17 +9,16 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import { submitLeadLast, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
-import Toast from 'react-native-toast-message';
+import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
+import { state } from '../../api/mainApi';
+
 const LeadLast = (props) => {
   const dispatch = useDispatch();
-  
-  // Correctly fetching values from Redux state
-  const {
-    assignto, services , remark 
-  } = useSelector(state => state.lastReducer); 
-
-
+  const { assignto, services, remark, servicesName,  } = useSelector((state) => state.lastReducer);
+  // const {service1} = useSelector((state)=> state.homeReducer)
+  // alert(service1)
+  const service1= useSelector(state => state.homeReducer);
+  //alert(JSON.stringify(service1.service)) 
   const steps = ['Personal', 'Occupation', 'Services'];
   const currentStep = 3;
   const servicesLoading = false; // Replace with actual loading state if available
@@ -39,6 +38,10 @@ const LeadLast = (props) => {
     },
   ]);
 
+  useEffect(() => {
+   // dispatch(fetchServices());
+  }, [dispatch]);
+
   const goBackCall = () => {
     props.navigation.goBack("LeadAddOccupation");
   };
@@ -48,21 +51,25 @@ const LeadLast = (props) => {
 
 
   const handleSubmit = () => {
-    if (!assignto) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: 'Please select "Assign to"',
-      });
-      return;
-    }
+    // if (!assignto) {
+    //   Toast.show({
+    //     type: 'error',
+    //     text1: 'Error',
+    //     text2: 'Please select "Assign to"',
+    //   });
+    //   return;
+    // }
 
+    // if (services.length === 0) {
+    //   Toast.show({
+    //     type: 'error',
+    //     text1: 'Error',
+    //     text2: 'Please select "Services"',
+    //   });
+    //   return;
+    // }
     if (services.length === 0) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: 'Please select "Services"',
-      });
+      Alert.alert('Error', "Please select 'Assign to' and 'Services'");
       return;
     }
 
@@ -80,7 +87,10 @@ const LeadLast = (props) => {
       text1: 'Success',
       text2: 'Lead submitted successfully',
     });
+  }
     // dispatch(submitLeadLast());
+    dispatch(leadSubmitAllData())
+   // Alert.alert('Success', 'Lead submitted successfully');
   };
 
   
@@ -98,12 +108,18 @@ const LeadLast = (props) => {
       </View>
       <View style={styles.centerContainer}>
         <Dropdown
+<<<<<<< HEAD
           label="Assign To"
           selectedValue={assignto} // Fixed Redux selector
           onValueChange={(value) => {
             console.log("AssignTo Selected:", value);
             dispatch(updateAssignTo(value));
           }}
+=======
+          label="Assign to"
+          selectedValue={assignto}
+          onValueChange={(value) => dispatch(updateAssignTo(value))}
+>>>>>>> UATLead
           options={[
             { label: 'John Doe', value: 'John Doe' },
             { label: 'Jane Smith', value: 'Jane Smith' }
@@ -111,6 +127,7 @@ const LeadLast = (props) => {
           ]}
           zIndex={4000}
         />
+<<<<<<< HEAD
 
         {servicesLoading ? (
           <Text>Loading Services...</Text>
@@ -128,6 +145,24 @@ const LeadLast = (props) => {
           />
         )}
 
+=======
+      
+          {/* <StatusDropdown
+            label="Services"
+            selectedValue={service1.service}
+            // onValueChange={(value) => dispatch(updateServices([value]))} 
+            apiType="service"
+            zIndex={2000}
+          /> */}
+        
+        <StatusDropdown
+                label={servicesName}
+                selectedValue={service1.services}
+                onValueChange={(value) => dispatch(updateServices(value))}
+                apiType="leadSource"
+                listData={service1.service}
+              />
+>>>>>>> UATLead
         <CustomTextInput
           value={remark}
           placeholder="Remark"
@@ -135,6 +170,7 @@ const LeadLast = (props) => {
         />
         <CustomButton title="Submit" onPress={handleSubmit} />
         <ScrollView contentContainerStyle={styles.insuranceCardContainer}>
+<<<<<<< HEAD
           <View style={styles.insuranceCard}>
             {cards.map((item) => (
               <View key={item.id} style={styles.cardContainer}>
@@ -155,6 +191,37 @@ const LeadLast = (props) => {
               </View>
             ))}
           </View>
+=======
+        <View style={styles.insuranceCard}>
+          <Text style={styles.insuranceText}>Interested Services</Text>
+          {/* {props.cardData.map((item) => (
+            <InsuranceCard
+              key={item.id}
+              title={item.title}
+              date={item.date}
+              description={item.description}
+            />
+          ))} */}
+        </View>
+          {/* {cards.map((item) => (
+            <View key={item.id} style={styles.cardContainer}>
+              <InsuranceCard
+                title={item.title}
+                date={item.date}
+                description={item.description}
+              />
+              <TouchableOpacity
+                style={styles.deleteButton}
+                onPress={() => handleDeleteCard(item.id)}
+              >
+                <Image
+                  source={require('../../assets/icons/Delete/delete.png')}
+                  style={styles.deleteIcon}
+                />
+              </TouchableOpacity>
+            </View>
+          ))} */}
+>>>>>>> UATLead
         </ScrollView>
       </View>
     </View>

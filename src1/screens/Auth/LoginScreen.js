@@ -15,7 +15,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Added AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomText from '../../components/CustomText';
 import CustomTextInput from '../../components/CustomTextInput';
 import CustomButton from '../../components/CustomButton';
@@ -55,15 +55,13 @@ const LoginScreen = props => {
 
     requestPermissions();
     checkAuthToken();
-    loadRememberedCredentials(); 
+    loadRememberedCredentials();
   }, []);
 
   const requestPermissions = async () => {
     try {
       if (Platform.OS === 'android') {
         const permissions = [];
-  
-        // Camera permission (required on all Android versions)
         permissions.push(PermissionsAndroid.PERMISSIONS.CAMERA);
   
         if (Platform.Version >= 33) {
@@ -77,11 +75,8 @@ const LoginScreen = props => {
           // Android 12 and below
           permissions.push(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE);
         }
-  
-        // Request permissions
+
         const grantedPermissions = await PermissionsAndroid.requestMultiple(permissions);
-  
-        // Check if all permissions are granted
         let allPermissionsGranted = true;
         for (const permission of permissions) {
           if (grantedPermissions[permission] !== PermissionsAndroid.RESULTS.GRANTED) {
@@ -128,15 +123,13 @@ const LoginScreen = props => {
         await AsyncStorage.setItem('loginCredentials', credentials);
         console.log("✅ Credentials Saved in Storage:", credentials); 
       } else {
-        await AsyncStorage.removeItem('loginCredentials'); // Clear saved data if unchecked
+        await AsyncStorage.removeItem('loginCredentials'); 
         console.log("❌ Credentials Removed from Storage"); 
       }
     } catch (error) {
       console.error('Error saving credentials:', error);
     }
   };
-
-
   // alert(JSON.stringify(loginPlaceHolder))
   // Validation and Login Handler
   const handleLogin = () => {
@@ -148,7 +141,7 @@ const LoginScreen = props => {
       return;
     } else {
       setLoading(true);
-      saveCredentials(); // Save credentials before logging in
+      saveCredentials();
       dispatch(loginUser());
     }
   };
@@ -161,7 +154,7 @@ const LoginScreen = props => {
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.inner}>
-              {/* Logo */}
+            
               <View style={{ flex: 1, justifyContent: 'center' }}>
                 <Image
                   source={require('../../assets/images/Logo.png')}
@@ -207,6 +200,7 @@ const LoginScreen = props => {
               </View>
 
               <View style={{ flex: 3, alignItems: 'center' }}>
+               
                 <View style={styles.checkboxContainer}>
                   <Pressable
                     style={[styles.checkbox, isChecked && styles.checked]}
@@ -302,7 +296,7 @@ const styles = StyleSheet.create({
       checkIcon: {
         width: 14,
         height: 10,
-        tintColor: '#fff', 
+        tintColor: '#fff',
         resizeMode: 'contain',
       },
       checkmark: {
@@ -311,6 +305,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
       },
 });
-
 export default LoginScreen;
 

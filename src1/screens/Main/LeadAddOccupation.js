@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Alert , ToastAndroid } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,13 +22,13 @@ const LeadAddOccupation = (props) => {
   };
 
   const { 
-    occupation,
+    occupation,occupationName,
     typeOfWork,
     monthlyIncome,
     } = useSelector(state => state.lastReducer);
 
     const occupationList= useSelector(state => state.homeReducer);
-    alert(JSON.stringify(occupationList))
+   // alert(JSON.stringify(occupationList))
 
     const leadLastHandle = () => 
       {
@@ -79,7 +78,7 @@ const LeadAddOccupation = (props) => {
       <View style={styles.centerContainer}>
          
         <StatusDropdown
-          label="Occupation"
+          label={occupationName}
           selectedValue={occupation}
           onValueChange={(value) => {
             dispatch(updateOccupation(value));
