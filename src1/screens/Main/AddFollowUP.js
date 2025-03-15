@@ -1,19 +1,26 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Alert, ScrollView, KeyboardAvoidingView } from "react-native";
+import React , {lazy,Suspense,useEffect,useState} from "react";
+import { View, StyleSheet, Alert , ScrollView , KeyboardAvoidingView , ToastAndroid } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import {
   changeTitle, changeFollowupStatus, changeAssignedTo, changeAttachment,
   changeFollowupDate, changeFollowupTime, changeRemark
 } from "../../redux/actions/addFollowUpActions";
-import Dropdown from "../../components/Dropdown";
+//import Dropdown from "../../components/Dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import CustomTextInput from "../../components/CustomTextInput";
-import CustomButton from "../../components/CustomButton";
+//import CustomTextInput from "../../components/CustomTextInput";
+//import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
-import NavigationHeaderBack from "../../components/NavigationHeaderBack";
+// import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import { useNavigation } from "@react-navigation/native";
-import StatusDropdown from "../../components/StatusDropdown";
+//import StatusDropdown from "../../components/StatusDropdown";
 import { submitFollowUp } from "../../redux/actions/addFollowUpActions";
+const CustomTextInput = lazy(() => import('../../components/CustomTextInput'));
+const CustomButton = lazy(() => import ('../../components/CustomButton'));
+const Dropdown = lazy(() => import ('../../components/Dropdown'));
+const StatusDropdown = lazy(() =>import ('../../components/StatusDropdown'));
+const NavigationHeaderBack = lazy(() =>import ('../../components/NavigationHeaderBack'));
+import DocumentPicker from 'react-native-document-picker';
+
 
 const AddFollowUP = (props) => {
   const dispatch = useDispatch();
@@ -25,12 +32,13 @@ const AddFollowUP = (props) => {
   } = useSelector(state => state.addFollowUp);
   //alert(followupStatus)
   const {
-    titlePlaceholder, followupStatusPlaceholder, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder,
+    titlePlaceholder, followupStatusName, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder,
     followupTimePlaceholder, remarkPlaceholder
   } = useSelector(state => state.addFollowUp);
 
   const followUpList = useSelector(state => state.homeReducer);
-  alert(JSON.stringify(followUpList))
+  // Alert.alert(JSON.stringify(followUpList))
+
   const goBackCall = () => {
     navigation.popToTop();
   };
@@ -68,118 +76,179 @@ const AddFollowUP = (props) => {
     setShowTimePicker(false);
   };
 
+   const showToast = (message) => {
+      ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
+    };
+
   const validateAndSubmit = () => {
-    console.log("🚀 validateAndSubmit called in validSubmit !");
-    const fields = [
-      { value: title, placeholder: titlePlaceholder },
-      { value: followupStatus, placeholder: followupStatusPlaceholder },
-      { value: assignedTo, placeholder: assignedToPlaceholder },
-      { value: attachmentUrl, placeholder: attachmentUrlPlaceholder },
-      { value: followupDate, placeholder: followupDatePlaceholder },
-      { value: followupTime, placeholder: followupTimePlaceholder },
-      { value: remark, placeholder: remarkPlaceholder }
-    ];
 
-    for (const field of fields) {
-      const fieldValue = field.value ? String(field.value).trim() : "";
-
-      if (!fieldValue) {
-        console.log(`⚠️ Validation failed for: ${field.placeholder}`);
-        Alert.alert("Validation Error", `${field.placeholder} is required.`);
+    if (!title) {
+      showToast( "Title is required.");
+      return;
+    }
+    if (!followupStatus) {
+      showToast(" Status is required.");
+      return;
+    }
+    if (!assignedTo) {
+      showToast("Assigned To is required.");
+      return;
+    }
+    if (!attachmentUrl) {
+      showToast("Attachment is required.");
+      return;
+    } else {
+      const fileExtension = attachmentUrl.split('.').pop().toLowerCase();
+      if (fileExtension !== "pdf" && fileExtension !== "doc") {
+        showToast( "Only PDF or DOC files are allowed.");
         return;
       }
     }
-    dispatch(submitFollowUp());
+    if (!followupDate) {
+      showToast("Date is required.");
+      return;
+    }
+    if (!followupTime) {
+      showToast(" Time is required.");
+      return;
+    }
+  
+    if (!remark) {
+      showToast( "Remark is required.");
+      return;
+    }
+    const followUpData = {
+      title,
+      followupStatus,
+      followupDate,
+      followupTime,
+      remark,
+      isActive: true,
+    };
+    dispatch(submitFollowUp(followUpData));
   };
 
 
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.1, marginLeft: 5 }}>
+      <Suspense fallback={<NavigationHeaderBack/>}>
         <NavigationHeaderBack text="Add Follow-Up" onPress={goBackCall} />
+        </Suspense>
       </View>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
-          <View style={styles.centerContainer}>
-            <CustomTextInput
-              value={title}
-              placeholder={titlePlaceholder}
-              onChangeText={(text) => dispatch(changeTitle(text))}
-            />
-
-            <StatusDropdown
-              label={followupStatusPlaceholder}
-              selectedValue={followupStatus}
-              onValueChange={(value) => dispatch(changeFollowupStatus(value))}
-              apiType="followUp"
-              zIndex={2000}
-              elevation={6}
-              listData={followUpList.followUp}
-            />
-
-            <Dropdown
-              label={assignedToPlaceholder}
-              selectedValue={assignedTo}
-              onValueChange={(value) => dispatch(changeAssignedTo(value))}
-              listData={followUpList.followUp}
-              zIndex={1000}
-              elevation={4}
-            />
-
-            <CustomTextInput
-              followupicon={require('../../assets/icons/Scan/scan.png')}
-              value={attachmentUrl}
-              placeholder={attachmentUrlPlaceholder}
-              onChangeText={(text) => dispatch(changeAttachment(text))}
-            />
-
-            <CustomTextInput
-              followupicon={require("../../assets/icons/Calendar/calendar.png")}
-              value={followupDate}
-              placeholder={followupDatePlaceholder}
-              onChangeText={(text) => dispatch(changeFollowupDate(text))}
-              onIconPress={() => setShowDatePicker(true)}
-            />
-            {showDatePicker && (
-              <DateTimePicker
-                value={new Date()}
-                mode="date"
-                display="default"
-                onChange={handleDateChange}
-              />
-            )}
-
-            <CustomTextInput
-              followupicon={require("../../assets/icons/Calendar/calendar.png")}
-              value={followupTime}
-              placeholder={followupTimePlaceholder}
-              onChangeText={(text) => dispatch(changeFollowupTime(text))}
-              onIconPress={() => setShowTimePicker(true)}
-            />
-            {showTimePicker && (
-              <DateTimePicker
-                value={new Date()}
-                mode="time"
-                display="default"
-                is24Hour={false}
-                onChange={handleTimeChange}
-              />
-            )}
-
-            <CustomTextInput
-              value={remark}
-              placeholder={remarkPlaceholder}
-              onChangeText={(text) => dispatch(changeRemark(text))}
-            />
-
-            <CustomButton
-              title="Submit"
-              customStyle={ButtonStyles.blueButton}
-              textStyles={ButtonStyles.blueButtonText}
-              onPress={validateAndSubmit}
-            />
-          </View>
-        </ScrollView>
+      <ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
+      <View style={styles.centerContainer}>
+         <Suspense fallback={<CustomTextInput/>}>
+        <CustomTextInput
+          value={title}
+          placeholder={titlePlaceholder}
+          onChangeText={(text) => dispatch(changeTitle(text))}
+        />
+        </Suspense>
+        <Suspense fallback={<StatusDropdown/>}>
+        <StatusDropdown
+          label={followupStatusName}
+          selectedValue={followupStatus}
+        //  onValueChange={(value) => dispatch(changeFollowupStatus(value))}
+          onValueChange={(value) => dispatch(changeFollowupStatus(value))}
+          apiType="followUp"
+          zIndex={2000}
+          elevation={6}
+          listData={followUpList.followUp}
+        />
+        </Suspense>
+        <Suspense fallback={<Dropdown/>}>
+        <Dropdown
+          label={assignedToPlaceholder}
+          selectedValue={assignedTo}
+          onValueChange={(value) => dispatch(changeAssignedTo(value))}
+          //listData={followUpList.followUp}
+          options={[
+            { label: "Mr.Akshat", value: "akshat" },
+            { label: "Mr.Paresh", value: "paresh" },
+            { label: "Mr.Rajesh", value: "rajesh" },
+            { label: "Mr.Subhash", value: "subhash" },
+          ]}
+          zIndex={1000}
+          elevation={4}
+        />
+        </Suspense>
+       <Suspense fallback={<CustomTextInput/>}>
+        <CustomTextInput
+          followupicon={require('../../assets/icons/Scan/scan.png')}
+          value={attachmentUrl}
+          placeholder={attachmentUrlPlaceholder}
+          onChangeText={(text) => dispatch(changeAttachment(text))}
+          onIconPress={async () => {
+            try {
+              const result = await DocumentPicker.pickSingle({
+                type: [DocumentPicker.types.allFiles], // Allows all file types
+              });
+              dispatch(changeAttachment(result.name)); // Update state with file name
+            } catch (err) {
+              if (DocumentPicker.isCancel(err)) {
+                console.log("User canceled the file picker");
+              } else {
+                console.error("Unknown error: ", err);
+              }
+            }
+          }}
+      
+        />
+        </Suspense>
+        <Suspense fallback={<CustomTextInput/>}>
+        <CustomTextInput
+          followupicon={require("../../assets/icons/Calendar/calendar.png")}
+          value={followupDate}
+          placeholder={followupDatePlaceholder}
+          onChangeText={(text) => dispatch(changeFollowupDate(text))}
+          onIconPress={() => setShowDatePicker(true)}
+        />
+          </Suspense>
+        {showDatePicker && (
+          <DateTimePicker
+            value={new Date()}
+            mode="date"
+            display="default"
+            onChange={handleDateChange}
+          />
+        )}
+         <Suspense fallback={<CustomTextInput/>}>     
+        <CustomTextInput
+          followupicon={require("../../assets/icons/Calendar/calendar.png")}
+          value={followupTime}
+          placeholder={followupTimePlaceholder}
+          onChangeText={(text) => dispatch(changeFollowupTime(text))}
+          onIconPress={() => setShowTimePicker(true)}
+        />
+        </Suspense>  
+        {showTimePicker && (
+          <DateTimePicker
+            value={new Date()}
+            mode="time"
+            display="default"
+            is24Hour={false}
+            onChange={handleTimeChange}
+          />
+        )}
+        <Suspense fallback={<CustomTextInput/>}>   
+        <CustomTextInput
+          value={remark}
+          placeholder={remarkPlaceholder}
+          onChangeText={(text) => dispatch(changeRemark(text))}
+        />
+        </Suspense>  
+        <Suspense fallback={<CustomButton/>}>
+        <CustomButton 
+          title="Submit" 
+          customStyle={ButtonStyles.blueButton} 
+          textStyles={ButtonStyles.blueButtonText} 
+          onPress={validateAndSubmit}
+        />
+        </Suspense>
+      </View>
+      </ScrollView>
       </KeyboardAvoidingView>
     </View>
   );

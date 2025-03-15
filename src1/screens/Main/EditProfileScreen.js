@@ -4,7 +4,7 @@ import Dropdown from "../../components/Dropdown";
 import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
-import NavigationHeaderBack from "../../components/NavigationHeaderBack";
+//import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import { useSelector, useDispatch } from "react-redux";
@@ -108,11 +108,14 @@ const EditProfileScreen = (props) => {
 
             <ScrollView style={styles.container1} showsVerticalScrollIndicator={false}>
                 <View style={styles.centerContainer}>
-
                     <CustomTextInput value={firstname} placeholder={firstnamePlaceholder} onChangeText={(text) => dispatch(updateFirstname(text))} />
+                    </Suspense>
+                     <Suspense fallback={<CustomTextInput/>}>
                     <CustomTextInput value={lastname} placeholder={lastnamePlaceholder} onChangeText={(text) => dispatch(updateLastname(text))} />
+                    </Suspense>
+                    <Suspense fallback={<CustomTextInput/>}>
                     <CustomTextInput followupicon={require('../../assets/icons/Message.png')} value={email} placeholder={emailPlaceholder} onChangeText={(text) => dispatch(updateEmail(text))} />
-
+                    </Suspense>
                     <View style={styles.phoneInputContainer}>
                         <Image source={require('../../assets/icons/Country.png')} style={styles.flagIcon} />
                         <Image source={require('../../assets/icons/arrowDownblack.png')} style={styles.dropdownIcon} />
@@ -143,6 +146,7 @@ const EditProfileScreen = (props) => {
                         placeholder={datePlaceholder}
                         onIconPress={() => setShowDatePicker(true)}
                     />
+                    </Suspense>
                     {showDatePicker && (
                         <DateTimePicker
                             value={selectedDate}
@@ -151,7 +155,6 @@ const EditProfileScreen = (props) => {
                             onChange={handleDateChange}
                         />
                     )}
-
                     <CustomTextInput
                         followupicon={require('../../assets/icons/Scan/scan.png')}
                         type={attachment} 
@@ -159,14 +162,12 @@ const EditProfileScreen = (props) => {
                         placeholder="Profile Photo"
                         onIconPress={handleImagePick}
                     />
-
                     <CustomButton
                         title="Update"
                         customStyle={ButtonStyles.blueButton} 
                         textStyles={ButtonStyles.blueButtonText} 
                         onPress={handleUpdateProfile} 
                     />
-
                 </View>
             </ScrollView>
         </View>

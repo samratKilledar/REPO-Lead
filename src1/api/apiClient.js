@@ -1,30 +1,64 @@
+import { Alert } from 'react-native';
 // GET Request Function
-export const apiGet = async (url, tokan) => {
+// export const apiGet = async (url,token) => {
+//   try {
+  
+//     const response = await fetch(url, {
+//       method: 'GET',
+//       headers: {
+//         // Authorization: `Bearer ${token}`,
+//         'Content-Type': 'application/json',
+//         Authorization: token,
+        
+
+//       },
+//     });
+//     console.log(url+"---------------------s------------------------------")
+//     //console.log("🛠️ Token being sent:", token);
+
+//     if (!response.ok) {
+//       //alert(11)
+//       console.error("HTTP error! Status:"+ response.status);
+//       throw new Error(`HTTP error! Status: ${response.status}`);
+//     }
+//     //alert(JSON.stringify(response))
+//     return await response.json();
+//   } catch (error) {
+//     console.error(`GET ${endpoint} Error:`,error.response?.data || error.message,
+// );
+//     throw error;
+//   }
+// };
+export const apiGet = async (url, token, id) => {
   try {
-    console.warn(url + '--------------------------request-------------------------'+url);
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        // Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        Authorization: tokan,
-      },
-    });
-    // console.log( '--------------------------resoponse-------------------------'+JSON.stringify(response));
-    if (!response.ok) {
-      console.error(url + '-----HTTP error! Status:----' + response.status);
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    //alert(JSON.stringify(response))
-    return await response.json();
+      console.log("🌐 Request URL:", url);
+      console.log("🔑 Sending Token:", token);
+      console.log("🆔 Sending ID in Header:", id);
+
+      const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,  // Ensure Bearer token format
+              'id': id,  // Sending ID in header
+          },
+      });
+
+      if (!response.ok) {
+          console.error("❌ API Response Error:", response.status);
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("📜 Server Response:", data);
+      return data;
+
   } catch (error) {
-    console.error(
-      `GET ${endpoint} Error:`,
-      error.response?.data || error.message,
-    );
-    throw error;
+      console.error("🚨 API Fetch Error:", error.message);
+      throw error;
   }
 };
+
 
 // POST Request Function
 export const apiPost = async (url, param = {}) => {
@@ -181,7 +215,7 @@ export const apiGetLeadList= async (url, param,token) => {
 
 };
 
-export const apiPut = async (url, data, token) => {
+export const apiPutEdit = async (url, data, token) => {
   console.log(`PUT Request to: ${url} with data:`, JSON.stringify(data));
   try {
     const response = await fetch(url, {

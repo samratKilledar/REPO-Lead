@@ -40,7 +40,13 @@ const StatusDropdown = ({ label, selectedValue, onValueChange, apiType, zIndex, 
           label: item.value01,
           value: { id: item.id, name: item.value01 },
         };
-      } else {
+      } else if (apiType === "taskPriority") {
+        return {
+          label: item.value01,
+          value: { id: item.id, name: item.value01 },
+           }
+          }
+        else {
         return {
           label: item.value01,
           value: { id: item.id?.toString() || "", name: item.value01, extraData: item.value02 },

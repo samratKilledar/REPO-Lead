@@ -1,5 +1,6 @@
-import {apiGet , apiPost,apiPostLead} from './apiClient';
+import {apiGet , apiPost,apiPostLead,apiPostFollowup} from './apiClient';
 import {api} from './api';
+import { getItem } from './storageServices';
 
 // Register API
 export const followUp = async authToken => {
@@ -61,12 +62,35 @@ export const clientDetail= async authToken=>{
 export const addTaskApiCall= async data => {
     console.log('inside function' + JSON.stringify(data));
     return await apiPost(api.addTask, {data});
-}; 
+  }; 
+  export const profileDetail = async (authToken) => {
+    console.log("📡 Fetching profile details...");
+    console.log("🔑 Token:", authToken); // Check if token is correctly passed
+
+    try {
+        const response = await apiGet(api.profileDetails, authToken,1);
+        console.log("✅ Server Response:", response); // Log the fetched data
+        return response;
+    } catch (error) {
+        console.error("🚨 Error fetching profile details:", error.message);
+        return { success: false, message: error.message };
+    }
+};
+
+
+ 
 
 export const leadAPISubmit = async (data,tenantId) =>{
     console.log(tenantId+'inside function' + JSON.stringify(data));
     return await apiPostLead(api.leadSubmit, data,tenantId);
 }
+
+export const followupAPISubmit = async data => {
+    const authToken = await getItem("authToken");
+    console.log("------------------------------token--"+JSON.stringify(authToken));
+    console.log('inside function' + JSON.stringify(data));
+    return await apiPostFollowup(api.addFollowUp, {data});
+  };
 
 
 export const taskListResApi= async authToken=>{

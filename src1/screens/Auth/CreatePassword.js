@@ -10,11 +10,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
+  ToastAndroid
 } from 'react-native';
 import {
   setNewPassword,
   setConfirmNewPassword,
-  setAuthenticated,
+  submitPassword,
 } from "../../redux/actions/createPassAction";
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import ButtonStyles from '../../styles/ButtonStyles';
@@ -23,11 +24,15 @@ import TextStyle from '../../styles/TextStyle';
 import CustomButton from '../../components/CustomButton';
 import CustomText from '../../components/CustomText';
 import { useDispatch, useSelector } from "react-redux";
-import { submitPassword } from '../../redux/actions/createPassAction';
+// import { submitPassword } from '../../redux/actions/createPassAction';
 
 const CreatePassword = props => {
   // const [password, setPassword] = useState('');
   // const [confirmPassword, setConfirmPassword] = useState('');
+   const showToast = (message) => {
+        ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
+      };
+  
   const dispatch = useDispatch();
   const {
     newPassword,
@@ -41,37 +46,37 @@ const CreatePassword = props => {
 
   const validatePasswords = (newPassword, confirmNewPassword) => { 
     if (!newPassword || !confirmNewPassword) {
-        alert("Both password fields are required.");
+        showToast("Both password fields are required.");
         return false;
     }
 
     if (newPassword.length < 8) {
-        alert("Password must be at least 8 characters long.");
+       showToast("Password must be at least 8 characters long.");
         return false;
     }
 
     if (!/[A-Z]/.test(newPassword)) {
-        alert("Password must contain at least one uppercase letter.");
+        showToast("Password must contain at least one uppercase letter.");
         return false;
     }
 
     if (!/[a-z]/.test(newPassword)) {
-        alert("Password must contain at least one lowercase letter.");
+       showToast("Password must contain at least one lowercase letter.");
         return false;
     }
 
     if (!/\d/.test(newPassword)) {
-        alert("Password must contain at least one number.");
+       showToast("Password must contain at least one number.");
         return false;
     }
 
     if (!/[@$!%*?&]/.test(newPassword)) {
-        alert("Password must contain at least one special character (@, $, !, %, *, ?, &).");
+        showToast("Password must contain at least one special character (@, $, !, %, *, ?, &).");
         return false;
     }
 
     if (newPassword !== confirmNewPassword) {
-        alert("Passwords do not match.");
+        showToast("Passwords do not match.");
         return false;
     } 
 
@@ -80,7 +85,7 @@ const CreatePassword = props => {
 
   const handleContinue = () =>{
     if (validatePasswords(newPassword, confirmNewPassword)) {
-      console.log("Password successfully set!");
+      //console.log("Password successfully set!");
       // Proceed with next steps (e.g., API call)
       dispatch(submitPassword());
     }
@@ -142,8 +147,8 @@ const CreatePassword = props => {
                   title="Continue"
                   customStyle={[ButtonStyles.blueButton]}
                   textStyles={ButtonStyles.blueButtonText}
-                  onPress={() => setModalVisible(true)}
-                  // onPress={handleContinue}
+                  //onPress={() => setModalVisible(true)}
+                   onPress={handleContinue}
                 />
               </View>
 
@@ -196,14 +201,14 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     alignItems: 'center',
-    marginTop: 20,
-    flex: 3,
+    //marginTop: 20,
+    flex: 2,
     resizeMode:'contain',
   },
   inputContainer: {
     width: '100%',
-    marginTop: 20,
-    flex: 2,
+   // marginTop: 20,
+    flex: 3,
   },
   inputBox: {
     width: '100%',

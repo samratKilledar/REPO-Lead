@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, StyleSheet, ScrollView, Platform, ToastAndroid } from "react-native"; // Import ToastAndroid
 import { useDispatch, useSelector } from "react-redux";
+import DocumentPicker from 'react-native-document-picker';
+
 import {
   changeTaskName,
   changeTaskType,
@@ -14,17 +16,24 @@ import {
   changeAttachmentName,
   changeRemarks,
 } from "../../redux/actions/addTaskAction";
-import Dropdown from "../../components/Dropdown";
-import NavigationHeaderBack from "../../components/NavigationHeaderBack";
-import CustomTextInput from "../../components/CustomTextInput";
-import CustomButton from "../../components/CustomButton";
+//import Dropdown from "../../components/Dropdown";
+//import NavigationHeaderBack from "../../components/NavigationHeaderBack";
+//import CustomTextInput from "../../components/CustomTextInput";
+//import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 import StatusDropdown from "../../components/StatusDropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { submitTask } from "../../redux/actions/addTaskAction";
+const NavigationHeaderBack = lazy(() => import('../../components/NavigationHeaderBack'));
+const CustomTextInput = lazy(() => import('../../components/CustomTextInput'));
+const CustomButton = lazy(() => import('../../components/CustomButton'));
+const Dropdown = lazy(() => import('../../components/Dropdown'));
+
+//const taskPriorityList = useSelector(state => state.homeReducer);
 
 const AddTask = (props) => {
   const dispatch = useDispatch();
+
   const {
     taskName,
     taskType,
@@ -102,7 +111,9 @@ const AddTask = (props) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.1 }}>
-        <NavigationHeaderBack text="Add Task" onPress={goBackCall} />
+        <Suspense fallback={<NavigationHeaderBack />}>
+          <NavigationHeaderBack text="Add Task" onPress={goBackCall} />
+        </Suspense>
       </View>
       <ScrollView
         style={{ flex: 1, marginBottom: 60 }}
@@ -110,105 +121,151 @@ const AddTask = (props) => {
         keyboardShouldPersistTaps="handled"
       >
         <View style={styles.centerContainer}>
-          <CustomTextInput
-            value={taskName}
-            placeholder={taskNamePlaceholder}
-            onChangeText={(text) => dispatch(changeTaskName(text))}
-          />
-          <Dropdown
-            label={taskTypePlaceholder}
-            selectedValue={taskType}
-            onValueChange={(value) => dispatch(changeTaskType(value))}
-            options={[{ label: "Lead", value: "Lead" }, { label: "Client", value: "client" }]}
-            zIndex={4000}
-            elevation={8}
-          />
-          <Dropdown
-            label={assignedToPlaceholder}
-            selectedValue={assignedTo}
-            onValueChange={(value) => dispatch(changeAssignedTo(value))}
-            options={[
-              { label: "Mr.Akshat", value: "akshat" },
-              { label: "Mr.Paresh", value: "paresh" },
-              { label: "Mr.Rajesh", value: "rajesh" },
-              { label: "Mr.Subhash", value: "subhash" },
-            ]}
-            zIndex={3000}
-            elevation={7}
-          />
-          <Dropdown
-            label={clientNamePlaceholder}
-            selectedValue={clientName}
-            onValueChange={(value) => dispatch(changeClientName(value))}
-            options={[
-              { label: "Mahesh Pawar", value: "mahesh pawar" },
-              { label: "Sonali Thakur", value: "sonali thakur" },
-              { label: "Raj Sharma", value: "raj sharma" },
-              { label: "Virendra Kambli", value: "virendra kambli" },
-            ]}
-            zIndex={2000}
-            elevation={6}
-          />
-          <CustomTextInput
-            followupicon={require('../../assets/icons/Calendar/calendar.png')}
-            value={dueDate}
-            placeholder={dueDatePlaceholder}
-            onChangeText={(text) => dispatch(changeDueDate(text))}
-            onIconPress={() => {
-              setActiveDateField("dueDate");
-              setShowDatePicker(true);
-            }}
-          />
+          <Suspense fallback={<CustomTextInput />}>
+            <CustomTextInput
+              value={taskName}
+              placeholder={taskNamePlaceholder}
+              onChangeText={(text) => dispatch(changeTaskName(text))}
+            />
+          </Suspense>
+          <Suspense fallback={<Dropdown />}>
+            <Dropdown
+              label={taskTypePlaceholder}
+              selectedValue={taskType}
+              onValueChange={(value) => dispatch(changeTaskType(value))}
+              options={[{ label: "Lead", value: "Lead" }, { label: "Client", value: "client" }]}
+              zIndex={4000}
+              elevation={8}
+            />
+          </Suspense>
+          <Suspense fallback={<Dropdown />}>
+            <Dropdown
+              label={assignedToPlaceholder}
+              selectedValue={assignedTo}
+              onValueChange={(value) => dispatch(changeAssignedTo(value))}
+              options={[
+                { label: "Mr.Akshat", value: "akshat" },
+                { label: "Mr.Paresh", value: "paresh" },
+                { label: "Mr.Rajesh", value: "rajesh" },
+                { label: "Mr.Subhash", value: "subhash" },
+              ]}
+              zIndex={3000}
+              elevation={7}
+            />
+          </Suspense>
+          <Suspense fallback={<Dropdown />}>
+            <Dropdown
+              label={clientNamePlaceholder}
+              selectedValue={clientName}
+              onValueChange={(value) => dispatch(changeClientName(value))}
+              options={[
+                { label: "Mahesh Pawar", value: "mahesh pawar" },
+                { label: "Sonali Thakur", value: "sonali thakur" },
+                { label: "Raj Sharma", value: "raj sharma" },
+                { label: "Virendra Kambli", value: "virendra kambli" },
+              ]}
+              zIndex={2000}
+              elevation={6}
+            />
+          </Suspense>
+          <Suspense fallback={<CustomTextInput />}>
+            <CustomTextInput
+              followupicon={require('../../assets/icons/Calendar/calendar.png')}
+              value={dueDate}
+              placeholder={dueDatePlaceholder}
+              onChangeText={(text) => dispatch(changeDueDate(text))}
+              onIconPress={() => {
+                setActiveDateField("dueDate");
+                setShowDatePicker(true);
+              }}
+            />
+          </Suspense>
           <StatusDropdown
             label={priorityPlaceholder}
             selectedValue={priority}
             onValueChange={(value) => dispatch(changePriority(value))}
             apiType="taskPriority"
+            //listData={taskPriorityList.taskPriority}
             zIndex={1000}
             elevation={5}
             listData={taskPriorityList.taskPriority}
           />
-          <CustomTextInput
-            value={serviceRequest}
-            placeholder={serviceRequestPlaceholder}
-            onChangeText={(text) => dispatch(changeServiceRequest(text))}
-          />
-          <CustomTextInput
-            followupicon={require("../../assets/icons/Calendar/calendar.png")}
-            value={startDate}
-            placeholder={startDatePlaceholder}
-            onChangeText={(text) => dispatch(changeStartDate(text))}
-            onIconPress={() => {
-              setActiveDateField("startDate");
-              setShowDatePicker(true)
-            }}
-          />
-          <CustomTextInput
-            followupicon={require("../../assets/icons/Calendar/calendar.png")}
-            value={reminderDate}
-            placeholder={reminderDatePlaceholder}
-            onChangeText={(text) => dispatch(changeReminderDate(text))}
-            onIconPress={() => {
-              setActiveDateField("reminderDate");
-              setShowDatePicker(true)
-            }}
-          />
+          <Suspense fallback={<CustomTextInput />}>
+            <CustomTextInput
+              value={serviceRequest}
+              placeholder={serviceRequestPlaceholder}
+              onChangeText={(text) => dispatch(changeServiceRequest(text))}
+            />
+          </Suspense>
+          <Suspense fallback={<CustomTextInput />}>
+            <CustomTextInput
+              followupicon={require("../../assets/icons/Calendar/calendar.png")}
+              value={startDate}
+              placeholder={startDatePlaceholder}
+              onChangeText={(text) => dispatch(changeStartDate(text))}
+              onIconPress={() => {
+                setActiveDateField("startDate");
+                setShowDatePicker(true)
+              }}
+            />
+          </Suspense>
+          <Suspense fallback={<CustomTextInput />}>
+            <CustomTextInput
+              followupicon={require("../../assets/icons/Calendar/calendar.png")}
+              value={reminderDate}
+              placeholder={reminderDatePlaceholder}
+              onChangeText={(text) => dispatch(changeReminderDate(text))}
+              onIconPress={() => {
+                setActiveDateField("reminderDate");
+                setShowDatePicker(true)
+              }}
+            />
+            </Suspense>
+         {/* <Suspense fallback={<CustomTextInput/>}>
           <CustomTextInput
             followupicon={require('../../assets/icons/Scan/scan.png')}
             value={attachmentName}
             placeholder={attachmentNamePlaceholder}
             onChangeText={(text) => dispatch(changeAttachmentName(text))}
           />
-          <CustomTextInput
-            value={remarks}
-            placeholder={remarksPlaceholder}
-            onChangeText={(text) => dispatch(changeRemarks(text))}
-          />
-          <CustomButton
-            title="Submit"
-            customStyle={ButtonStyles.blueButton}
-            textStyles={ButtonStyles.blueButtonText} onPress={handleAddTask}
-          />
+          </Suspense> */}
+            <Suspense fallback={<CustomTextInput />}>
+              <CustomTextInput
+                followupicon={require('../../assets/icons/Scan/scan.png')}
+                value={attachmentName}
+                placeholder={attachmentNamePlaceholder}
+                onChangeText={(text) => dispatch(changeAttachmentName(text))}
+                onIconPress={async () => {
+                  try {
+                    const result = await DocumentPicker.pickSingle({
+                      type: [DocumentPicker.types.allFiles], // Allows all file types
+                    });
+                    dispatch(changeAttachmentName(result.name)); // Update state with file name
+                  } catch (err) {
+                    if (DocumentPicker.isCancel(err)) {
+                      console.log("User canceled the file picker");
+                    } else {
+                      console.error("Unknown error: ", err);
+                    }
+                  }
+                }}
+              />
+            </Suspense>
+
+            <Suspense fallback={<CustomTextInput />}>
+              <CustomTextInput
+                value={remarks}
+                placeholder={remarksPlaceholder}
+                onChangeText={(text) => dispatch(changeRemarks(text))}
+              />
+            </Suspense>
+            <Suspense fallback={<CustomButton />}>
+              <CustomButton
+                title="Submit"
+                customStyle={ButtonStyles.blueButton}
+                textStyles={ButtonStyles.blueButtonText} onPress={handleAddTask}
+              />
+            </Suspense>
         </View>
         {showDatePicker && (
           <DateTimePicker

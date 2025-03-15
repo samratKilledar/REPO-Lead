@@ -36,6 +36,7 @@ const homeReducer = (state = initialState, action) => {
         state: action.payload.stateRes,
         occupation: action.payload.occupationRes,
         getAllLeadApi:action.payload.getAllLeadApiRes,
+        profileDetail:action.payload.profileDetailRes,
         taskList:action.payload.taskListRes
       };
   

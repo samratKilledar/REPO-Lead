@@ -1,4 +1,4 @@
-import React , {useEffect,useState} from "react";
+import React , {lazy,Suspense,useEffect,useState} from "react";
 import { View, StyleSheet, Alert , ScrollView , KeyboardAvoidingView} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { 
@@ -7,14 +7,14 @@ import {
 } from "../../redux/actions/addFollowUpActions";
 import Dropdown from "../../components/Dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import CustomTextInput from "../../components/CustomTextInput";
+//import CustomTextInput from "../../components/CustomTextInput";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import { useNavigation } from "@react-navigation/native";
 import StatusDropdown from "../../components/StatusDropdown";
 import { submitFollowUp } from "../../redux/actions/addFollowUpActions";
-
+const CustomTextInput = lazy(() => import('../../components/CustomTextInput'));
 
 const ClientAddFollowUP = (props) => {
   const dispatch = useDispatch();
@@ -22,12 +22,15 @@ const ClientAddFollowUP = (props) => {
 
   const { 
     title, followupStatus, assignedTo, attachmentUrl, followupDate, followupTime, remark,
-    titlePlaceholder, followupStatusPlaceholder, assignedToPlaceholder, attachmentUrlPlaceholder, 
-    followupDatePlaceholder, followupTimePlaceholder, remarkPlaceholder, 
     isLoading, error, isAuthenticated 
   } = useSelector(state => state.addFollowUp);
-
-
+  //alert(followupStatus)
+  const { 
+    titlePlaceholder, followupStatusPlaceholder, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder, 
+    followupTimePlaceholder, remarkPlaceholder
+  } = useSelector(state => state.addFollowUp);
+  const followUpList= useSelector(state => state.homeReducer);
+  alert(JSON.stringify(followUpList))
   const goBackCall = () => {
     navigation.popToTop();
   };
@@ -99,12 +102,13 @@ const ClientAddFollowUP = (props) => {
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
       <View style={styles.centerContainer}>
+         <Suspense fallback={<CustomTextInput/>}>
         <CustomTextInput
           value={title}
           placeholder={titlePlaceholder}
           onChangeText={(text) => dispatch(changeTitle(text))}
         />
-
+        </Suspense>
         <StatusDropdown
           label={followupStatusPlaceholder}
           selectedValue={followupStatus}
@@ -112,29 +116,26 @@ const ClientAddFollowUP = (props) => {
           apiType="followUp"
           zIndex={2000}
           elevation={6}
+          listData={followUpList.followUp}
         />
        
         <Dropdown
           label={assignedToPlaceholder}
           selectedValue={assignedTo}
           onValueChange={(value) => dispatch(changeAssignedTo(value))}
-          options={[
-              { label: "Mr.Akshat", value: "akshat" },
-              { label: "Mr.Paresh", value: "paresh" },
-              { label: "Mr.Rajesh", value: "paresh" },
-              { label: "Mr.Subhash", value: "subhash" },
-          ]}
+          listData={followUpList.followUp}
           zIndex={1000}
           elevation={4}
         />
-
+       <Suspense fallback={<CustomTextInput/>}>
         <CustomTextInput
           followupicon={require('../../assets/icons/Scan/scan.png')}
           value={attachmentUrl}
           placeholder={attachmentUrlPlaceholder}
           onChangeText={(text) => dispatch(changeAttachment(text))}
         />
-
+        </Suspense>
+        <Suspense fallback={<CustomTextInput/>}>
         <CustomTextInput
           followupicon={require("../../assets/icons/Calendar/calendar.png")}
           value={followupDate}
@@ -142,6 +143,7 @@ const ClientAddFollowUP = (props) => {
           onChangeText={(text) => dispatch(changeFollowupDate(text))}
           onIconPress={() => setShowDatePicker(true)}
         />
+          </Suspense>
         {showDatePicker && (
           <DateTimePicker
             value={new Date()}
@@ -150,7 +152,7 @@ const ClientAddFollowUP = (props) => {
             onChange={handleDateChange}
           />
         )}
-
+         <Suspense fallback={<CustomTextInput/>}>     
         <CustomTextInput
           followupicon={require("../../assets/icons/Calendar/calendar.png")}
           value={followupTime}
@@ -158,6 +160,7 @@ const ClientAddFollowUP = (props) => {
           onChangeText={(text) => dispatch(changeFollowupTime(text))}
           onIconPress={() => setShowTimePicker(true)}
         />
+        </Suspense>  
         {showTimePicker && (
           <DateTimePicker
             value={new Date()}
@@ -167,13 +170,13 @@ const ClientAddFollowUP = (props) => {
             onChange={handleTimeChange}
           />
         )}
-
+        <Suspense fallback={<CustomTextInput/>}>   
         <CustomTextInput
           value={remark}
           placeholder={remarkPlaceholder}
           onChangeText={(text) => dispatch(changeRemark(text))}
         />
-
+        </Suspense>  
         <CustomButton 
           title="Submit" 
           customStyle={ButtonStyles.blueButton} 
@@ -192,7 +195,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 15,
     paddingLeft: 5,
-    paddingTop: 13,
+    paddingTop: 12,
     backgroundColor: "#FFFFFF",
     gap: 20,
   },

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import DetailItem from "../../components/DetailItem";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
@@ -7,27 +7,21 @@ import ButtonStyles from "../../styles/ButtonStyles";
 import { ScrollView } from "react-native-gesture-handler";
 import InsuranceCard from "../../components/InsuranceCard";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLeadSuccess, fetchInsuranceSuccess } from "../../redux/actions/leadDetailActions";
+
 const LeadDetails = (props) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const goBackCall = () => {
     navigation.goBack();
   };
-  const cardData = [
-    {
-      id: 1,
-      title: "Insurance",
-      date: "20-01-2025",
-      description:
-        "Loorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type ...",
-    },
-    {
-      id: 2,
-      title: "Mutual Fund",
-      date: "20-01-2025",
-      description:
-        "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type ...",
-    },
-  ];
+
+  const leadDetails = useSelector((state) => state.leadDetailReducer.LeadValue);
+  const leadDetailsPlaceholder = useSelector((state) => state.leadDetailReducer.LeadPlaceholder);
+  const insuranceList = useSelector((state) => state.leadDetailReducer.InsuranceList);
+
   const [menuVisible, setMenuVisible] = useState(false);
   const addfollow = () => {
     props.navigation.navigate("AddFollowUp")
@@ -49,20 +43,20 @@ const LeadDetails = (props) => {
   
       <ScrollView style={styles.centralcontainer}>
         <View style={styles.detailsContainer}>
-          <DetailItem icon={require('../../assets/icons/ProfileGrey/profileGrey.png')} label="Name" detail="Rajiv Sharma" />
-          <DetailItem icon={require('../../assets/icons/Call/call.png')} label="Mobile No" detail="+919876543210" />
-          <DetailItem icon={require('../../assets/icons/Address/Address.png')} label="Address" detail="Build 1/A, 101, Shree krishna society,Waghle Esate, Thane - 400601 Maharashtra,India." />
-          <DetailItem icon={require('../../assets/icons/Bag/bag.png')} label="Occupation" detail="Job" />
-          <DetailItem icon={require('../../assets/icons/Work/work.png')} label="Type Of Work" detail="IT Engineer" />
-          <DetailItem icon={require('../../assets/icons/Wallet/wallett.png')} label="Monthly Income" detail="30000" />
-          <DetailItem icon={require('../../assets/icons/Chart/chart.png')} label="Company Name" detail="ABC Contact Pvt Ltd" />
+          <DetailItem icon={require('../../assets/icons/ProfileGrey/profileGrey.png')} label={leadDetailsPlaceholder.name} detail={leadDetails.name} />
+          <DetailItem icon={require('../../assets/icons/Call/call.png')}  label={leadDetailsPlaceholder.mobileNo} detail={leadDetails.mobileNo} />
+          <DetailItem icon={require('../../assets/icons/Address/Address.png')} label={leadDetailsPlaceholder.address} detail={leadDetails.address} />
+          <DetailItem icon={require('../../assets/icons/Bag/bag.png')} label={leadDetailsPlaceholder.occupation} detail={leadDetails.occupation} />
+          <DetailItem icon={require('../../assets/icons/Work/work.png')} label={leadDetailsPlaceholder.typeOfWork} detail={leadDetails.typeOfWork} />
+          <DetailItem icon={require('../../assets/icons/Wallet/wallett.png')} label={leadDetailsPlaceholder.monthlyIncome} detail={leadDetails.monthlyIncome} />
+          <DetailItem icon={require('../../assets/icons/Chart/chart.png')} label={leadDetailsPlaceholder.companyName} detail={leadDetails.companyName} />
           <View style={styles.leadStatusContainer}>
-            <DetailItem icon={require('../../assets/icons/LSTIckSquare/lsTickSquare.png')} label="Lead Status" detail={<Text style={styles.leadStatusText}>Follow Up</Text>} />
+            <DetailItem icon={require('../../assets/icons/LSTIckSquare/lsTickSquare.png')} label={leadDetailsPlaceholder.leadStatus} detail={<Text style={styles.leadStatusText}>{leadDetails.leadStatus}</Text>} />
           </View>
-          <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label="Next Meeting Date" detail="Feb 14, 2025" />
-          <DetailItem icon={require('../../assets/icons/Remarks.png')} label="Attachment" detail="References.pdf" />
+          <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label={leadDetailsPlaceholder.nextMeetingDate} detail={leadDetails.nextMeetingDate}  />
+          <DetailItem icon={require('../../assets/icons/Remarks.png')} label={leadDetailsPlaceholder.attachment}  detail={leadDetails.attachment} />
         </View>
-        
+
         <View style={styles.followup}>
         <View style={{ flex: 1, margin: 10 }}>
           <CustomButton title="Add Follow Up" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} onPress={addfollow} />
@@ -74,7 +68,7 @@ const LeadDetails = (props) => {
 
         <View style={styles.insuranceCard}>
           <Text style={styles.insuranceText}>Interested Services</Text>
-          {cardData.map((item) => (
+          {insuranceList.map((item) => (
             <InsuranceCard
               key={item.id}
               title={item.title}

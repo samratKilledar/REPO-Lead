@@ -257,8 +257,8 @@ const styles = StyleSheet.create({
     height: 5,
     backgroundColor: "#ccc",
     borderRadius: 10,
-    marginLeft: 115,
-    justifyContent: "center",
+    marginLeft: 130,
+    justifyContent:"center",
     marginBottom: 10
   },
   modalTitle: {
