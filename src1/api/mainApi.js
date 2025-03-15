@@ -69,13 +69,6 @@ export const leadAPISubmit = async (data,tenantId) =>{
 }
 
 
-
-  
-  
-
-
-
-
 export const taskListResApi= async authToken=>{
     //  console.log("ss---samrat---ssss"+authToken)
     return await apiGet(api.taskList,authToken);

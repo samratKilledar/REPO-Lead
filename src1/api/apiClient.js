@@ -1,7 +1,7 @@
 // GET Request Function
 export const apiGet = async (url, tokan) => {
   try {
-    // console.warn(url + '--------------------------request-------------------------'+url);
+    console.warn(url + '--------------------------request-------------------------'+url);
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -148,6 +148,60 @@ export const apiPostLead = async (url, data,tenantId) => {
     return result;
   } catch (error) {
     console.error('Network request failed:', error.message);
+    return null;
+  }
+};
+
+
+export const apiGetLeadList= async (url, param,token) => {
+  console.log(url+"==============================="+JSON.stringify(param));
+    try {
+      console.warn(url + '--------------------------request-------------------------'+url);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          // Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Authorization:`Bearer ${token}`,
+        },
+      });
+      // console.log( '--------------------------resoponse-------------------------'+JSON.stringify(response));
+      if (!response.ok) {
+        console.error(url + '-----HTTP error! Status:----' + response.status);
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      //alert(JSON.stringify(response))
+      return await response.json();
+    } catch (error) {
+      console.error(
+         `GET ${url} Error:`, error.message
+      );
+      throw error;
+    }
+
+};
+
+export const apiPut = async (url, data, token) => {
+  console.log(`PUT Request to: ${url} with data:`, JSON.stringify(data));
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error! Status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('PUT Success:', result);
+    return result;
+  } catch (error) {
+    console.error('PUT request failed:', error.message);
     return null;
   }
 };

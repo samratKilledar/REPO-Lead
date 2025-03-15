@@ -58,15 +58,11 @@ const LogoutScreen = ({ navigation }) => {
 
         <View style={{ marginBottom: 19 }}>
           <View style={styles.line} />
-          <CustomButton title={"Add UDC Service"} onPress={() => setModalVisible(true)} />
         </View>
 
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <CustomText text={"Services"} customstyle={TextStyle.serviceText} />
-            <TouchableOpacity onPress={() => setEditModalVisible(true)}>
-              <Image source={require("../../assets/icons/Edit/edit3x.png")} style={styles.editIcon} />
-            </TouchableOpacity>
           </View>
           <View style={styles.badgesContainer}>
             <GradientCard
@@ -99,9 +95,6 @@ const LogoutScreen = ({ navigation }) => {
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <CustomText text={"Occupation"} customstyle={TextStyle.serviceText} />
-            <TouchableOpacity onPress={() => setEditModalVisible(true)}>
-              <Image source={require("../../assets/icons/Edit/edit3x.png")} style={styles.editIcon} />
-            </TouchableOpacity>
           </View>
           <View style={styles.badgesContainer}>
             <GradientCard
@@ -162,92 +155,6 @@ const LogoutScreen = ({ navigation }) => {
                   onPress={() => setLogoutVisible(false)}
                 />
               </View>
-            </View>
-          </View>
-          </TouchableWithoutFeedback>
-        </Modal>
-
-        <Modal visible={modalVisible} animationType="slide" transparent={true}>
-        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-          <View style={styles.bottomModalOverlay}>
-            <View style={styles.bottomModalContainer}>
-              <ScrollView contentContainerStyle={styles.modalScrollContent}>
-                <CustomText text={"UDC Service"} customstyle={TextStyle.modallText2} />
-                <Image source={require("../../assets/icons/Line.png")} style={styles.line} />
-            
-                <Dropdown
-                  label="Services"
-                  selectedValue={Services}
-                  onValueChange={setServices}
-                  options={[
-                    { label: "Services", value: "Services" },
-                    { label: "Occupation", value: "Occupation" },
-                    { label: "Lead Source", value: "Lead Source" },
-                    { label: "Lead Status", value: "Lead Status" }
-                  ]}
-                />
-
-                <CustomTextInput
-                  style={styles.input}
-                  placeholder="Service Name"
-                  value={serviceName}
-                  onChangeText={setServiceName}
-                />
-
-                <View style={styles.buttonContainer}>
-                  <CustomButton title={"Add"} customStyle={{ width: width * 0.9, alignSelf: 'center' }} onPress={() => setModalVisible(false)} />
-                </View>
-              </ScrollView>
-            </View>
-          </View>
-          </TouchableWithoutFeedback>
-        </Modal>
-
-        <Modal visible={editModalVisible} animationType="slide" transparent={true}>
-        <TouchableWithoutFeedback onPress={() => setEditModalVisible(false)}>
-          <View style={styles.bottomModalOverlay}>
-            <View style={styles.bottomModalContainer}>
-              <ScrollView contentContainerStyle={styles.modalScrollContent}>
-                <CustomText text={"Services"} customstyle={TextStyle.modallText2} />
-                <Image source={require("../../assets/icons/Line.png")} style={styles.line} />
-                <View style={{ gap: width * 0.01 }}>
-                  <View style={styles.serviceItem}>
-                    <CustomText text={"Insurance"} customstyle={TextStyle.serviceText} />
-                    <View style={styles.iconContainer}>
-                      <TouchableOpacity onPress={() => { /* Handle edit action */ }}>
-                        <Image source={require("../../assets/icons/Edit/edit3x.png")} style={styles.smallIcon} />
-                      </TouchableOpacity>
-                      <TouchableOpacity onPress={() => { /* Handle delete action */ }}>
-                        <Image source={require("../../assets/icons/cross.png")} style={styles.smallIcon} />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-
-                  {/* Mutual Fund Section */}
-                  <View style={styles.serviceItem}>
-                    <CustomText text={"Mutual Fund"} customstyle={TextStyle.serviceText} />
-                    <View style={styles.iconContainer}>
-                      <TouchableOpacity onPress={() => { /* Handle edit action */ }}>
-                        <Image source={require("../../assets/icons/Edit/edit3x.png")} style={styles.smallIcon} />
-                      </TouchableOpacity>
-                      <TouchableOpacity onPress={() => { /* Handle delete action */ }}>
-                        <Image source={require("../../assets/icons/cross.png")} style={styles.smallIcon} />
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-
-                  <CustomTextInput
-                    style={styles.input}
-                    placeholder="Service Name"
-                    value={serviceName}
-                    onChangeText={setServiceName}
-                  />
-                </View>
-
-                <View style={styles.buttonContainer}>
-                  <CustomButton title={"Add"} customStyle={{width: width * 0.9, alignSelf: 'center'}} onPress={() => setEditModalVisible(false)} />
-                </View>
-              </ScrollView>
             </View>
           </View>
           </TouchableWithoutFeedback>
@@ -345,11 +252,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   bottomModalContainer: {
-    height: height * 0.5, 
+    height: height * 0.35, 
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    padding: width * 0.05,
+    padding: width * 0.04,
     gap : 20,
   },
   modalScrollContent: {

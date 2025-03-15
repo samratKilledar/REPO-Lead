@@ -5,15 +5,15 @@ import {
     SUBMIT_SUCCESS,
     SUBMIT_FAILURE,
 
-} from "../reducers/leadAddServiceReducer";
+} from "../actions/leadAddServiceActions";
 
 const initialState = {
     isUpdating: false,
     remark: "",
-    services: [],
+    services: " ",
 
     RemarkPlaceholder: "firstName",
-    ServicesPlaceholder: [],
+    servicesName: "Services",
 };
 
 const leadAddServiceReducer = (state = initialState, action) => {
@@ -21,11 +21,14 @@ const leadAddServiceReducer = (state = initialState, action) => {
         case SUBMIT_SUCCESS:
             return { ...state, isUpdating: true };
 
+        case SUBMIT_FAILURE:
+            return { ...state, isUpdating: false };
+
         case UPDATE_REMARK:
             return { ...state, remark: action.payload };
 
         case UPDATE_SERVICES:
-            return { ...state, services: action.payload };
+            return { ...state, services: action.payload.id, servicesName:action.payload.name};
 
         default:
             return state;

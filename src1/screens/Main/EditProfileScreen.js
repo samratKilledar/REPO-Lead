@@ -1,8 +1,8 @@
-import React, { useState, lazy, Suspense } from "react";
-import { View, StyleSheet, Image, TextInput, Platform, ScrollView, Alert, ActivityIndicator } from "react-native";
-// import Dropdown from "../../components/Dropdown";
-// import CustomTextInput from "../../components/CustomTextInput";
-// import CustomButton from "../../components/CustomButton";
+import React, { useState, Suspense } from "react";
+import { View, StyleSheet, Image, TextInput, Platform, ScrollView, Alert ,ToastAndroid} from "react-native";
+import Dropdown from "../../components/Dropdown";
+import CustomTextInput from "../../components/CustomTextInput";
+import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -15,12 +15,8 @@ import {
     updatePhoneNumber, 
     updateGender,
     updateDate,
+    updateProfile,
 } from "../../redux/actions/editProfileActions";
-
-// Lazy Load Components
-const Dropdown = lazy(() => import("../../components/Dropdown"));
-const CustomTextInput = lazy(() => import("../../components/CustomTextInput"));
-const CustomButton = lazy(() => import("../../components/CustomButton"));
 
 
 const EditProfileScreen = (props) => {
@@ -79,27 +75,30 @@ const EditProfileScreen = (props) => {
         });
     };
 
-    const handleUpdateProfile = () => {
-        if (!firstname || !lastname || !email || !phonenumber || !gender || !date) {
-            Alert.alert("Error", "All fields are required!");
-            return;
-        } else if (!/^[A-Za-z]+$/.test(firstname)) {
-            Alert.alert("Error", "First name must contain only letters!");
-            return;
-        } else if (!/^[A-Za-z]+$/.test(lastname)) {
-            Alert.alert("Error", "Last name must contain only letters!");
-            return;
-        } else if (!/\S+@\S+\.\S+/.test(email)) {
-            Alert.alert("Error", "Enter a valid email address!");
-            return;
-        } else if (!/^[0-9]{10}$/.test(phonenumber)) {
-            Alert.alert("Error", "Phone number must be 10 digits!");
-            return;
+     const handleUpdateProfile = () => {
+        const fields = [
+            { key: "First Name", value: firstname, regex: /^[A-Za-z]+$/, errorMsg: "First name must contain only letters!" },
+            { key: "Last Name", value: lastname, regex: /^[A-Za-z]+$/, errorMsg: "Last name must contain only letters!" },
+            { key: "Email", value: email, regex: /\S+@\S+\.\S+/, errorMsg: "Enter a valid email address!" },
+            { key: "Phone Number", value: phonenumber, regex: /^[0-9]{10}$/, errorMsg: "Phone number must be 10 digits!" },
+            { key: "Gender", value: gender },
+            { key: "Date", value: date }
+        ];
+    
+        for (const field of fields) {
+            if (!field.value) {
+                ToastAndroid.show(`${field.key} is required.`, ToastAndroid.SHORT);
+                return;
+            } else if (field.regex && !field.regex.test(field.value)) {
+                ToastAndroid.show(field.errorMsg, ToastAndroid.SHORT);
+                return;
+            }
         }
-
-        Alert.alert("Success", "Profile updated successfully!");
-
+    
+        ToastAndroid.show("Profile updated successfully!", ToastAndroid.SHORT);
+        dispatch(updateProfile());
     };
+    
 
     return (
         <View style={styles.container}>
@@ -109,15 +108,11 @@ const EditProfileScreen = (props) => {
 
             <ScrollView style={styles.container1} showsVerticalScrollIndicator={false}>
                 <View style={styles.centerContainer}>
-                    <Suspense fallback={<CustomTextInput/>}>
+
                     <CustomTextInput value={firstname} placeholder={firstnamePlaceholder} onChangeText={(text) => dispatch(updateFirstname(text))} />
-                    </Suspense>
-                    <Suspense fallback={<CustomTextInput/>}>
                     <CustomTextInput value={lastname} placeholder={lastnamePlaceholder} onChangeText={(text) => dispatch(updateLastname(text))} />
-                    </Suspense>
-                    <Suspense fallback={<CustomTextInput/>}>
                     <CustomTextInput followupicon={require('../../assets/icons/Message.png')} value={email} placeholder={emailPlaceholder} onChangeText={(text) => dispatch(updateEmail(text))} />
-                    </Suspense>
+
                     <View style={styles.phoneInputContainer}>
                         <Image source={require('../../assets/icons/Country.png')} style={styles.flagIcon} />
                         <Image source={require('../../assets/icons/arrowDownblack.png')} style={styles.dropdownIcon} />
@@ -130,7 +125,7 @@ const EditProfileScreen = (props) => {
                         />
                     </View>
 
-                    <Suspense fallback={<Dropdown/>}>
+                
                     <Dropdown
                         label={genderPlaceholder}
                         selectedValue={gender}
@@ -142,8 +137,6 @@ const EditProfileScreen = (props) => {
                         ]}
                         zIndex={2000}
                     />
-                    </Suspense>
-                    <Suspense fallback={<CustomTextInput/>}>
                     <CustomTextInput
                         followupicon={require('../../assets/icons/Calendar/calendar.png')}
                         value={date}
@@ -158,8 +151,7 @@ const EditProfileScreen = (props) => {
                             onChange={handleDateChange}
                         />
                     )}
-                    </Suspense>
-                    <Suspense fallback={<CustomTextInput/>}>
+
                     <CustomTextInput
                         followupicon={require('../../assets/icons/Scan/scan.png')}
                         type={attachment} 
@@ -167,15 +159,14 @@ const EditProfileScreen = (props) => {
                         placeholder="Profile Photo"
                         onIconPress={handleImagePick}
                     />
-                    </Suspense>
-                    <Suspense fallback={<CustomButton/>}>
+
                     <CustomButton
                         title="Update"
                         customStyle={ButtonStyles.blueButton} 
                         textStyles={ButtonStyles.blueButtonText} 
                         onPress={handleUpdateProfile} 
                     />
-                    </Suspense>
+
                 </View>
             </ScrollView>
         </View>

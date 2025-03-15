@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions, ScrollView , Image} from 'react-native'; // Import ScrollView
+import { View, StyleSheet, Dimensions, ScrollView,ToastAndroid } from 'react-native'; 
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
@@ -7,7 +7,7 @@ import InsuranceCardDel from '../../components/InsuranceCardDel';
 import { useNavigation } from '@react-navigation/native';
 import StatusDropdown from '../../components/StatusDropdown';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateRemark, updateServices } from '../../redux/reducers/leadAddServiceReducer';
+import { updateRemark, updateServices,leadAddServiceUser } from '../../redux/actions/leadAddServiceActions';
 
 const { width, height } = Dimensions.get('window'); 
 
@@ -15,24 +15,30 @@ const LeadAddServices = () => {
   const dispatch = useDispatch();
   const remark = useSelector(state => state.leadAddService.remark);
   const services = useSelector(state => state.leadAddService.services);
+
+  const RemarkPlaceholder = useSelector(state => state.leadAddService.RemarkPlaceholder);
+  const servicesName = useSelector(state => state.leadAddService.servicesName);
+
+
+  const service1= useSelector(state => state.homeReducer);
   const navigation = useNavigation();
   const goBackCall = () => {
     navigation.popToTop();
   };
 
   const handleSubmit = () => {
-    if (!remark || !services) {
-      alert("All fields are required!");
-      return;
+    if (!remark) {
+        ToastAndroid.show("Remark is required.", ToastAndroid.SHORT);
+        return;
+    }
+    if (!services || services.length === 0) {
+        ToastAndroid.show("Services are required.", ToastAndroid.SHORT);
+        return;
     }
 
-    const leadServiceData = {
-      remark,
-      services,
-    };
-
-    dispatch(leadServiceData);
-  };
+    ToastAndroid.show("Service added successfully!", ToastAndroid.SHORT);
+    dispatch(leadAddServiceUser());
+};
 
   const cardData = [
     {
@@ -57,18 +63,19 @@ const LeadAddServices = () => {
         <NavigationHeaderBack text="Add Services" onPress={goBackCall} />
       </View>
       <View style={styles.centerContainer}>
+        <StatusDropdown
+          label={servicesName}
+          selectedValue={services}
+          onValueChange={(value) =>dispatch(updateServices(value))}
+          apiType="service"
+          zIndex={1000}
+          listData={service1.service}
+        />
         <CustomTextInput
           type={remark}
           value={remark}
-          placeholder="Remark"
+          placeholder={RemarkPlaceholder}
           onChangeText={(text) => dispatch(updateRemark(text))} 
-        />
-        <StatusDropdown
-          label="Services"
-          selectedValue={services}
-          onValueChange={(value) => dispatch(updateServices(value))}
-          apiType="service"
-          zIndex={1000}
         />
         <CustomButton
           title="Submit"

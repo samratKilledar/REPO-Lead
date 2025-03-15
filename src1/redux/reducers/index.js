@@ -10,6 +10,7 @@ import lastReducer from './lastReducer';
 import occupationReducer from './occupationReducer';
 import forgotPassReducer from './forgotPassReducer';
 import createPassReducer from './createPassReducer';
+import leadListReducer from './leadListReducer';
 
 
 export default combineReducers({
@@ -24,5 +25,6 @@ export default combineReducers({
   personalReducer : personalReducer,
   lastReducer: lastReducer,
   occupationReducer: occupationReducer,
+  leads: leadListReducer,
 });
 

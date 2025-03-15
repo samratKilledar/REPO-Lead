@@ -1,3 +1,6 @@
+import {updateUserProfile} from '../../api/authApi';
+import {setItem, getItem} from '../../api/storageServices';
+
 export const UPDATE_FIRSTNAME = "UPDATE_FIRSTNAME";
 export const UPDATE_LASTNAME = "UPDATE_LASTNAME";
 export const UPDATE_EMAIL = "UPDATE_EMAIL";
@@ -44,7 +47,22 @@ export const updateSuccess = userData => ({
   payload: userData,
 });
 
+export const updateProfile = () => async (dispatch, getState) => {
+    try {
+        const { firstname, lastname, email, phonenumber, gender, date } = getState().editProfile;
+        dispatch({ type: SUBMIT_CLICK });
 
+        const response = await updateUserProfile(firstname, lastname, email, phonenumber, gender, date);
+        
+        if (response.success) {
+            dispatch({ type: SUBMIT_SUCCESS });
+        } else {
+            dispatch({ type: SUBMIT_FAILURE, payload: response.message });
+        }
+    } catch (error) {
+        dispatch({ type: SUBMIT_FAILURE, payload: error.message });
+    }
+};
 
 
 

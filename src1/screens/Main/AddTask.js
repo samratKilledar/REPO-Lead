@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, StyleSheet, ScrollView, Platform, Alert } from "react-native";
+import { View, StyleSheet, ScrollView, Platform, ToastAndroid } from "react-native"; // Import ToastAndroid
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeTaskName,
@@ -22,7 +22,6 @@ import ButtonStyles from "../../styles/ButtonStyles";
 import StatusDropdown from "../../components/StatusDropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { submitTask } from "../../redux/actions/addTaskAction";
-
 
 const AddTask = (props) => {
   const dispatch = useDispatch();
@@ -54,6 +53,7 @@ const AddTask = (props) => {
     remarksPlaceholder,
   } = useSelector((state) => state.addTask);
 
+  const taskPriorityList= useSelector(state => state.homeReducer);
 
   const goBackCall = () => {
     props.navigation.goBack();
@@ -72,28 +72,30 @@ const AddTask = (props) => {
     }
     setShowDatePicker(false);
   };
+
   const handleAddTask = () => {
     const fields = [
-      { value: taskName, placeholder: taskNamePlaceholder },
-      { value: taskType, placeholder: taskTypePlaceholder },
-      { value: assignedTo, placeholder: assignedToPlaceholder },
-      { value: clientName, placeholder: clientNamePlaceholder },
-      { value: dueDate, placeholder: dueDatePlaceholder },
-      { value: priority, placeholder: priorityPlaceholder },
-      { value: serviceRequest, placeholder: serviceRequestPlaceholder },
-      { value: startDate, placeholder: startDatePlaceholder },
-      { value: reminderDate, placeholder: reminderDatePlaceholder },
-      { value: attachmentName, placeholder: attachmentNamePlaceholder },
-      { value: remarks, placeholder: remarksPlaceholder }
+      { key: "Task Name", value: taskName, placeholder: taskNamePlaceholder },
+      { key: "Task Type", value: taskType, placeholder: taskTypePlaceholder },
+      { key: "Assigned To", value: assignedTo, placeholder: assignedToPlaceholder },
+      { key: "Client Name", value: clientName, placeholder: clientNamePlaceholder },
+      { key: "Due Date", value: dueDate, placeholder: dueDatePlaceholder },
+      // { key: "Priority", value: priority, placeholder: priorityPlaceholder },
+      { key: "Service Request", value: serviceRequest, placeholder: serviceRequestPlaceholder },
+      { key: "Start Date", value: startDate, placeholder: startDatePlaceholder },
+      { key: "Reminder Date", value: reminderDate, placeholder: reminderDatePlaceholder },
+      // { key: "Attachment Name", value: attachmentName, placeholder: attachmentNamePlaceholder },
+      { key: "Remarks", value: remarks, placeholder: remarksPlaceholder }
     ];
 
-    for (const [key, value] of Object.entries(fields)) {
-      if (!value) {
-        Alert.alert("Validation Error", `${key.replace(/([A-Z])/g, " $1")} is required.`);
+    for (const field of fields) {
+      if (!field.value) {
+        ToastAndroid.show(`${field.key} is required.`, ToastAndroid.SHORT); // Show Android Toast
         return;
       }
     }
-    Alert.alert("Success", "Task added successfully.");
+
+    ToastAndroid.show("Task added successfully.", ToastAndroid.SHORT); // Show Android Toast
     dispatch(submitTask());
   };
 
@@ -164,6 +166,7 @@ const AddTask = (props) => {
             apiType="taskPriority"
             zIndex={1000}
             elevation={5}
+            listData={taskPriorityList.taskPriority}
           />
           <CustomTextInput
             value={serviceRequest}
