@@ -47,20 +47,33 @@ export const updateSuccess = userData => ({
   payload: userData,
 });
 
-export const updateProfile = () => async (dispatch, getState) => {
-    try {
-        const { firstname, lastname, email, phonenumber, gender, date } = getState().editProfile;
-        dispatch({ type: SUBMIT_CLICK });
+// export const updateProfile = () => async (dispatch, getState) => {
+//     try {
+//         const { firstname, lastname, email, phonenumber, gender, date } = getState().editProfile;
+//         dispatch({ type: SUBMIT_CLICK });
 
-        const response = await updateUserProfile(firstname, lastname, email, phonenumber, gender, date);
+//         const response = await updateUserProfile(firstname, lastname, email, phonenumber, gender, date);
         
+//         if (response.success) {
+//             dispatch({ type: SUBMIT_SUCCESS });
+//         } else {
+//             dispatch({ type: SUBMIT_FAILURE, payload: response.message });
+//         }
+//     } catch (error) {
+//         dispatch({ type: SUBMIT_FAILURE, payload: error.message });
+//     }
+// };
+
+export const updateProfile = (updatedUserData) => async (dispatch) => {
+    try {
+        const response = await updateUserProfile(updatedUserData);
         if (response.success) {
-            dispatch({ type: SUBMIT_SUCCESS });
+            dispatch({ type: UPDATE_SUCCESS, payload: response.data });
         } else {
-            dispatch({ type: SUBMIT_FAILURE, payload: response.message });
+            dispatch({ type: UPDATE_FAILURE, payload: 'Profile update failed' });
         }
     } catch (error) {
-        dispatch({ type: SUBMIT_FAILURE, payload: error.message });
+        dispatch({ type: UPDATE_FAILURE, payload: error.message });
     }
 };
 

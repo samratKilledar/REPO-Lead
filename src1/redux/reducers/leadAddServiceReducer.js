@@ -12,7 +12,7 @@ const initialState = {
     remark: "",
     services: " ",
 
-    RemarkPlaceholder: "firstName",
+    RemarkPlaceholder: "Remark",
     servicesName: "Services",
 };
 

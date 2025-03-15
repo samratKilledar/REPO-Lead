@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { lazy, Suspense,useState } from "react";
 import { View, StyleSheet, ScrollView, Platform, ToastAndroid } from "react-native"; // Import ToastAndroid
 import { useDispatch, useSelector } from "react-redux";
 import DocumentPicker from 'react-native-document-picker';

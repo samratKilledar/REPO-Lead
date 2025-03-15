@@ -215,7 +215,7 @@ export const apiGetLeadList= async (url, param,token) => {
 
 };
 
-export const apiPutEdit = async (url, data, token) => {
+export const apiPut = async (url, data, token) => {
   console.log(`PUT Request to: ${url} with data:`, JSON.stringify(data));
   try {
     const response = await fetch(url, {

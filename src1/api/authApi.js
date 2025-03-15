@@ -1,4 +1,4 @@
-import {apiGet, apiPost, apiPut,postApi,apiGetLeadList,apiPostForgotPass,apiPutEdit} from './apiClient';
+import {apiGet, apiPost, apiPut,postApi,apiGetLeadList,apiPostForgotPass} from './apiClient';
 import {api} from './api';
 import { getItem } from '../api/storageServices';
 // import {apiGet, apiPost} from './apiClient';
@@ -147,7 +147,7 @@ export const updateUserProfile = async userData => {
     const authToken = await getItem("authToken");
 
     console.log("-------------ssss------------token--"+JSON.stringify(authToken));
-    return await apiPutEdit(api.editProfileApi,authToken,userData);
+    return await apiPut(api.editProfileApi,authToken,userData);
 }
 
 
