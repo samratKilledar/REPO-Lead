@@ -3,7 +3,6 @@ import { View, StyleSheet, Alert , ToastAndroid } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../components/CustomButton";
 import CustomTextInput from "../../components/CustomTextInput";
-import Dropdown from "../../components/Dropdown";
 import Stepper from "../../components/StepperComp";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import StatusDropdown from "../../components/StatusDropdown";

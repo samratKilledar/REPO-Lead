@@ -60,14 +60,14 @@ export const updatePersonalField = (data) => ({
   payload: data,
 });
 
-export const updatefirstName = (data) => ({
+export const updatefirstName = (firstName) => ({
   type: CHANGE_FIRST_NAME,
-  payload: data,
+  payload: firstName,
 });
 
-export const updatelastName = (data) => ({
+export const updatelastName = (lastName) => ({
   type: CHANGE_LAST_NAME,
-  payload: data,
+  payload: lastName,
 });
 
 
@@ -75,50 +75,50 @@ export const updatelastName = (data) => ({
 
 export const updateemailId = (data) => ({
   type: CHANGE_EMAIL_ID,
-  payload: data,
+  payload: emailId,
 });
 
-export const updateMobileno = (data) => ({
+export const updateMobileno = (mobileNo) => ({
   type: CHANGE_MOBILENO,
-  payload: data,
+  payload: mobileNo,
 });
 
-export const updatewhatsappNo = (data) => ({
+export const updatewhatsappNo = (whatsAppNo) => ({
   type: CHANGE_WHATSAPPNO,
-  payload: data,
+  payload: whatsAppNo,
 });
 
-export const updateAddressLine1 = (data) => ({
+export const updateAddressLine1 = (addressLine1) => ({
   type: CHANGE_ADDRESS_LINE1,
-  payload: data,
+  payload: addressLine1,
 });
 
-export const updateAddressLine2 = (data) => ({
+export const updateAddressLine2 = (addressLine2) => ({
   type: CHANGE_ADDRESS_LINE2,
-  payload: data,
+  payload: addressLine2,
 });
 
-export const updatePincode = (data) => ({
+export const updatePincode = (pincode) => ({
   type: CHANGE_PINCODE,
-  payload: data,
+  payload: pincode,
 });
 
-export const updateleadSource = (data) => ({
+export const updateleadSource = (leadSourceName) => ({
   type: CHANGE_LEAD_SOURCE,
-  payload: data,
+  payload: leadSourceName,
 });
 
-export const updateCity = (data) => ({
+export const updateCity = (cityOption) => ({
   type: CHANGE_CITY_OPTION,
-  payload: data,
+  payload: cityOption,
 });
 
-export const updateState = (data) => ({
+export const updateState = (stateOption) => ({
   type: CHANGE_STATE_OPTION,
-  payload: data,
+  payload: stateOption,
 });
 
-export const updateCountry = (data) => ({
+export const updateCountry = (countryOption) => ({
   type: CHANGE_COUNTRY_OPTION,
-  payload: data,
+  payload: countryOption
 });
