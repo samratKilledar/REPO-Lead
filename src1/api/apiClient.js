@@ -239,3 +239,96 @@ export const apiPutEdit = async (url, data, token) => {
     return null;
   }
 };
+
+export const apiPostForgotPass = async (url, param = {}) => {
+  try {
+    const data = param.data || {};
+    console.log('📨 Sending Data:', JSON.stringify(data));
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        tenant: 'Root',
+      },
+      body: JSON.stringify({ email: data.email }),
+    });
+
+    console.log('📩 API Response Status:', response.status);
+
+    // ✅ Detect Content-Type (JSON or Plain Text)
+    const contentType = response.headers.get("content-type");
+    let result;
+
+    if (contentType && contentType.includes("application/json")) {
+      result = await response.json(); // ✅ Parse JSON response
+    } else {
+      result = await response.text(); // ✅ Handle plain text response
+    }
+
+    //console.log("✅ API Success:", result);
+    Alert.alert("Success", result);
+
+    return { success: true, message: result };
+
+  } catch (error) {
+    console.error('🚨 Network/API Error:', error.message);
+    return { success: false, message: error.message };
+  }
+};
+
+export const apiGetDetails= async (url, token, id) => {
+  try {
+      console.log("🌐 Request URL:", url);
+      console.log("🔑 Sending Token:", token);
+      console.log("🆔 Sending ID in Header:", id);
+
+      const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,  // Ensure Bearer token format
+              'id': id,  // Sending ID in header
+          },
+      });
+
+      if (!response.ok) {
+          console.error("❌ API Response Error:", response.status);
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("📜 Server Response:", data);
+      return data;
+
+  } catch (error) {
+      console.error("🚨 API Fetch Error:", error.message);
+      throw error;
+  }
+};
+
+export const apiPutPassword = async (url, param = {}) => {
+  const data = param.data;
+  console.log(JSON.stringify(data));
+
+  try {
+      const response = await fetch(url, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP Error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('Success:', result);
+      return result;
+  } catch (error) {
+      console.error('Network request failed:', error.message);
+      return { success: false, message: error.message };
+  }
+};

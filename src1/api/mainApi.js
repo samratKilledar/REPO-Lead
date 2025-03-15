@@ -1,4 +1,4 @@
-import {apiGet , apiPost,apiPostLead,apiPostFollowup} from './apiClient';
+import {apiGet , apiPost,apiPostLead,apiPostFollowup,apiGetDetails} from './apiClient';
 import {api} from './api';
 import { getItem } from './storageServices';
 
@@ -68,7 +68,7 @@ export const addTaskApiCall= async data => {
     console.log("🔑 Token:", authToken); // Check if token is correctly passed
 
     try {
-        const response = await apiGet(api.profileDetails, authToken,1);
+        const response = await apiGetDetails(api.profileDetails, authToken,1);
         console.log("✅ Server Response:", response); // Log the fetched data
         return response;
     } catch (error) {
@@ -76,9 +76,6 @@ export const addTaskApiCall= async data => {
         return { success: false, message: error.message };
     }
 };
-
-
- 
 
 export const leadAPISubmit = async (data,tenantId) =>{
     console.log(tenantId+'inside function' + JSON.stringify(data));
