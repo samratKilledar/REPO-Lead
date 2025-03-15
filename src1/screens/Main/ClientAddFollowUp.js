@@ -210,18 +210,18 @@
 
 
 import React , {lazy,Suspense,useEffect,useState} from "react";
-import { View, StyleSheet, Alert , ScrollView , KeyboardAvoidingView} from "react-native";
+import { View, StyleSheet, Alert , ScrollView , KeyboardAvoidingView , ToastAndroid } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { 
-  changeTitle, changeFollowupStatus, changeAssignedTo, changeAttachment, 
-  changeFollowupDate, changeFollowupTime, changeRemark 
+import {
+  changeTitle, changeFollowupStatus, changeAssignedTo, changeAttachment,
+  changeFollowupDate, changeFollowupTime, changeRemark
 } from "../../redux/actions/addFollowUpActions";
 //import Dropdown from "../../components/Dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 //import CustomTextInput from "../../components/CustomTextInput";
 //import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
-//import NavigationHeaderBack from "../../components/NavigationHeaderBack";
+// import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import { useNavigation } from "@react-navigation/native";
 //import StatusDropdown from "../../components/StatusDropdown";
 import { submitFollowUp } from "../../redux/actions/addFollowUpActions";
@@ -230,18 +230,25 @@ const CustomButton = lazy(() => import ('../../components/CustomButton'));
 const Dropdown = lazy(() => import ('../../components/Dropdown'));
 const StatusDropdown = lazy(() =>import ('../../components/StatusDropdown'));
 const NavigationHeaderBack = lazy(() =>import ('../../components/NavigationHeaderBack'));
+import DocumentPicker from 'react-native-document-picker';
+
 
 const ClientAddFollowUP = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const { 
+  const {
     title, followupStatus, assignedTo, attachmentUrl, followupDate, followupTime, remark,
-    titlePlaceholder, followupStatusPlaceholder, assignedToPlaceholder, attachmentUrlPlaceholder, 
-    followupDatePlaceholder, followupTimePlaceholder, remarkPlaceholder, 
-    isLoading, error, isAuthenticated 
+    isLoading, error, isAuthenticated
+  } = useSelector(state => state.addFollowUp);
+  //alert(followupStatus)
+  const {
+    titlePlaceholder, followupStatusName, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder,
+    followupTimePlaceholder, remarkPlaceholder
   } = useSelector(state => state.addFollowUp);
 
+  const followUpList = useSelector(state => state.homeReducer);
+  // Alert.alert(JSON.stringify(followUpList))
 
   const goBackCall = () => {
     navigation.popToTop();
@@ -254,7 +261,6 @@ const ClientAddFollowUP = (props) => {
       ]);
     }
   }, [isAuthenticated]);
-
   useEffect(() => {
     if (error) {
       Alert.alert("Error", error);
@@ -270,47 +276,75 @@ const ClientAddFollowUP = (props) => {
     setShowDatePicker(false);
   };
 
- const handleTimeChange = (event, time) => {
-     if (event.type === "set" && time) {
-       const hours = time.getHours();
-       const minutes = time.getMinutes().toString().padStart(2, "0");
-       const ampm = hours >= 12 ? "PM" : "AM";
-       const formattedHours = (hours % 12 || 12).toString().padStart(2, "0");
-       dispatch(changeFollowupTime(`${formattedHours}:${minutes} ${ampm}`));
-     }
-     setShowTimePicker(false);
-   };
+  const handleTimeChange = (event, time) => {
+    if (event.type === "set" && time) {
+      const hours = time.getHours();
+      const minutes = time.getMinutes().toString().padStart(2, "0");
+      const ampm = hours >= 12 ? "PM" : "AM";
+      const formattedHours = (hours % 12 || 12).toString().padStart(2, "0");
+      dispatch(changeFollowupTime(`${formattedHours}:${minutes} ${ampm}`));
+    }
+    setShowTimePicker(false);
+  };
+
+   const showToast = (message) => {
+      ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
+    };
 
   const validateAndSubmit = () => {
-    console.log("🚀 validateAndSubmit called in validSubmit !");
-    const fields = [
-      { value: title, placeholder: titlePlaceholder },
-      { value: followupStatus, placeholder: followupStatusPlaceholder },
-      { value: assignedTo, placeholder: assignedToPlaceholder },
-      { value: attachmentUrl, placeholder: attachmentUrlPlaceholder },
-      { value: followupDate, placeholder: followupDatePlaceholder },
-      { value: followupTime, placeholder: followupTimePlaceholder },
-      { value: remark, placeholder: remarkPlaceholder }
-    ];
-  
-    for (const field of fields) {
-      const fieldValue = field.value ? String(field.value).trim() : "";
-  
-      if (!fieldValue) {
-        console.log(`⚠️ Validation failed for: ${field.placeholder}`);
-        Alert.alert("Validation Error", `${field.placeholder} is required.`);
+
+    if (!title) {
+      showToast( "Title is required.");
+      return;
+    }
+    if (!followupStatus) {
+      showToast(" Status is required.");
+      return;
+    }
+    if (!assignedTo) {
+      showToast("Assigned To is required.");
+      return;
+    }
+    if (!attachmentUrl) {
+      showToast("Attachment is required.");
+      return;
+    } else {
+      const fileExtension = attachmentUrl.split('.').pop().toLowerCase();
+      if (fileExtension !== "pdf" && fileExtension !== "doc") {
+        showToast( "Only PDF or DOC files are allowed.");
         return;
       }
     }
-    dispatch(submitFollowUp());
-  };
+    if (!followupDate) {
+      showToast("Date is required.");
+      return;
+    }
+    if (!followupTime) {
+      showToast(" Time is required.");
+      return;
+    }
   
+    if (!remark) {
+      showToast( "Remark is required.");
+      return;
+    }
+    const followUpData = {
+      title,
+      followupStatus,
+      followupDate,
+      followupTime,
+      remark,
+      isActive: true,
+    };
+    dispatch(submitFollowUp(followUpData));
+  };
+
 
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.1, marginLeft: 5 }}>
-        <Suspense fallback={<NavigationHeaderBack/>}>
-           <NavigationHeaderBack text="Add Follow-Up" onPress={goBackCall} />
+      <Suspense fallback={<NavigationHeaderBack/>}>
+        <NavigationHeaderBack text="Add Follow-Up" onPress={goBackCall} />
         </Suspense>
       </View>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
@@ -325,12 +359,14 @@ const ClientAddFollowUP = (props) => {
         </Suspense>
         <Suspense fallback={<StatusDropdown/>}>
         <StatusDropdown
-          label={followupStatusPlaceholder}
+          label={followupStatusName}
           selectedValue={followupStatus}
+        //  onValueChange={(value) => dispatch(changeFollowupStatus(value))}
           onValueChange={(value) => dispatch(changeFollowupStatus(value))}
           apiType="followUp"
           zIndex={2000}
           elevation={6}
+          listData={followUpList.followUp}
         />
         </Suspense>
         <Suspense fallback={<Dropdown/>}>
@@ -338,6 +374,13 @@ const ClientAddFollowUP = (props) => {
           label={assignedToPlaceholder}
           selectedValue={assignedTo}
           onValueChange={(value) => dispatch(changeAssignedTo(value))}
+          //listData={followUpList.followUp}
+          options={[
+            { label: "Mr.Akshat", value: "akshat" },
+            { label: "Mr.Paresh", value: "paresh" },
+            { label: "Mr.Rajesh", value: "rajesh" },
+            { label: "Mr.Subhash", value: "subhash" },
+          ]}
           zIndex={1000}
           elevation={4}
         />
@@ -348,6 +391,21 @@ const ClientAddFollowUP = (props) => {
           value={attachmentUrl}
           placeholder={attachmentUrlPlaceholder}
           onChangeText={(text) => dispatch(changeAttachment(text))}
+          onIconPress={async () => {
+            try {
+              const result = await DocumentPicker.pickSingle({
+                type: [DocumentPicker.types.allFiles], // Allows all file types
+              });
+              dispatch(changeAttachment(result.name)); // Update state with file name
+            } catch (err) {
+              if (DocumentPicker.isCancel(err)) {
+                console.log("User canceled the file picker");
+              } else {
+                console.error("Unknown error: ", err);
+              }
+            }
+          }}
+      
         />
         </Suspense>
         <Suspense fallback={<CustomTextInput/>}>
@@ -412,7 +470,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingRight: 15,
     paddingLeft: 5,
-    paddingTop: 13,
+    paddingTop: 12,
     backgroundColor: "#FFFFFF",
     gap: 20,
   },

@@ -9,10 +9,6 @@ import {
   city,
   state,
   occupation,
-  upComingTask,
-  leadDetail,
-  client,
-  clientDetail,
   getAllLeadApi,taskListResApi,particularLeadDetailApi
 } from '../../api/mainApi';
 export const FETCH_DROPDOWN_SUCCESS = 'FETCH_DROPDOWN_SUCCESS';
@@ -32,11 +28,11 @@ export const callAllDropDownAPI = storedData => {
         occupationRes,
         //getAllLeadApiRes,
        //  taskListRes,
-        // particularLeadDetailApiRes,
-        upComingTaskRes,
-        leadDetailRes,
-        clientRes,
-        clientDetailRes,
+        // particularLeadDetailApiRes
+        //upComingTaskRes,
+        //         leadDetailRes,
+        //         clientRes,
+        //         clientDetailRes,
       ] = await Promise.all([
         followUp(storedData),
         clientFollowUp(storedData),
@@ -49,11 +45,7 @@ export const callAllDropDownAPI = storedData => {
         occupation(storedData),
       //  getAllLeadApi(storedData),
        //  taskListResApi(storedData),
-        // particularLeadDetailApi(storedData),
-        upComingTask(storedData),
-        leadDetail(storedData),
-        client(storedData),
-        clientDetail(storedData),
+        // particularLeadDetailApi(storedData)
       ]);
       console.log('1.followUp API Response:==>'+ JSON.stringify(followUpRes));
       console.log('2.clientFollowUp API Response:==>'+ JSON.stringify(clientFollowUpRes));
@@ -65,14 +57,10 @@ export const callAllDropDownAPI = storedData => {
       console.log('8.stateRes API Response:',  JSON.stringify(stateRes));
       console.log('9.occupationRes API Response:',  JSON.stringify(occupationRes));
      // console.log('10.getAllLeadApi API Response:',  JSON.stringify(getAllLeadApiRes));
-      console.log('11.taskListResApi API Response:',  JSON.stringify(taskListRes));
+     // console.log('11.taskListResApi API Response:',  JSON.stringify(taskListRes));
       // console.log("=========particularLeadDetailApiRes=======>"+particularLeadDetailApiRes)
 
       // console.log('Third getAllLeadApi Response:--------------------->', JSON.stringify(getAllLeadApiRes));
-      console.log('Third API Response:', upComingTaskRes);
-      console.log('Third API Response:', leadDetailRes);
-      console.log('Third API Response:', clientRes);
-      console.log('Third API Response:', clientDetailRes);
       
       dispatch({
         type: FETCH_DROPDOWN_SUCCESS,
@@ -88,11 +76,7 @@ export const callAllDropDownAPI = storedData => {
           occupationRes,
           //getAllLeadApiRes,
           // taskListRes,
-          // particularLeadDetailApiRes,
-          upComingTaskRes,
-          leadDetailRes,
-          clientRes,
-          clientDetailRes,
+          // particularLeadDetailApiRes
         },
       });
     } catch (error) {

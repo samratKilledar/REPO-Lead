@@ -207,7 +207,7 @@
 
 
 import React , {lazy,Suspense,useEffect,useState} from "react";
-import { View, StyleSheet, Alert , ScrollView , KeyboardAvoidingView} from "react-native";
+import { View, StyleSheet, Alert , ScrollView , KeyboardAvoidingView , ToastAndroid } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import {
   changeTitle, changeFollowupStatus, changeAssignedTo, changeAttachment,
@@ -227,6 +227,8 @@ const CustomButton = lazy(() => import ('../../components/CustomButton'));
 const Dropdown = lazy(() => import ('../../components/Dropdown'));
 const StatusDropdown = lazy(() =>import ('../../components/StatusDropdown'));
 const NavigationHeaderBack = lazy(() =>import ('../../components/NavigationHeaderBack'));
+import DocumentPicker from 'react-native-document-picker';
+
 
 const AddFollowUP = (props) => {
   const dispatch = useDispatch();
@@ -238,12 +240,13 @@ const AddFollowUP = (props) => {
   } = useSelector(state => state.addFollowUp);
   //alert(followupStatus)
   const {
-    titlePlaceholder, followupStatusPlaceholder, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder,
+    titlePlaceholder, followupStatusName, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder,
     followupTimePlaceholder, remarkPlaceholder
   } = useSelector(state => state.addFollowUp);
 
   const followUpList = useSelector(state => state.homeReducer);
-  alert(JSON.stringify(followUpList))
+  // Alert.alert(JSON.stringify(followUpList))
+
   const goBackCall = () => {
     navigation.popToTop();
   };
@@ -281,28 +284,56 @@ const AddFollowUP = (props) => {
     setShowTimePicker(false);
   };
 
+   const showToast = (message) => {
+      ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
+    };
+
   const validateAndSubmit = () => {
-    console.log("🚀 validateAndSubmit called in validSubmit !");
-    const fields = [
-      { value: title, placeholder: titlePlaceholder },
-      { value: followupStatus, placeholder: followupStatusPlaceholder },
-      { value: assignedTo, placeholder: assignedToPlaceholder },
-      { value: attachmentUrl, placeholder: attachmentUrlPlaceholder },
-      { value: followupDate, placeholder: followupDatePlaceholder },
-      { value: followupTime, placeholder: followupTimePlaceholder },
-      { value: remark, placeholder: remarkPlaceholder }
-    ];
 
-    for (const field of fields) {
-      const fieldValue = field.value ? String(field.value).trim() : "";
-
-      if (!fieldValue) {
-        console.log(`⚠️ Validation failed for: ${field.placeholder}`);
-         Alert.alert("Validation Error", `${field.placeholder} is required.`);
+    if (!title) {
+      showToast( "Title is required.");
+      return;
+    }
+    if (!followupStatus) {
+      showToast(" Status is required.");
+      return;
+    }
+    if (!assignedTo) {
+      showToast("Assigned To is required.");
+      return;
+    }
+    if (!attachmentUrl) {
+      showToast("Attachment is required.");
+      return;
+    } else {
+      const fileExtension = attachmentUrl.split('.').pop().toLowerCase();
+      if (fileExtension !== "pdf" && fileExtension !== "doc") {
+        showToast( "Only PDF or DOC files are allowed.");
         return;
       }
     }
-    dispatch(submitFollowUp());
+    if (!followupDate) {
+      showToast("Date is required.");
+      return;
+    }
+    if (!followupTime) {
+      showToast(" Time is required.");
+      return;
+    }
+  
+    if (!remark) {
+      showToast( "Remark is required.");
+      return;
+    }
+    const followUpData = {
+      title,
+      followupStatus,
+      followupDate,
+      followupTime,
+      remark,
+      isActive: true,
+    };
+    dispatch(submitFollowUp(followUpData));
   };
 
 
@@ -325,8 +356,9 @@ const AddFollowUP = (props) => {
         </Suspense>
         <Suspense fallback={<StatusDropdown/>}>
         <StatusDropdown
-          label={followupStatusPlaceholder}
+          label={followupStatusName}
           selectedValue={followupStatus}
+        //  onValueChange={(value) => dispatch(changeFollowupStatus(value))}
           onValueChange={(value) => dispatch(changeFollowupStatus(value))}
           apiType="followUp"
           zIndex={2000}
@@ -339,7 +371,13 @@ const AddFollowUP = (props) => {
           label={assignedToPlaceholder}
           selectedValue={assignedTo}
           onValueChange={(value) => dispatch(changeAssignedTo(value))}
-          listData={followUpList.followUp}
+          //listData={followUpList.followUp}
+          options={[
+            { label: "Mr.Akshat", value: "akshat" },
+            { label: "Mr.Paresh", value: "paresh" },
+            { label: "Mr.Rajesh", value: "rajesh" },
+            { label: "Mr.Subhash", value: "subhash" },
+          ]}
           zIndex={1000}
           elevation={4}
         />
@@ -350,6 +388,21 @@ const AddFollowUP = (props) => {
           value={attachmentUrl}
           placeholder={attachmentUrlPlaceholder}
           onChangeText={(text) => dispatch(changeAttachment(text))}
+          onIconPress={async () => {
+            try {
+              const result = await DocumentPicker.pickSingle({
+                type: [DocumentPicker.types.allFiles], // Allows all file types
+              });
+              dispatch(changeAttachment(result.name)); // Update state with file name
+            } catch (err) {
+              if (DocumentPicker.isCancel(err)) {
+                console.log("User canceled the file picker");
+              } else {
+                console.error("Unknown error: ", err);
+              }
+            }
+          }}
+      
         />
         </Suspense>
         <Suspense fallback={<CustomTextInput/>}>

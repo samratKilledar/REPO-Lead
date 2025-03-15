@@ -1,6 +1,6 @@
-import {apiGet , apiPost,apiPostLead} from './apiClient';
+import {apiGet , apiPost,apiPostLead , apiPostFollowup} from './apiClient';
 import {api} from './api';
-
+import { getItem } from './storageServices';
 // Register API
 export const followUp = async authToken => {
     //console.log("ss------ssss"+authToken)
@@ -68,6 +68,15 @@ export const leadAPISubmit = async (data,tenantId) =>{
     return await apiPostLead(api.leadSubmit, data,tenantId);
 }
 
+  
+  export const followupAPISubmit = async data => {
+    const authToken = await getItem("authToken");
+    console.log("------------------------------token--"+JSON.stringify(authToken));
+    console.log('inside function' + JSON.stringify(data));
+    return await apiPostFollowup(api.addFollowUp, {data});
+  };
+
+
 
 
 export const taskListResApi= async authToken=>{
@@ -79,4 +88,5 @@ export const particularLeadDetailApi =async authToken=>{
     // console.log("=====particularLeadDetailApi==="+authToken);
     return await apiGet(api.particularLeadDetailApi, authToken);
 }
+
 

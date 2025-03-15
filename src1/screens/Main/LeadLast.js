@@ -21,20 +21,19 @@ const LeadLast = (props) => {
   //alert(JSON.stringify(service1.service)) 
   const steps = ['Personal', 'Occupation', 'Services'];
   const currentStep = 3;
-  const servicesLoading = false; // Replace with actual loading state if available
 
   const [cards, setCards] = useState([
     {
       id: 1,
       title: 'Insurance',
       date: '10-01-2025',
-      description: "Loorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type ...",
+      description: 'Lorem Ipsum is simply dummy text of the printing industry...'
     },
     {
       id: 2,
       title: 'Mutual Fund',
       date: '20-01-2025',
-      description: "Loorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type ...",
+      description: "Lorem Ipsum has been the industry's standard dummy text..."
     },
   ]);
 
@@ -46,28 +45,7 @@ const LeadLast = (props) => {
     props.navigation.goBack("LeadAddOccupation");
   };
 
-  const serviceList= useSelector(state => state.homeReducer);
-  alert(JSON.stringify(serviceList))
-
-
   const handleSubmit = () => {
-    // if (!assignto) {
-    //   Toast.show({
-    //     type: 'error',
-    //     text1: 'Error',
-    //     text2: 'Please select "Assign to"',
-    //   });
-    //   return;
-    // }
-
-    // if (services.length === 0) {
-    //   Toast.show({
-    //     type: 'error',
-    //     text1: 'Error',
-    //     text2: 'Please select "Services"',
-    //   });
-    //   return;
-    // }
     if (services.length === 0) {
       Alert.alert('Error', "Please select 'Assign to' and 'Services'");
       return;
@@ -82,18 +60,10 @@ const LeadLast = (props) => {
 
     setCards((prevCards) => [...prevCards, newCard]);
 
-    Toast.show({
-      type: 'success',
-      text1: 'Success',
-      text2: 'Lead submitted successfully',
-    });
-  }
-    // dispatch(submitLeadLast());
     dispatch(leadSubmitAllData())
    // Alert.alert('Success', 'Lead submitted successfully');
   };
 
-  
   const handleDeleteCard = (id) => {
     setCards((prevCards) => prevCards.filter((card) => card.id !== id));
   };
@@ -108,44 +78,15 @@ const LeadLast = (props) => {
       </View>
       <View style={styles.centerContainer}>
         <Dropdown
-<<<<<<< HEAD
-          label="Assign To"
-          selectedValue={assignto} // Fixed Redux selector
-          onValueChange={(value) => {
-            console.log("AssignTo Selected:", value);
-            dispatch(updateAssignTo(value));
-          }}
-=======
           label="Assign to"
           selectedValue={assignto}
           onValueChange={(value) => dispatch(updateAssignTo(value))}
->>>>>>> UATLead
           options={[
             { label: 'John Doe', value: 'John Doe' },
             { label: 'Jane Smith', value: 'Jane Smith' }
-            
           ]}
           zIndex={4000}
         />
-<<<<<<< HEAD
-
-        {servicesLoading ? (
-          <Text>Loading Services...</Text>
-        ) : (
-          <StatusDropdown
-            label="Services"
-            selectedValue={services} // Fixed Redux selector
-            onValueChange={(value) => {
-              console.log("Service Selected:", value);
-              dispatch(updateServices([value])); // Keeping array format
-            }}
-            listData={serviceList.service}
-            apiType="service"
-            zIndex={2000}
-          />
-        )}
-
-=======
       
           {/* <StatusDropdown
             label="Services"
@@ -162,15 +103,13 @@ const LeadLast = (props) => {
                 apiType="leadSource"
                 listData={service1.service}
               />
->>>>>>> UATLead
         <CustomTextInput
           value={remark}
           placeholder="Remark"
           onChangeText={(value) => dispatch(updateRemark(value))}
         />
-        <CustomButton title="Submit" onPress={handleSubmit} />
+        <CustomButton title="Add" onPress={handleSubmit} />
         <ScrollView contentContainerStyle={styles.insuranceCardContainer}>
-<<<<<<< HEAD
           <View style={styles.insuranceCard}>
             {cards.map((item) => (
               <View key={item.id} style={styles.cardContainer}>
@@ -191,45 +130,15 @@ const LeadLast = (props) => {
               </View>
             ))}
           </View>
-=======
-        <View style={styles.insuranceCard}>
-          <Text style={styles.insuranceText}>Interested Services</Text>
-          {/* {props.cardData.map((item) => (
-            <InsuranceCard
-              key={item.id}
-              title={item.title}
-              date={item.date}
-              description={item.description}
-            />
-          ))} */}
-        </View>
-          {/* {cards.map((item) => (
-            <View key={item.id} style={styles.cardContainer}>
-              <InsuranceCard
-                title={item.title}
-                date={item.date}
-                description={item.description}
-              />
-              <TouchableOpacity
-                style={styles.deleteButton}
-                onPress={() => handleDeleteCard(item.id)}
-              >
-                <Image
-                  source={require('../../assets/icons/Delete/delete.png')}
-                  style={styles.deleteIcon}
-                />
-              </TouchableOpacity>
-            </View>
-          ))} */}
->>>>>>> UATLead
         </ScrollView>
       </View>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+   container: {
     flex: 1,
     paddingTop: 10,
     gap: 18,

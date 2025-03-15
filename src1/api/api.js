@@ -20,7 +20,7 @@ export const api={
     particularLeadDetailApi:"https://opticalerp.in:85/api/lead/getbyleadid",
 
     //AddFollowUP screen 
-    addFollowUP: "https://opticalerp.in:85/api/followupdetails/create/create",
+    addFollowUp: "https://opticalerp.in:85/api/followupdetails/create/create",
     //add Task screen API
     addTask:"https://opticalerp.in:85/api/taskdetails/create",
    upComingTask: "https://opticalerp.in:85/api/taskdetails/getlist",
