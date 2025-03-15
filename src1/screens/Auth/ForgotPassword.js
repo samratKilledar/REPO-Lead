@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Platform,
+  ToastAndroid
 } from 'react-native';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import CustomText from '../../components/CustomText';
@@ -18,8 +19,14 @@ import ButtonStyles from '../../styles/ButtonStyles';
 import {  updateForgotPassEmail,forgotPassUser } from '../../redux/actions/forgotPassAction';
 import { useDispatch, useSelector } from 'react-redux';
 // import {useNavigation} from '@react-navigation/native';
+ 
 
 const ForgotPassword = props => {
+
+  const showToast = (message) => {
+    ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
+  };
+
   const [email, setEmail] = useState('');
   // const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -27,13 +34,14 @@ const ForgotPassword = props => {
   const emailValue = useSelector(state => state.forgotPassReducer.emailValue);
   const handleEmail = () => { 
     if (!emailValue?.email || emailValue.email.trim() === "") {
-        Alert.alert('Users', 'Email is required');
-        return;
+      showToast('Email is required');
+        return ;
     } else if (!/\S+@\S+\.\S+/.test(emailValue.email)) {
-        Alert.alert('Error', 'Enter a valid email address!');
-        return;
+      showToast('Enter a valid email address!');
+        return ;
     }
 
+   
     dispatch(forgotPassUser())
         .then((response) => {
             if (response.success) {
@@ -44,7 +52,7 @@ const ForgotPassword = props => {
                     }
                 ]);
             } else {
-                Alert.alert('Error', response.message || 'Something went wrong!');
+                Alert.alert('Something went wrong!');
             }
         })
         .catch((error) => {

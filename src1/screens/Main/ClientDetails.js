@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import DetailItem from "../../components/DetailItem";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
@@ -7,27 +7,21 @@ import ButtonStyles from "../../styles/ButtonStyles";
 import { ScrollView } from "react-native-gesture-handler";
 import InsuranceCard from "../../components/InsuranceCard";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchLeadSuccess, fetchInsuranceSuccess } from "../../redux/actions/clientDetailActions";
+
 const ClientDetails = (props) => {
-  const navigation = useNavigation()
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const goBackCall = () => {
     navigation.goBack();
   };
-  const cardData = [
-    {
-      id: 1,
-      title: "Insurance",
-      date: "20-01-2025",
-      description:
-        "Loorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type ...",
-    },
-    {
-      id: 2,
-      title: "Mutual Fund",
-      date: "20-01-2025",
-      description:
-        "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a gallery of type and scrambled it to make a type ...",
-    },
-  ];
+
+  const clientDetails = useSelector((state) => state.clientDetailReducer.ClientValue);
+  const clientDetailsPlaceholder = useSelector((state) => state.clientDetailReducer.ClientPlaceholder);
+  const insuranceList = useSelector((state) => state.clientDetailReducer.InsuranceList);
+
   const [menuVisible, setMenuVisible] = useState(false);
   const addfollow = () => {
     props.navigation.navigate("ClientAddFollowUp")
@@ -36,10 +30,9 @@ const ClientDetails = (props) => {
     props.navigation.navigate("ClientAddServices")
   }
   return (
- 
     <View style={styles.container}>
-      <View style={{ flexDirection: "row", paddingRight: 28, marginLeft: 8}}>
-        <NavigationHeaderBack text="Barbara Moore" onPress={goBackCall}/>
+      <View style={{ flexDirection: "row",  paddingRight: 28, marginLeft: 8 }}>
+        <NavigationHeaderBack text="Barbara Moore" onPress={goBackCall} />
         <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
           <Image
             source={require('../../assets/icons/MoreCircle.png')}
@@ -50,20 +43,20 @@ const ClientDetails = (props) => {
   
       <ScrollView style={styles.centralcontainer}>
         <View style={styles.detailsContainer}>
-          <DetailItem icon={require('../../assets/icons/ProfileGrey/profileGrey.png')} label="Name" detail="Rajiv Sharma" />
-          <DetailItem icon={require('../../assets/icons/Call/call.png')} label="Mobile No" detail="+919876543210" />
-          <DetailItem icon={require('../../assets/icons/Address/Address.png')} label="Address" detail="Build 1/A, 101, Shree krishna society,Waghle Esate, Thane - 400601 Maharashtra,India." />
-          <DetailItem icon={require('../../assets/icons/Bag/bag.png')} label="Occupation" detail="Job" />
-          <DetailItem icon={require('../../assets/icons/Work/work.png')} label="Type Of Work" detail="IT Engineer" />
-          <DetailItem icon={require('../../assets/icons/Wallet/wallett.png')} label="Monthly Income" detail="30000" />
-          <DetailItem icon={require('../../assets/icons/Chart/chart.png')} label="Company Name" detail="ABC Contact Pvt Ltd" />
+          <DetailItem icon={require('../../assets/icons/ProfileGrey/profileGrey.png')} label={clientDetailsPlaceholder.name} detail={clientDetails.name} />
+          <DetailItem icon={require('../../assets/icons/Call/call.png')}  label={clientDetailsPlaceholder.mobileNo} detail={clientDetails.mobileNo} />
+          <DetailItem icon={require('../../assets/icons/Address/Address.png')} label={clientDetailsPlaceholder.address} detail={clientDetails.address} />
+          <DetailItem icon={require('../../assets/icons/Bag/bag.png')} label={clientDetailsPlaceholder.occupation} detail={clientDetails.occupation} />
+          <DetailItem icon={require('../../assets/icons/Work/work.png')} label={clientDetailsPlaceholder.typeOfWork} detail={clientDetails.typeOfWork} />
+          <DetailItem icon={require('../../assets/icons/Wallet/wallett.png')} label={clientDetailsPlaceholder.monthlyIncome} detail={clientDetails.monthlyIncome} />
+          <DetailItem icon={require('../../assets/icons/Chart/chart.png')} label={clientDetailsPlaceholder.companyName} detail={clientDetails.companyName} />
           <View style={styles.leadStatusContainer}>
-            <DetailItem icon={require('../../assets/icons/LSTIckSquare/lsTickSquare.png')} label="Lead Status" detail={<Text style={styles.leadStatusText}>Follow Up</Text>} />
+            <DetailItem icon={require('../../assets/icons/LSTIckSquare/lsTickSquare.png')} label={clientDetailsPlaceholder.leadStatus} detail={<Text style={styles.leadStatusText}>{clientDetails.leadStatus}</Text>} />
           </View>
-          <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label="Next Meeting Date" detail="Feb 14, 2025" />
-          <DetailItem icon={require('../../assets/icons/Remarks.png')} label="Attachment" detail="References.pdf" />
+          <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label={clientDetailsPlaceholder.nextMeetingDate} detail={clientDetails.nextMeetingDate}  />
+          <DetailItem icon={require('../../assets/icons/Remarks.png')} label={clientDetailsPlaceholder.attachment}  detail={clientDetails.attachment} />
         </View>
-  
+
         <View style={styles.followup}>
         <View style={{ flex: 1, margin: 10 }}>
           <CustomButton title="Add Follow Up" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} onPress={addfollow} />
@@ -71,11 +64,11 @@ const ClientDetails = (props) => {
         <View style={{ flex: 1, margin: 10 }}>
           <CustomButton title="Add Services" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} onPress={addService} />
         </View>
-      </View>
+        </View>
 
         <View style={styles.insuranceCard}>
           <Text style={styles.insuranceText}>Interested Services</Text>
-          {cardData.map((item) => (
+          {insuranceList.map((item) => (
             <InsuranceCard
               key={item.id}
               title={item.title}
@@ -85,7 +78,7 @@ const ClientDetails = (props) => {
           ))}
         </View>
       </ScrollView>
-   
+
       {menuVisible && (
         <View style={styles.menuBox}>
           <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Edit clicked")}>
@@ -98,7 +91,7 @@ const ClientDetails = (props) => {
           </TouchableOpacity>
         </View>
       )}
-    </View>    
+    </View>
   );
 };
 
@@ -176,6 +169,5 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 14,
   },
-
 });
 export default ClientDetails;

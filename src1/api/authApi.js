@@ -16,7 +16,7 @@
 // };
 
 // export const l = async userData => {
-  
+
 //     return await apiGet(api.getAllLeadApi,getItem(userData));
 // };
 
@@ -34,28 +34,61 @@
 //     }
 // };
 
-import {apiGet, apiPost,apiPostForgotPass, apiPut,postApi} from './apiClient';
-import {api} from './api';
+import { apiGet, apiPost, apiPostForgotPass, apiPut, postApi } from './apiClient';
+import { api } from './api';
 import { getItem } from '../api/storageServices';
 
 // Login API
 export const loginUserApiCall = async data => {
-  console.log('inside function' + JSON.stringify(data));
-  return await apiPost(api.authApi, {data});
+    console.log('inside function' + JSON.stringify(data));
+    return await apiPost(api.authApi, { data });
 };
 //forgot Password
 export const forgotPassApiCall = async data => {
     console.log('inside function' + JSON.stringify(data));
-    return await apiPostForgotPass(api.forgotPasswordApi, {data});
-  };
+    return await apiPostForgotPass(api.forgotPasswordApi, { data });
+};
 
-  export const submitPasswordApiCall = async (newPassword, confirmNewPassword) => {  
+
+export const verifyUserApiCall = async (password, email, token) => {
     const param = {
-        data:{
+        password: password,
+        email: email,
+        token: token,
+    };
+
+    try {
+        console.log("📡 Sending verification request:", param);
+
+        const response = await fetch(api.verifyUser, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(param),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP Error! Status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("✅ Verification Response:", result);
+        return result;
+    } catch (error) {
+        console.log("🚨 Verification API Error:", error.message);
+        return { success: false, message: error.message };
+    }
+};
+
+
+export const submitPasswordApiCall = async (newPassword, confirmNewPassword) => {
+    const param = {
+        data: {
             customerId: "Root", // Keep tenant as "Root"
             password: newPassword,
             confirmPassword: confirmNewPassword
-        },    
+        },
     };
 
     try {
@@ -79,7 +112,7 @@ export const forgotPassApiCall = async data => {
 // Register API
 export const readAllLead = async userData => {
     console.log(getItem("authToken"))
-    return await apiGet(api.getAllLeadApi,getItem(authToken));
+    return await apiGet(api.getAllLeadApi, getItem(authToken));
 };
 
 // export const l = async userData => {
@@ -98,4 +131,6 @@ export const fetchDropdownDataApi = async (apiType) => {
         throw error;
     }
 };
+
+
 

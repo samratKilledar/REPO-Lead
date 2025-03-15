@@ -1,7 +1,8 @@
 export const api={
     authApi:"https://opticalerp.in:85/api/tokens/gettoken",
     forgotPasswordApi:"https://opticalerp.in:85/api/users/forgotpassword/forgot-password",
-    createPass:"https://opticalerp.in:85/api/users/resetpassword/reset-password",
+    createPass:"https://opticalerp.in:85/api/currentuser/changepassword/change-password",
+    verifyUser:"https://opticalerp.in:85/api/users/resetpassword/reset-password",
     profileDetails:"https://opticalerp.in:85/api/users/getbyidwithrole",
     getAllLeadApi:"https://opticalerp.in:85/api/lead/getlist/get-all",
     
@@ -23,6 +24,7 @@ export const api={
 
     //AddFollowUP screen 
     addFollowUP: "https://opticalerp.in:85/api/followupdetails/create/create",
+    
     //add Task screen API
     addTask:"https://opticalerp.in:85/api/taskdetails/create",
    upComingTask: "https://opticalerp.in:85/api/taskdetails/getlist",

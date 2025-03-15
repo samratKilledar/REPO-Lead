@@ -222,6 +222,60 @@ export const apiPostForgotPass = async (url, param = {}) => {
     return { success: false, message: error.message };
   }
 };
+export const apiPut = async (url, param = {}) => {
+  const data = param.data;
+  console.log(JSON.stringify(data));
+
+  try {
+      const response = await fetch(url, {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+          throw new Error(`HTTP Error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log('Success:', result);
+      return result;
+  } catch (error) {
+      console.error('Network request failed:', error.message);
+      return { success: false, message: error.message };
+  }
+};
+
+export const apiPostFollowup = async (url, param = {}) => {
+  const data = param.data;
+  console.log("Sending Data:", JSON.stringify(data));
+
+  try {
+    console.log("Inside API Client - Making Request");
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        tenant: data.tenantId || "",  // Ensure tenantId is included if needed
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error! Status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log("Success:", result);
+    return result;
+  } catch (error) {
+    console.error("Network request failed:", error.message);
+    return null;
+  }
+};
 
 
 

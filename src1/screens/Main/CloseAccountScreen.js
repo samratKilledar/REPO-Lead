@@ -5,6 +5,8 @@ import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
 import { useNavigation } from "@react-navigation/native";
+import { useSelector,useDispatch } from "react-redux";
+import { fetchData } from '../../redux/actions/closeAccountAction';
 const CloseAccountScreen = () => {
   const navigation = useNavigation()
   const goBackCall = () => {
@@ -21,6 +23,9 @@ const CloseAccountScreen = () => {
     "Mandate Pending",
     "Informed Client"
   ];
+
+  const taskPlaceHolder = useSelector(state => state.closeAccountReducer.taskPlaceHolder);
+  const taskValue = useSelector(state => state.closeAccountReducer.taskValue);
   return (
 
     <View style={styles.container}>
@@ -37,16 +42,16 @@ const CloseAccountScreen = () => {
           </View>
 
           <View style={styles.detailsContainer}>
-            <DetailItem icon={require('../../assets/icons/Work/work.png')} label="Task Name" detail="Close Account" />
-            <DetailItem icon={require('../../assets/icons/ProfileGrey/profileGrey.png')} label="Task Owner" detail="John Smith" />
-            <DetailItem icon={require('../../assets/icons/ShieldDone.png')} label="Priority" detail="Medium" />
+            <DetailItem icon={require('../../assets/icons/Work/work.png')} label={taskPlaceHolder.taskName} detail={taskValue.taskName} />
+            <DetailItem icon={require('../../assets/icons/ProfileGrey/profileGrey.png')} label={taskPlaceHolder.assignedTo} detail={taskValue.assignedTo} />
+            <DetailItem icon={require('../../assets/icons/ShieldDone.png')} label={taskPlaceHolder.priority}detail={taskValue.priority} />
             <DetailItem icon={require('../../assets/icons/Bag/bag.png')} label="Progress" detail="50%" />
-            <DetailItem icon={require('../../assets/icons/LSTIckSquare/lsTickSquare.png')} label="Lead Status" detail="Under Process" />
-            <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label="Due Date" detail="Feb 14, 2025" />
-            <DetailItem icon={require('../../assets/icons/Service.png')} label="Service Request" detail="Account close once redemption amt credited to his account." />
-            <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label="Start Date" detail="Feb 21, 2025" />
-            <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label="Reminder Date" detail="Feb 15, 2025" />
-            <DetailItem icon={require('../../assets/icons/Remarks.png')} label="Remarks" detail="Query raised- 11310957" />
+            <DetailItem icon={require('../../assets/icons/LSTIckSquare/lsTickSquare.png')} label={taskPlaceHolder.taskStatus} detail={taskValue.taskStatus} />
+            <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label={taskPlaceHolder.dueDate} detail={taskValue.dueDate} />
+            <DetailItem icon={require('../../assets/icons/Service.png')} label={taskPlaceHolder.serviceRequest} detail={taskValue.serviceRequest} />
+            <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label={taskPlaceHolder.startDate} detail={taskValue.startDate}/>
+            <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label={taskPlaceHolder.reminderDate} detail={taskValue.reminderDate} />
+        <DetailItem icon={require('../../assets/icons/Remarks.png')} label={taskPlaceHolder.remarks} detail={taskValue.remarks} />
           </View>
         </View>
         {menuVisible && (

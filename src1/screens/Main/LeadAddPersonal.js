@@ -7,11 +7,8 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
 import Dropdown from '../../components/Dropdown';
-<<<<<<< HEAD
-=======
 import Toast from "react-native-toast-message";
 
->>>>>>> UATLead
 import {
   updateAddressLine1,
   updateAddressLine2,
@@ -98,101 +95,10 @@ const LeadAddPersonal = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-<<<<<<< HEAD
-      {/* NavigationHeaderBack positioned absolutely at the top */}
-=======
->>>>>>> UATLead
       <View style={styles.headerContainer}>
         <NavigationHeaderBack text="Add Lead" onPress={goBackCall} />
       </View>
 
-<<<<<<< HEAD
-      {/* Rest of the content */}
-      <View style={styles.contentContainer}>
-        <Stepper steps={steps} currentStep={currentStep} style={styles.stepper} />
-
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <View style={styles.centerContainer}>
-            <CustomTextInput
-              value={firstName}
-              placeholder="First Name"
-              onChangeText={(value) => dispatch(updateFirstName(value))}
-            />
-            <CustomTextInput
-              value={lastName}
-              placeholder="Last Name"
-              onChangeText={(value) => dispatch(updateLastName(value))}
-            />
-            <StatusDropdown
-              label="Lead Source"
-              selectedValue={leadService}
-              onValueChange={setLeadService}
-              apiType="leadSource"
-            />
-            <CustomTextInput
-              value={mobileNo}
-              placeholder="Mobile No"
-              keyboardType="phone-pad"
-              onChangeText={(value) => dispatch(updateMobileNo(value))}
-            />
-            <CustomTextInput
-              value={emailId}
-              placeholder="Email Id"
-              keyboardType="email-address"
-              onChangeText={(value) => dispatch(updateEmailId(value))}
-            />
-            <CustomTextInput
-              value={whatsappNo}
-              placeholder="WhatsApp No"
-              keyboardType="phone-pad"
-              onChangeText={(value) => dispatch(updateWhatsAppNo(value))}
-            />
-            <CustomTextInput
-              value={addressLine1}
-              placeholder="Address Line 1"
-              onChangeText={(value) => dispatch(updateAddressLine1(value))}
-            />
-            <CustomTextInput
-              value={addressLine2}
-              placeholder="Address Line 2"
-              onChangeText={(value) => dispatch(updateAddressLine2(value))}
-            />
-            <StatusDropdown
-              label="City"
-              selectedValue={city}
-              onValueChange={(value) => dispatch(updateCity(value))}
-              apiType="city"
-              zIndex={3000}
-            />
-            <StatusDropdown
-              label="State"
-              selectedValue={state}
-              onValueChange={(value) => dispatch(updateState(value))}
-              apiType="state"
-              zIndex={2000}
-            />
-            <StatusDropdown
-              label="Country"
-              selectedValue={country}
-              onValueChange={(value) => dispatch(updateCountry(value))}
-              apiType="country"
-              zIndex={1000}
-            />
-            <CustomTextInput
-              value={pincode}
-              placeholder="Pincode"
-              keyboardType="numeric"
-              onChangeText={(value) => dispatch(updatePincode(value))}
-            />
-            <CustomButton
-              title="Next"
-              customStyle={styles.nextButton}
-              onPress={handleOccupation}
-            />
-          </View>
-        </ScrollView>
-      </View>
-=======
       <KeyboardAvoidingView 
         behavior={Platform.OS === "ios" ? "padding" : null} 
         style={{ flex: 1 }} 
@@ -312,7 +218,6 @@ const LeadAddPersonal = ({ navigation }) => {
           ),
         }}
       />
->>>>>>> UATLead
     </View>
   );
 };
@@ -321,31 +226,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-<<<<<<< HEAD
-    paddingTop:15,
-    gap:18,
-  },
-  headerContainer: {
-    position: 'absolute', 
-    top: 15, 
-    left: 0,
-    right: 0,
-    zIndex: 1000, 
-    paddingTop: 15, 
-    paddingHorizontal: 15, 
-    backgroundColor: '#FFFFFF', 
-  },
-  contentContainer: {
-    flex: 1,
-    paddingTop: 70, 
-  },
-  stepper: {
-    marginTop: 10, 
-    paddingHorizontal: 15, 
-    marginTop:10,
-    paddingTop:15,
-    gap:18
-=======
     paddingTop: 15,
     gap: 18,
   },
@@ -369,21 +249,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     paddingTop: 15,
     gap: 18,
->>>>>>> UATLead
   },
   centerContainer: {
     paddingBottom: 20,
     gap: 10,
-<<<<<<< HEAD
-    paddingLeft: 15,
-    paddingRight: 15,
-    position: "relative",
-    paddingHorizontal: 15, 
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    paddingBottom: '50'
-=======
     paddingHorizontal: 15,
   },
   scrollViewContent: {
@@ -408,7 +277,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 14,
     marginTop: 5,
->>>>>>> UATLead
   },
 });
 
