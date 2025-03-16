@@ -1,4 +1,4 @@
-import {apiGet , apiPost,apiPostLead,apiPostFollowup} from './apiClient';
+import {apiGet , apiPost,apiPostLead,apiPostFollowup, apiGetDetails} from './apiClient';
 import {api} from './api';
 import { getItem } from './storageServices';
 
@@ -63,12 +63,13 @@ export const addTaskApiCall= async data => {
     console.log('inside function' + JSON.stringify(data));
     return await apiPost(api.addTask, {data});
   }; 
+  
   export const profileDetail = async (authToken) => {
     console.log("📡 Fetching profile details...");
     console.log("🔑 Token:", authToken); // Check if token is correctly passed
 
     try {
-        const response = await apiGet(api.profileDetails, authToken,1);
+        const response = await apiGetDetails(api.profileDetails, authToken,1);
         console.log("✅ Server Response:", response); // Log the fetched data
         return response;
     } catch (error) {

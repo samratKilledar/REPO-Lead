@@ -102,7 +102,7 @@ const AddTask = (props) => {
         return;
       }
     }
-    Alert.alert("Success", "Task added successfully.");
+    //Alert.alert("Success", "Task added successfully.");
     dispatch(submitTask());
   };
 

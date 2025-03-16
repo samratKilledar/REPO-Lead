@@ -1,35 +1,36 @@
 import { Alert } from 'react-native';
-// GET Request Function
-// export const apiGet = async (url,token) => {
-//   try {
+//GET Request Function
+export const apiGet = async (url,token) => {
+  try {
   
-//     const response = await fetch(url, {
-//       method: 'GET',
-//       headers: {
-//         // Authorization: `Bearer ${token}`,
-//         'Content-Type': 'application/json',
-//         Authorization: token,
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        // Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+        Authorization: token,
         
 
-//       },
-//     });
-//     console.log(url+"---------------------s------------------------------")
-//     //console.log("🛠️ Token being sent:", token);
+      },
+    });
+    console.log(url+"---------------------s------------------------------")
+    //console.log("🛠️ Token being sent:", token);
 
-//     if (!response.ok) {
-//       //alert(11)
-//       console.error("HTTP error! Status:"+ response.status);
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-//     //alert(JSON.stringify(response))
-//     return await response.json();
-//   } catch (error) {
-//     console.error(`GET ${endpoint} Error:`,error.response?.data || error.message,
-// );
-//     throw error;
-//   }
-// };
-export const apiGet = async (url, token, id) => {
+    if (!response.ok) {
+      //alert(11)
+      console.error("HTTP error! Status:"+ response.status);
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    //alert(JSON.stringify(response))
+    return await response.json();
+  } catch (error) {
+    console.error(`GET ${endpoint} Error:`,error.response?.data || error.message,
+);
+    throw error;
+  }
+};
+
+export const apiGetDetails= async (url, token, id) => {
   try {
       console.log("🌐 Request URL:", url);
       console.log("🔑 Sending Token:", token);
@@ -222,7 +223,7 @@ export const apiPostForgotPass = async (url, param = {}) => {
     return { success: false, message: error.message };
   }
 };
-export const apiPut = async (url, param = {}) => {
+export const apiPutPassword = async (url, param = {}) => {
   const data = param.data;
   console.log(JSON.stringify(data));
 
