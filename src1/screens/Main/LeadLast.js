@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { View, Text, Alert, ScrollView, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,15 +10,13 @@ import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
 import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
-import { state } from '../../api/mainApi';
+import { state as _state } from '../../api/mainApi';  // Renamed to prevent conflicts
 
 const LeadLast = (props) => {
   const dispatch = useDispatch();
-  const { assignto, services, remark, servicesName,  } = useSelector((state) => state.lastReducer);
-  // const {service1} = useSelector((state)=> state.homeReducer)
-  // alert(service1)
-  const service1= useSelector(state => state.homeReducer);
-  //alert(JSON.stringify(service1.service)) 
+  const { assignto, services, remark, servicesName } = useSelector((state) => state.lastReducer);
+  const service1 = useSelector((state) => state.homeReducer);
+
   const steps = ['Personal', 'Occupation', 'Services'];
   const currentStep = 3;
 
@@ -26,22 +25,22 @@ const LeadLast = (props) => {
       id: 1,
       title: 'Insurance',
       date: '10-01-2025',
-      description: 'Lorem Ipsum is simply dummy text of the printing industry...'
+      description: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...",
     },
     {
       id: 2,
       title: 'Mutual Fund',
       date: '20-01-2025',
-      description: "Lorem Ipsum has been the industry's standard dummy text..."
+      description: "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s...",
     },
   ]);
 
   useEffect(() => {
-   // dispatch(fetchServices());
+    // Uncomment when needed: dispatch(fetchServices());
   }, [dispatch]);
 
   const goBackCall = () => {
-    props.navigation.goBack("LeadAddOccupation");
+    props.navigation.goBack();
   };
 
   const handleSubmit = () => {
@@ -54,13 +53,13 @@ const LeadLast = (props) => {
       id: Date.now(),
       title: services[0],
       date: new Date().toLocaleDateString(),
-      description: remark
+      description: remark,
     };
 
     setCards((prevCards) => [...prevCards, newCard]);
 
-    dispatch(leadSubmitAllData())
-   // Alert.alert('Success', 'Lead submitted successfully');
+    dispatch(leadSubmitAllData());
+    // Alert.alert('Success', 'Lead submitted successfully');
   };
 
   const handleDeleteCard = (id) => {
@@ -82,62 +81,38 @@ const LeadLast = (props) => {
           onValueChange={(value) => dispatch(updateAssignTo(value))}
           options={[
             { label: 'John Doe', value: 'John Doe' },
-            { label: 'Jane Smith', value: 'Jane Smith' }
+            { label: 'Jane Smith', value: 'Jane Smith' },
           ]}
           zIndex={4000}
         />
-      
-          {/* <StatusDropdown
-            label="Services"
-            selectedValue={service1.service}
-            // onValueChange={(value) => dispatch(updateServices([value]))} 
-            apiType="service"
-            zIndex={2000}
-          /> */}
-        
+
         <StatusDropdown
-                label={servicesName}
-                selectedValue={service1.services}
-                onValueChange={(value) => dispatch(updateServices(value))}
-                apiType="leadSource"
-                listData={service1.service}
-              />
+          label={servicesName}
+          selectedValue={services}
+          onValueChange={(value) => dispatch(updateServices(value))}
+          apiType="leadSource"
+          listData={service1.service}
+        />
+
         <CustomTextInput
           value={remark}
           placeholder="Remark"
           onChangeText={(value) => dispatch(updateRemark(value))}
         />
         <CustomButton title="Submit" onPress={handleSubmit} />
+
         <ScrollView contentContainerStyle={styles.insuranceCardContainer}>
-        <View style={styles.insuranceCard}>
-          <Text style={styles.insuranceText}>Interested Services</Text>
-          {/* {props.cardData.map((item) => (
-            <InsuranceCard
-              key={item.id}
-              title={item.title}
-              date={item.date}
-              description={item.description}
-            />
-          ))} */}
-        </View>
-          {/* {cards.map((item) => (
+          <View style={styles.insuranceCard}>
+          </View>
+
+          {cards.map((item) => (
             <View key={item.id} style={styles.cardContainer}>
-              <InsuranceCard
-                title={item.title}
-                date={item.date}
-                description={item.description}
-              />
-              <TouchableOpacity
-                style={styles.deleteButton}
-                onPress={() => handleDeleteCard(item.id)}
-              >
-                <Image
-                  source={require('../../assets/icons/Delete/delete.png')}
-                  style={styles.deleteIcon}
-                />
+              <InsuranceCard title={item.title} date={item.date} description={item.description} />
+              <TouchableOpacity style={styles.deleteButton} onPress={() => handleDeleteCard(item.id)}>
+                <Image source={require('../../assets/icons/Delete/delete.png')} style={styles.deleteIcon} />
               </TouchableOpacity>
             </View>
-          ))} */}
+          ))}
         </ScrollView>
       </View>
     </View>
@@ -148,7 +123,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 10,
-    backgroundColor: '#FFFFFF',
     gap: 18,
     zIndex: -1,
   },
@@ -163,15 +137,17 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   insuranceCardContainer: {
-    marginRight: 10,
-    marginLeft: 5,
     gap: 24,
     marginBottom: 16,
-    padding: 6,
     paddingBottom: 100,
   },
   cardContainer: {
     position: 'relative',
+  },
+  insuranceCard: {
+    marginTop: 10,
+    marginBottom: 30,
+    gap: 24,
   },
   deleteButton: {
     position: 'absolute',
@@ -188,4 +164,3 @@ const styles = StyleSheet.create({
 });
 
 export default LeadLast;
-

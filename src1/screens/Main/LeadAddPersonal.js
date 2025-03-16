@@ -1,22 +1,20 @@
+
+
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, ToastAndroid } from 'react-native';
+import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, ToastAndroid , Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import Toast from 'react-native-toast-message';
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
 import Dropdown from '../../components/Dropdown';
-import Toast from "react-native-toast-message";
-
 import {
   updateAddressLine1,
   updateAddressLine2,
   updateCity,
   updateCountry,
-  updateEmailId,
-  updateLastName,
-  updateMobileNo,
   updatePincode,
   updateState,
   updateWhatsAppNo,
@@ -46,44 +44,60 @@ const LeadAddPersonal = ({ navigation }) => {
   const leadSourceList = useSelector(state => state.homeReducer);
   const stateList = useSelector(state => state.homeReducer);
 
+
+  const steps = ['Personal', 'Occupation', 'Services'];
+  const currentStep = 1;
+
   const showToast = (message) => {
     ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
   };
 
+  // Validation function with toast messages
   const validateFields = () => {
     if (!firstName.trim()) {
-      showToast('Please enter First Name.');
-      return false;
+        showToast('Please enter First Name.');
+        return false;
     }
     if (!lastName.trim()) {
-      showToast('Please enter Last Name.');
-      return false;
+        showToast('Please enter Last Name.');
+        return false;
     }
     if (!mobileNo.trim() || !/^\d{10}$/.test(mobileNo)) {
-      showToast('Please enter a valid 10-digit Mobile Number.');
-      return false;
+        showToast('Please enter a valid 10-digit Mobile Number.');
+        return false;
     }
     if (!addressLine1.trim()) {
-      showToast('Please enter Address Line 1.');
-      return false;
+        showToast('Please enter Address Line 1.');
+        return false;
     }
     if (!addressLine2.trim()) {
-      showToast('Please enter Address Line 2.');
-      return false;
+        showToast('Please enter Address Line 1.');
+        return false;
     }
     if (!pincode.trim() || !/^\d{6}$/.test(pincode)) {
-      showToast('Please enter a valid 6-digit Pincode.');
-      return false;
+        showToast('Please enter a valid 6-digit Pincode.');
+        return false;
     }
     if (!emailId || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailId.trim())) {
-      showToast('Please enter a valid Email Address.');
-      return false;
+        showToast('Please enter a valid Email Address.');
+        return false;
     }
+      
+    // if (!city) {
+    //     showToast('Please select City.');
+    //     return false;
+    // }
+    // if (!state) {
+    //     showToast('Please select State.');
+    //     return false;
+    // }
+    // if (!country) {
+    //     showToast('Please select Country.');
+    //     return false;
+    // }
+    
     return true;
   };
-
-  const steps = ['Personal', 'Occupation', 'Services'];
-  const currentStep = 1;
 
   const goBackCall = () => navigation.goBack();
 
@@ -246,7 +260,6 @@ const styles = StyleSheet.create({
   stepper: {
     marginTop: 10,
     paddingHorizontal: 15,
-    marginTop: 10,
     paddingTop: 15,
     gap: 18,
   },

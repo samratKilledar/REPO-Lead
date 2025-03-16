@@ -5,7 +5,10 @@ export const api={
     verifyUser:"https://opticalerp.in:85/api/users/resetpassword/reset-password",
     profileDetails:"https://opticalerp.in:85/api/users/getbyidwithrole",
     getAllLeadApi:"https://opticalerp.in:85/api/lead/getlist/get-all",
+    editProfileApi :"https://opticalerp.in:85/api/users/update/1/update",
     
+
+
 
     //all drop down API
     followUp: "https://opticalerp.in:85/api/udc/getvaluesbytype?type=Leads",
@@ -26,7 +29,7 @@ export const api={
     addFollowUP: "https://opticalerp.in:85/api/followupdetails/create/create",
     
     //add Task screen API
-    addTask:"https://opticalerp.in:85/api/taskdetails/create",
+   addTask:"https://opticalerp.in:85/api/taskdetails/create",
    upComingTask: "https://opticalerp.in:85/api/taskdetails/getlist",
    leadDetail:"https://opticalerp.in:85/api/lead/getbyleadid",
    client:"https://opticalerp.in:85/api/client/getlist/get-all",
@@ -34,5 +37,7 @@ export const api={
    // UpcomingMeetingsList:"https://opticalerp.in:85/api/lead/getlist/get-all"
 
 
-   leadSubmit:"https://opticalerp.in:85/api/lead/create/create"
+   leadSubmit:"https://opticalerp.in:85/api/lead/create/create",
+   leadAddServiceApi : "",
+   
 }

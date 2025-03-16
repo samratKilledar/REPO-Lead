@@ -10,6 +10,7 @@ import lastReducer from './lastReducer';
 import occupationReducer from './occupationReducer';
 import forgotPassReducer from './forgotPassReducer';
 import createPassReducer from './createPassReducer';
+import leadListReducer from './leadListReducer';
 import closeAccountReducer from './closeAccountReducer';
 import leadDetailReducer from './leadDetailReducer';
 import clientDetailReducer from './clientDetailReducer';
@@ -26,6 +27,7 @@ export default combineReducers({
   personalReducer : personalReducer,
   lastReducer: lastReducer,
   occupationReducer: occupationReducer,
+  leads: leadListReducer,
   closeAccountReducer:closeAccountReducer,
   leadDetailReducer:leadDetailReducer,
   clientDetailReducer:clientDetailReducer,

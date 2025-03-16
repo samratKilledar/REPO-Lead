@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
+import { useDispatch } from 'react-redux';
 import LeadCard from "../../components/LeadCard";
 import HeaderComp from "../../components/HeaderComp";
 import TextStyle from "../../styles/TextStyle";
+import { fetchLeads } from "../../redux/actions/leadListAction";
 import CustomText from "../../components/CustomText";
 import { useNavigation } from "@react-navigation/native";
 const leadsData = [
@@ -12,7 +14,13 @@ const leadsData = [
 ];
 
 const LeadScreen = (props) => {
+    const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  useEffect(() => {
+    dispatch(fetchLeads);
+  }, [dispatch]);
+
   return (
     <View style={styles.container}>
       <HeaderComp navigation={navigation} />
@@ -62,3 +70,5 @@ const styles = StyleSheet.create({
   },
 });
 export default LeadScreen;
+
+

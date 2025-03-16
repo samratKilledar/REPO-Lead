@@ -78,9 +78,6 @@ export const addTaskApiCall= async data => {
     }
 };
 
-
- 
-
 export const leadAPISubmit = async (data,tenantId) =>{
     console.log(tenantId+'inside function' + JSON.stringify(data));
     return await apiPostLead(api.leadSubmit, data,tenantId);
@@ -92,13 +89,6 @@ export const followupAPISubmit = async data => {
     console.log('inside function' + JSON.stringify(data));
     return await apiPostFollowup(api.addFollowUp, {data});
   };
-
-
-
-  
-  
-
-
 
 
 export const taskListResApi= async authToken=>{

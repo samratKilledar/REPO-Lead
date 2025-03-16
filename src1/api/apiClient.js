@@ -187,6 +187,60 @@ export const apiPostLead = async (url, data,tenantId) => {
   }
 };
 
+
+export const apiGetLeadList= async (url, param,token) => {
+  console.log(url+"==============================="+JSON.stringify(param));
+    try {
+      console.warn(url + '--------------------------request-------------------------'+url);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          // Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          Authorization:`Bearer ${token}`,
+        },
+      });
+      // console.log( '--------------------------resoponse-------------------------'+JSON.stringify(response));
+      if (!response.ok) {
+        console.error(url + '-----HTTP error! Status:----' + response.status);
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      //alert(JSON.stringify(response))
+      return await response.json();
+    } catch (error) {
+      console.error(
+         `GET ${url} Error:`, error.message
+      );
+      throw error;
+    }
+
+};
+
+export const apiPut = async (url, data, token) => {
+  console.log(`PUT Request to: ${url} with data:`, JSON.stringify(data));
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error! Status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('PUT Success:', result);
+    return result;
+  } catch (error) {
+    console.error('PUT request failed:', error.message);
+    return null;
+  }
+};
+
 export const apiPostForgotPass = async (url, param = {}) => {
   try {
     const data = param.data || {};
@@ -223,6 +277,8 @@ export const apiPostForgotPass = async (url, param = {}) => {
     return { success: false, message: error.message };
   }
 };
+
+
 export const apiPutPassword = async (url, param = {}) => {
   const data = param.data;
   console.log(JSON.stringify(data));
@@ -248,35 +304,3 @@ export const apiPutPassword = async (url, param = {}) => {
       return { success: false, message: error.message };
   }
 };
-
-export const apiPostFollowup = async (url, param = {}) => {
-  const data = param.data;
-  console.log("Sending Data:", JSON.stringify(data));
-
-  try {
-    console.log("Inside API Client - Making Request");
-
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        tenant: data.tenantId || "",  // Ensure tenantId is included if needed
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP Error! Status: ${response.status}`);
-    }
-
-    const result = await response.json();
-    console.log("Success:", result);
-    return result;
-  } catch (error) {
-    console.error("Network request failed:", error.message);
-    return null;
-  }
-};
-
-
-
