@@ -19,19 +19,19 @@ import { UPDATE_ASSIGNTO,
   UPDATE_MONTHLYINCOME,
   SUBMIT_REQUEST,
   SUBMIT_SUCCESS, 
-  SUBMIT_FAILURE  } from "../actions/lastAction";
-
+  SUBMIT_FAILURE  } from "../actions/editLeadAction";
+import { occupation } from "../../api/mainApi";
 
 const initialState = {
-  firstName: "",
-  lastName: "", 
+  firstName: "Pranjali",
+  lastName: "Patil", 
   leadSources: "",
   leadSourcesName:"Lead Source",
-  mobileNo:"",
-  emailId:"",
-  whatsAppNo:"",
-  addressLine1:"",
-  addressLine2:"",
+  mobileNo:"9860763112",
+  emailId:"peanju@gmail.com",
+  whatsAppNo:"1234567890",
+  addressLine1:"gf",
+  addressLine2:"gf",
   city:"",
   cityName:"Select City",
   state:"",
@@ -39,24 +39,23 @@ const initialState = {
   country:"",
   countryName:"Select Country",
   isdCode:"",
-  pincode:"",
+  pincode:"100000",
   occupation:"",
   occupationName:"Occupation Name",
-  typeOfWork:"",
-  monthlyIncome:"",
+  typeOfWork:"it",
+  monthlyIncome:"70000",
   assignTo:"",
-  assignToName: "Assign To",
   services:"",
   servicesName:"Services",
-  remark:""
+  remark:"sogt"
 
  
 };
 
-const lastReducer = (state = initialState, action) => {
-  // if(action.type =="UPDATE_SERVICES"){
-  //   alert(JSON.stringify(action.payload)+"===")
-  // }
+const editLeadReducer = (state = initialState, action) => {
+  if(action.type =="UPDATE_SERVICES"){
+    // alert(JSON.stringify(action.payload)+"===")
+  }
   switch (action.type) {
     case UPDATE_FIRSTNAME:
       return { ...state, firstName: action.payload };
@@ -104,7 +103,7 @@ const lastReducer = (state = initialState, action) => {
       return { ...state, monthlyIncome: action.payload };
 
     case UPDATE_ASSIGNTO:
-      return { ...state, assignTo: action.payload.id, assignToName:action.payload.name };
+      return { ...state, assignTo: action.payload };
 
     case UPDATE_SERVICES:
       return { ...state, services: action.payload.id , servicesName:action.payload.name };
@@ -112,7 +111,7 @@ const lastReducer = (state = initialState, action) => {
     case UPDATE_REMARK:
       return { ...state, remark: action.payload };
 
-    case SUBMIT_REQUEST:
+    case SUBMIT_REQUEST: 
       return { ...state, isLoading: true, error: null };
 
       case SUBMIT_SUCCESS:
@@ -127,4 +126,4 @@ const lastReducer = (state = initialState, action) => {
   }
 };
 
-export default lastReducer;
+export default editLeadReducer;

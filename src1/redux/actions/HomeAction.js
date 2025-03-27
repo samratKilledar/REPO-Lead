@@ -97,6 +97,7 @@ import {
   city,
   state,
   occupation,
+  assignTo,
   profileDetail,
   getAllLeadApi,taskListResApi,particularLeadDetailApi
 } from '../../api/mainApi';
@@ -116,6 +117,7 @@ export const callAllDropDownAPI = storedData => {
         stateRes,
         occupationRes,
         profileDetailRes,
+        assignToRes,
         //getAllLeadApiRes,
        //  taskListRes,
         // particularLeadDetailApiRes
@@ -130,6 +132,7 @@ export const callAllDropDownAPI = storedData => {
         state(storedData),
         occupation(storedData),
         profileDetail(storedData),
+        assignTo(storedData),
       //  getAllLeadApi(storedData),
        //  taskListResApi(storedData),
         // particularLeadDetailApi(storedData)
@@ -143,6 +146,7 @@ export const callAllDropDownAPI = storedData => {
       console.log('7.cityRes API Response', JSON.stringify(cityRes));
       console.log('8.stateRes API Response:',  JSON.stringify(stateRes));
       console.log('9.occupationRes API Response:',  JSON.stringify(occupationRes));
+      console.log('10.assignTo API Response:',  JSON.stringify(assignToRes));
      // console.log('10.getAllLeadApi API Response:',  JSON.stringify(getAllLeadApiRes));
      // console.log('11.taskListResApi API Response:',  JSON.stringify(taskListRes));
       // console.log("=========particularLeadDetailApiRes=======>"+particularLeadDetailApiRes)
@@ -162,14 +166,15 @@ export const callAllDropDownAPI = storedData => {
           cityRes,
           stateRes,
           occupationRes,
-          profileDetailRes
+          profileDetailRes,
+          assignToRes,
           //getAllLeadApiRes,
           // taskListRes,
           // particularLeadDetailApiRes
         },
       });
     } catch (error) {
-      alert('Dropdown API Error:==>'+ JSON.stringify(error));
+      // alert('Dropdown API Error:==>'+ JSON.stringify(error));
       dispatch({type: FETCH_DROPDOWN_FAILURE, payload: error.message});
     }
   };

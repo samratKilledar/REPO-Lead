@@ -1,3 +1,4 @@
+import { assignTo } from '../../api/mainApi';
 import UpcomingMeetings from '../../screens/Main/UpcomingMeetings';
 import {
   FETCH_DROPDOWN_SUCCESS,
@@ -17,6 +18,8 @@ const initialState = {
   occupation: ['No Data Avialable'],
   getAllLeadApi:['No Data Avialable'],
   taskList:['No Data Avialable'],
+  assignTo:['No Data Avialable'],
+
 };
 
 const homeReducer = (state = initialState, action) => {
@@ -37,7 +40,8 @@ const homeReducer = (state = initialState, action) => {
         occupation: action.payload.occupationRes,
         getAllLeadApi:action.payload.getAllLeadApiRes,
         profileDetail:action.payload.profileDetailRes,
-        taskList:action.payload.taskListRes
+        taskList:action.payload.taskListRes,
+        assignTo:action.payload.assignToRes
       };
   
     case FETCH_DROPDOWN_FAILURE:
@@ -55,7 +59,8 @@ const homeReducer = (state = initialState, action) => {
         occupation: ['No Data Avialable'],
         getAllLeadApi:['No Data Avialable'],
         taskList:['No Data Avialable'],
-        particularLeadDetailApi:['No Data Avialable']
+        particularLeadDetailApi:['No Data Avialable'],
+        assignTo:['No Data Avialable']
       };
 
     default:

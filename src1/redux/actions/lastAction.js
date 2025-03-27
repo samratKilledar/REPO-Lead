@@ -2,6 +2,7 @@ import { leadAPISubmit } from "../../api/mainApi";
 
 export const SUBMIT_SUCCESS = "SUBMIT_SUCCESS";
 export const SUBMIT_FAILURE = "SUBMIT_FAILURE";
+export const SUBMIT_REQUEST = "SUBMIT_REQUEST";
 
 export const UPDATE_ASSIGNTO = "UPDATE_ASSIGNTO";
 export const UPDATE_SERVICES = "UPDATE_SERVICES";
@@ -21,6 +22,7 @@ export const UPDATE_PINCODE = "UPDATE_PINCODE";
 export const UPDATE_OCCUPATION = "UPDATE_OCCUPATION";
 export const UPDATE_TYPEOFWORK = "UPDATE_TYPEOFWORK";
 export const UPDATE_MONTHLYINCOME = "UPDATE_MONTHLYINCOME";
+
 
 export const updateFirstName = (firstName) => ({
   type: UPDATE_FIRSTNAME,
@@ -112,26 +114,66 @@ export const updateRemark = (remark) => ({
   payload: remark,
 });
 
-export const leadSubmitAllData= () => async (dispatch, getState) => {
-  try {
+export const leadSubmitAllData = () => async (dispatch, getState) => {
+  dispatch({ type: SUBMIT_REQUEST });
 
-    const alldata= getState().lastReducer; 
-    const tenantId=getState().auth;
-    alert(JSON.stringify(alldata)+"---"+tenantId.loginValue.customerId)
-   // dispatch({type: SUBMIT_ALL_LEAD_DATA});
-   
-     const data = await leadAPISubmit(alldata,tenantId.customerId);
-    // if (data.token != null) {
-    //   //alert(JSON.stringify(data));
-    //   setItem('authToken', data.token); 
-    //   dispatch({type: LOGIN_SUCCESS}); 
-    // } else {
-    //   dispatch({type: LOGIN_FAILURE, payload: error.message}); 
-    // }
+  const { lastReducer } = getState();
+  const leadData = {
+    id: 0,
+    tenantId: "root",
+    customerId: 0,
+    entity: "someEntityValue", 
+    firstName: lastReducer.firstName,
+    lastName: lastReducer.lastName,
+    emailId: lastReducer.emailId ,
+    mobileNo: lastReducer.mobileNo ,
+    whatsAppNo: lastReducer.whatsAppNo,
+    addressLine1: lastReducer.addressLine1,
+    addressLine2: lastReducer.addressLine2 ,
+    city : lastReducer.city ,
+    cityName : lastReducer.cityName,
+    state : lastReducer.state,
+    stateName : lastReducer.stateName,
+    country : lastReducer.country,
+    countryName : lastReducer.countryName,
+    pincode: lastReducer.pincode,
+    leadSources: lastReducer.leadSources ,
+    leadSourcesName: lastReducer.leadSourcesName,
+    occupation: lastReducer.occupation ,
+    occupationName: lastReducer.occupationName ,
+    typeOfWork: lastReducer.typeOfWork ,
+    assignedTo: Number(lastReducer.assignedTo) || 2, 
+    assignToName: lastReducer.assignToName ,
+    leadDate: new Date().toISOString(),
+    isActive: true,
+    serviceDetails: lastReducer.serviceDetails || [
+      {
+        id: 0,
+        customerId: 0,
+        services : lastReducer.services ,
+        servicesName : lastReducer.servicesName ,
+        isExistingClient: true,
+        remark: lastReducer.remark,
+        assignedTo: Number(lastReducer.assignedTo) || 0, // ✅ Ensure it's an integer
+        isActive: true,
+      },
+    ],
+  };
+  console.log("📤 Submitting Lead Data:", JSON.stringify(leadData, null, 2));
+
+
+  try {
+    const response = await leadAPISubmit(leadData, "root");
+    console.log("✅ Lead Submitted Successfully:", response);
+
+    dispatch({ type: SUBMIT_SUCCESS, payload: response });
   } catch (error) {
-    dispatch({type: LOGIN_FAILURE, payload: error.message}); 
+    console.error("❌ Lead Submission Failed:", error);
+
+    dispatch({ type: SUBMIT_FAILURE, error: error.message });
   }
-}
+
+};
 
 
 
@@ -142,35 +184,4 @@ export const submitFailure = (error) => ({
   payload: error,
 });
 
-
-
-
-
-
-
-
-
-
-// export const submitLeadLast = () => async (dispatch, getState) => {
-//   console.log("🎯 Inside Submit Action");
-
-//   try {
-//     const { remark, assignto, services } = getState().lastReducer;
-
-//     const data = { remark, assignto, services };
-//     console.log("📤 Submitting Lead Data:", JSON.stringify(data));
-
-//     const response = await leadLastApiCall(data);
-
-//     if (response.success) {
-//       console.log("✅ Lead Submitted Successfully:", response.data);
-//       dispatch({ type: SUBMIT_SUCCESS });
-//     } else {
-//       console.log("❌ Submission Failed:", response.message);
-//       dispatch({ type: SUBMIT_FAILURE, payload: response.message });
-//     }
-//   } catch (error) {
-//     console.log("🚨 Submission Error:", error.message);
-//     dispatch({ type: SUBMIT_FAILURE, payload: error.message });
-//   }
-// };
+export const submitRequest = () => ({ type: SUBMIT_REQUEST });

@@ -1,4 +1,4 @@
-import { FETCH_LEADS_REQUEST, FETCH_LEADS_SUCCESS, FETCH_LEADS_FAILURE } from "../actions/leadListAction";
+import { FETCH_LEADS_REQUEST, FETCH_LEADS_SUCCESS, FETCH_LEADS_FAILURE ,DELETE_LEAD_SUCCESS,DELETE_LEAD_FAILURE} from "../actions/leadListAction";
 
 const initialState = {
   leads: [],
@@ -16,7 +16,19 @@ const leadReducer = (state = initialState, action) => {
 
     case FETCH_LEADS_FAILURE:
       return { ...state, loading: false, error: action.payload };
-      
+    
+      case DELETE_LEAD_SUCCESS:
+        return {
+          ...state,
+          leads: action.payload, // Update lead list after deletion
+        };
+  
+      case DELETE_LEAD_FAILURE:
+        return {
+          ...state,
+          error: action.payload,
+        };
+  
     default:
       return state;
   }

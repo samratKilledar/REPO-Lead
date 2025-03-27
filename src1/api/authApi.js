@@ -1,6 +1,8 @@
-import {apiGet, apiPost, apiPut,postApi,apiGetLeadList,apiPostForgotPass} from './apiClient';
+import {apiGet, apiPost, apiPut,postApi,apiGetLeadList,apiPostForgotPass,apiGetEditList} from './apiClient';
 import {api} from './api';
-import { getItem } from '../api/storageServices';
+import{scheduleTokenRefresh} from '../redux/actions/authActions'
+import { getItem, setItem } from './storageServices';
+//import { getItem } from '../api/storageServices';
 // import {apiGet, apiPost} from './apiClient';
 // import {api} from './api';
 // import { getItem } from '../api/storageServices';
@@ -42,7 +44,54 @@ import { getItem } from '../api/storageServices';
 export const loginUserApiCall = async data => {
     console.log('inside function' + JSON.stringify(data));
     return await apiPost(api.authApi, { data });
-};
+  };
+
+  export const refreshTokenApiCall = async () => {
+    try {
+        const token = await AsyncStorage.getItem("authToken");
+        const refreshToken = await AsyncStorage.getItem("refreshToken");
+        
+        const cleanedToken = token ? JSON.parse(token) : null;
+        const cleanedRefreshToken = refreshToken ? JSON.parse(refreshToken) : null;
+        
+        const requestBody = {
+          token: cleanedToken,
+          refreshToken: cleanedRefreshToken,
+        };
+      console.log("🔍 Refresh Token Request Payload:", requestBody);
+  
+      const response = await fetch(api.refreshApi, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          tenant: "root", 
+          //Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+  
+      if (!response.ok) {
+        const errorResponse = await response.text();
+        console.error(`❌ HTTP Error! Status: ${response.status}, Response: ${errorResponse}`);
+        throw new Error(`HTTP Error! Status: ${response.status}, Response: ${errorResponse}`);
+      }
+  
+      const result = await response.json();
+      console.log("🔄 Token refreshed:", result);
+  
+      // 🔹 Store the new token
+      await AsyncStorage.setItem("newToken", result.token);
+      await AsyncStorage.setItem("refreshToken", result.refreshToken);
+      await AsyncStorage.setItem("refreshTokenExpiryTime", result.refreshTokenExpiryTime);
+  
+      scheduleTokenRefresh(); // Reschedule the refresh
+      return result;
+    } catch (error) {
+      console.error("❌ Token refresh failed:", error.message);
+      return null;
+    }
+  };
+  
 //forgot Password
 export const forgotPassApiCall = async data => {
     console.log('inside function' + JSON.stringify(data));
@@ -133,15 +182,16 @@ export const fetchDropdownDataApi = async (apiType) => {
 };
 
 
-export const LeadList = async userData => {
-    const authToken = await getItem("authToken");
+export const LeadList = async (url) => {
+    const authToken = await AsyncStorage.getItem("newToken");
+    return await apiGetLeadList(url, authToken);
+};
 
-    console.log("------------------------------token--"+JSON.stringify(authToken));
-    // let authToken = getItem("authToken");
-    return await apiGetLeadList(api.getAllLeadApi,authToken);
-}
-
-
+export const EditLead = async (leadId) => {
+    const token = await AsyncStorage.getItem("authToken");
+    const url = `https://opticalerp.in:85/api/lead/getbyleadid/${leadId}`;
+    return await apiGetEditList(url, token);
+};
 export const updateUserProfile = async userData => {
     console.log("data---"+JSON.stringify(authToken));
     const authToken = await getItem("authToken");
@@ -158,3 +208,20 @@ export const leadAddServiceApiCall = async userData => {
     console.log("-----sbssss--"+JSON.stringify(authToken));
     return await apiGet(api.leadAddServiceApi,authToken);
 }
+
+import jwtDecode from 'jwt-decode';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export const getUserId = async () => {
+    try {
+        const token = await AsyncStorage.getItem('token'); // Retrieve token from storage
+        if (token) {
+            const decoded = jwtDecode(token); // Decode JWT
+            return decoded.id; // Extract user ID
+        }
+    } catch (error) {
+        console.error('Error decoding token:', error);
+    }
+    return null;
+};
+

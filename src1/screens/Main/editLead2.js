@@ -3,16 +3,20 @@ import { View, StyleSheet, Alert , ToastAndroid } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../components/CustomButton";
 import CustomTextInput from "../../components/CustomTextInput";
-import Dropdown from "../../components/Dropdown";
 import Stepper from "../../components/StepperComp";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import StatusDropdown from "../../components/StatusDropdown";
-import { updateMonthlyIncome, updateOccupation, updateTypeOfWork } from "../../redux/actions/lastAction";
+import { updateMonthlyIncome, updateOccupation, updateTypeOfWork ,EditLeadFetch} from "../../redux/actions/editLeadAction";
 
 
-const LeadAddOccupation = (props) => {
+const editLead2 = (props) => {
   const dispatch = useDispatch();
-  // const occupations = useSelector((state) => state.occupationReducer);
+
+  // useEffect(() => {
+  //   dispatch(EditLeadFetch());
+  // }, [dispatch]);
+
+  const occupations = useSelector((state) => state.occupationReducer);
 
   const steps = ["Personal", "Occupation", "Services"];
   const currentStep = 2;
@@ -25,7 +29,7 @@ const LeadAddOccupation = (props) => {
     occupation,occupationName,
     typeOfWork,
     monthlyIncome,
-    } = useSelector(state => state.lastReducer);
+    } = useSelector(state => state.editLeadReducer);
 
     const occupationList= useSelector(state => state.homeReducer);
    // alert(JSON.stringify(occupationList))
@@ -53,11 +57,8 @@ const LeadAddOccupation = (props) => {
           showToast("Monthly Income should be between 1,000 and 1,00,00,000");
           return;
         }
-        if(!occupation){
-          showToast("Select the Occupation");
-          return;
-        }
-        props.navigation.navigate("LeadLast");
+    
+        props.navigation.navigate("editLead3");
       };
 
   const goBackCall = () => {
@@ -68,7 +69,7 @@ const LeadAddOccupation = (props) => {
     <View style={styles.container}>
       <View style={{ flex: 0.1 }}>
          
-        <NavigationHeaderBack text="Add Lead" onPress={goBackCall} />
+        <NavigationHeaderBack text="Add Lead 2" onPress={goBackCall} />
        
       </View>
 
@@ -139,4 +140,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LeadAddOccupation;
+export default editLead2;
+
+
+

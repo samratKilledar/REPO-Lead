@@ -40,6 +40,9 @@ import HeaderComp from '../components/HeaderComp';
 import ClientAddServices from '../screens/Main/ClientAddServices';
 import LeadLast from '../screens/Main/LeadLast';
 import SplashScreen from '../screens/Main/SplashScreen';
+import editLead2 from '../screens/Main/editLead2';
+import editLead3 from '../screens/Main/editLead3';
+import Editlead1 from '../screens/Main/Editlead1';
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -82,6 +85,9 @@ const LeadStackScreen = ({ navigation, route }) => {
       <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
       <HomeStack.Screen name="LeadAddOccupation" component={LeadAddOccupation} />
       <HomeStack.Screen name="LeadLast" component={LeadLast} />
+      <HomeStack.Screen name="Editlead1" component={Editlead1} />
+      <HomeStack.Screen name="editLead2" component={editLead2} />
+      <HomeStack.Screen name="editLead3" component={editLead3} />
     </HomeStack.Navigator>
   );
 };

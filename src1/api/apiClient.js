@@ -1,67 +1,69 @@
 import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 //GET Request Function
-export const apiGet = async (url,token) => {
+export const apiGet = async (url, token) => {
   try {
-  
+
     const response = await fetch(url, {
       method: 'GET',
       headers: {
         // Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
         Authorization: token,
-        
+
 
       },
     });
-    console.log(url+"---------------------s------------------------------")
-    //console.log("🛠️ Token being sent:", token);
+   // console.log(url + "---------------------s------------------------------")
+    console.log("🛠️ Token being sent:"+ JSON.stringify(response));
 
     if (!response.ok) {
       //alert(11)
-      console.error("HTTP error! Status:"+ response.status);
+      console.error("HTTP error! Status:" + response.status);
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     //alert(JSON.stringify(response))
     return await response.json();
   } catch (error) {
-    console.error(`GET ${endpoint} Error:`,error.response?.data || error.message,
-);
+    console.error(`GET ${endpoint} Error:`, error.response?.data || error.message,
+    );
     throw error;
   }
 };
 
-export const apiGetDetails= async (url, token, id) => {
-  try {
-      console.log("🌐 Request URL:", url);
-      console.log("🔑 Sending Token:", token);
-      console.log("🆔 Sending ID in Header:", id);
+// export const apiGetDetails = async (url, token, id) => {
+//   try {
+//     console.log("🌐 Request URL:", url);
+//     console.log("🔑 Sending Token:", token);
+//     console.log("🆔 Sending ID in Header:", id);
 
-      const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,  // Ensure Bearer token format
-              'id': id,  // Sending ID in header
-          },
-      });
+//     const response = await fetch(url, {
+//       method: 'GET',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization': `Bearer ${token}`,  // Ensure Bearer token format
+//         'id': id,  // Sending ID in header
+//       },
+//     });
 
-      if (!response.ok) {
-          console.error("❌ API Response Error:", response.status);
-          throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+//     if (!response.ok) {
+//       console.error("❌ API Response Error:", response.status);
+//       throw new Error(`HTTP error! Status: ${response.status}`);
+//     }
 
-      const data = await response.json();
-      console.log("📜 Server Response:", data);
-      return data;
+//     const data = await response.json();
+//     console.log("📜 Server Response:", data);
+//     return data;
 
-  } catch (error) {
-      console.error("🚨 API Fetch Error:", error.message);
-      throw error;
-  }
-};
+//   } catch (error) {
+//     console.error("🚨 API Fetch Error:", error.message);
+//     throw error;
+//   }
+// };
 
 
 // POST Request Function
+
 export const apiPost = async (url, param = {}) => {
   const data = param.data;
   console.log(JSON.stringify(data));
@@ -91,130 +93,118 @@ export const apiPost = async (url, param = {}) => {
   }
 };
 
-export const apiPostLead = async (url, data,tenantId) => {
-  console.log(JSON.stringify(data));
+
+export const apiPostLead = async (url, payload, tenantId) => {
+  console.log("Sending Data to:", url);
+
   try {
+    const token = await AsyncStorage.getItem("newToken");
+    if (!token) {
+      throw new Error("Authentication token not found. Please login again.");
+    }
+
     const response = await fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        tenant: data.customerId,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        tenant: "root",
       },
-      body: JSON.stringify({
-          "id": 0,
-          "tenantId": tenantId,
-          "customerId": 0,
-          "firstName": data.firstName,
-          "lastName": data.lastName,
-          "emailId": data.emailId,
-          "mobileNo": data.mobileNo,
-          "whatsAppNo": data.whatsAppNo,
-          "addressLine1": data.addressLine1,
-          "addressLine2": data.addressLine2,
-          "cityId": data.city,
-          "cityName": data.cityName,
-          "stateId": data.state,
-          "stateName": data.stateName,
-          "countryId": data.country,
-          "countryName": data.countryName,
-          "pincode": data.pincode,
-          "leadSource": data.leadSources,
-          "leadSourceName": data.leadName,
-          "otherSource": "string",
-          "occupation": data.occupation,
-          "occupationName": data.occupationName,
-          "organisationName": "string",
-          "workType": data.typeOfWork,
-          "monthlyIncome": data.monthlyIncome,
-          "assignedTo": data.assignedTo,
-          "assignedToName": "string",
-          "leadStatus": 0,
-          "leadStatusName": "string",
-          "createdBy": 0,
-          "createdByName": "string",
-          "leadDate": "string",
-          "isActive": true,
-          "serviceDetails": [
-            {
-              "id": 0,
-              "customerId": 0,
-              "serviceId": 0,
-              "serviceName": "string",
-              "leadId": 0,
-              "clientId": 0,
-              "isExistingClient": true,
-              "remark": "string",
-              "assignedTo": 0,
-              "assignedToName": "string",
-              "isActive": true
-            }
-          ]
-        }
-      ),
+      body: JSON.stringify(payload),
     });
 
-    // firstName: "s",
-    // lastName: "ss", 
-    // leadSources: "",
-    // mobileNo:"7798417997",
-    // emailId:"sam@gmail.com",
-    // whatsAppNo:"779841779",
-    // addressLine1:"2qe",
-    // addressLine2:"wfqwac",
-    // city:"",
-    // state:"",
-    // country:"",
-    // pincode:"415262",
-    // occupation:"",
-    // typeOfWork:"",
-    // monthlyIncome:"34344344",
-    // assignTo:"",
-    // services:"",
-    // remark:"ednkjnf"
-  
+    console.log("📢 Response Status Code:", response.status);
+    console.log("📢 Response Headers:", response.headers);
 
 
     if (!response.ok) {
-      throw new Error(`HTTP Error! Status: ${response.status}`);
+      const errorText = await response.text();
+      console.error("❌ API Error:", response.status, errorText);
+      Alert.alert("Error", ` HTTP Error ${response.status}: ${errorText}`);
+      return;
     }
 
-    const result = await response.json();
-    console.log('Success:', result);
-    return result;
+    const text = await response.text();
+    if (!text.trim()) {
+      console.warn("⚠ Server returned an empty response.");
+      Alert.alert("Warning", "Data sent successfully, but no response from server.");
+      return;
+    }
+
+    const result = JSON.parse(text);
+    console.log("✅ API Response Body:", result);
   } catch (error) {
-    console.error('Network request failed:', error.message);
-    return null;
+    Alert.alert("Error", error.message);
+    console.error("❌ Error:", error.message);
+    throw error;
   }
 };
 
 
-export const apiGetLeadList= async (url, param,token) => {
-  console.log(url+"==============================="+JSON.stringify(param));
-    try {
-      console.warn(url + '--------------------------request-------------------------'+url);
-      const response = await fetch(url, {
-        method: 'GET',
-        headers: {
-          // Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-          Authorization:`Bearer ${token}`,
-        },
-      });
-      // console.log( '--------------------------resoponse-------------------------'+JSON.stringify(response));
-      if (!response.ok) {
-        console.error(url + '-----HTTP error! Status:----' + response.status);
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      //alert(JSON.stringify(response))
-      return await response.json();
-    } catch (error) {
-      console.error(
-         `GET ${url} Error:`, error.message
-      );
-      throw error;
+export const apiGetLeadList = async (url, token) => {
+  console.log("Making GET request to:=============", url);
+  console.log("Using token:================", token);
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Response status:===============>", response.status);
+
+    if (!response.ok) {
+      console.error("HTTP error! Status:", response.status);
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
+    const data = await response.json();
+    console.log("API Response:", data);
+    return data;
+  } catch (error) {
+    console.error(`GET ${url} Error:`, error.message);
+    throw error;
+  }
 };
+
+
+export const apiGetLeadList1 = async (url, token) => {
+  console.log("samrat=============", url);
+  console.log("sss================", token);
+
+  try {
+    const token = await AsyncStorage.getItem("newToken");
+    alert(token)
+      if (!token) {
+        throw new Error("Authentication token not found. Please login again.");
+      }
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("samres===============>", response.status);
+
+    if (!response.ok) {
+      console.error("HTTP error! Status:", response.status);
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("API Response:", data);
+    return data;
+  } catch (error) {
+    console.error(`GET ${url} Error:`, error.message);
+    throw error;
+  }
+};
+
 
 export const apiPut = async (url, data, token) => {
   console.log(`PUT Request to: ${url} with data:`, JSON.stringify(data));
@@ -240,6 +230,7 @@ export const apiPut = async (url, data, token) => {
     return null;
   }
 };
+
 
 export const apiPostForgotPass = async (url, param = {}) => {
   try {
@@ -284,23 +275,83 @@ export const apiPutPassword = async (url, param = {}) => {
   console.log(JSON.stringify(data));
 
   try {
-      const response = await fetch(url, {
-          method: 'PUT',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-      });
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
 
-      if (!response.ok) {
-          throw new Error(`HTTP Error! Status: ${response.status}`);
-      }
+    if (!response.ok) {
+      throw new Error(`HTTP Error! Status: ${response.status}`);
+    }
 
-      const result = await response.json();
-      console.log('Success:', result);
-      return result;
+    const result = await response.json();
+    console.log('Success:', result);
+    return result;
   } catch (error) {
-      console.error('Network request failed:', error.message);
-      return { success: false, message: error.message };
+    console.error('Network request failed:', error.message);
+    return { success: false, message: error.message };
+  }
+};
+
+export const deleteLeadApi = async (id) => {
+  const token = await AsyncStorage.getItem("newToken");
+
+  try {
+    const apiUrl = `https://opticalerp.in:85/api/lead/delete?leadId=${id}`;
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Response Status Code:", response.status);
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete lead (Status: ${response.status})`);
+    }
+
+    console.log("Lead deleted successfully");
+    return { success: true }; // Ensure API function returns a response
+  } catch (error) {
+    console.error("Error deleting lead:", error.message);
+    throw error;
+  }
+};
+
+export const apiGetEditList = async (url,token) => {
+  console.log("Making GET request to:", url);
+  console.log("Using token:", token); 
+
+  try {
+    const token = await AsyncStorage.getItem("authToken");
+    if (!token) {
+      throw new Error("Authentication token not found. Please login again.");
+    }
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Response status:", response.status); 
+
+    if (!response.ok) {
+      console.error("HTTP error! Status:", response.status);
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("API Response:", data); 
+    return data;
+  } catch (error) {
+    console.error(`GET ${url} Error:`, error.message);
+    throw error;
   }
 };

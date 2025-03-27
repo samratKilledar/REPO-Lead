@@ -1,14 +1,39 @@
 import React, { useState } from "react";
-import { View, Image, Text, TouchableOpacity, StyleSheet, Modal } from "react-native";
+import { 
+  View, 
+  Image, 
+  Text, 
+  TouchableOpacity, 
+  StyleSheet, 
+  Modal, 
+  Alert 
+} from "react-native";
+import { useDispatch } from 'react-redux';
 import LinearGradient from "react-native-linear-gradient";
 import CustomText from "./CustomText";
 import TextStyle from "../styles/TextStyle";
 import CustomButton from "./CustomButton";
 import ButtonStyles from "../styles/ButtonStyles";
+import { EditLeadFetch } from "../redux/actions/editLeadAction";
+import {deleteLead} from "../redux/actions/leadDeleteAction"
 
 const LeadCard = (props) => {
+  const dispatch = useDispatch();
+  const { 
+    id,
+    name,
+    phone,
+    dateTime, 
+    status, 
+    statusGradient,
+    menuType,
+    navigation,
+    screenType,
+  } = props;
+
   const [menuVisible, setMenuVisible] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState("Task Complete");
 
   const statusOptions = [
@@ -29,35 +54,74 @@ const LeadCard = (props) => {
     setMenuVisible(false);
     setModalVisible(false);
   };
-  const editProfile = () => {
-    props.navigation.navigate("LeadAddPersonal")
+
+  const editProfile = async () => {
+    try {
+      if (!id) {
+        Alert.alert("Error", "This lead isn't ready for editing yet");
+        return;
+      }
+  
+      setIsEditing(true);
+      console.log("Editing lead ID:", id);
+      
+      const result = await dispatch(EditLeadFetch(id));
+      if (result) { // Only navigate if successful
+        navigation.navigate("Editlead1");
+      }
+    } catch (error) {
+      console.error("Edit failed:", error);
+      const message = error.response?.data?.message || 
+                     "Lead data not available. Please try again in a few seconds.";
+      Alert.alert("Error", message);
+    } finally {
+      setIsEditing(false);
+      setMenuVisible(false);
+      setModalVisible(false);
+    }
+  };
+
+  const handledelete = async () => {
+    try {
+      if (!id) {
+        console.warn("Lead ID missing:", { props });
+        throw new Error("No lead ID available");
+      }
+      
+      console.log("Deleting  lead ID:", id);
+      await dispatch(deleteLead(id));
+     
+    } catch (error) {
+      console.error("Delete failed:", error);
+    }
     setMenuVisible(false);
-    setModalVisible(false)
-  }
+    setModalVisible(false);
+  };
+
   const details = () => {
     if (props.screenType === "lead") {
-      props.navigation.navigate("LeadDetails", { name: props.name });
+      props.navigation.navigate("LeadDetails", { leadId: props.id, name: props.name });
     } else if (props.screenType === "client") {
       props.navigation.navigate("ClientDetails", { name: props.name });
     } else if (props.screenType === "task") {
-      props.navigation.navigate("CloseAccountScreen", { name: props.name }); // ✅ Fix
+      props.navigation.navigate("CloseAccountScreen", { name: props.name });
     }
   };
 
   return (
     <View style={styles.cardContainer}>
-      <View style={styles.card}>
+      <TouchableOpacity style={styles.card} onPress={details}>
         <View style={styles.HorLayout}>
-          <TouchableOpacity onPress={details}>
-            <CustomText text={props.name} customstyle={TextStyle.nameText} />
-          </TouchableOpacity>
-
-          <CustomText text={props.phone} customstyle={TextStyle.namePhone} />
+          <CustomText text={name} customstyle={TextStyle.nameText} />
+          <CustomText text={phone} customstyle={TextStyle.namePhone} />
 
           {/* Three Dots Icon */}
           <View style={styles.moreCircleDot}>
             <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
-              <Image source={require("../assets/icons/MoreCircle.png")} style={styles.moreCircleIcon} />
+              <Image 
+                source={require("../assets/icons/MoreCircle.png")} 
+                style={styles.moreCircleIcon} 
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -65,7 +129,7 @@ const LeadCard = (props) => {
         <View style={styles.VerLayout}>
           {props.status && (
             <LinearGradient
-              colors={props.statusGradient}
+              colors={statusGradient}
               start={{ x: 1, y: 1 }}
               end={{ x: 0, y: 0 }}
               style={styles.statusBadge}
@@ -73,9 +137,9 @@ const LeadCard = (props) => {
               <CustomText text={props.status} customstyle={{}} />
             </LinearGradient>
           )}
-          {props.leadstatus && (
+          {props.leadstatus &&(
             <LinearGradient
-              colors={props.statusGradient}
+              colors={statusGradient}
               start={{ x: 1, y: 1 }}
               end={{ x: 0, y: 0 }}
               style={styles.leadstatusBadge}
@@ -83,35 +147,54 @@ const LeadCard = (props) => {
               <CustomText text={props.leadstatus} customstyle={TextStyle.statusText} />
             </LinearGradient>
           )}
-          <CustomText text={props.dateTime} customstyle={TextStyle.dateTime} />
+          <CustomText text={dateTime} customstyle={TextStyle.dateTime} />
         </View>
-      </View>
+      </TouchableOpacity>
 
       {menuVisible && (
         <View style={styles.menuBox}>
           <TouchableOpacity style={styles.menuItem} onPress={editProfile}>
-            <Image source={require("../assets/icons/Edit/edit.png")} style={styles.menuIcon} />
+            <Image 
+              source={require("../assets/icons/Edit/edit.png")} 
+              style={styles.menuIcon} 
+            />
             <Text style={styles.menuText}>Edit</Text>
           </TouchableOpacity>
 
-          {props.menuType === "follow" ? (
+          {menuType === "follow" ? (
             <TouchableOpacity style={styles.menuItem} onPress={addFollow}>
-              <Image source={require("../assets/icons/PlusBlack/Plus.png")} style={styles.menuIcon} />
+              <Image 
+                source={require("../assets/icons/PlusBlack/Plus.png")} 
+                style={styles.menuIcon} 
+              />
               <Text style={styles.menuText}>Add Follow</Text>
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity style={styles.menuItem} onPress={() => setModalVisible(true)}>
-              <Image source={require("../assets/icons/LSTIckSquare/lsTickSquare.png")} style={styles.menuIcon} />
+            <TouchableOpacity 
+              style={styles.menuItem} 
+              onPress={() => setModalVisible(true)}
+            >
+              <Image 
+                source={require("../assets/icons/LSTIckSquare/lsTickSquare.png")} 
+                style={styles.menuIcon} 
+              />
               <Text style={styles.menuText}>Status</Text>
             </TouchableOpacity>
           )}
 
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Delete clicked")}>
-            <Image source={require("../assets/icons/Delete/delete.png")} style={styles.menuIcon} />
+          <TouchableOpacity 
+            style={styles.menuItem} 
+            onPress={handledelete}
+          >
+            <Image 
+              source={require("../assets/icons/Delete/delete.png")} 
+              style={styles.menuIcon} 
+            />
             <Text style={styles.menuText}>Delete</Text>
           </TouchableOpacity>
         </View>
       )}
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -135,7 +218,7 @@ const LeadCard = (props) => {
                 onPress={() => setSelectedStatus(option)}
               >
                 <Text style={styles.radioText}>{option}</Text>
-                <View style={selectedStatus === option ? styles.radioSelected : styles.radioUnselected} >
+                <View style={selectedStatus === option ? styles.radioSelected : styles.radioUnselected}>
                   {selectedStatus === option && <View style={styles.radioInnerCircle} />}
                 </View>
               </TouchableOpacity>
@@ -143,14 +226,13 @@ const LeadCard = (props) => {
 
             <CustomButton
               title="Submit"
-              customstyle={ButtonStyles.blueButton} textStyles={ButtonStyles.blueButtonText}
+              customstyle={ButtonStyles.blueButton} 
+              textStyles={ButtonStyles.blueButtonText}
               onPress={() => {
                 console.log("Selected Status:", selectedStatus);
                 setModalVisible(false);
               }}
-            >
-              <Text style={styles.submitText}>Submit</Text>
-            </CustomButton>
+            />
           </View>
         </View>
       </Modal>
@@ -213,7 +295,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     gap: 4,
   },
-
   menuBox: {
     position: "absolute",
     top: 30,
@@ -258,7 +339,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ccc",
     borderRadius: 10,
     marginLeft: 130,
-    justifyContent:"center",
+    justifyContent: "center",
     marginBottom: 10
   },
   modalTitle: {
@@ -306,6 +387,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: "#2B2162",
   },
-
 });
+
 export default LeadCard;

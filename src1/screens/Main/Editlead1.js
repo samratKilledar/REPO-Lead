@@ -1,37 +1,36 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, ToastAndroid } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, ToastAndroid, Text } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import Toast from 'react-native-toast-message';
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import Dropdown from '../../components/Dropdown';
-import Toast from "react-native-toast-message";
-
-import {
+import { 
+  EditLeadFetch,
   updateAddressLine1,
   updateAddressLine2,
   updateCity,
   updateCountry,
-  updateEmailId,
-  updateLastName,
-  updateMobileNo,
   updatePincode,
   updateState,
   updateWhatsAppNo,
   updateFirstName,
-  updateLeadSources,
-} from '../../redux/actions/lastAction';
+  updateLastName,
+  updateMobileNo,
+  updateEmailId,
+  updateLeadSources
+} from '../../redux/actions/editLeadAction';
 
-const LeadAddPersonal = ({ navigation }) => {
+const Editlead1 = ({ navigation }) => {
   const dispatch = useDispatch();
   const {
     firstName,
     lastName,
     mobileNo,
     emailId,
-    leadSources,leadSourcesName,
+    leadSources,leadName,
     whatsAppNo,
     addressLine1,
     addressLine2,
@@ -39,18 +38,24 @@ const LeadAddPersonal = ({ navigation }) => {
     city,cityName,
     state,stateName,
     country,countryName
-  } = useSelector(state => state.lastReducer);
-  // let aa= useSelector(state => state.lastReducer);
+  } = useSelector(state => state.editLeadReducer);
+
   const cityList = useSelector(state => state.homeReducer);
   const countryList = useSelector(state => state.homeReducer);
   const leadSourceList = useSelector(state => state.homeReducer);
   const stateList = useSelector(state => state.homeReducer);
 
+  const steps = ['Personal', 'Occupation', 'Services'];
+  const currentStep = 1;
+
+  // useEffect(() => {
+  //   dispatch(EditLeadFetch());
+  // }, [dispatch]);
+
   const showToast = (message) => {
     ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
   };
 
-  // Validation function with toast messages
   const validateFields = () => {
     if (!firstName.trim()) {
       showToast('Please enter First Name.');
@@ -68,54 +73,29 @@ const LeadAddPersonal = ({ navigation }) => {
       showToast('Please enter Address Line 1.');
       return false;
     }
-    if (!addressLine2.trim()) {
-      showToast('Please enter Address Line 2.');
-      return false;
-    }
     if (!pincode.trim() || !/^\d{6}$/.test(pincode)) {
       showToast('Please enter a valid 6-digit Pincode.');
       return false;
     }
-    if (!emailId || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailId.trim())) {
+    if (emailId && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailId.trim())) {
       showToast('Please enter a valid Email Address.');
-      return false;
-    }
-    if (!city) {
-        showToast('Please select City.');
-        return false;
-    }
-    if (!state) {
-        showToast('Please select State.');
-        return false;
-    }
-    if (!country) {
-        showToast('Please select Country.');
-        return false;
-    }
-    if(!leadSources){
-      showToast('Please select Lead Source');
       return false;
     }
     return true;
   };
 
-  const steps = ['Personal', 'Occupation', 'Services'];
-  const currentStep = 1;
-
   const goBackCall = () => navigation.goBack();
 
   const handleOccupation = () => {
     if (validateFields()) {
-      navigation.navigate('LeadAddOccupation');
+      navigation.navigate('editLead2');
     }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        
-        <NavigationHeaderBack text="Add Lead" onPress={goBackCall} />
-       
+        <NavigationHeaderBack text="Add Lead 1" onPress={goBackCall} />
       </View>
 
       <KeyboardAvoidingView 
@@ -140,11 +120,9 @@ const LeadAddPersonal = ({ navigation }) => {
               />
               
               <StatusDropdown
-                label={leadSourcesName}
+                label={leadName}
                 selectedValue={leadSources}
-                 onValueChange={(value) => dispatch(updateLeadSources(value))}
-                //onValueChange={(value) => alert(JSON.stringify(value))}
-
+                onValueChange={(value) => dispatch(updateLeadSources(value))}
                 apiType="leadSource"
                 listData={leadSourceList.leadSource}
               />
@@ -265,7 +243,6 @@ const styles = StyleSheet.create({
   stepper: {
     marginTop: 10,
     paddingHorizontal: 15,
-    marginTop: 10,
     paddingTop: 15,
     gap: 18,
   },
@@ -297,25 +274,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginTop: 5,
   },
-  toastError: {
-    backgroundColor: 'black',
-    padding: 15,
-    borderRadius: 8,
-    marginHorizontal: 20,
-    marginBottom: 20,
-    width: '90%',
-    alignSelf: 'center',
-  },
-  toastText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  toastSubText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    marginTop: 5,
-  },
 });
 
-export default LeadAddPersonal;
+export default Editlead1;
