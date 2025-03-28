@@ -80,8 +80,9 @@ export const callAllDropDownAPI = storedData => {
         },
       });
     } catch (error) {
-      alert('Dropdown API Error:==>'+ JSON.stringify(error));
+     // alert('Dropdown API Error:==>'+ JSON.stringify(error));
       dispatch({type: FETCH_DROPDOWN_FAILURE, payload: error.message});
     }
   };
 };
+

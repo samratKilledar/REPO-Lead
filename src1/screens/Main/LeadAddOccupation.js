@@ -12,7 +12,7 @@ import { updateMonthlyIncome, updateOccupation, updateTypeOfWork } from "../../r
 
 const LeadAddOccupation = (props) => {
   const dispatch = useDispatch();
-  const occupations = useSelector((state) => state.occupationReducer);
+  // const occupations = useSelector((state) => state.occupationReducer);
 
   const steps = ["Personal", "Occupation", "Services"];
   const currentStep = 2;
@@ -53,7 +53,10 @@ const LeadAddOccupation = (props) => {
           showToast("Monthly Income should be between 1,000 and 1,00,00,000");
           return;
         }
-    
+        if(!occupation){
+          showToast("Select the Occupation");
+          return;
+        }
         props.navigation.navigate("LeadLast");
       };
 

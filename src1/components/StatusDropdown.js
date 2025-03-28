@@ -40,6 +40,17 @@ const StatusDropdown = ({ label, selectedValue, onValueChange, apiType, zIndex, 
           label: item.value01,
           value: { id: item.id, name: item.value01 },
         };
+      } else if (apiType === "assignTo") {
+        return {
+          label: item.value,
+  value: {
+    id: item.key,
+    name: item.value,
+    option1: item.option1,
+    option2: item.option2,
+    option3: item.option3
+  }
+        };
       } else {
         return {
           label: item.value01,

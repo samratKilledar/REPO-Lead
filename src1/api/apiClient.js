@@ -57,128 +57,147 @@ export const apiPost = async (url, param = {}) => {
   }
 };
 
-export const apiPostLead = async (url, data,tenantId) => {
-  console.log(JSON.stringify(data));
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+export const apiPostLead = async (url, payload, tenantId) => {
+  console.log("Sending Data to:", url);
+
   try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        tenant: data.customerId,
-      },
-      body: JSON.stringify({
-          "id": 0,
-          "tenantId": tenantId,
-          "customerId": 0,
-          "firstName": data.firstName,
-          "lastName": data.lastName,
-          "emailId": data.emailId,
-          "mobileNo": data.mobileNo,
-          "whatsAppNo": data.whatsAppNo,
-          "addressLine1": data.addressLine1,
-          "addressLine2": data.addressLine2,
-          "cityId": data.city,
-          "cityName": data.cityName,
-          "stateId": data.state,
-          "stateName": data.stateName,
-          "countryId": data.country,
-          "countryName": data.countryName,
-          "pincode": data.pincode,
-          "leadSource": data.leadSources,
-          "leadSourceName": data.leadName,
-          "otherSource": "string",
-          "occupation": data.occupation,
-          "occupationName": data.occupationName,
-          "organisationName": "string",
-          "workType": data.typeOfWork,
-          "monthlyIncome": data.monthlyIncome,
-          "assignedTo": data.assignedTo,
-          "assignedToName": "string",
-          "leadStatus": 0,
-          "leadStatusName": "string",
-          "createdBy": 0,
-          "createdByName": "string",
-          "leadDate": "string",
-          "isActive": true,
-          "serviceDetails": [
-            {
-              "id": 0,
-              "customerId": 0,
-              "serviceId": 0,
-              "serviceName": "string",
-              "leadId": 0,
-              "clientId": 0,
-              "isExistingClient": true,
-              "remark": "string",
-              "assignedTo": 0,
-              "assignedToName": "string",
-              "isActive": true
-            }
-          ]
-        }
-      ),
-    });
-
-    // firstName: "s",
-    // lastName: "ss", 
-    // leadSources: "",
-    // mobileNo:"7798417997",
-    // emailId:"sam@gmail.com",
-    // whatsAppNo:"779841779",
-    // addressLine1:"2qe",
-    // addressLine2:"wfqwac",
-    // city:"",
-    // state:"",
-    // country:"",
-    // pincode:"415262",
-    // occupation:"",
-    // typeOfWork:"",
-    // monthlyIncome:"34344344",
-    // assignTo:"",
-    // services:"",
-    // remark:"ednkjnf"
-  
-
-
-    if (!response.ok) {
-      throw new Error(`HTTP Error! Status: ${response.status}`);
+    const token = await AsyncStorage.getItem("authToken");
+    if (!token) {
+      throw new Error("Authentication token not found. Please login again.");
     }
 
-    const result = await response.json();
-    console.log('Success:', result);
-    return result;
-  } catch (error) {
-    console.error('Network request failed:', error.message);
-    return null;
-  }
-};
-
-
-export const apiPostFollowup = async (url, param = {}) => {
-  const data = param.data;
-  console.log("Sending Data:", JSON.stringify(data));
-
-  try {
-    console.log("Inside API Client - Making Request");
+    // const payload = {
+    //   id: 0,
+    //   tenantId: "root",
+    //   customerId: 0,
+    //   firstName: "Sanika",
+    //   lastName: "Patil",
+    //   emailId: "string",
+    //   mobileNo: "string",
+    //   whatsAppNo: "string",
+    //   addressLine1: "string",
+    //   addressLine2: "string",
+    //   cityId:2707,
+    //   cityName: "",
+    //   stateId: 22,
+    //   stateName: "",
+    //   countryId: 1,
+    //   countryName: "",
+    //   pincode: 0,
+    //   leadSource: 9,
+    //   leadSourceName: "string",
+    //   otherSource: "string",
+    //   occupation: 5,
+    //   occupationName: "string",
+    //   organisationName: "string",
+    //   workType: "twquyi",
+    //   monthlyIncome: 0,
+    //   assignedTo: 2,
+    //   assignedToName: "string",
+    //   leadStatus: 0,
+    //   leadStatusName: "string",
+    //   createdBy: 0,
+    //   createdByName: "string",
+    //   leadDate: "string",
+    //   isActive: true,
+    //   serviceDetails: [
+    //     {
+    //       id: 0,
+    //       customerId: 0,
+    //       serviceId: 2,
+    //       serviceName: "",
+    //       leadId: 0,
+    //       clientId: 0,
+    //       isExistingClient: true,
+    //       remark: "string",
+    //       assignedTo: 0,
+    //       assignedToName: "",
+    //       isActive: true,
+    //     },
+    //   ],
+    // };
 
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        tenant: data.tenantId || "",  // Ensure tenantId is included if needed
+        Authorization: `Bearer ${token}`,
+        tenant: "root",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
 
+    console.log("📢 Response Status Code:", response.status);
+    console.log("📢 Response Headers:", response.headers);
+
+   
     if (!response.ok) {
-      throw new Error(`HTTP Error! Status: ${response.status}`);
+      const errorText = await response.text();
+      console.error("❌ API Error:", response.status, errorText);
+      Alert.alert("Error", `HTTP Error ${response.status}: ${errorText}`);
+      return;
     }
 
-    const result = await response.json();
-    console.log("Success:", result);
-    return result;
+    const text = await response.text();
+    if (!text.trim()) {
+      console.warn("⚠ Server returned an empty response.");
+      Alert.alert("Warning", "Data sent successfully, but no response from server.");
+      return;
+    }
+
+    const result = JSON.parse(text);
+    console.log("✅ API Response Body:", result);
   } catch (error) {
-    console.error("Network request failed:", error.message);
-    return null;
+     Alert.alert("Error", error.message);
+    console.error("❌ Error:", error.message);
+    throw error;
   }
 };
+
+export const apigetAddFollowUp = async (url, tenantId) => {
+  console.log("Fetching Data from:", url);
+
+  try {
+    const token = await AsyncStorage.getItem("authToken");
+    if (!token) {
+      throw new Error("Authentication token not found. Please login again.");
+    }
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        tenant: "root",
+      },
+    });
+
+    console.log("📢 Response Status Code:", response.status);
+    console.log("📢 Response Headers:", response.headers);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("❌ API Error:", response.status, errorText);
+      Alert.alert("Error", `HTTP Error ${response.status}: ${errorText}`);
+      return;
+    }
+
+    const text = await response.text();
+    if (!text.trim()) {
+      console.warn("⚠ Server returned an empty response.");
+      Alert.alert("Warning", "No data received from the server.");
+      return;
+    }
+
+    const result = JSON.parse(text);
+    console.log("✅ API Response Body:", result);
+    return result;
+  } catch (error) {
+    Alert.alert("Error", error.message);
+    console.error("❌ Error:", error.message);
+    throw error;
+  }
+};
+
+

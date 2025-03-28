@@ -32,7 +32,7 @@ const LeadAddPersonal = ({ navigation }) => {
     lastName,
     mobileNo,
     emailId,
-    leadSources,leadName,
+    leadSources,leadSourcesName,
     whatsAppNo,
     addressLine1,
     addressLine2,
@@ -81,18 +81,22 @@ const LeadAddPersonal = ({ navigation }) => {
       showToast('Please enter a valid Email Address.');
       return false;
     }
-    // if (!city) {
-    //     showToast('Please select City.');
-    //     return false;
-    // }
-    // if (!state) {
-    //     showToast('Please select State.');
-    //     return false;
-    // }
-    // if (!country) {
-    //     showToast('Please select Country.');
-    //     return false;
-    // }
+    if (!city) {
+        showToast('Please select City.');
+        return false;
+    }
+    if (!state) {
+        showToast('Please select State.');
+        return false;
+    }
+    if (!country) {
+        showToast('Please select Country.');
+        return false;
+    }
+    if(!leadSources){
+      showToast('Please select Lead Source');
+      return false;
+    }
     return true;
   };
 
@@ -137,7 +141,7 @@ const LeadAddPersonal = ({ navigation }) => {
               />
               
               <StatusDropdown
-                label={leadName}
+                label={leadSourcesName}
                 selectedValue={leadSources}
                  onValueChange={(value) => dispatch(updateLeadSources(value))}
                 //onValueChange={(value) => alert(JSON.stringify(value))}

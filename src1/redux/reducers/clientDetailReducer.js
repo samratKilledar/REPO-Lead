@@ -1,5 +1,5 @@
 
-import { FETCH_LEAD_SUCCESS, FETCH_INSURANCE_SUCCESS } from '../actions/clientDetailActions'; // Update with correct file path
+import { FETCH_LEAD_SUCCESS, FETCH_LEAD_FAILURE, FETCH_INSURANCE_SUCCESS, FETCH_INSURANCE_FAILURE } from '../actions/clientDetailActions'; // Update with correct file path
 
 const initialState = {
     ClientPlaceholder: {
@@ -26,7 +26,7 @@ const initialState = {
         nextMeetingDate: "2025-02-14",
         attachment: "References.pdf"
     },
- 
+
     InsuranceList: [
         {
             id: 1,
@@ -50,10 +50,20 @@ const clientDetailReducer = (state = initialState, action) => {
                 ...state,
                 ClientValue: action.payload,
             };
+        case FETCH_LEAD_FAILURE:
+            return {
+                ...state,
+                error: action.payload
+            };
         case FETCH_INSURANCE_SUCCESS:
             return {
                 ...state,
                 InsuranceList: action.payload,
+            };
+        case FETCH_INSURANCE_FAILURE:
+            return {
+                ...state,
+                error: action.payload
             };
         default:
             return state;
