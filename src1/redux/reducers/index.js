@@ -14,6 +14,9 @@ import leadListReducer from './leadListReducer';
 import closeAccountReducer from './closeAccountReducer';
 import leadDetailReducer from './leadDetailReducer';
 import clientDetailReducer from './clientDetailReducer';
+import upcomingTaskReducer from './upcomingTaskReducer';
+import editLeadReducer from './editLeadReducer';
+
 
 export default combineReducers({
   auth: authReducer,
@@ -31,5 +34,7 @@ export default combineReducers({
   closeAccountReducer:closeAccountReducer,
   leadDetailReducer:leadDetailReducer,
   clientDetailReducer:clientDetailReducer,
+  upcomingTaskReducer:upcomingTaskReducer,
+  editLeadReducer:editLeadReducer,
 });
 

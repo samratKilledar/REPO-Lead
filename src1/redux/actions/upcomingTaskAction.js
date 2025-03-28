@@ -1,3 +1,4 @@
+import {UpcomingTask} from '../../api/authApi';
 // Action Types
 export const FETCH_TASKS_REQUEST = 'FETCH_TASKS_REQUEST';
 export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS';
@@ -18,19 +19,20 @@ export const fetchTasksFailure = (error) => ({
   payload: error,
 });
 
-// // Async Action (Thunk)
-// export const fetchUpcomingTasks = () => {
-//   return async (dispatch) => {
-//     dispatch(fetchTasksRequest());
-//     try {
-//       const response = await fetch('https://api.example.com/upcoming-tasks'); // Replace with actual API URL
-//       if (!response.ok) {
-//         throw new Error(`HTTP error! Status: ${response.status}`);
-//       }
-//       const data = await response.json();
-//       dispatch(fetchTasksSuccess(data));
-//     } catch (error) {
-//       dispatch(fetchTasksFailure(error.message));
-//     }
-//   };
-// };
+
+export const fetchUpcomingTasks = () => {
+  return async (dispatch) => {
+    dispatch(fetchTasksRequest()); // Dispatch request action
+
+    try {
+      console.log("Fetching upcoming tasks...");
+      const data = await UpcomingTask(); // API call
+
+      console.log("Fetched tasks:", data);
+      dispatch(fetchTasksSuccess(data)); // Dispatch success action
+    } catch (error) {
+      console.error("Error fetching tasks:", error.message);
+      dispatch(fetchTasksFailure(error.message)); // Dispatch failure action
+    }
+  };
+}

@@ -1,41 +1,7 @@
-import {apiGet, apiPost, apiPut,postApi,apiGetLeadList,apiPostForgotPass} from './apiClient';
+import {apiGet, apiPost, apiPut,postApi,apiGetLeadList,apiPostForgotPass, apiGetEditList,apiEditLeadPost} from './apiClient';
 import {api} from './api';
 import { getItem } from '../api/storageServices';
-// import {apiGet, apiPost} from './apiClient';
-// import {api} from './api';
-// import { getItem } from '../api/storageServices';
-
-// // Login API
-// export const loginUserApiCall = async data => {
-//   console.log('inside function' + JSON.stringify(data));
-//   return await apiPost(api.authApi, {data});
-// };
-
-// // Register API
-// export const readAllLead = async userData => {
-
-//     console.log(getItem("authToken"))
-//     return await apiGet(api.getAllLeadApi,getItem(authToken));
-// };
-
-// export const l = async userData => {
-
-//     return await apiGet(api.getAllLeadApi,getItem(userData));
-// };
-
-
-// export const fetchDropdownDataApi = async (apiType) => {
-//     try {
-//         const authToken = await getItem("authToken");
-//         const apiUrl = api[apiType];
-//         if (!apiUrl) throw new Error("Invalid API type");
-
-//         return await apiGet(apiUrl, authToken);
-//     } catch (error) {
-//         console.error(`Error fetching dropdown data for ${apiType}:`, error);
-//         throw error;
-//     }
-// };
+import AsyncStorage from "@react-native-async-storage/async-storage"; 
 
 
 // Login API
@@ -43,6 +9,55 @@ export const loginUserApiCall = async data => {
     console.log('inside function' + JSON.stringify(data));
     return await apiPost(api.authApi, { data });
 };
+
+ 
+export const refreshTokenApiCall = async () => {
+    try {
+        const token = await AsyncStorage.getItem("authToken");
+        const refreshToken = await AsyncStorage.getItem("refreshToken");
+        
+        const cleanedToken = token ? JSON.parse(token) : null;
+        const cleanedRefreshToken = refreshToken ? JSON.parse(refreshToken) : null;
+        
+        const requestBody = {
+          token: cleanedToken,
+          refreshToken: cleanedRefreshToken,
+        };
+      console.log("🔍 Refresh Token Request Payload:", requestBody);
+  
+      const response = await fetch(api.refreshApi, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          tenant: "root", 
+          //Authorization: Bearer ${token},
+        },
+        body: JSON.stringify(requestBody),
+      });
+  
+      if (!response.ok) {
+        const errorResponse = await response.text();
+        console.error(`❌ HTTP Error! Status: ${response.status}, Response: ${errorResponse}`);
+        throw new Error(`HTTP Error! Status: ${response.status}, Response: ${errorResponse}`);
+      }
+  
+      const result = await response.json();
+      console.log("🔄 Token refreshed:", result);
+  
+      // 🔹 Store the new token
+      await AsyncStorage.setItem("authToken", result.token);
+      await AsyncStorage.setItem("refreshToken", result.refreshToken);
+      await AsyncStorage.setItem("refreshTokenExpiryTime", result.refreshTokenExpiryTime);
+  
+      scheduleTokenRefresh(); // Reschedule the refresh
+      return result;
+    } catch (error) {
+      console.error("❌ Token refresh failed:", error.message);
+      return null;
+    }
+  };
+
+  
 //forgot Password
 export const forgotPassApiCall = async data => {
     console.log('inside function' + JSON.stringify(data));
@@ -132,14 +147,27 @@ export const fetchDropdownDataApi = async (apiType) => {
     }
 };
 
-
-export const LeadList = async userData => {
+export const LeadList = async (url) => {
     const authToken = await getItem("authToken");
+    return await apiGetLeadList(url, authToken);
+};
 
-    console.log("------------------------------token--"+JSON.stringify(authToken));
-    // let authToken = getItem("authToken");
-    return await apiGetLeadList(api.getAllLeadApi,authToken);
-}
+// export const EditLead = async () => {
+//     const authToken = await getItem("authToken");
+//     return await apiGetEditList(api.editLead, authToken);
+// }
+
+export const EditLead = async (leadId) => {
+    const token = await AsyncStorage.getItem("authToken");
+    const url = `https://opticalerp.in:85/api/lead/getbyleadid/${leadId}`;
+    return await apiGetEditList(url, token);
+};
+
+export const editUpdate = async (url) => {
+    const authToken = await getItem("authToken");
+    return await apiPostLead(api.leadSubmit, authToken);
+};
+
 
 
 export const updateUserProfile = async userData => {
@@ -158,3 +186,11 @@ export const leadAddServiceApiCall = async userData => {
     console.log("-----sbssss--"+JSON.stringify(authToken));
     return await apiGet(api.leadAddServiceApi,authToken);
 }
+
+export const UpcomingTask = async userData => {
+    const authToken = await getItem("authToken");
+
+    console.log("------------------------------token--"+JSON.stringify(authToken));
+    return await apiGet(api.UpcomingTaskList,authToken);
+}
+

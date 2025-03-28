@@ -1,4 +1,5 @@
-import {loginUserApiCall, readAllLead} from '../../api/authApi';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {loginUserApiCall, readAllLead,refreshTokenApiCall} from '../../api/authApi';
 import {setItem, getItem} from '../../api/storageServices';
 
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -11,19 +12,46 @@ export const LOGIN_CLICK = 'LOGIN_CLICK';
 
 export const loginUser = () => async (dispatch, getState) => {
   try {
-    const {loginValue} = getState().auth; 
-    dispatch({type: LOGIN_CLICK});
-    //  alert(JSON.stringify(loginValue))
+    const { loginValue } = getState().auth;
+    dispatch({ type: LOGIN_CLICK });
+
+    // Call Login API
     const data = await loginUserApiCall(loginValue);
     if (data.token != null) {
-      //alert(JSON.stringify(data));
-      setItem('authToken', data.token); 
-      dispatch({type: LOGIN_SUCCESS}); 
+      setItem('authToken', data.token);
+      setItem('refreshToken', data.refreshToken);
+      setItem('refreshTokenExpiryTime', data.refreshTokenExpiryTime);
+      setItem('tenantId', loginValue.customerId); // Store tenantId for refresh API
+
+      dispatch({ type: LOGIN_SUCCESS });
+
+      // ✅ Call Refresh Token API immediately after login
+      const newTokenData = await refreshTokenApiCall();
+      if (newTokenData) {
+        setItem('authToken', newTokenData.token); // Store the updated token
+      }
+
+      scheduleTokenRefresh(); // Start automatic refresh mechanism
     } else {
-      dispatch({type: LOGIN_FAILURE, payload: error.message}); 
+      dispatch({ type: LOGIN_FAILURE, payload: 'Login failed' });
     }
   } catch (error) {
-    dispatch({type: LOGIN_FAILURE, payload: error.message}); 
+    dispatch({ type: LOGIN_FAILURE, payload: error.message });
+  }
+};
+
+
+
+const scheduleTokenRefresh = async () => {
+  const expiryTime = await getItem("refreshTokenExpiryTime");
+  if (!expiryTime) return;
+
+  const expiryTimestamp = new Date(expiryTime).getTime();
+  const currentTime = Date.now();
+  const refreshTime = expiryTimestamp - currentTime - 60000; // Refresh 1 minute before expiry
+
+  if (refreshTime > 0) {
+    setTimeout(refreshTokenApiCall, refreshTime);
   }
 };
 

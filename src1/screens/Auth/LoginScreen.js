@@ -69,7 +69,7 @@ const LoginScreen = props => {
           permissions.push(
             PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
             PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
-            PermissionsAndroid.PERMISSIONS.READ_MEDIA_AUDIO
+            // PermissionsAndroid.PERMISSIONS.READ_MEDIA_AUDIO
           );
         } else {
           // Android 12 and below

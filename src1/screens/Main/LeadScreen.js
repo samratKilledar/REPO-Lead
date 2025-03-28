@@ -1,25 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useCallback,useState } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'; 
 import LeadCard from "../../components/LeadCard";
 import HeaderComp from "../../components/HeaderComp";
 import TextStyle from "../../styles/TextStyle";
 import { fetchLeads } from "../../redux/actions/leadListAction";
 import CustomText from "../../components/CustomText";
-import { useNavigation } from "@react-navigation/native";
-const leadsData = [
-  { id: "1", name: "Barbara Moore", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Follow Up", statusGradient: ["#246BFD", "#6F9EFF"], menuType: "follow" },
-  { id: "2", name: "Pricilla Maureen", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Meeting Pending", statusGradient: ["#FACC15", "#FFE580"], menuType: "follow" },
-  { id: "3", name: "Robert George", phone: "+91 9876543210", dateTime: "02 Feb 2025 - 12.00 PM", status: "Lead Win", statusGradient: ["#4ADE80", "#73FFA6"], menuType: "follow" },
-];
+import { useNavigation , useFocusEffect} from "@react-navigation/native";
+import LottieScreen from "../../styles/Loader";
 
 const LeadScreen = (props) => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+  const { leads, loading, error } = useSelector((state) => state.leads);
+  const [isLoading, setIsLoading] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0); // Key to force re-render
 
-  useEffect(() => {
-    dispatch(fetchLeads);
-  }, [dispatch]);
+  useFocusEffect(
+    useCallback(() => {
+      setIsLoading(true);
+      dispatch(fetchLeads()).finally(() => {
+        setIsLoading(false);
+        setRefreshKey((prevKey) => prevKey + 1); // Update state to trigger re-render
+      });
+    }, [dispatch])
+  );
+
+  // Show loading filter animation
+  if (isLoading || loading) {
+    return <LottieScreen />;
+  }
+
+  // Show error state
+  if (error) {
+    return <CustomText text={`Error: ${error}`} />;
+  }
 
   return (
     <View style={styles.container}>
@@ -30,10 +45,22 @@ const LeadScreen = (props) => {
           <CustomText text="Lead" customstyle={TextStyle.leadText} />
         </View>
 
-        <ScrollView style={{ padding: 20, flex: 1,marginBottom: 60, }}>
-          {leadsData.map((item) => (
-            <LeadCard key={item.id} {...item} navigation={props.navigation} screenType="lead" />
+        <ScrollView style={{ padding: 20, flex: 1, marginBottom: 60 }}>
 
+          {leads.map((item) => (
+            <LeadCard
+              key={item.id} 
+              id={item.id}
+              name={item.customerName} 
+              phone={item.mobileNo}
+              dateTime={item.leadDate} 
+              status={item.leadStatus} 
+              statusGradient={getStatusGradient(item.leadStatus)} // Add a function to map status to gradient
+              menuType="follow" // You can customize this based on your requirements
+              navigation={props.navigation}
+              screenType="lead"
+              setIsLoading={setIsLoading}
+            />
           ))}
         </ScrollView>
       </View>
@@ -41,6 +68,19 @@ const LeadScreen = (props) => {
   );
 };
 
+
+const getStatusGradient = (status) => {
+  switch (status) {
+    case "New Lead":
+      return ["#246BFD", "#6F9EFF"]; // Blue gradient for New Lead
+    case "Follow Up":
+      return ["#FACC15", "#FFE580"]; // Yellow gradient for Follow Up
+    case "Lead Win":
+      return ["#4ADE80", "#73FFA6"]; // Green gradient for Lead Win
+    default:
+      return ["#246BFD", "#6F9EFF"]; // Default gradient
+  }
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -69,6 +109,5 @@ const styles = StyleSheet.create({
     paddingLeft: 24,
   },
 });
+
 export default LeadScreen;
-
-

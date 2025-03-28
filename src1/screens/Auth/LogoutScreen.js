@@ -13,10 +13,8 @@ const { width, height } = Dimensions.get('window');
 
 const LogoutScreen = ({ navigation }) => {
   const [logoutVisible, setLogoutVisible] = useState(false);
-  const [modalVisible, setModalVisible] = useState(false);
   const [Services, setServices] = useState(null);
   const [serviceName, setServiceName] = useState('');
-  const [editModalVisible, setEditModalVisible] = useState(false);
 
   const GradientCard = ({ style, colors, start, end, children }) => (
     <LinearGradient
