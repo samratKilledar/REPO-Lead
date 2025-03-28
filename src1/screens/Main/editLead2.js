@@ -9,7 +9,7 @@ import StatusDropdown from "../../components/StatusDropdown";
 import { updateMonthlyIncome, updateOccupation, updateTypeOfWork ,EditLeadFetch} from "../../redux/actions/editLeadAction";
 
 
-const editLead2 = (props) => {
+const EditLead2 = (props) => {
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -34,32 +34,32 @@ const editLead2 = (props) => {
     const occupationList= useSelector(state => state.homeReducer);
    // alert(JSON.stringify(occupationList))
 
-    const leadLastHandle = () => 
-      {
-        if (!typeOfWork.trim()) {
-          showToast("Type of Work cannot be empty");
-          return;
-        }
+   const leadLastHandle = () => {
+    const monthlyIncomeStr = String(monthlyIncome || ""); // Ensure it's a string
     
-        if (!monthlyIncome.trim()) {
-          showToast("Monthly Income cannot be empty");
-          return;
-        }
-    
-        if (!/^\d+$/.test(monthlyIncome)) {
-          showToast("Invalid Input: Monthly Income should contain only numbers");
-          return;
-        }
-    
-        // Optional: Check if income is within a valid range
-        const incomeValue = parseInt(monthlyIncome, 10);
-        if (incomeValue < 1000 || incomeValue > 10000000) {
-          showToast("Monthly Income should be between 1,000 and 1,00,00,000");
-          return;
-        }
-    
-        props.navigation.navigate("editLead3");
-      };
+    if (!typeOfWork.trim()) {
+      showToast("Type of Work cannot be empty");
+      return;
+    }
+  
+    if (!monthlyIncomeStr.trim()) {
+      showToast("Monthly Income cannot be empty");
+      return;
+    }
+  
+    if (!/^\d+$/.test(monthlyIncomeStr)) {
+      showToast("Invalid Input: Monthly Income should contain only numbers");
+      return;
+    }
+  
+    const incomeValue = parseInt(monthlyIncomeStr, 10);
+    if (incomeValue < 1000 || incomeValue > 10000000) {
+      showToast("Monthly Income should be between 1,000 and 1,00,00,000");
+      return;
+    }
+  
+    props.navigation.navigate("EditLead3");
+  };
 
   const goBackCall = () => {
     props.navigation.goBack();
@@ -69,7 +69,7 @@ const editLead2 = (props) => {
     <View style={styles.container}>
       <View style={{ flex: 0.1 }}>
          
-        <NavigationHeaderBack text="Add Lead 2" onPress={goBackCall} />
+        <NavigationHeaderBack text="Edit Lead" onPress={goBackCall} />
        
       </View>
 
@@ -140,7 +140,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default editLead2;
-
-
-
+export default EditLead2;

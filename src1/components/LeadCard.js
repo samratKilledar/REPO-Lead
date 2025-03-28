@@ -16,9 +16,11 @@ import CustomButton from "./CustomButton";
 import ButtonStyles from "../styles/ButtonStyles";
 import { EditLeadFetch } from "../redux/actions/editLeadAction";
 import {deleteLead} from "../redux/actions/leadDeleteAction"
+import { useNavigation } from "@react-navigation/native";
 
 const LeadCard = (props) => {
   const dispatch = useDispatch();
+  const navigationtolead = useNavigation;
   const { 
     id,
     name,
@@ -89,13 +91,20 @@ const LeadCard = (props) => {
       }
       
       console.log("Deleting  lead ID:", id);
-      await dispatch(deleteLead(id));
-     
-    } catch (error) {
+      // await dispatch(deleteLead(id));
+      const result = await dispatch(deleteLead(id));
+      if (result) { // Only navigate if successful
+        navigationtolead.navigate("Lead");
+      }
+       } catch (error) {
       console.error("Delete failed:", error);
+      const message = error.response?.data?.message || 
+                     "Lead data not available. Please try again in a few seconds.";
+      Alert.alert("Error", message);
+    } finally {
+      setMenuVisible(false);
+      setModalVisible(false);
     }
-    setMenuVisible(false);
-    setModalVisible(false);
   };
 
   const details = () => {

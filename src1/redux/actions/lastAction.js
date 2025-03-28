@@ -143,7 +143,6 @@ export const leadSubmitAllData = () => async (dispatch, getState) => {
     occupationName: lastReducer.occupationName ,
     typeOfWork: lastReducer.typeOfWork ,
     assignedTo: Number(lastReducer.assignedTo) || 2, 
-    assignToName: lastReducer.assignToName ,
     leadDate: new Date().toISOString(),
     isActive: true,
     serviceDetails: lastReducer.serviceDetails || [

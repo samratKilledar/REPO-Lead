@@ -31,39 +31,6 @@ export const apiGet = async (url, token) => {
   }
 };
 
-// export const apiGetDetails = async (url, token, id) => {
-//   try {
-//     console.log("🌐 Request URL:", url);
-//     console.log("🔑 Sending Token:", token);
-//     console.log("🆔 Sending ID in Header:", id);
-
-//     const response = await fetch(url, {
-//       method: 'GET',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Authorization': `Bearer ${token}`,  // Ensure Bearer token format
-//         'id': id,  // Sending ID in header
-//       },
-//     });
-
-//     if (!response.ok) {
-//       console.error("❌ API Response Error:", response.status);
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-
-//     const data = await response.json();
-//     console.log("📜 Server Response:", data);
-//     return data;
-
-//   } catch (error) {
-//     console.error("🚨 API Fetch Error:", error.message);
-//     throw error;
-//   }
-// };
-
-
-// POST Request Function
-
 export const apiPost = async (url, param = {}) => {
   const data = param.data;
   console.log(JSON.stringify(data));
@@ -127,7 +94,7 @@ export const apiPostLead = async (url, payload, tenantId) => {
     const text = await response.text();
     if (!text.trim()) {
       console.warn("⚠ Server returned an empty response.");
-      Alert.alert("Warning", "Data sent successfully, but no response from server.");
+      Alert.alert("Lead added successfully.");
       return;
     }
 
@@ -177,9 +144,9 @@ export const apiGetLeadList1 = async (url, token) => {
 
   try {
     const token = await AsyncStorage.getItem("newToken");
-    alert(token)
-      if (!token) {
-        throw new Error("Authentication token not found. Please login again.");
+      if (token == null) {
+        apiGetLeadList1(api.assignTo)
+        throw new Error("------------------------------------Authentication token not found. Please login again.");
       }
     const response = await fetch(url, {
       method: 'GET',
@@ -328,7 +295,7 @@ export const apiGetEditList = async (url,token) => {
   console.log("Using token:", token); 
 
   try {
-    const token = await AsyncStorage.getItem("authToken");
+    const token = await AsyncStorage.getItem("newToken");
     if (!token) {
       throw new Error("Authentication token not found. Please login again.");
     }

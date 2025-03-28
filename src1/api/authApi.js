@@ -2,45 +2,6 @@ import {apiGet, apiPost, apiPut,postApi,apiGetLeadList,apiPostForgotPass,apiGetE
 import {api} from './api';
 import{scheduleTokenRefresh} from '../redux/actions/authActions'
 import { getItem, setItem } from './storageServices';
-//import { getItem } from '../api/storageServices';
-// import {apiGet, apiPost} from './apiClient';
-// import {api} from './api';
-// import { getItem } from '../api/storageServices';
-
-// // Login API
-// export const loginUserApiCall = async data => {
-//   console.log('inside function' + JSON.stringify(data));
-//   return await apiPost(api.authApi, {data});
-// };
-
-// // Register API
-// export const readAllLead = async userData => {
-
-//     console.log(getItem("authToken"))
-//     return await apiGet(api.getAllLeadApi,getItem(authToken));
-// };
-
-// export const l = async userData => {
-
-//     return await apiGet(api.getAllLeadApi,getItem(userData));
-// };
-
-
-// export const fetchDropdownDataApi = async (apiType) => {
-//     try {
-//         const authToken = await getItem("authToken");
-//         const apiUrl = api[apiType];
-//         if (!apiUrl) throw new Error("Invalid API type");
-
-//         return await apiGet(apiUrl, authToken);
-//     } catch (error) {
-//         console.error(`Error fetching dropdown data for ${apiType}:`, error);
-//         throw error;
-//     }
-// };
-
-
-// Login API
 export const loginUserApiCall = async data => {
     console.log('inside function' + JSON.stringify(data));
     return await apiPost(api.authApi, { data });
@@ -69,7 +30,6 @@ export const loginUserApiCall = async data => {
         },
         body: JSON.stringify(requestBody),
       });
-  
       if (!response.ok) {
         const errorResponse = await response.text();
         console.error(`❌ HTTP Error! Status: ${response.status}, Response: ${errorResponse}`);
@@ -77,7 +37,7 @@ export const loginUserApiCall = async data => {
       }
   
       const result = await response.json();
-      console.log("🔄 Token refreshed:", result);
+     console.log("🔄 Token refreshed:", result);
   
       // 🔹 Store the new token
       await AsyncStorage.setItem("newToken", result.token);
@@ -188,7 +148,7 @@ export const LeadList = async (url) => {
 };
 
 export const EditLead = async (leadId) => {
-    const token = await AsyncStorage.getItem("authToken");
+    const token = await AsyncStorage.getItem("newToken");
     const url = `https://opticalerp.in:85/api/lead/getbyleadid/${leadId}`;
     return await apiGetEditList(url, token);
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from 'react-redux';
 import LeadCard from "../../components/LeadCard";
@@ -7,19 +7,29 @@ import TextStyle from "../../styles/TextStyle";
 import { fetchLeads } from "../../redux/actions/leadListAction";
 import CustomText from "../../components/CustomText";
 import { useNavigation } from "@react-navigation/native";
+import LottieScreen from "../../styles/Loader";
+import { RefreshControl } from "react-native";
 
 const LeadScreen = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { leads, loading, error } = useSelector((state) => state.leads);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     dispatch(fetchLeads());
   }, [dispatch]);
 
-  // Show loading state
-  if (loading) {
-    return <CustomText text="Loading..." />;
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(fetchLeads()).finally(() => setRefreshing(false));
+  };
+
+  // Show loading filter animation
+  if (isLoading || loading) {
+    return <LottieScreen />;
   }
 
   // Show error state
@@ -36,9 +46,12 @@ const LeadScreen = (props) => {
           <CustomText text="Lead" customstyle={TextStyle.leadText} />
         </View>
 
-        <ScrollView style={{ padding: 20, flex: 1, marginBottom: 60 }}>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+          style={{ padding: 20, flex: 1, marginBottom: 60 }}
+        >
 
-        {leads && leads.length > 0 ? (
+         {leads && leads.length > 0 ? (
             leads.map((item) => (
               <LeadCard
                 key={item.id}
@@ -54,9 +67,8 @@ const LeadScreen = (props) => {
               />
             ))
           ) : (
-            <CustomText text="No leads available" />
+            <CustomText text="" />
           )}
-
         </ScrollView>
       </View>
     </View>

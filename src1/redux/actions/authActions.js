@@ -29,7 +29,7 @@ export const loginUser = () => async (dispatch, getState) => {
       if (newTokenData) {
         setItem('authToken', newTokenData.token); // Store the updated token
       }
-      alert(newTokenData)
+      // alert(newTokenData)
       scheduleTokenRefresh(); // Start automatic refresh mechanism
     } else {
       dispatch({ type: LOGIN_FAILURE, payload: 'Login failed' });
@@ -79,7 +79,7 @@ export const getReadAllLead = async () => {
     const data = await readAllLead(); // API call
     //alert(JSON.stringify(data));
     //setItem('authToken',data); // Store token
-    alert("===>"+data);
+    //alert("===>"+data);
     dispatch({type: READ_ALL_LEAD, payload: data});
   } catch (error) {
     dispatch({type: READ_ALL_LEAD_FAIL, payload: error.message}); 

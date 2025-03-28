@@ -102,7 +102,7 @@ const LeadAddPersonal = ({ navigation }) => {
   const steps = ['Personal', 'Occupation', 'Services'];
   const currentStep = 1;
 
-  const goBackCall = () => navigation.goBack();
+  const goBackCall = () => navigation.navigate("Lead");
 
   const handleOccupation = () => {
     if (validateFields()) {

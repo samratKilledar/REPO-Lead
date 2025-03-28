@@ -23,7 +23,7 @@ import {
   updateLeadSources
 } from '../../redux/actions/editLeadAction';
 
-const Editlead1 = ({ navigation }) => {
+const Editlead1 = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const {
     firstName,
@@ -73,7 +73,9 @@ const Editlead1 = ({ navigation }) => {
       showToast('Please enter Address Line 1.');
       return false;
     }
-    if (!pincode.trim() || !/^\d{6}$/.test(pincode)) {
+    // Convert pincode to string before trimming and testing
+    const pincodeStr = String(pincode || '');
+    if (!pincodeStr.trim() || !/^\d{6}$/.test(pincodeStr)) {
       showToast('Please enter a valid 6-digit Pincode.');
       return false;
     }
@@ -83,19 +85,19 @@ const Editlead1 = ({ navigation }) => {
     }
     return true;
   };
-
+  
   const goBackCall = () => navigation.goBack();
 
   const handleOccupation = () => {
     if (validateFields()) {
-      navigation.navigate('editLead2');
+      navigation.navigate('EditLead2');
     }
   };
 
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <NavigationHeaderBack text="Add Lead 1" onPress={goBackCall} />
+        <NavigationHeaderBack text="Edit Lead " onPress={goBackCall} />
       </View>
 
       <KeyboardAvoidingView 

@@ -16,7 +16,8 @@ export const deleteLeadFailure = (error) => ({
 export const deleteLead = (id) => async (dispatch) => {
     try {
       await deleteLeadApi(id);
-      dispatch(deleteLeadSuccess(id)); // Pass ID to update state
+      dispatch(deleteLeadSuccess(id)); 
+      // Pass ID to update state
     } catch (error) {
       dispatch(deleteLeadFailure(error.message));
     }

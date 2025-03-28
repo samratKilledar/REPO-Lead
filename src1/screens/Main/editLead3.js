@@ -8,10 +8,10 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import { EditLeadFetch, EditLeadSubmit, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/editLeadAction';
+import { EditLeadFetch, leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/editLeadAction';
 import { state } from '../../api/mainApi';
 
-const editLead3 = (props) => {
+const EditLead3 = (props) => {
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -44,7 +44,7 @@ const editLead3 = (props) => {
 
 
   const goBackCall = () => {
-    props.navigation.goBack("editLead2");
+    props.navigation.goBack("EditLead2");
   };
 
   const showToast = (message) => {
@@ -52,7 +52,9 @@ const editLead3 = (props) => {
   };
 
   const handleSubmit = () => {
-    dispatch(EditLeadSubmit())
+    
+    dispatch(leadSubmitAllData())
+    props.navigation.navigate('LeadScreen');
   };
 
   const handleAdd = () => {
@@ -90,7 +92,7 @@ const editLead3 = (props) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.1, marginLeft: 5 }}>
-        <NavigationHeaderBack text="Add Services 3" onPress={goBackCall} />
+        <NavigationHeaderBack text="Edit Lead" onPress={goBackCall} />
       </View>
       <View style={styles.stepperContainer}>
         <Stepper steps={steps} currentStep={currentStep} />
@@ -200,7 +202,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default editLead3;
- 
-
-
+export default EditLead3;
