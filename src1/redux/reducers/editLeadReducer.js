@@ -19,43 +19,44 @@ import { UPDATE_ASSIGNTO,
   UPDATE_MONTHLYINCOME,
   SUBMIT_REQUEST,
   SUBMIT_SUCCESS, 
-  SUBMIT_FAILURE  } from "../actions/editLeadAction";
-import { occupation } from "../../api/mainApi";
+  SUBMIT_FAILURE  } from "../actions/lastAction";
+
 
 const initialState = {
   firstName: "",
   lastName: "", 
   leadSources: "",
-  leadSourcesName:"",
+  leadSourcesName:"Lead Source",
   mobileNo:"",
   emailId:"",
   whatsAppNo:"",
   addressLine1:"",
   addressLine2:"",
   city:"",
-  cityName:"",
+  cityName:"Select City",
   state:"",
-  stateName:"",
+  stateName:"Select State",
   country:"",
-  countryName:"",
+  countryName:"Select Country",
   isdCode:"",
   pincode:"",
   occupation:"",
-  occupationName:"",
+  occupationName:"Occupation Name",
   typeOfWork:"",
   monthlyIncome:"",
   assignTo:"",
+  assignToName: "Assign To",
   services:"",
-  servicesName:"",
+  servicesName:"Services",
   remark:""
 
  
 };
 
 const editLeadReducer = (state = initialState, action) => {
-  if(action.type =="UPDATE_SERVICES"){
-    // alert(JSON.stringify(action.payload)+"===")
-  }
+  // if(action.type =="UPDATE_SERVICES"){
+  //   alert(JSON.stringify(action.payload)+"===")
+  // }
   switch (action.type) {
     case UPDATE_FIRSTNAME:
       return { ...state, firstName: action.payload };
@@ -103,7 +104,7 @@ const editLeadReducer = (state = initialState, action) => {
       return { ...state, monthlyIncome: action.payload };
 
     case UPDATE_ASSIGNTO:
-      return { ...state, assignTo: action.payload };
+      return { ...state, assignTo: action.payload.id, assignToName:action.payload.name };
 
     case UPDATE_SERVICES:
       return { ...state, services: action.payload.id , servicesName:action.payload.name };
@@ -111,7 +112,7 @@ const editLeadReducer = (state = initialState, action) => {
     case UPDATE_REMARK:
       return { ...state, remark: action.payload };
 
-    case SUBMIT_REQUEST: 
+    case SUBMIT_REQUEST:
       return { ...state, isLoading: true, error: null };
 
       case SUBMIT_SUCCESS:

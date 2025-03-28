@@ -1,6 +1,7 @@
-import {apiGet ,apiGetLeadList1, apiPost,apiPostLead,apiPostFollowup, apiGetDetails} from './apiClient';
+import {apiGet ,apiGetLeadList1, apiPost,apiPostLead,apiPostFollowup, apiGetDetails,apiGetEditList,apiGetLeadList,apiPut} from './apiClient';
 import {api} from './api';
 import { getItem } from './storageServices';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // Register API
 export const followUp = async authToken => {
@@ -107,26 +108,39 @@ export const particularLeadDetailApi =async authToken=>{
     return await apiGet(api.particularLeadDetailApi, authToken);
 }
 
-// export const postDeleteLead = async (leadId) => {
-//     const Token = await AsyncStorage.getItem("authToken");
-//   try {
-//     const apiUrl = `https://opticalerp.in:85/api/lead/delete`;
-//     const response = await fetch(apiUrl, {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({ leadId }), // Sending leadId in body as per API requirement
-//     });
+export const leadAddServiceApiCall = async userData => {
+    console.log("data---"+JSON.stringify(authToken));
+    const authToken = await getItem("authToken");
 
-//     const data = await response.json();
-//     return data;
-//   } catch (error) {
-//     console.error("Error deleting lead:", error.message);
-//     throw error;
-//   }
-// };
+    console.log("-----sbssss--"+JSON.stringify(authToken));
+    return await apiGet(api.leadAddServiceApi,authToken);
+}
 
+export const UpcomingTask = async userData => {
+    const authToken = await getItem("authToken");
+
+    console.log("------------------------------token--"+JSON.stringify(authToken));
+    return await apiGet(api.UpcomingTaskList,authToken);
+}
+
+export const updateUserProfile = async userData => {
+    console.log("data---"+JSON.stringify(authToken));
+    const authToken = await getItem("authToken");
+
+    console.log("-------------ssss------------token--"+JSON.stringify(authToken));
+    return await apiPut(api.editProfileApi,authToken,userData);
+}
+
+export const LeadList = async (url) => {
+    const authToken = await AsyncStorage.getItem("newToken");
+    return await apiGetLeadList(url, authToken);
+};
+
+export const EditLead = async (leadId) => {
+    const token = await AsyncStorage.getItem("newToken");
+    const url = `https://opticalerp.in:85/api/lead/getbyleadid/${leadId}`;
+    return await apiGetEditList(url, token);
+};
 
 
 

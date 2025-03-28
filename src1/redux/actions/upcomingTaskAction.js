@@ -1,4 +1,4 @@
-import {UpcomingTask} from '../../api/authApi';
+import {UpcomingTask} from '../../api/mainApi';
 // Action Types
 export const FETCH_TASKS_REQUEST = 'FETCH_TASKS_REQUEST';
 export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS';

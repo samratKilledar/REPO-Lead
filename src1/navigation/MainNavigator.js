@@ -40,7 +40,7 @@ import HeaderComp from '../components/HeaderComp';
 import ClientAddServices from '../screens/Main/ClientAddServices';
 import LeadLast from '../screens/Main/LeadLast';
 import SplashScreen from '../screens/Main/SplashScreen';
-import EditLead2 from '../screens/Main/EditLead2';
+import EditLead2 from '../screens/Main/EditLead2'
 import EditLead3 from '../screens/Main/EditLead3';
 import Editlead1 from '../screens/Main/Editlead1';
 

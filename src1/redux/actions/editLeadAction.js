@@ -1,4 +1,4 @@
-import { EditLead , editUpdate } from "../../api/authApi";
+import { EditLead , editUpdate } from "../../api/mainApi";
 import { leadAPISubmit } from "../../api/mainApi";
 
 export const SUBMIT_SUCCESS = "SUBMIT_SUCCESS";

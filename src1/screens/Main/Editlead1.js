@@ -1,36 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, ToastAndroid, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, ToastAndroid } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import Toast from 'react-native-toast-message';
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import { 
-  EditLeadFetch,
+import Dropdown from '../../components/Dropdown';
+import Toast from "react-native-toast-message";
+
+import {
   updateAddressLine1,
   updateAddressLine2,
   updateCity,
   updateCountry,
+  updateEmailId,
+  updateLastName,
+  updateMobileNo,
   updatePincode,
   updateState,
   updateWhatsAppNo,
   updateFirstName,
-  updateLastName,
-  updateMobileNo,
-  updateEmailId,
-  updateLeadSources
+  updateLeadSources,
 } from '../../redux/actions/editLeadAction';
 
-const Editlead1 = ({ navigation, route }) => {
+const Editlead1 = ({ navigation }) => {
   const dispatch = useDispatch();
   const {
     firstName,
     lastName,
     mobileNo,
     emailId,
-    leadSources,leadName,
+    leadSources,leadSourcesName,
     whatsAppNo,
     addressLine1,
     addressLine2,
@@ -39,23 +40,17 @@ const Editlead1 = ({ navigation, route }) => {
     state,stateName,
     country,countryName
   } = useSelector(state => state.editLeadReducer);
-
+  // let aa= useSelector(state => state.lastReducer);
   const cityList = useSelector(state => state.homeReducer);
   const countryList = useSelector(state => state.homeReducer);
   const leadSourceList = useSelector(state => state.homeReducer);
   const stateList = useSelector(state => state.homeReducer);
 
-  const steps = ['Personal', 'Occupation', 'Services'];
-  const currentStep = 1;
-
-  // useEffect(() => {
-  //   dispatch(EditLeadFetch());
-  // }, [dispatch]);
-
   const showToast = (message) => {
     ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
   };
 
+  // Validation function with toast messages
   const validateFields = () => {
     if (!firstName.trim()) {
       showToast('Please enter First Name.');
@@ -73,20 +68,41 @@ const Editlead1 = ({ navigation, route }) => {
       showToast('Please enter Address Line 1.');
       return false;
     }
-    // Convert pincode to string before trimming and testing
-    const pincodeStr = String(pincode || '');
-    if (!pincodeStr.trim() || !/^\d{6}$/.test(pincodeStr)) {
+    if (!addressLine2.trim()) {
+      showToast('Please enter Address Line 2.');
+      return false;
+    }
+    if (!pincode.trim() || !/^\d{6}$/.test(pincode)) {
       showToast('Please enter a valid 6-digit Pincode.');
       return false;
     }
-    if (emailId && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailId.trim())) {
+    if (!emailId || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailId.trim())) {
       showToast('Please enter a valid Email Address.');
+      return false;
+    }
+    if (!city) {
+        showToast('Please select City.');
+        return false;
+    }
+    if (!state) {
+        showToast('Please select State.');
+        return false;
+    }
+    if (!country) {
+        showToast('Please select Country.');
+        return false;
+    }
+    if(!leadSources){
+      showToast('Please select Lead Source');
       return false;
     }
     return true;
   };
-  
-  const goBackCall = () => navigation.goBack();
+
+  const steps = ['Personal', 'Occupation', 'Services'];
+  const currentStep = 1;
+
+  const goBackCall = () => navigation.navigate("LeadScreen");
 
   const handleOccupation = () => {
     if (validateFields()) {
@@ -97,7 +113,9 @@ const Editlead1 = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <NavigationHeaderBack text="Edit Lead " onPress={goBackCall} />
+        
+        <NavigationHeaderBack text="Edit Lead" onPress={goBackCall} />
+       
       </View>
 
       <KeyboardAvoidingView 
@@ -122,9 +140,11 @@ const Editlead1 = ({ navigation, route }) => {
               />
               
               <StatusDropdown
-                label={leadName}
+                label={leadSourcesName}
                 selectedValue={leadSources}
-                onValueChange={(value) => dispatch(updateLeadSources(value))}
+                 onValueChange={(value) => dispatch(updateLeadSources(value))}
+                //onValueChange={(value) => alert(JSON.stringify(value))}
+
                 apiType="leadSource"
                 listData={leadSourceList.leadSource}
               />
@@ -245,6 +265,7 @@ const styles = StyleSheet.create({
   stepper: {
     marginTop: 10,
     paddingHorizontal: 15,
+    marginTop: 10,
     paddingTop: 15,
     gap: 18,
   },
@@ -256,6 +277,25 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     flexGrow: 1,
     paddingBottom: 50,
+  },
+  toastError: {
+    backgroundColor: 'black',
+    padding: 15,
+    borderRadius: 8,
+    marginHorizontal: 20,
+    marginBottom: 20,
+    width: '90%',
+    alignSelf: 'center',
+  },
+  toastText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  toastSubText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    marginTop: 5,
   },
   toastError: {
     backgroundColor: 'black',
