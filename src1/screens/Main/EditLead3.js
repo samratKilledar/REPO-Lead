@@ -92,7 +92,7 @@ const EditLead3 = (props) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.1, marginLeft: 5 }}>
-        <NavigationHeaderBack text="Add Services 3" onPress={goBackCall} />
+        <NavigationHeaderBack text="Edit Lead" onPress={goBackCall} />
       </View>
       <View style={styles.stepperContainer}>
         <Stepper steps={steps} currentStep={currentStep} />
@@ -203,6 +203,3 @@ const styles = StyleSheet.create({
 });
 
 export default EditLead3;
- 
-
-

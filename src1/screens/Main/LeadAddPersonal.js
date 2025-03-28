@@ -1,20 +1,22 @@
-
-
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, ToastAndroid , Text } from 'react-native';
+import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, ToastAndroid } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import Toast from 'react-native-toast-message';
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
 import Dropdown from '../../components/Dropdown';
+import Toast from "react-native-toast-message";
+
 import {
   updateAddressLine1,
   updateAddressLine2,
   updateCity,
   updateCountry,
+  updateEmailId,
+  updateLastName,
+  updateMobileNo,
   updatePincode,
   updateState,
   updateWhatsAppNo,
@@ -29,7 +31,7 @@ const LeadAddPersonal = ({ navigation }) => {
     lastName,
     mobileNo,
     emailId,
-    leadSources,leadName,
+    leadSources,leadSourcesName,
     whatsAppNo,
     addressLine1,
     addressLine2,
@@ -44,10 +46,6 @@ const LeadAddPersonal = ({ navigation }) => {
   const leadSourceList = useSelector(state => state.homeReducer);
   const stateList = useSelector(state => state.homeReducer);
 
-
-  const steps = ['Personal', 'Occupation', 'Services'];
-  const currentStep = 1;
-
   const showToast = (message) => {
     ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
   };
@@ -55,51 +53,56 @@ const LeadAddPersonal = ({ navigation }) => {
   // Validation function with toast messages
   const validateFields = () => {
     if (!firstName.trim()) {
-        showToast('Please enter First Name.');
-        return false;
+      showToast('Please enter First Name.');
+      return false;
     }
     if (!lastName.trim()) {
-        showToast('Please enter Last Name.');
-        return false;
+      showToast('Please enter Last Name.');
+      return false;
     }
     if (!mobileNo.trim() || !/^\d{10}$/.test(mobileNo)) {
-        showToast('Please enter a valid 10-digit Mobile Number.');
-        return false;
+      showToast('Please enter a valid 10-digit Mobile Number.');
+      return false;
     }
     if (!addressLine1.trim()) {
-        showToast('Please enter Address Line 1.');
-        return false;
+      showToast('Please enter Address Line 1.');
+      return false;
     }
     if (!addressLine2.trim()) {
-        showToast('Please enter Address Line 1.');
-        return false;
+      showToast('Please enter Address Line 2.');
+      return false;
     }
     if (!pincode.trim() || !/^\d{6}$/.test(pincode)) {
-        showToast('Please enter a valid 6-digit Pincode.');
-        return false;
+      showToast('Please enter a valid 6-digit Pincode.');
+      return false;
     }
     if (!emailId || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailId.trim())) {
-        showToast('Please enter a valid Email Address.');
+      showToast('Please enter a valid Email Address.');
+      return false;
+    }
+    if (!city) {
+        showToast('Please select City.');
         return false;
     }
-      
-    // if (!city) {
-    //     showToast('Please select City.');
-    //     return false;
-    // }
-    // if (!state) {
-    //     showToast('Please select State.');
-    //     return false;
-    // }
-    // if (!country) {
-    //     showToast('Please select Country.');
-    //     return false;
-    // }
-    
+    if (!state) {
+        showToast('Please select State.');
+        return false;
+    }
+    if (!country) {
+        showToast('Please select Country.');
+        return false;
+    }
+    if(!leadSources){
+      showToast('Please select Lead Source');
+      return false;
+    }
     return true;
   };
 
-  const goBackCall = () => navigation.goBack();
+  const steps = ['Personal', 'Occupation', 'Services'];
+  const currentStep = 1;
+
+  const goBackCall = () => navigation.navigate("Lead");
 
   const handleOccupation = () => {
     if (validateFields()) {
@@ -110,7 +113,9 @@ const LeadAddPersonal = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
+        
         <NavigationHeaderBack text="Add Lead" onPress={goBackCall} />
+       
       </View>
 
       <KeyboardAvoidingView 
@@ -135,7 +140,7 @@ const LeadAddPersonal = ({ navigation }) => {
               />
               
               <StatusDropdown
-                label={leadName}
+                label={leadSourcesName}
                 selectedValue={leadSources}
                  onValueChange={(value) => dispatch(updateLeadSources(value))}
                 //onValueChange={(value) => alert(JSON.stringify(value))}
@@ -260,6 +265,7 @@ const styles = StyleSheet.create({
   stepper: {
     marginTop: 10,
     paddingHorizontal: 15,
+    marginTop: 10,
     paddingTop: 15,
     gap: 18,
   },
@@ -271,6 +277,25 @@ const styles = StyleSheet.create({
   scrollViewContent: {
     flexGrow: 1,
     paddingBottom: 50,
+  },
+  toastError: {
+    backgroundColor: 'black',
+    padding: 15,
+    borderRadius: 8,
+    marginHorizontal: 20,
+    marginBottom: 20,
+    width: '90%',
+    alignSelf: 'center',
+  },
+  toastText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  toastSubText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    marginTop: 5,
   },
   toastError: {
     backgroundColor: 'black',

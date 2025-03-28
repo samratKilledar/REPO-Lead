@@ -69,7 +69,7 @@ const EditLead2 = (props) => {
     <View style={styles.container}>
       <View style={{ flex: 0.1 }}>
          
-        <NavigationHeaderBack text="Add Lead 2" onPress={goBackCall} />
+        <NavigationHeaderBack text="Edit Lead" onPress={goBackCall} />
        
       </View>
 
@@ -141,6 +141,3 @@ const styles = StyleSheet.create({
 });
 
 export default EditLead2;
-
-
-

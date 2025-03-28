@@ -231,7 +231,3 @@ export const leadSubmitAllData = () => async (dispatch, getState) => {
     dispatch({ type: SUBMIT_FAILURE, error: error.message });
   }
 };
-
-
-
-

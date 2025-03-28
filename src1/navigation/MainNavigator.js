@@ -44,7 +44,6 @@ import EditLead2 from '../screens/Main/EditLead2';
 import EditLead3 from '../screens/Main/EditLead3';
 import Editlead1 from '../screens/Main/Editlead1';
 
-
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 

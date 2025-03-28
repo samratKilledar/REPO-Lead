@@ -17,20 +17,21 @@ import { UPDATE_ASSIGNTO,
   UPDATE_OCCUPATION,
   UPDATE_TYPEOFWORK,
   UPDATE_MONTHLYINCOME,
+  SUBMIT_REQUEST,
   SUBMIT_SUCCESS, 
   SUBMIT_FAILURE  } from "../actions/lastAction";
-import { occupation } from "../../api/mainApi";
+
 
 const initialState = {
-  firstName: "s",
-  lastName: "ss", 
+  firstName: "",
+  lastName: "", 
   leadSources: "",
-  leadName:"Lead Sources",
-  mobileNo:"7798417997",
-  emailId:"sam@gmail.com",
-  whatsAppNo:"779841779",
-  addressLine1:"2qe",
-  addressLine2:"wfqwac",
+  leadSourcesName:"Lead Source",
+  mobileNo:"",
+  emailId:"",
+  whatsAppNo:"",
+  addressLine1:"",
+  addressLine2:"",
   city:"",
   cityName:"Select City",
   state:"",
@@ -38,23 +39,24 @@ const initialState = {
   country:"",
   countryName:"Select Country",
   isdCode:"",
-  pincode:"415262",
+  pincode:"",
   occupation:"",
   occupationName:"Occupation Name",
   typeOfWork:"",
-  monthlyIncome:"34344",
+  monthlyIncome:"",
   assignTo:"",
+  assignToName: "Assign To",
   services:"",
-  servicesName:"Services=",
-  remark:"ednkjnf"
+  servicesName:"Services",
+  remark:""
 
  
 };
 
 const lastReducer = (state = initialState, action) => {
-  if(action.type =="UPDATE_SERVICES"){
-    alert(JSON.stringify(action.payload)+"===")
-  }
+  // if(action.type =="UPDATE_SERVICES"){
+  //   alert(JSON.stringify(action.payload)+"===")
+  // }
   switch (action.type) {
     case UPDATE_FIRSTNAME:
       return { ...state, firstName: action.payload };
@@ -63,7 +65,7 @@ const lastReducer = (state = initialState, action) => {
       return { ...state, lastName: action.payload };
 
     case UPDATE_LEADSOURCES:
-      return { ...state, leadSources: action.payload.id, leadName:action.payload.name };
+      return { ...state, leadSources: action.payload.id, leadSourcesName:action.payload.name };
 
     case UPDATE_MOBILENO:
       return { ...state, mobileNo: action.payload };
@@ -84,7 +86,7 @@ const lastReducer = (state = initialState, action) => {
       return { ...state, city: action.payload.id, cityName:action.payload.name };
 
     case UPDATE_STATE:
-      return { ...state, state: action.payload.state,stateName:action.payload.name };
+      return { ...state, state: action.payload.id,stateName:action.payload.name };
 
     case UPDATE_COUNTRY:
       return { ...state, country: action.payload.id, countryName: action.payload.name,isdCode:action.payload.isdCode};
@@ -102,7 +104,7 @@ const lastReducer = (state = initialState, action) => {
       return { ...state, monthlyIncome: action.payload };
 
     case UPDATE_ASSIGNTO:
-      return { ...state, assignTo: action.payload };
+      return { ...state, assignTo: action.payload.id, assignToName:action.payload.name };
 
     case UPDATE_SERVICES:
       return { ...state, services: action.payload.id , servicesName:action.payload.name };
@@ -110,12 +112,16 @@ const lastReducer = (state = initialState, action) => {
     case UPDATE_REMARK:
       return { ...state, remark: action.payload };
 
-    case SUBMIT_SUCCESS:
-      return { ...state, isAuthenticated: true };
+    case SUBMIT_REQUEST:
+      return { ...state, isLoading: true, error: null };
+
+      case SUBMIT_SUCCESS:
+      return { ...state, isAuthenticated: true ,  isLoading: false, error: null, };
 
     case SUBMIT_FAILURE:
-      return { ...state, isAuthenticated: false };
-
+      return { ...state, isAuthenticated: false , isLoading: false, error: action.payload};
+      
+    
     default:
       return state;
   }

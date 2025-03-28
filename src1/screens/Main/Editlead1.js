@@ -97,7 +97,7 @@ const Editlead1 = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <NavigationHeaderBack text="Add Lead 1" onPress={goBackCall} />
+        <NavigationHeaderBack text="Edit Lead " onPress={goBackCall} />
       </View>
 
       <KeyboardAvoidingView 

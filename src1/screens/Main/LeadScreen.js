@@ -51,21 +51,24 @@ const LeadScreen = (props) => {
           style={{ padding: 20, flex: 1, marginBottom: 60 }}
         >
 
-          {leads.map((item) => (
-            <LeadCard
-              key={item.id}
-              id={item.id}
-              name={item.customerName}
-              phone={item.mobileNo}
-              dateTime={item.leadDate}
-              status={item.leadStatus}
-              statusGradient={getStatusGradient(item.leadStatus)} // Add a function to map status to gradient
-              menuType="follow" // You can customize this based on your requirements
-              navigation={props.navigation}
-              screenType="lead"
-              setIsLoading={setIsLoading}
-            />
-          ))}
+         {leads && leads.length > 0 ? (
+            leads.map((item) => (
+              <LeadCard
+                key={item.id}
+                id={item.id}
+                name={item.customerName}
+                phone={item.mobileNo}
+                dateTime={item.leadDate}
+                status={item.leadStatus}
+                statusGradient={getStatusGradient(item.leadStatus)}
+                menuType="follow"
+                navigation={props.navigation}
+                screenType="lead"
+              />
+            ))
+          ) : (
+            <CustomText text="" />
+          )}
         </ScrollView>
       </View>
     </View>

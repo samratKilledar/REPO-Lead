@@ -1,4 +1,4 @@
-import {apiGet , apiPost,apiPostLead,apiPostFollowup,apiGetDetails} from './apiClient';
+import {apiGet ,apiGetLeadList1, apiPost,apiPostLead,apiPostFollowup, apiGetDetails} from './apiClient';
 import {api} from './api';
 import { getItem } from './storageServices';
 
@@ -39,6 +39,12 @@ export const occupation = async authToken => {
     //console.log("ss------ssss"+authToken)
     return await apiGet(api.occupation,authToken);
 };
+
+export const assignTo = async authToken => {
+    console.log(authToken+"-------------------------------ss------ssss"+api.assignTo)
+    return await apiGetLeadList1(api.assignTo,authToken);
+};
+
 export const getAllLeadApi= async authToken=>{
     //  console.log("ss-------->"+authToken)
    return await apiGet(api.getAllLeadApi);
@@ -63,6 +69,7 @@ export const addTaskApiCall= async data => {
     console.log('inside function' + JSON.stringify(data));
     return await apiPost(api.addTask, {data});
   }; 
+  
   export const profileDetail = async (authToken) => {
     console.log("📡 Fetching profile details...");
     console.log("🔑 Token:", authToken); // Check if token is correctly passed
@@ -99,4 +106,28 @@ export const particularLeadDetailApi =async authToken=>{
     // console.log("=====particularLeadDetailApi==="+authToken);
     return await apiGet(api.particularLeadDetailApi, authToken);
 }
+
+// export const postDeleteLead = async (leadId) => {
+//     const Token = await AsyncStorage.getItem("authToken");
+//   try {
+//     const apiUrl = `https://opticalerp.in:85/api/lead/delete`;
+//     const response = await fetch(apiUrl, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({ leadId }), // Sending leadId in body as per API requirement
+//     });
+
+//     const data = await response.json();
+//     return data;
+//   } catch (error) {
+//     console.error("Error deleting lead:", error.message);
+//     throw error;
+//   }
+// };
+
+
+
+
 

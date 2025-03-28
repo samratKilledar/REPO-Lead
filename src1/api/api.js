@@ -1,6 +1,8 @@
+import { refresh } from "@react-native-community/netinfo";
+
 export const api={
     authApi:"https://opticalerp.in:85/api/tokens/gettoken",
-    refreshApi : "https://opticalerp.in:85/api/tokens/refresh/refresh",
+    refreshApi:"https://opticalerp.in:85/api/tokens/refresh/refresh",
     forgotPasswordApi:"https://opticalerp.in:85/api/users/forgotpassword/forgot-password",
     createPass:"https://opticalerp.in:85/api/currentuser/changepassword/change-password",
     verifyUser:"https://opticalerp.in:85/api/users/resetpassword/reset-password",
@@ -23,6 +25,7 @@ export const api={
     state:"https://opticalerp.in:85/api/cascadecountrycitystate/getstates",
     occupation:"https://opticalerp.in:85/api/udc/getvaluesbytype?type=Occupation",
     taskList:"https://opticalerp.in:85/api/taskdetails/getlist",
+    
     particularLeadDetailApi:"https://opticalerp.in:85/api/lead/getbyleadid",
     assignTo :"https://opticalerp.in:85/api/lead/getdropdowndata/getdropdowndata",
 
@@ -39,7 +42,9 @@ export const api={
    UpcomingMeetingsList:"https://opticalerp.in:85/api/lead/getlist/get-all",
    UpcomingTaskList:"https://opticalerp.in:85/api/taskdetails/getlist",
 
+
    leadSubmit:"https://opticalerp.in:85/api/lead/insertupdateleaddetails/create-update",
+   leadDelete:"https://opticalerp.in:85/api/lead/delete?leadId=${leadId}",
    leadAddServiceApi : "",
    
 }

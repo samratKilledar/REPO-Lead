@@ -1,17 +1,13 @@
-import {apiGet, apiPost, apiPut,postApi,apiGetLeadList,apiPostForgotPass, apiGetEditList,apiEditLeadPost} from './apiClient';
+import {apiGet, apiPost, apiPut,postApi,apiGetLeadList,apiPostForgotPass,apiGetEditList} from './apiClient';
 import {api} from './api';
-import { getItem } from '../api/storageServices';
-import AsyncStorage from "@react-native-async-storage/async-storage"; 
-
-
-// Login API
+import{scheduleTokenRefresh} from '../redux/actions/authActions'
+import { getItem, setItem } from './storageServices';
 export const loginUserApiCall = async data => {
     console.log('inside function' + JSON.stringify(data));
     return await apiPost(api.authApi, { data });
-};
+  };
 
- 
-export const refreshTokenApiCall = async () => {
+  export const refreshTokenApiCall = async () => {
     try {
         const token = await AsyncStorage.getItem("authToken");
         const refreshToken = await AsyncStorage.getItem("refreshToken");
@@ -30,11 +26,10 @@ export const refreshTokenApiCall = async () => {
         headers: {
           "Content-Type": "application/json",
           tenant: "root", 
-          //Authorization: Bearer ${token},
+          //Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(requestBody),
       });
-  
       if (!response.ok) {
         const errorResponse = await response.text();
         console.error(`❌ HTTP Error! Status: ${response.status}, Response: ${errorResponse}`);
@@ -42,10 +37,10 @@ export const refreshTokenApiCall = async () => {
       }
   
       const result = await response.json();
-      console.log("🔄 Token refreshed:", result);
+     console.log("🔄 Token refreshed:", result);
   
       // 🔹 Store the new token
-      await AsyncStorage.setItem("authToken", result.token);
+      await AsyncStorage.setItem("newToken", result.token);
       await AsyncStorage.setItem("refreshToken", result.refreshToken);
       await AsyncStorage.setItem("refreshTokenExpiryTime", result.refreshTokenExpiryTime);
   
@@ -56,7 +51,6 @@ export const refreshTokenApiCall = async () => {
       return null;
     }
   };
-
   
 //forgot Password
 export const forgotPassApiCall = async data => {
@@ -147,29 +141,17 @@ export const fetchDropdownDataApi = async (apiType) => {
     }
 };
 
+
 export const LeadList = async (url) => {
-    const authToken = await getItem("authToken");
+    const authToken = await AsyncStorage.getItem("newToken");
     return await apiGetLeadList(url, authToken);
 };
 
-// export const EditLead = async () => {
-//     const authToken = await getItem("authToken");
-//     return await apiGetEditList(api.editLead, authToken);
-// }
-
 export const EditLead = async (leadId) => {
-    const token = await AsyncStorage.getItem("authToken");
+    const token = await AsyncStorage.getItem("newToken");
     const url = `https://opticalerp.in:85/api/lead/getbyleadid/${leadId}`;
     return await apiGetEditList(url, token);
 };
-
-export const editUpdate = async (url) => {
-    const authToken = await getItem("authToken");
-    return await apiPostLead(api.leadSubmit, authToken);
-};
-
-
-
 export const updateUserProfile = async userData => {
     console.log("data---"+JSON.stringify(authToken));
     const authToken = await getItem("authToken");
@@ -187,10 +169,19 @@ export const leadAddServiceApiCall = async userData => {
     return await apiGet(api.leadAddServiceApi,authToken);
 }
 
-export const UpcomingTask = async userData => {
-    const authToken = await getItem("authToken");
+import jwtDecode from 'jwt-decode';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-    console.log("------------------------------token--"+JSON.stringify(authToken));
-    return await apiGet(api.UpcomingTaskList,authToken);
-}
+export const getUserId = async () => {
+    try {
+        const token = await AsyncStorage.getItem('token'); // Retrieve token from storage
+        if (token) {
+            const decoded = jwtDecode(token); // Decode JWT
+            return decoded.id; // Extract user ID
+        }
+    } catch (error) {
+        console.error('Error decoding token:', error);
+    }
+    return null;
+};
 
