@@ -23,7 +23,7 @@ import {
   updateLeadSources
 } from '../../redux/actions/editLeadAction';
 
-const editlead1 = ({ navigation, route }) => {
+const Editlead1 = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const {
     firstName,
@@ -90,7 +90,7 @@ const editlead1 = ({ navigation, route }) => {
 
   const handleOccupation = () => {
     if (validateFields()) {
-      navigation.navigate('editLead2');
+      navigation.navigate('EditLead2');
     }
   };
 
@@ -278,4 +278,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default editlead1;
+export default Editlead1;

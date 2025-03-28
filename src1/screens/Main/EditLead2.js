@@ -9,7 +9,7 @@ import StatusDropdown from "../../components/StatusDropdown";
 import { updateMonthlyIncome, updateOccupation, updateTypeOfWork ,EditLeadFetch} from "../../redux/actions/editLeadAction";
 
 
-const editLead2 = (props) => {
+const EditLead2 = (props) => {
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default editLead2;
+export default EditLead2;
 
 
 

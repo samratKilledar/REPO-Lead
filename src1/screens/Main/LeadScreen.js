@@ -1,30 +1,31 @@
-import React, { useCallback,useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
-import { useDispatch, useSelector } from 'react-redux'; 
+import { useDispatch, useSelector } from 'react-redux';
 import LeadCard from "../../components/LeadCard";
 import HeaderComp from "../../components/HeaderComp";
 import TextStyle from "../../styles/TextStyle";
 import { fetchLeads } from "../../redux/actions/leadListAction";
 import CustomText from "../../components/CustomText";
-import { useNavigation , useFocusEffect} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import LottieScreen from "../../styles/Loader";
+import { RefreshControl } from "react-native";
 
 const LeadScreen = (props) => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
   const { leads, loading, error } = useSelector((state) => state.leads);
   const [isLoading, setIsLoading] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0); // Key to force re-render
 
-  useFocusEffect(
-    useCallback(() => {
-      setIsLoading(true);
-      dispatch(fetchLeads()).finally(() => {
-        setIsLoading(false);
-        setRefreshKey((prevKey) => prevKey + 1); // Update state to trigger re-render
-      });
-    }, [dispatch])
-  );
+  const [refreshing, setRefreshing] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchLeads());
+  }, [dispatch]);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    dispatch(fetchLeads()).finally(() => setRefreshing(false));
+  };
 
   // Show loading filter animation
   if (isLoading || loading) {
@@ -45,16 +46,19 @@ const LeadScreen = (props) => {
           <CustomText text="Lead" customstyle={TextStyle.leadText} />
         </View>
 
-        <ScrollView style={{ padding: 20, flex: 1, marginBottom: 60 }}>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+          style={{ padding: 20, flex: 1, marginBottom: 60 }}
+        >
 
           {leads.map((item) => (
             <LeadCard
-              key={item.id} 
+              key={item.id}
               id={item.id}
-              name={item.customerName} 
+              name={item.customerName}
               phone={item.mobileNo}
-              dateTime={item.leadDate} 
-              status={item.leadStatus} 
+              dateTime={item.leadDate}
+              status={item.leadStatus}
               statusGradient={getStatusGradient(item.leadStatus)} // Add a function to map status to gradient
               menuType="follow" // You can customize this based on your requirements
               navigation={props.navigation}

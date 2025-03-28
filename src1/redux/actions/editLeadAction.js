@@ -3,6 +3,7 @@ import { leadAPISubmit } from "../../api/mainApi";
 
 export const SUBMIT_SUCCESS = "SUBMIT_SUCCESS";
 export const SUBMIT_FAILURE = "SUBMIT_FAILURE";
+export const SUBMIT_REQUEST = "SUBMIT_REQUEST";
 export const UPDATE_ASSIGNTO = "UPDATE_ASSIGNTO";
 export const UPDATE_SERVICES = "UPDATE_SERVICES";
 export const UPDATE_REMARK = "UPDATE_REMARK";
@@ -128,6 +129,7 @@ export const submitFailure = (error) => ({
   payload: error,
 });
 
+export const submitRequest = () => ({ type: SUBMIT_REQUEST });
 
 export const EditLeadFetch = (leadId) => async (dispatch) => {
   try {
@@ -168,6 +170,8 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
     throw error; // Re-throw for component handling
   }
 };
+
+
 
 export const leadSubmitAllData = () => async (dispatch, getState) => {
   dispatch({ type: SUBMIT_REQUEST });
@@ -227,7 +231,6 @@ export const leadSubmitAllData = () => async (dispatch, getState) => {
     dispatch({ type: SUBMIT_FAILURE, error: error.message });
   }
 };
-
 
 
 

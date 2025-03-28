@@ -11,7 +11,7 @@ import StatusDropdown from '../../components/StatusDropdown';
 import { EditLeadFetch, leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/editLeadAction';
 import { state } from '../../api/mainApi';
 
-const editLead3 = (props) => {
+const EditLead3 = (props) => {
   const dispatch = useDispatch();
 
   // useEffect(() => {
@@ -52,8 +52,9 @@ const editLead3 = (props) => {
   };
 
   const handleSubmit = () => {
-    console.log("Submitting lead data...");
+    
     dispatch(leadSubmitAllData())
+    props.navigation.navigate('LeadScreen');
   };
 
   const handleAdd = () => {
@@ -201,7 +202,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default editLead3;
+export default EditLead3;
  
 
 
