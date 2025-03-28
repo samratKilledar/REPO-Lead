@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, Alert, ScrollView, StyleSheet, TouchableOpacity, Image , ToastAndroid } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,68 +8,53 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
+import { EditLeadFetch, leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/editLeadAction';
 import { state } from '../../api/mainApi';
-import { CommonActions } from '@react-navigation/native';
-import { useNavigation } from '@react-navigation/native';
 
-import { updateAddressLine1, updateAddressLine2, updateCity, updateCountry, updateEmailId, updateLastName, updateMobileNo, updatePincode, updateState, updateWhatsAppNo, updateFirstName, updateLeadSources } from '../../redux/actions/lastAction';
-import { updateMonthlyIncome, updateOccupation, updateTypeOfWork } from "../../redux/actions/lastAction";
-
-const LeadLast = (props) => {
+const EditLead3 = (props) => {
   const dispatch = useDispatch();
-  const { assignto, services, remark, servicesName, assignToName } = useSelector((state) => state.lastReducer);
+
+  // useEffect(() => {
+  //   dispatch(EditLeadFetch());
+  // }, [dispatch]);
+
+  const { assignto, services, remark, servicesName,  } = useSelector((state) => state.editLeadReducer);
   // const {service1} = useSelector((state)=> state.homeReducer)
   // alert(service1)
-  const navigation = useNavigation();
   const service1= useSelector(state => state.homeReducer);
-  const assignToList= useSelector(state => state.homeReducer);
-//  alert((service1.assignTo)) 
+  const assignTo1= useSelector(state => state.homeReducer);
+  //alert(JSON.stringify(service1.service)) 
   const steps = ['Personal', 'Occupation', 'Services'];
   const currentStep = 3;
 
   const [cards, setCards] = useState([
-    
+    {
+      id: 1,
+      title: 'Insurance',
+      date: '10-01-2025',
+      description: 'Lorem Ipsum is simply dummy text of the printing industry...'
+    },
+    {
+      id: 2,
+      title: 'Mutual Fund',
+      date: '20-01-2025',
+      description: "Lorem Ipsum has been the industry's standard dummy text..."
+    },
   ]);
 
 
   const goBackCall = () => {
-    props.navigation.goBack("LeadAddOccupation");
+    props.navigation.goBack("EditLead2");
   };
 
   const showToast = (message) => {
     ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
-  };
+  };
 
   const handleSubmit = () => {
-    dispatch(leadSubmitAllData());
-    dispatch(updateFirstName(""));
-    dispatch(updateLastName(""));
-    dispatch(updateMobileNo(""));
-    dispatch(updateEmailId(""));
-    dispatch(updateWhatsAppNo(""));
-    dispatch(updateAddressLine1(""));
-    dispatch(updateAddressLine2(""));
-    dispatch(updatePincode(""));
-    dispatch(updateCity(""));
-    dispatch(updateState(""));
-    dispatch(updateCountry(""));
-    dispatch(updateLeadSources(""));
-  
-    dispatch(updateOccupation(""));
-  dispatch(updateTypeOfWork(""));
-  dispatch(updateMonthlyIncome(""));
-
-    dispatch(updateAssignTo("")); 
-  dispatch(updateServices("")); 
-  dispatch(updateRemark("")); 
-  setCards([]); 
-
-  // Reset navigation to LeadScreen
-   // Only navigate if successful
-    navigation.navigate("Lead");
- 
-   // showToast("Lead submitted successfully!");
+    
+    dispatch(leadSubmitAllData())
+    props.navigation.navigate('LeadScreen');
   };
 
   const handleAdd = () => {
@@ -91,12 +75,13 @@ const LeadLast = (props) => {
 
     const newCard = {
         id: Date.now(),
-        title: servicesName, 
+        title: services[0], 
         date: new Date().toLocaleDateString(),
         description: remark
     };
 
     setCards((prevCards) => [...prevCards, newCard]);
+
 };
 
 
@@ -107,21 +92,28 @@ const LeadLast = (props) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.1, marginLeft: 5 }}>
-        <NavigationHeaderBack text="Add Lead" onPress={goBackCall} />
+        <NavigationHeaderBack text="Edit Lead" onPress={goBackCall} />
       </View>
       <View style={styles.stepperContainer}>
         <Stepper steps={steps} currentStep={currentStep} />
       </View>
       <View style={styles.centerContainer}>
         <StatusDropdown
-          label={assignToName}
+          label="Assign to"
           selectedValue={assignto}
           onValueChange={(value) => dispatch(updateAssignTo(value))}
-          apiType="assignTo"
-                listData={assignToList.assignTo[3]}
+         apiType="assignTo"
+         listData={assignTo1.assignTo}
           zIndex={4000}
         />
       
+          {/* <StatusDropdown
+            label="Services"
+            selectedValue={service1.service}
+            // onValueChange={(value) => dispatch(updateServices([value]))} 
+            apiType="service"
+            zIndex={2000}
+          /> */}
         
         <StatusDropdown
                 label={servicesName}
@@ -210,4 +202,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LeadLast;
+export default EditLead3;

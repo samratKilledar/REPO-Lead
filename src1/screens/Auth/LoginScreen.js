@@ -349,22 +349,22 @@ const LoginScreen = props => {
   const loginValue = useSelector(state => state.auth.loginValue);
 
   useEffect(() => {
-    dispatch(getReadAllLead);
+    //dispatch(getReadAllLead);
   
-    const checkAuthToken = async () => {
-      try {
-        const user = await getItem('authToken');
-        if (user) {
-          navigation.replace('HomeStack');
-        }
-      } catch (error) {
-        console.error('Error retrieving auth token:', error);
-      }
-    };
+    // const checkAuthToken = async () => {
+    //   try {
+    //     const user = await getItem('authToken');
+    //     if (user) {
+    //       navigation.replace('HomeStack');
+    //     }
+    //   } catch (error) {
+    //     console.error('Error retrieving auth token:', error);
+    //   }
+    // };
   
 
     requestPermissions();
-    checkAuthToken();
+    //checkAuthToken();
     loadRememberedCredentials();
   }, []);
 

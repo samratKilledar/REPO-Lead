@@ -184,4 +184,3 @@ export const submitFailure = (error) => ({
 });
 
 export const submitRequest = () => ({ type: SUBMIT_REQUEST });
-

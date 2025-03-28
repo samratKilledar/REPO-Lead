@@ -9,79 +9,55 @@ import {
   city,
   state,
   occupation,
-  getAllLeadApi,taskListResApi,particularLeadDetailApi
+  assignTo,
+  profileDetail
 } from '../../api/mainApi';
+
 export const FETCH_DROPDOWN_SUCCESS = 'FETCH_DROPDOWN_SUCCESS';
 export const FETCH_DROPDOWN_FAILURE = 'FETCH_DROPDOWN_FAILURE';
-export const callAllDropDownAPI = storedData => {
-  return async dispatch => {
-    try {
-      const [
-        followUpRes,
-        clientFollowUpRes,
-        taskPriorityRes,
-        serviceRes,
-        leadSourceRes,
-        countryRes,
-        cityRes,
-        stateRes,
-        occupationRes,
-        //getAllLeadApiRes,
-       //  taskListRes,
-        // particularLeadDetailApiRes
-        //upComingTaskRes,
-        //         leadDetailRes,
-        //         clientRes,
-        //         clientDetailRes,
-      ] = await Promise.all([
-        followUp(storedData),
-        clientFollowUp(storedData),
-        taskPriority(storedData),
-        service(storedData),
-        leadSource(storedData),
-        country(storedData),
-        city(storedData),
-        state(storedData),
-        occupation(storedData),
-      //  getAllLeadApi(storedData),
-       //  taskListResApi(storedData),
-        // particularLeadDetailApi(storedData)
-      ]);
-      console.log('1.followUp API Response:==>'+ JSON.stringify(followUpRes));
-      console.log('2.clientFollowUp API Response:==>'+ JSON.stringify(clientFollowUpRes));
-      console.log('3.taskPriority API Response:'+ JSON.stringify(taskPriorityRes));
-      console.log('4.service API Response:'+ JSON.stringify(serviceRes));
-      console.log('5.leadSourceRes API Response:'+ JSON.stringify(leadSourceRes));
-      console.log('6.country API Response:'+ JSON.stringify(countryRes));
-      console.log('7.cityRes API Response', JSON.stringify(cityRes));
-      console.log('8.stateRes API Response:',  JSON.stringify(stateRes));
-      console.log('9.occupationRes API Response:',  JSON.stringify(occupationRes));
-     // console.log('10.getAllLeadApi API Response:',  JSON.stringify(getAllLeadApiRes));
-     // console.log('11.taskListResApi API Response:',  JSON.stringify(taskListRes));
-      // console.log("=========particularLeadDetailApiRes=======>"+particularLeadDetailApiRes)
 
-      // console.log('Third getAllLeadApi Response:--------------------->', JSON.stringify(getAllLeadApiRes));
-      
-      dispatch({
-        type: FETCH_DROPDOWN_SUCCESS,
-        payload: {
-          followUpRes,
-          clientFollowUpRes,
-          taskPriorityRes,
-          serviceRes,
-          leadSourceRes,
-          countryRes,
-          cityRes,
-          stateRes,
-          occupationRes,
-          //getAllLeadApiRes,
-          // taskListRes,
-          // particularLeadDetailApiRes
-        },
-      });
+export const callAllDropDownAPI = (storedData) => {
+  return async (dispatch) => {
+    try {
+      const responses = {}; // Object to store successful responses
+      const errors = {};    // Object to store failed APIs
+
+      // Helper function to call API and handle failure
+      const callApi = async (apiFunc, key) => {
+        try {
+          const response = await apiFunc(storedData);
+          responses[key] = response;
+          console.log(`${key} API Response:`, JSON.stringify(response));
+        } catch (error) {
+          errors[key] = error.message || 'API call failed';
+          console.error(`${key} API Error:`, error);
+        }
+      };
+
+      // Sequential API calls with error handling
+      await callApi(followUp, 'followUpRes');
+      await callApi(clientFollowUp, 'clientFollowUpRes');
+      await callApi(taskPriority, 'taskPriorityRes');
+      await callApi(service, 'serviceRes');
+      await callApi(leadSource, 'leadSourceRes');
+      await callApi(country, 'countryRes');
+      await callApi(city, 'cityRes');
+      await callApi(state, 'stateRes');
+      await callApi(occupation, 'occupationRes');
+      await callApi(assignTo, 'assignToRes');
+      // await callApi(profileDetail, 'profileDetailRes');
+
+      // Dispatch success action with all responses
+      dispatch({ type: FETCH_DROPDOWN_SUCCESS, payload: responses });
+
+      // If there are any failed APIs, dispatch a failure action
+      if (Object.keys(errors).length > 0) {
+        dispatch({ type: FETCH_DROPDOWN_FAILURE, payload: errors });
+      }
+
     } catch (error) {
-     // alert('Dropdown API Error:==>'+ JSON.stringify(error));
-      dispatch({type: FETCH_DROPDOWN_FAILURE, payload: error.message});
+      console.error('Unexpected Error:', error);
+      dispatch({ type: FETCH_DROPDOWN_FAILURE, payload: { general: error.message } });
     }
   };
 };

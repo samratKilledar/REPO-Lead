@@ -42,10 +42,10 @@ export const setServiceRequestOptions = (options) => ({ type: SET_SERVICE_REQUES
 
 export const submitTask = () => async (dispatch, getState) => {
     try {
-      const taskData = getState().addTask; 
+      const {taskName,taskType,assignedTo,clientName,dueDate,priority,serviceRequest,startDate,reminderDate,attachmentName,remarks,typeOptions,assignOptions,clientOptions,priorityOptions, }= getState().addTask; 
       dispatch({ type: SUBMIT_TASK });
   
-      const response = await addTaskApiCall(taskData); 
+      const response = await addTaskApiCall(taskName,taskType,assignedTo,clientName,dueDate,priority,serviceRequest,startDate,reminderDate,attachmentName,remarks,typeOptions,assignOptions,clientOptions,priorityOptions,); 
       if (response.success) {
         dispatch({ type: SUBMIT_SUCCESS }); 
       } else {
@@ -55,3 +55,4 @@ export const submitTask = () => async (dispatch, getState) => {
       dispatch({ type: SUBMIT_FAILURE, payload: error.message });
     }
 };
+

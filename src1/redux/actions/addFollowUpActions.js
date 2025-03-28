@@ -1,6 +1,4 @@
-import { addFollowUpAPI } from "../../api/mainApi";
-import { Alert } from "react-native";
-
+import { followupAPISubmit } from "../../api/mainApi";
 export const SUBMIT_CLICK = "SUBMIT_CLICK";
 export const SUBMIT_SUCCESS = "SUBMIT_SUCCESS";
 export const SUBMIT_FAILURE = "SUBMIT_FAILURE";
@@ -25,14 +23,19 @@ export const setStatusOptions = (options) => ({ type: "SET_STATUS_OPTIONS", payl
 export const setAssignedToOptions = (options) => ({ type: "SET_ASSIGNED_TO_OPTIONS", payload: options });
 
 
-export const submitFollowUp = (url) => async (dispatch) => {
+export const submitFollowUp = (followUpData) => async (dispatch) => {
     dispatch({ type: SUBMIT_CLICK });
   
     try {
-      const response = await addFollowUpAPI(url);
-      dispatch({ type: SUBMIT_SUCCESS, payload: response });
+      const response = await followupAPISubmit(followUpData);
+  
+      if (response) {
+        dispatch({ type: SUBMIT_SUCCESS, payload: response });
+      } else {
+        throw new Error("No response received from the API");
+      }
     } catch (error) {
-      console.error("Follow-up submission failed:", error.message);
       dispatch({ type: SUBMIT_FAILURE, payload: error.message });
+      console.error("Follow-up submission failed:", error.message);
     }
   };

@@ -25,10 +25,10 @@ export const submitSuccess = userData => ({
 
 export const leadAddServiceUser = () => async (dispatch, getState) => {
   try {
-    const { firstname,lastname,email,phonenumber,gender,date} = getState().leadAddServiceApi;
+    const { remark,services} = getState().leadAddService;
     dispatch({type: SUBMIT_CLICK});
 
-    const data = await leadAddServiceApiCall( firstname,lastname,email,phonenumber,gender,date);
+    const data = await leadAddServiceApiCall( remark,services);
     if (data.success){
         dispatch({type: SUBMIT_SUCCESS }); 
     } else {
@@ -38,3 +38,4 @@ export const leadAddServiceUser = () => async (dispatch, getState) => {
         dispatch({type: SUBMIT_FAILURE, payload: error.message}); 
       }
 };
+

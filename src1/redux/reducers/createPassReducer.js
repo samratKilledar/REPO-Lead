@@ -1,4 +1,10 @@
-import { SET_NEW_PASSWORD, SET_CONFIRM_NEW_PASSWORD, SET_AUTHENTICATED } from "../actions/createPassAction";
+import { 
+    SET_NEW_PASSWORD, 
+    SET_CONFIRM_NEW_PASSWORD, 
+    SET_AUTHENTICATED, 
+    SET_NEW_PASSWORD_PLACEHOLDER, 
+    SET_CONFIRM_NEW_PASSWORD_PLACEHOLDER 
+} from "../../redux/actions/createPassAction";
 
 const initialState = {
     isAuthenticated: false,
@@ -18,6 +24,12 @@ const createPassReducer = (state = initialState, action) => {
 
         case SET_AUTHENTICATED:
             return { ...state, isAuthenticated: action.payload };
+
+        case SET_NEW_PASSWORD_PLACEHOLDER:
+            return { ...state, newPasswordPlaceholder: action.payload };
+
+        case SET_CONFIRM_NEW_PASSWORD_PLACEHOLDER:
+            return { ...state, confirmNewPasswordPlaceholder: action.payload };
 
         default:
             return state;

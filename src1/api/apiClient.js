@@ -1,37 +1,40 @@
-// GET Request Function
-export const apiGet = async (url, tokan) => {
+import { Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+//GET Request Function
+export const apiGet = async (url, token) => {
   try {
-    // console.warn(url + '--------------------------request-------------------------'+url);
+
     const response = await fetch(url, {
       method: 'GET',
       headers: {
         // Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
-        Authorization: tokan,
+        Authorization: token,
+
+
       },
     });
-    // console.log( '--------------------------resoponse-------------------------'+JSON.stringify(response));
+   // console.log(url + "---------------------s------------------------------")
+    console.log("🛠️ Token being sent:"+ JSON.stringify(response));
+
     if (!response.ok) {
-      console.error(url + '-----HTTP error! Status:----' + response.status);
+      //alert(11)
+      console.error("HTTP error! Status:" + response.status);
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     //alert(JSON.stringify(response))
     return await response.json();
   } catch (error) {
-    console.error(
-      `GET ${endpoint} Error:`,
-      error.response?.data || error.message,
+    console.error(`GET ${endpoint} Error:`, error.response?.data || error.message,
     );
     throw error;
   }
 };
 
-// POST Request Function
 export const apiPost = async (url, param = {}) => {
   const data = param.data;
   console.log(JSON.stringify(data));
   try {
-    console.log("inside a apiclient try")
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -57,67 +60,15 @@ export const apiPost = async (url, param = {}) => {
   }
 };
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export const apiPostLead = async (url, payload, tenantId) => {
   console.log("Sending Data to:", url);
 
   try {
-    const token = await AsyncStorage.getItem("authToken");
+    const token = await AsyncStorage.getItem("newToken");
     if (!token) {
       throw new Error("Authentication token not found. Please login again.");
     }
-
-    // const payload = {
-    //   id: 0,
-    //   tenantId: "root",
-    //   customerId: 0,
-    //   firstName: "Sanika",
-    //   lastName: "Patil",
-    //   emailId: "string",
-    //   mobileNo: "string",
-    //   whatsAppNo: "string",
-    //   addressLine1: "string",
-    //   addressLine2: "string",
-    //   cityId:2707,
-    //   cityName: "",
-    //   stateId: 22,
-    //   stateName: "",
-    //   countryId: 1,
-    //   countryName: "",
-    //   pincode: 0,
-    //   leadSource: 9,
-    //   leadSourceName: "string",
-    //   otherSource: "string",
-    //   occupation: 5,
-    //   occupationName: "string",
-    //   organisationName: "string",
-    //   workType: "twquyi",
-    //   monthlyIncome: 0,
-    //   assignedTo: 2,
-    //   assignedToName: "string",
-    //   leadStatus: 0,
-    //   leadStatusName: "string",
-    //   createdBy: 0,
-    //   createdByName: "string",
-    //   leadDate: "string",
-    //   isActive: true,
-    //   serviceDetails: [
-    //     {
-    //       id: 0,
-    //       customerId: 0,
-    //       serviceId: 2,
-    //       serviceName: "",
-    //       leadId: 0,
-    //       clientId: 0,
-    //       isExistingClient: true,
-    //       remark: "string",
-    //       assignedTo: 0,
-    //       assignedToName: "",
-    //       isActive: true,
-    //     },
-    //   ],
-    // };
 
     const response = await fetch(url, {
       method: "POST",
@@ -132,67 +83,23 @@ export const apiPostLead = async (url, payload, tenantId) => {
     console.log("📢 Response Status Code:", response.status);
     console.log("📢 Response Headers:", response.headers);
 
-   
+
     if (!response.ok) {
       const errorText = await response.text();
       console.error("❌ API Error:", response.status, errorText);
-      Alert.alert("Error", `HTTP Error ${response.status}: ${errorText}`);
+      Alert.alert("Error", ` HTTP Error ${response.status}: ${errorText}`);
       return;
     }
 
     const text = await response.text();
     if (!text.trim()) {
       console.warn("⚠ Server returned an empty response.");
-      Alert.alert("Warning", "Data sent successfully, but no response from server.");
+      Alert.alert("Lead added successfully.");
       return;
     }
 
     const result = JSON.parse(text);
     console.log("✅ API Response Body:", result);
-  } catch (error) {
-     Alert.alert("Error", error.message);
-    console.error("❌ Error:", error.message);
-    throw error;
-  }
-};
-
-export const apigetAddFollowUp = async (url, tenantId) => {
-  console.log("Fetching Data from:", url);
-
-  try {
-    const token = await AsyncStorage.getItem("authToken");
-    if (!token) {
-      throw new Error("Authentication token not found. Please login again.");
-    }
-
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        tenant: "root",
-      },
-    });
-
-    console.log("📢 Response Status Code:", response.status);
-    console.log("📢 Response Headers:", response.headers);
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("❌ API Error:", response.status, errorText);
-      Alert.alert("Error", `HTTP Error ${response.status}: ${errorText}`);
-      return;
-    }
-
-    const text = await response.text();
-    if (!text.trim()) {
-      console.warn("⚠ Server returned an empty response.");
-      Alert.alert("Warning", "No data received from the server.");
-      return;
-    }
-
-    const result = JSON.parse(text);
-    console.log("✅ API Response Body:", result);
-    return result;
   } catch (error) {
     Alert.alert("Error", error.message);
     console.error("❌ Error:", error.message);
@@ -201,3 +108,217 @@ export const apigetAddFollowUp = async (url, tenantId) => {
 };
 
 
+export const apiGetLeadList = async (url, token) => {
+  console.log("Making GET request to:=============", url);
+  console.log("Using token:================", token);
+
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Response status:===============>", response.status);
+
+    if (!response.ok) {
+      console.error("HTTP error! Status:", response.status);
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("API Response:", data);
+    return data;
+  } catch (error) {
+    console.error(`GET ${url} Error:`, error.message);
+    throw error;
+  }
+};
+
+
+export const apiGetLeadList1 = async (url, token) => {
+  console.log("samrat=============", url);
+  console.log("sss================", token);
+
+  try {
+    const token = await AsyncStorage.getItem("newToken");
+      if (token == null) {
+        apiGetLeadList1(api.assignTo)
+        throw new Error("------------------------------------Authentication token not found. Please login again.");
+      }
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("samres===============>", response.status);
+
+    if (!response.ok) {
+      console.error("HTTP error! Status:", response.status);
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("API Response:", data);
+    return data;
+  } catch (error) {
+    console.error(`GET ${url} Error:`, error.message);
+    throw error;
+  }
+};
+
+
+export const apiPut = async (url, data, token) => {
+  console.log(`PUT Request to: ${url} with data:`, JSON.stringify(data));
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error! Status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('PUT Success:', result);
+    return result;
+  } catch (error) {
+    console.error('PUT request failed:', error.message);
+    return null;
+  }
+};
+
+
+export const apiPostForgotPass = async (url, param = {}) => {
+  try {
+    const data = param.data || {};
+    console.log('📨 Sending Data:', JSON.stringify(data));
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        tenant: 'Root',
+      },
+      body: JSON.stringify({ email: data.email }),
+    });
+
+    console.log('📩 API Response Status:', response.status);
+
+    // ✅ Detect Content-Type (JSON or Plain Text)
+    const contentType = response.headers.get("content-type");
+    let result;
+
+    if (contentType && contentType.includes("application/json")) {
+      result = await response.json(); // ✅ Parse JSON response
+    } else {
+      result = await response.text(); // ✅ Handle plain text response
+    }
+
+    //console.log("✅ API Success:", result);
+    Alert.alert("Success", result);
+
+    return { success: true, message: result };
+
+  } catch (error) {
+    console.error('🚨 Network/API Error:', error.message);
+    return { success: false, message: error.message };
+  }
+};
+
+
+export const apiPutPassword = async (url, param = {}) => {
+  const data = param.data;
+  console.log(JSON.stringify(data));
+
+  try {
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP Error! Status: ${response.status}`);
+    }
+
+    const result = await response.json();
+    console.log('Success:', result);
+    return result;
+  } catch (error) {
+    console.error('Network request failed:', error.message);
+    return { success: false, message: error.message };
+  }
+};
+
+export const deleteLeadApi = async (id) => {
+  const token = await AsyncStorage.getItem("newToken");
+
+  try {
+    const apiUrl = `https://opticalerp.in:85/api/lead/delete?leadId=${id}`;
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Response Status Code:", response.status);
+
+    if (!response.ok) {
+      throw new Error(`Failed to delete lead (Status: ${response.status})`);
+    }
+
+    console.log("Lead deleted successfully");
+    return { success: true }; // Ensure API function returns a response
+  } catch (error) {
+    console.error("Error deleting lead:", error.message);
+    throw error;
+  }
+};
+
+export const apiGetEditList = async (url,token) => {
+  console.log("Making GET request to:", url);
+  console.log("Using token:", token); 
+
+  try {
+    const token = await AsyncStorage.getItem("newToken");
+    if (!token) {
+      throw new Error("Authentication token not found. Please login again.");
+    }
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Response status:", response.status); 
+
+    if (!response.ok) {
+      console.error("HTTP error! Status:", response.status);
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("API Response:", data); 
+    return data;
+  } catch (error) {
+    console.error(`GET ${url} Error:`, error.message);
+    throw error;
+  }
+};

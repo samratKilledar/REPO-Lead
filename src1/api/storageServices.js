@@ -1,4 +1,27 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import jwtDecode from 'jwt-decode';
+
+
+// const getUserId = async () => {
+//     try {
+//         const token = await AsyncStorage.getItem('token'); // Retrieve token from storage
+//         if (token) {
+//             const decoded = jwtDecode(token); // Decode JWT
+//             console.log('User ID:', decoded.id); // Extract user ID
+//             return decoded.id;
+//         }
+//     } catch (error) {
+//         console.error('Error decoding token:', error);
+//     }
+//     return null;
+// };
+
+// Usage
+// getUserId().then(userId => {
+//     if (userId) {
+//         console.log('User ID:', userId);
+//     }
+// });
 
 // Function to save data to AsyncStorage
 export const setItem = async (key, value) => {
@@ -40,3 +63,38 @@ export const clearStorage = async () => {
     console.error('Error clearing storage:', error);
   }
 };
+
+export const getUserId = async () => {
+    try {
+        const token = await AsyncStorage.getItem('token');
+        console.log('Retrieved Token:', token);
+
+        if (!token) {
+            console.log('No token found');
+            return;
+        }
+
+        // Decode the token
+        const decoded = jwtDecode(token);
+        console.log('Decoded Token:', decoded);
+
+        // Extract user ID using the correct key
+        const userId = decoded ["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+        console.log('User ID:', userId);
+
+        return userId;
+    } catch (error) {
+        console.error('Error retrieving or decoding token:', error);
+    }
+};
+
+
+// const App = () => {
+//     useEffect(() => {
+//         getUserId();
+//     }, []);
+
+//     return null; // Empty component for testing
+// };
+
+// export default App;
