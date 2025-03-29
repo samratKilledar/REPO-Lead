@@ -124,7 +124,7 @@ export default StyleSheet.create({
         alignItems: "center",
     },
     Inside: {
-        height: 140,
-        gap: 8,
+        // height: 140,
+        // gap: 8,
     },
 });
