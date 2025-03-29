@@ -75,7 +75,7 @@ const LeadStackScreen = ({ navigation, route }) => {
 
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-      {/* <HomeStack.Screen name="Lead" component={LeadScreen} /> */}
+      <HomeStack.Screen name="LeadScreen" component={LeadScreen} />
       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
       <HomeStack.Screen name="LeadDetails" component={LeadDetails} />
@@ -88,7 +88,6 @@ const LeadStackScreen = ({ navigation, route }) => {
       <HomeStack.Screen name="Editlead1" component={Editlead1} />
       <HomeStack.Screen name="EditLead2" component={EditLead2} />
       <HomeStack.Screen name="EditLead3" component={EditLead3} />
-      <HomeStack.Screen name="LeadScreen" component={LeadScreen} />
     </HomeStack.Navigator>
   );
 };

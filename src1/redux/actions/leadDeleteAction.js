@@ -1,5 +1,4 @@
 import {deleteLeadApi} from '../../api/apiClient';
-
 export const DELETE_LEAD_SUCCESS = "DELETE_LEAD_SUCCESS";
 export const DELETE_LEAD_FAILURE = "DELETE_LEAD_FAILURE";
 
@@ -15,8 +14,13 @@ export const deleteLeadFailure = (error) => ({
 
 export const deleteLead = (id) => async (dispatch) => {
     try {
-      await deleteLeadApi(id);
-      dispatch(deleteLeadSuccess(id)); 
+      let response= await deleteLeadApi(id);
+     // alert(JSON.stringify(response))
+      if(response.success){
+        dispatch(deleteLeadSuccess(id)); 
+
+      }
+     
       // Pass ID to update state
     } catch (error) {
       dispatch(deleteLeadFailure(error.message));

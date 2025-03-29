@@ -278,7 +278,7 @@ export const deleteLeadApi = async (id) => {
       },
     });
 
-    console.log("Response Status Code:", response.status);
+    console.log("Response Status Code:------>", JSON.stringify(response));
 
     if (!response.ok) {
       throw new Error(`Failed to delete lead (Status: ${response.status})`);
