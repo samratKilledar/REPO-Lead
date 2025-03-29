@@ -12,7 +12,7 @@ import LinearGradient from 'react-native-linear-gradient';
 const { width, height } = Dimensions.get('window');
 
 const LogoutScreen = ({ navigation }) => {
-  const [logoutVisible, setLogoutVisible] = useState(false);
+  const [modalVisible, setmodalVisible] = useState(false);
   const [Services, setServices] = useState(null);
   const [serviceName, setServiceName] = useState('');
 
@@ -32,7 +32,7 @@ const LogoutScreen = ({ navigation }) => {
       <View style={styles.fullcontainer}>
         <View style={styles.headcontainer}>
           <Image source={require("../../assets/images/Frame.png")} style={styles.logoImage} />
-          <TouchableOpacity style={styles.logout} onPress={() => setLogoutVisible(true)}>
+          <TouchableOpacity style={styles.logout} onPress={() => setmodalVisible(true)}>
             <Image source={require("../../assets/icons/Logout/logOut.png")} />
             <CustomText text={"Logout"} customstyle={TextStyle.logouttext} />
           </TouchableOpacity>
@@ -130,8 +130,8 @@ const LogoutScreen = ({ navigation }) => {
           </GradientCard>
         </View>
 
-        <Modal visible={logoutVisible} animationType="slide" transparent={true}>
-        <TouchableWithoutFeedback onPress={() => setLogoutVisible(false)}>
+        <Modal visible={modalVisible} animationType="slide" transparent={true}>
+        <TouchableWithoutFeedback onPress={() => setmodalVisible(false)}>
           <View style={styles.bottomModalOverlay}>
             <View style={styles.bottomModalContainer}>
               <CustomText text={"Logout"} customstyle={TextStyle.modallText} />
@@ -141,7 +141,7 @@ const LogoutScreen = ({ navigation }) => {
                 title={"Yes, logout"}
                 customStyle={{ width: width - 30 }}
                 onPress={() => {
-                  setLogoutVisible(false);
+                  setmodalVisible(false);
                   navigation.navigate('LoginScreen');
                 }}
               />
@@ -150,7 +150,7 @@ const LogoutScreen = ({ navigation }) => {
                   title={"Cancel"}
                   customStyle={ButtonStyles.cancelbutton}
                   textStyles={ButtonStyles.cancelButtonText}
-                  onPress={() => setLogoutVisible(false)}
+                  onPress={() => setmodalVisible(false)}
                 />
               </View>
             </View>
@@ -250,7 +250,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   bottomModalContainer: {
-    height: height * 0.35, 
+    height: height * 0.43, 
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
