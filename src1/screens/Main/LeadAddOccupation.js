@@ -3,17 +3,13 @@ import { View, StyleSheet, Alert , ToastAndroid } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../components/CustomButton";
 import CustomTextInput from "../../components/CustomTextInput";
-import Dropdown from "../../components/Dropdown";
 import Stepper from "../../components/StepperComp";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import StatusDropdown from "../../components/StatusDropdown";
 import { updateMonthlyIncome, updateOccupation, updateTypeOfWork } from "../../redux/actions/lastAction";
 
-
 const LeadAddOccupation = (props) => {
   const dispatch = useDispatch();
-  // const occupations = useSelector((state) => state.occupationReducer);
-
   const steps = ["Personal", "Occupation", "Services"];
   const currentStep = 2;
   
@@ -22,43 +18,41 @@ const LeadAddOccupation = (props) => {
   };
 
   const { 
-    occupation,occupationName,
+    occupation, occupationName,
     typeOfWork,
     monthlyIncome,
-    } = useSelector(state => state.lastReducer);
+  } = useSelector(state => state.lastReducer);
 
-    const occupationList= useSelector(state => state.homeReducer);
-   // alert(JSON.stringify(occupationList))
+  const occupationList = useSelector(state => state.homeReducer);
 
-    const leadLastHandle = () => 
-      {
-        if (!typeOfWork.trim()) {
-          showToast("Type of Work cannot be empty");
-          return;
-        }
-    
-        if (!monthlyIncome.trim()) {
-          showToast("Monthly Income cannot be empty");
-          return;
-        }
-    
-        if (!/^\d+$/.test(monthlyIncome)) {
-          showToast("Invalid Input: Monthly Income should contain only numbers");
-          return;
-        }
-    
-        // Optional: Check if income is within a valid range
-        const incomeValue = parseInt(monthlyIncome, 10);
-        if (incomeValue < 1000 || incomeValue > 10000000) {
-          showToast("Monthly Income should be between 1,000 and 1,00,00,000");
-          return;
-        }
-        if(!occupation){
-          showToast("Select the Occupation");
-          return;
-        }
-        props.navigation.navigate("LeadLast");
-      };
+  const leadLastHandle = () => {
+    if (!typeOfWork.trim()) {
+      showToast("Type of Work cannot be empty");
+      return;
+    }
+
+    if (!monthlyIncome.trim()) {
+      showToast("Monthly Income cannot be empty");
+      return;
+    }
+
+    if (!/^\d+$/.test(monthlyIncome)) {
+      showToast("Invalid Input: Monthly Income should contain only numbers");
+      return;
+    }
+
+    const incomeValue = parseInt(monthlyIncome, 10);
+    if (incomeValue < 1000 || incomeValue > 10000000) {
+      showToast("Monthly Income should be between 1,000 and 1,00,00,000");
+      return;
+    }
+
+    if (!occupation) {
+      showToast("Select the Occupation");
+      return;
+    }
+    props.navigation.navigate("LeadLast");
+  };
 
   const goBackCall = () => {
     props.navigation.goBack();
@@ -66,20 +60,15 @@ const LeadAddOccupation = (props) => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 0.1 }}>
-         
+      <View style={{ flex: 0.5 }}>
         <NavigationHeaderBack text="Add Lead" onPress={goBackCall} />
-       
       </View>
 
       <View style={styles.stepperContainer1}>
-       
-        <Stepper steps={steps} currentStep={currentStep} />
-       
+        <Stepper steps={steps} currentStep={currentStep} style={{ width: '100%' }} />
       </View>
 
       <View style={styles.centerContainer}>
-         
         <StatusDropdown
           label={occupationName}
           selectedValue={occupation}
@@ -90,7 +79,7 @@ const LeadAddOccupation = (props) => {
           listData={occupationList.occupation}
           zIndex={1000}
         />
-       
+
         <CustomTextInput
           value={typeOfWork}
           placeholder="Type of Work"
@@ -98,9 +87,8 @@ const LeadAddOccupation = (props) => {
             dispatch(updateTypeOfWork(text));
           }}
         />
-       
-       
-       <CustomTextInput
+
+        <CustomTextInput
           value={monthlyIncome}
           placeholder="Monthly Income"
           keyboardType="numeric"
@@ -110,10 +98,8 @@ const LeadAddOccupation = (props) => {
             }
           }}
         />
-      
-       
+
         <CustomButton title="NEXT" customStyle={{ width: -30 }} onPress={leadLastHandle} />
-        
       </View>
     </View>
   );
@@ -122,20 +108,19 @@ const LeadAddOccupation = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 10,
     backgroundColor: "#FFFFFF",
-    gap: 18,
-    marginBottom: 50,
   },
   centerContainer: {
-    flex: 0.7,
-    gap: 12,
-    zIndex: 1,
-    paddingLeft: 20,
-    paddingRight: 20,
+    marginTop:10,
+    flex: 6,
+    paddingBottom: 20,
+    gap: 10,
+    paddingHorizontal: 15,
   },
   stepperContainer1: {
-    justifyContent: "space-evenly",
+    flex: 0.5,
+    justifyContent: 'center', backgroundColor: '#EEF0FF',
+    alignItems: 'center', // Ensure full width
   },
 });
 

@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LeadAddservice from '../screens/Main/LeadAddServices' 
 import LeadAddPersonal from '../screens/Main/LeadAddPersonal'; 
 import LeadAddOccupation from '../screens/Main/LeadAddOccupation'; 
-import LeadAdd from '../screens/Main/LeadLast'; 
+import LeadLast from '../screens/Main/LeadLast'; 
 
 const Stack = createStackNavigator();
 
@@ -30,7 +30,7 @@ const AppNavigator = () => {
 
       <Stack.Screen
         name="LeadAdd"
-        component={LeadAdd}
+        component={LeadLast}
         options={{ title: 'Add Lead' }}
       />
     </Stack.Navigator>

@@ -40,8 +40,8 @@ import HeaderComp from '../components/HeaderComp';
 import ClientAddServices from '../screens/Main/ClientAddServices';
 import LeadLast from '../screens/Main/LeadLast';
 import SplashScreen from '../screens/Main/SplashScreen';
-import EditLead2 from '../screens/Main/EditLead2'
-import EditLead3 from '../screens/Main/EditLead3';
+import EditLead2 from '../screens/Main/editLead2';
+import EditLead3 from '../screens/Main/editLead3';
 import Editlead1 from '../screens/Main/Editlead1';
 
 const Tab = createBottomTabNavigator();
@@ -75,7 +75,7 @@ const LeadStackScreen = ({ navigation, route }) => {
 
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-      <HomeStack.Screen name="Lead" component={LeadScreen} />
+      {/* <HomeStack.Screen name="Lead" component={LeadScreen} /> */}
       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
       <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
       <HomeStack.Screen name="LeadDetails" component={LeadDetails} />
@@ -150,6 +150,7 @@ const CustomTabButton = ({ onPress }) => {
     <View>
       <TouchableOpacity
         style={styles.plusButton}
+        activeOpacity={0.7} 
         onPress={() => setModalVisible(true)}>
         <View style={styles.plusButtonInner}>
           <Image
@@ -158,6 +159,7 @@ const CustomTabButton = ({ onPress }) => {
           />
         </View>
       </TouchableOpacity>
+      
       <Modal
         transparent={true}
         visible={modalVisible}

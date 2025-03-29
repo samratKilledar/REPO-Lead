@@ -4,7 +4,7 @@ import InputStyle from "../styles/Inputstyle";
 import { useState } from "react";
 
 
-const CustomTextInput = ({ icon, followupicon,type, value, onChangeText, placeholder, secureTextEntry,searchbaricon , onIconPress }) => {
+const CustomTextInput = ({ icon, followupicon,type,keyboardType, value, onChangeText, placeholder, secureTextEntry,searchbaricon , onIconPress }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(secureTextEntry);
   return (
     <View style={InputStyle.container}>
@@ -18,6 +18,7 @@ const CustomTextInput = ({ icon, followupicon,type, value, onChangeText, placeho
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={isPasswordVisible}
+        keyboardType={keyboardType}
       />
       {secureTextEntry && (
         <Pressable onPress={() => setIsPasswordVisible(!isPasswordVisible)}>

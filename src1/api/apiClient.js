@@ -62,7 +62,7 @@ export const apiPost = async (url, param = {}) => {
 
 
 export const apiPostLead = async (url, payload, tenantId) => {
-  console.log("Sending Data to:", url);
+  console.log(url + "-------" + JSON.stringify(payload) + "-----------------" + tenantId);
 
   try {
     const token = await AsyncStorage.getItem("newToken");
@@ -75,7 +75,7 @@ export const apiPostLead = async (url, payload, tenantId) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        tenant: "root",
+        tenant: tenantId,
       },
       body: JSON.stringify(payload),
     });
@@ -83,29 +83,31 @@ export const apiPostLead = async (url, payload, tenantId) => {
     console.log("📢 Response Status Code:", response.status);
     console.log("📢 Response Headers:", response.headers);
 
-
     if (!response.ok) {
       const errorText = await response.text();
       console.error("❌ API Error:", response.status, errorText);
-      Alert.alert("Error", ` HTTP Error ${response.status}: ${errorText}`);
-      return;
+     // Alert.alert("Error", `HTTP Error ${response.status}: ${errorText}`);
+      return { success: false, status: response.status, error: errorText };
     }
 
     const text = await response.text();
     if (!text.trim()) {
       console.warn("⚠ Server returned an empty response.");
-      Alert.alert("Lead added successfully.");
-      return;
+     // Alert.alert("Lead added successfully.");
+      return { success: true, message: "Lead added successfully." };
     }
 
     const result = JSON.parse(text);
     console.log("✅ API Response Body:", result);
+
+    return { success: true, data: result };
   } catch (error) {
-    Alert.alert("Error", error.message);
+    //Alert.alert("Error", error.message);
     console.error("❌ Error:", error.message);
-    throw error;
+    return { success: false, error: error.message };
   }
 };
+
 
 
 export const apiGetLeadList = async (url, token) => {
