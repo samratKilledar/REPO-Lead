@@ -1,4 +1,4 @@
-import {apiGet ,apiGetLeadList1, apiPost,apiPostLead,apiPostFollowup, apiGetDetails} from './apiClient';
+import {apiGet ,apiGetLeadList1, apiPost,apiPostLead,apiPostFollowup, apiGetDetails , apigetAddFollowUp} from './apiClient';
 import {api} from './api';
 import { getItem } from './storageServices';
 
@@ -105,6 +105,11 @@ export const taskListResApi= async authToken=>{
 export const particularLeadDetailApi =async authToken=>{
     // console.log("=====particularLeadDetailApi==="+authToken);
     return await apiGet(api.particularLeadDetailApi, authToken);
+}
+
+export const addFollowUpAPI = async (data,tenantId) =>{
+    console.log(tenantId+'inside function' + JSON.stringify(data));
+    return await apigetAddFollowUp(api.addFollowUp, data,tenantId);
 }
 
 // export const postDeleteLead = async (leadId) => {

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { View, Text, Alert, ScrollView, StyleSheet, TouchableOpacity, Image , ToastAndroid } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +10,6 @@ import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
 import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
 import { state } from '../../api/mainApi';
-import { CommonActions } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
 
 import { updateAddressLine1, updateAddressLine2, updateCity, updateCountry, updateEmailId, updateLastName, updateMobileNo, updatePincode, updateState, updateWhatsAppNo, updateFirstName, updateLeadSources } from '../../redux/actions/lastAction';
@@ -44,6 +42,7 @@ const LeadLast = (props) => {
 
   const handleSubmit = () => {
     dispatch(leadSubmitAllData());
+    
     dispatch(updateFirstName(""));
     dispatch(updateLastName(""));
     dispatch(updateMobileNo(""));
@@ -70,7 +69,7 @@ const LeadLast = (props) => {
    // Only navigate if successful
     navigation.navigate("Lead");
  
-   // showToast("Lead submitted successfully!");
+  //  showToast("Lead submitted successfully!");
   };
 
   const handleAdd = () => {
@@ -118,11 +117,9 @@ const LeadLast = (props) => {
           selectedValue={assignto}
           onValueChange={(value) => dispatch(updateAssignTo(value))}
           apiType="assignTo"
-                listData={assignToList.assignTo[3]}
+          listData={assignToList.assignTo[3]}
           zIndex={4000}
         />
-      
-        
         <StatusDropdown
                 label={servicesName}
                 selectedValue={service1.services}

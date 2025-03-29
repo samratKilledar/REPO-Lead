@@ -21,7 +21,7 @@ const initialState = {
 
     titlePlaceholder: "Title",
     followupStatusName: "Status",
-    assignedToPlaceholder: "Assign",
+    assignedToName: "Assign",
     attachmentUrlPlaceholder: "Attachment",
     followupDatePlaceholder: "Next Meeting schedule on",
     followupTimePlaceholder: "Schedule Time",
@@ -69,7 +69,7 @@ const addFollowUpReducer = (state = initialState, action) => {
             return { ...state, followupStatus: action.payload.id, followupStatusName:action.payload.name};
            
         case CHANGE_ASSIGNED_TO:
-            return { ...state, assignedTo: action.payload };
+            return { ...state, assignedTo: action.payload.id, assignedToName:action.payload.name };
 
         case CHANGE_ATTACHMENT:
             return { ...state, attachmentUrl: action.payload };

@@ -15,23 +15,11 @@ const clintsData = [
 
 const ClientScreen = (props) => {
   const navigation = useNavigation();
-  const [search, setSearch] = useState('');
+ // const [search, setSearch] = useState('');
   return (
     <View style={styles.container}>
       
       <HeaderComp navigation={navigation} />
-     
-      <View style={styles.input}>
-         
-        <CustomTextInput
-          icon={require('../../assets/icons/Search/search.png')}
-          type={search}
-          value={search}
-          onChangeText={setSearch}
-          placeholder="Search"
-          searchbaricon={require('../../assets/icons/Group.png')}
-        />
-      </View>
 
       <View style={styles.centerContainer}>
         <View style={styles.lead}>

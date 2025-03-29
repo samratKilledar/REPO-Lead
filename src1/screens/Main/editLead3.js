@@ -18,11 +18,11 @@ const EditLead3 = (props) => {
   //   dispatch(EditLeadFetch());
   // }, [dispatch]);
 
-  const { assignto, services, remark, servicesName,  } = useSelector((state) => state.editLeadReducer);
+  const { assignto, services, remark, servicesName, assignToName   } = useSelector((state) => state.editLeadReducer);
   // const {service1} = useSelector((state)=> state.homeReducer)
   // alert(service1)
   const service1= useSelector(state => state.homeReducer);
-  const assignTo1= useSelector(state => state.homeReducer);
+    const assignToList= useSelector(state => state.homeReducer);
   //alert(JSON.stringify(service1.service)) 
   const steps = ['Personal', 'Occupation', 'Services'];
   const currentStep = 3;
@@ -99,11 +99,11 @@ const EditLead3 = (props) => {
       </View>
       <View style={styles.centerContainer}>
         <StatusDropdown
-          label="Assign to"
+          label={assignToName}
           selectedValue={assignto}
           onValueChange={(value) => dispatch(updateAssignTo(value))}
          apiType="assignTo"
-         listData={assignTo1.assignTo}
+         listData={assignToList.assignTo[3]}
           zIndex={4000}
         />
       

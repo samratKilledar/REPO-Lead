@@ -30,9 +30,9 @@ const ClientDetails = (props) => {
     props.navigation.navigate("ClientAddServices")
   }
 
-    useEffect(() => {
-      dispatch(fetchClientDetails());
-    }, [dispatch]);
+    // useEffect(() => {
+    //   dispatch(fetchClientDetails());
+    // }, [dispatch]);
 
   return (
     <View style={styles.container}>

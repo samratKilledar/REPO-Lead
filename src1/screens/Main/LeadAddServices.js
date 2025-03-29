@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, StyleSheet, Dimensions, ScrollView,ToastAndroid ,TouchableOpacity} from 'react-native'; 
+import React  from "react";
+import { View, StyleSheet, Dimensions, ScrollView , Image ,TouchableOpacity ,ToastAndroid} from 'react-native'; // Import ScrollView
 import CustomButton from '../../components/CustomButton';
 import CustomTextInput from '../../components/CustomTextInput';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
@@ -16,11 +16,6 @@ const LeadAddServices = () => {
   const dispatch = useDispatch();
   const remark = useSelector(state => state.leadAddService.remark);
   const services = useSelector(state => state.leadAddService.services);
-
-  const RemarkPlaceholder = useSelector(state => state.leadAddService.RemarkPlaceholder);
-  const servicesName = useSelector(state => state.leadAddService.servicesName);
-
-
   const service1= useSelector(state => state.homeReducer);
   const navigation = useNavigation();
   const goBackCall = () => {
@@ -61,14 +56,13 @@ const LeadAddServices = () => {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-      
+     
         <NavigationHeaderBack text="Add Services" onPress={goBackCall} />
        
       </View>
       <View style={styles.centerContainer}>
-       
         <StatusDropdown
-          label={servicesName}
+          label="Services"
           selectedValue={services}
           onValueChange={(value) =>dispatch(updateServices(value))}
           apiType="service"
@@ -78,26 +72,16 @@ const LeadAddServices = () => {
         <CustomTextInput
           type={remark}
           value={remark}
-          placeholder={RemarkPlaceholder}
+          placeholder="Remark"
           onChangeText={(text) => dispatch(updateRemark(text))} 
         />
-        
-       
-        <StatusDropdown
-          label="Services"
-          selectedValue={services}
-          onValueChange={(value) => dispatch(updateServices(value))}
-          apiType="service"
-          zIndex={1000}
-        />
-       
         <CustomButton
           title="Submit"
-          customStyle={{ width: width * 0.9 }} 
+          customStyle={{ width: width * 0.9 }}
           textStyles={styles.nextButtonText}
           onPress={handleSubmit}
         />
-       
+        
       </View>
       <ScrollView style={styles.scrollViewContainer}>
       <View style={styles.insuranceCard}>
