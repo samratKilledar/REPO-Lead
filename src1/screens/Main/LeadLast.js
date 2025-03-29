@@ -17,8 +17,6 @@ import StatusDropdown from '../../components/StatusDropdown';
 import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
 import { state } from '../../api/mainApi';
 import { useNavigation } from '@react-navigation/native';
-
-import {useNavigation} from '@react-navigation/native';
 import {resetStateLead} from '../../redux/actions/lastAction';
 
 const LeadLast = props => {

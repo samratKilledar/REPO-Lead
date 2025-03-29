@@ -9,6 +9,7 @@ export const loginUserApiCall = async data => {
 
   export const refreshTokenApiCall = async () => {
     try {
+        const user = await getItem('tenantId');
         const token = await AsyncStorage.getItem("authToken");
         const refreshToken = await AsyncStorage.getItem("refreshToken");
         
@@ -25,7 +26,8 @@ export const loginUserApiCall = async data => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          tenant: "root", 
+          tenantId: user,
+        //   tenant: "root", 
           //Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(requestBody),
@@ -92,9 +94,11 @@ export const verifyUserApiCall = async (password, email, token) => {
 
 
 export const submitPasswordApiCall = async (newPassword, confirmNewPassword) => {
+    const user = await getItem('tenantId');
     const param = {
         data: {
-            customerId: "Root", // Keep tenant as "Root"
+            tenantId: user,
+            // customerId: "Root", // Keep tenant as "Root"
             password: newPassword,
             confirmPassword: confirmNewPassword
         },

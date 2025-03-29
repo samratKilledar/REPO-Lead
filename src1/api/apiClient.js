@@ -71,6 +71,7 @@ export const apiPostLead = async (url, payload, tenantId) => {
 
   try {
     const token = await AsyncStorage.getItem("newToken");
+    const user = await getItem('tenantId');
     if (!token) {
       throw new Error("Authentication token not found. Please login again.");
     }
@@ -80,7 +81,7 @@ export const apiPostLead = async (url, payload, tenantId) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        tenant: tenantId,
+        tenantId: user,
       },
       body: JSON.stringify(payload),
     });
@@ -209,6 +210,7 @@ export const apiPut = async (url, data, token) => {
 
 export const apiPostForgotPass = async (url, param = {}) => {
   try {
+      const user = await getItem('tenantId');
     const data = param.data || {};
     console.log('📨 Sending Data:', JSON.stringify(data));
 
@@ -216,7 +218,7 @@ export const apiPostForgotPass = async (url, param = {}) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        tenant: 'Root',
+        tenantId: user,
       },
       body: JSON.stringify({ email: data.email }),
     });
@@ -335,6 +337,7 @@ export const apigetAddFollowUp = async (url, tenantId) => {
   console.log("Fetching Data from:", url);
 
   try {
+    const user = await getItem('tenantId');
     const token = await AsyncStorage.getItem("newToken");
     if (!token) {
       throw new Error("Authentication token not found. Please login again.");
@@ -344,7 +347,7 @@ export const apigetAddFollowUp = async (url, tenantId) => {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
-        tenant: "root",
+        tenantId: user,
       },
     });
 

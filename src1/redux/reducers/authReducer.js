@@ -9,7 +9,7 @@ const initialState = {
   },
   loginValue: {
     customerId: "Root",
-    HoarwayId: "12345",
+    tenantId: "12345",
     email: "Supra@admin.com",
     password: "Admin@123"
   },

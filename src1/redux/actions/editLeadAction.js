@@ -177,9 +177,10 @@ export const leadSubmitAllData = () => async (dispatch, getState) => {
   dispatch({ type: SUBMIT_REQUEST });
 
   const { editLeadReducer } = getState();
+   const user = await getItem('tenantId');
   const leadData = {
     id: 0,
-    tenantId: "root",
+    tenantId: user,
     customerId: 0,
     entity: "someEntityValue", 
     firstName: editLeadReducer.firstName,
