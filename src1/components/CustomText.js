@@ -1,10 +1,20 @@
 import React from "react";
 import { View, Text } from "react-native";
-const CustomText = (props) => {
+
+const CustomText = ({ text, customstyle, maxWords = 30 }) => {
+   // const words = text.split(" ");
+
     return (
         <View>
-            <Text style={props.customstyle}>{props.text}</Text>
+            <Text
+                style={customstyle}
+                numberOfLines={text.length > maxWords ? 1 : undefined}
+                ellipsizeMode={text.length > maxWords ? "tail" : "clip"}
+            >
+                {text}
+            </Text>
         </View>
     );
 };
+
 export default CustomText;

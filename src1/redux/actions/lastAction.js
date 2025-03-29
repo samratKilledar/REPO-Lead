@@ -1,9 +1,10 @@
 import { leadAPISubmit } from "../../api/mainApi";
+import { getItem } from '../../api/storageServices';
 
-export const SUBMIT_SUCCESS = "SUBMIT_SUCCESS";
-export const SUBMIT_FAILURE = "SUBMIT_FAILURE";
+export const SUBMIT_SUCCESS_LEAD = "SUBMIT_SUCCESS_LEAD";
+export const SUBMIT_FAILURE_LEAD = "SUBMIT_FAILURE_LEAD";
 export const SUBMIT_REQUEST = "SUBMIT_REQUEST";
-
+export const SUBMIT_FAILURE = "SUBMIT_FAILURE";
 export const UPDATE_ASSIGNTO = "UPDATE_ASSIGNTO";
 export const UPDATE_SERVICES = "UPDATE_SERVICES";
 export const UPDATE_REMARK = "UPDATE_REMARK";
@@ -22,6 +23,7 @@ export const UPDATE_PINCODE = "UPDATE_PINCODE";
 export const UPDATE_OCCUPATION = "UPDATE_OCCUPATION";
 export const UPDATE_TYPEOFWORK = "UPDATE_TYPEOFWORK";
 export const UPDATE_MONTHLYINCOME = "UPDATE_MONTHLYINCOME";
+export const RESET_ALL_STATE = "RESET_ALL_STATE";
 
 
 export const updateFirstName = (firstName) => ({
@@ -114,13 +116,15 @@ export const updateRemark = (remark) => ({
   payload: remark,
 });
 
-export const leadSubmitAllData = () => async (dispatch, getState) => {
+export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
   dispatch({ type: SUBMIT_REQUEST });
-
   const { lastReducer } = getState();
+  console.log("----------"+JSON.stringify(newCard))
+  const user = await getItem('tenantId');
+  let newServices=newCard;
   const leadData = {
     id: 0,
-    tenantId: "root",
+    tenantId: user,
     customerId: 0,
     entity: "someEntityValue", 
     firstName: lastReducer.firstName,
@@ -145,27 +149,42 @@ export const leadSubmitAllData = () => async (dispatch, getState) => {
     assignedTo: Number(lastReducer.assignedTo) || 2, 
     leadDate: new Date().toISOString(),
     isActive: true,
-    serviceDetails: lastReducer.serviceDetails || [
-      {
-        id: 0,
-        customerId: 0,
-        services : lastReducer.services ,
-        servicesName : lastReducer.servicesName ,
-        isExistingClient: true,
-        remark: lastReducer.remark,
-        assignedTo: Number(lastReducer.assignedTo) || 0, // ✅ Ensure it's an integer
-        isActive: true,
-      },
-    ],
+    serviceDetails: newServices.length > 0
+    ? newServices.map(service => ({
+        id: 0, 
+        customerId: 0, 
+        services: Number(service.id), 
+        servicesName: service.title, 
+        isExistingClient: true, 
+        remark: service.description, 
+        assignedTo: Number(lastReducer.assignedTo) || 0, 
+        isActive: true
+      }))
+    : lastReducer.serviceDetails || [
+        {
+          id: 0,
+          customerId: 0,
+          services: Number(service.id),
+          servicesName: lastReducer.servicesName,
+          isExistingClient: true,
+          remark: lastReducer.remark,
+          assignedTo: Number(lastReducer.assignedTo) || 0,
+          isActive: true
+        }
+      ]
   };
-  console.log("📤 Submitting Lead Data:", JSON.stringify(leadData, null, 2));
+  console.log("📤 Submitting Lead Data:"+ JSON.stringify(leadData));
 
 
   try {
-    const response = await leadAPISubmit(leadData, "root");
+    const response = await leadAPISubmit(leadData, user);
     console.log("✅ Lead Submitted Successfully:", response);
-
-    dispatch({ type: SUBMIT_SUCCESS, payload: response });
+    if(response.message == "Lead added successfully." || response.success == true){
+      dispatch({ type: SUBMIT_SUCCESS_LEAD, payload: response });
+    }else{
+      dispatch({ type: SUBMIT_FAILURE_LEAD, error: response.message });
+    }
+  
   } catch (error) {
     console.error("❌ Lead Submission Failed:", error);
 
@@ -181,6 +200,12 @@ export const submitSuccess = () => ({ type: SUBMIT_SUCCESS });
 export const submitFailure = (error) => ({
   type: SUBMIT_FAILURE,
   payload: error,
+});
+
+
+export const resetStateLead = (error) => ({
+  type: RESET_ALL_STATE,
+
 });
 
 export const submitRequest = () => ({ type: SUBMIT_REQUEST });

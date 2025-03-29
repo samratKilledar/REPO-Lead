@@ -18,8 +18,8 @@ import { UPDATE_ASSIGNTO,
   UPDATE_TYPEOFWORK,
   UPDATE_MONTHLYINCOME,
   SUBMIT_REQUEST,
-  SUBMIT_SUCCESS, 
-  SUBMIT_FAILURE  } from "../actions/lastAction";
+  SUBMIT_SUCCESS_LEAD, 
+  SUBMIT_FAILURE_LEAD,RESET_ALL_STATE  } from "../actions/lastAction";
 
 
 const initialState = {
@@ -48,9 +48,8 @@ const initialState = {
   assignToName: "Assign To",
   services:"",
   servicesName:"Services",
-  remark:""
-
- 
+  remark:"",
+  messageFromServer:""
 };
 
 const lastReducer = (state = initialState, action) => {
@@ -115,13 +114,15 @@ const lastReducer = (state = initialState, action) => {
     case SUBMIT_REQUEST:
       return { ...state, isLoading: true, error: null };
 
-      case SUBMIT_SUCCESS:
-      return { ...state, isAuthenticated: true ,  isLoading: false, error: null, };
+      case SUBMIT_SUCCESS_LEAD:
+      return { ...state, messageFromServer: action.payload ,  isLoading: false, error: null, };
 
-    case SUBMIT_FAILURE:
-      return { ...state, isAuthenticated: false , isLoading: false, error: action.payload};
+    case SUBMIT_FAILURE_LEAD:
+      return { ...state, messageFromServer: action.payload , isLoading: false, error: action.payload};
       
-    
+    case RESET_ALL_STATE:
+      return initialState
+
     default:
       return state;
   }

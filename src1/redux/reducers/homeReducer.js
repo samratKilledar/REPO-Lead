@@ -2,7 +2,7 @@ import { assignTo } from '../../api/mainApi';
 import UpcomingMeetings from '../../screens/Main/UpcomingMeetings';
 import {
   FETCH_DROPDOWN_SUCCESS,
-  FETCH_DROPDOWN_FAILURE,
+  FETCH_DROPDOWN_FAILURE,RESET_ALL_STATE
 } from '../actions/HomeAction';
 
 const initialState = {
@@ -62,6 +62,11 @@ const homeReducer = (state = initialState, action) => {
         particularLeadDetailApi:['No Data Avialable'],
         assignTo:['No Data Avialable']
       };
+
+      case RESET_ALL_STATE:
+        {
+          return { ...initialState };
+        }
 
     default:
       return state;

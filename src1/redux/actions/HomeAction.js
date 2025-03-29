@@ -15,6 +15,7 @@ import {
 
 export const FETCH_DROPDOWN_SUCCESS = 'FETCH_DROPDOWN_SUCCESS';
 export const FETCH_DROPDOWN_FAILURE = 'FETCH_DROPDOWN_FAILURE';
+export const RESET_ALL_STATE = 'RESET_ALL_STATE';
 
 export const callAllDropDownAPI = (storedData) => {
   return async (dispatch) => {
