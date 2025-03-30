@@ -13,8 +13,6 @@ export const loginUser = () => async (dispatch, getState) => {
   try {
     const { loginValue } = getState().auth;
     dispatch({ type: LOGIN_CLICK });
-
-    // Call Login API
     const data = await loginUserApiCall(loginValue);
     if (data.token != null) {
       setItem('authToken', data.token);

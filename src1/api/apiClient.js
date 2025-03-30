@@ -141,15 +141,15 @@ export const apiGetLeadList = async (url, token) => {
 
 
 export const apiGetLeadList1 = async (url, token) => {
-  console.log("samrat=============", url);
-  console.log("sss================", token);
+  console.log("Making GET request to:", url);
+  console.log("Using token:", token); 
 
   try {
     const token = await AsyncStorage.getItem("newToken");
-    if (token == null) {
-      apiGetLeadList1(api.assignTo)
-      throw new Error("------------------------------------Authentication token not found. Please login again.");
-    }
+      if (token == null) {
+        //apiGetLeadList1(api.assignTo)
+        throw new Error("------------------------------------Authentication token not found. Please login again.");
+      }
     const response = await fetch(url, {
       method: 'GET',
       headers: {
@@ -323,6 +323,42 @@ export const apiGetEditList = async (url, token) => {
   }
 };
 
+export const EditLeadReadData = async (leadId) => {
+  try {
+    const token = await AsyncStorage.getItem("newToken"); // Retrieve token from storage
+
+    if (!token) {
+      throw new Error("Authentication token not found. Please login again.");
+    }
+
+    const apiUrl = `https://opticalerp.in:85/api/lead/getbyleadid/${leadId}`;
+
+    console.log("Fetching data from:", apiUrl);
+
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Accept": "application/json",
+        "Authorization": `Bearer ${token}`, // Pass token in the header
+      },
+    });
+
+    console.log("Response status:", response.status);
+
+    if (!response.ok) {
+      const errorText = await response.text(); // Get error message
+      console.error("Server Response:", errorText);
+      throw new Error(`HTTP Error: ${response.status} - ${errorText}`);
+    }
+
+    const data = await response.json();
+    console.log("API Response:", data);
+    return data;
+  } catch (error) {
+    console.error(`GET ${leadId} Error:`, error.message);
+    throw error;
+  }
+};
 
 
 export const apiGetDetailList = async (url) => {

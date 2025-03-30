@@ -1,4 +1,5 @@
-import { EditLead , editUpdate } from "../../api/mainApi";
+import {   EditLeadReadData } from "../../api/apiClient";
+import {EditLead} from "../../api/authApi";
 import { leadAPISubmit } from "../../api/mainApi";
 
 export const SUBMIT_SUCCESS = "SUBMIT_SUCCESS";
@@ -138,33 +139,33 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
     }
 
     const data = await EditLead(leadId);
+    alert(JSON.stringify(data))
+    // if (!data || data.error) {
+    //   throw new Error(data?.error || 'Lead data not found');
+    // }
     
-    if (!data || data.error) {
-      throw new Error(data?.error || 'Lead data not found');
-    }
+    // // Dispatch updates - add null checks for nested objects
+    // dispatch(updateFirstName(data.firstName || ''));
+    // dispatch(updateLastName(data.lastName || ''));
+    // dispatch(updateLeadSources(data.leadSource?.id || '', data.leadSource?.name || 'Lead Sources'));
+    // dispatch(updateMobileNo(data.mobileNo || ''));
+    // dispatch(updateEmailId(data.emailId || ''));
+    // dispatch(updateWhatsAppNo(data.whatsAppNo || ''));
+    // dispatch(updateAddressLine1(data.addressLine1 || ''));
+    // dispatch(updateAddressLine2(data.addressLine2 || ''));
+    // dispatch(updateCity(data.cityId?.id || '', data.city?.name || 'Select City'));
+    // dispatch(updateState(data.stateId?.id || '', data.state?.name || 'Select State'));
+    // dispatch(updateCountry(data.countryId?.id || '', data.country?.name || 'Select Country', data.country?.isdCode || ''));
+    // dispatch(updatePincode(data.pincode || ''));
+    // dispatch(updateOccupation(data.occupation?.id || '', data.occupation?.name || 'Occupation'));
+    // dispatch(updateTypeOfWork(data.workType || ''));
+    // dispatch(updateMonthlyIncome(data.monthlyIncome || ''));
+    // dispatch(updateAssignTo(data.assignedTo || ''));
+    // dispatch(updateServices(data.serviceId?.id || '', data.serviceId?.name || 'Services'));
+    // dispatch(updateRemark(data.remark || ''));
     
-    // Dispatch updates - add null checks for nested objects
-    dispatch(updateFirstName(data.firstName || ''));
-    dispatch(updateLastName(data.lastName || ''));
-    dispatch(updateLeadSources(data.leadSources?.id || '', data.leadSources?.name || 'Lead Sources'));
-    dispatch(updateMobileNo(data.mobileNo || ''));
-    dispatch(updateEmailId(data.emailId || ''));
-    dispatch(updateWhatsAppNo(data.whatsAppNo || ''));
-    dispatch(updateAddressLine1(data.addressLine1 || ''));
-    dispatch(updateAddressLine2(data.addressLine2 || ''));
-    dispatch(updateCity(data.city?.id || '', data.city?.name || 'Select City'));
-    dispatch(updateState(data.state?.id || '', data.state?.name || 'Select State'));
-    dispatch(updateCountry(data.country?.id || '', data.country?.name || 'Select Country', data.country?.isdCode || ''));
-    dispatch(updatePincode(data.pincode || ''));
-    dispatch(updateOccupation(data.occupation?.id || '', data.occupation?.name || 'Occupation'));
-    dispatch(updateTypeOfWork(data.typeOfWork || ''));
-    dispatch(updateMonthlyIncome(data.monthlyIncome || ''));
-    dispatch(updateAssignTo(data.assignTo || ''));
-    dispatch(updateServices(data.services?.id || '', data.services?.name || 'Services'));
-    dispatch(updateRemark(data.remark || ''));
-    
-    dispatch(submitSuccess());
-    return data; // Return the data for component-level checks
+    // dispatch(submitSuccess());
+    // return data; // Return the data for component-level checks
   } catch (error) {
     console.error("Error fetching lead:", error);
     throw error; // Re-throw for component handling
