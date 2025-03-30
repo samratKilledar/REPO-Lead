@@ -25,29 +25,29 @@ import { UPDATE_ASSIGNTO,
 const initialState = {
   firstName: "",
   lastName: "", 
-  leadSources: "",
-  leadSourcesName:"Lead Source",
+  leadSource: "",
+  leadSourceName:"Lead Source",
   mobileNo:"",
   emailId:"",
   whatsAppNo:"",
   addressLine1:"",
   addressLine2:"",
-  city:"",
+  cityId:"",
   cityName:"Select City",
-  state:"",
+  stateId:"",
   stateName:"Select State",
-  country:"",
+  countryId:"",
   countryName:"Select Country",
   isdCode:"",
   pincode:"",
   occupation:"",
   occupationName:"Occupation Name",
-  typeOfWork:"",
+  workType:"",
   monthlyIncome:"",
-  assignTo:"",
-  assignToName: "Assign To",
-  services:"",
-  servicesName:"Services",
+  assignedTo:"",
+  assignedToName: "Assign To",
+  serviceId:"",
+  serviceName:"Services",
   remark:"",
   messageFromServer:""
 };
@@ -64,7 +64,7 @@ const lastReducer = (state = initialState, action) => {
       return { ...state, lastName: action.payload };
 
     case UPDATE_LEADSOURCES:
-      return { ...state, leadSources: action.payload.id, leadSourcesName:action.payload.name };
+      return { ...state, leadSource: action.payload.id, leadSourceName:action.payload.name };
 
     case UPDATE_MOBILENO:
       return { ...state, mobileNo: action.payload };
@@ -82,13 +82,13 @@ const lastReducer = (state = initialState, action) => {
       return { ...state, addressLine2: action.payload };
 
     case UPDATE_CITY:
-      return { ...state, city: action.payload.id, cityName:action.payload.name };
+      return { ...state, cityId: action.payload.id, cityName:action.payload.name };
 
     case UPDATE_STATE:
-      return { ...state, state: action.payload.id,stateName:action.payload.name };
+      return { ...state, stateId: action.payload.id,stateName:action.payload.name };
 
     case UPDATE_COUNTRY:
-      return { ...state, country: action.payload.id, countryName: action.payload.name,isdCode:action.payload.isdCode};
+      return { ...state, countryId: action.payload.id, countryName: action.payload.name,isdCode:action.payload.isdCode};
 
     case UPDATE_PINCODE:
       return { ...state, pincode: action.payload };
@@ -97,16 +97,16 @@ const lastReducer = (state = initialState, action) => {
       return { ...state, occupation: action.payload.id, occupationName: action.payload.name};
 
     case UPDATE_TYPEOFWORK:
-      return { ...state, typeOfWork: action.payload };
+      return { ...state, workType: action.payload };
 
     case UPDATE_MONTHLYINCOME:
       return { ...state, monthlyIncome: action.payload };
 
     case UPDATE_ASSIGNTO:
-      return { ...state, assignTo: action.payload.id, assignToName:action.payload.name };
+      return { ...state, assignedTo: action.payload.id, assignedToName:action.payload.name };
 
     case UPDATE_SERVICES:
-      return { ...state, services: action.payload.id , servicesName:action.payload.name };
+      return { ...state, serviceId: action.payload.id , serviceName:action.payload.name };
 
     case UPDATE_REMARK:
       return { ...state, remark: action.payload };

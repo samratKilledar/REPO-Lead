@@ -93,9 +93,9 @@ export const updateOccupation = (id, name) => ({
   payload: { id, name }
 });
 
-export const updateTypeOfWork = (typeOfWork) => ({
+export const updateTypeOfWork = (workType) => ({
   type: UPDATE_TYPEOFWORK,
-  payload: typeOfWork
+  payload: workType
 });
 
 export const updateMonthlyIncome = (monthlyIncome) => ({
@@ -109,9 +109,9 @@ export const updateAssignTo = (id, name) => ({
 });
 
 // Service Actions
-export const updateServices = (services) => ({
+export const updateServices = (serviceId) => ({
   type: UPDATE_SERVICES,
-  payload: services
+  payload: serviceId
 });
 
 export const updateRemark = (remark) => ({
@@ -146,21 +146,21 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
     // Dispatch updates - add null checks for nested objects
     dispatch(updateFirstName(data.firstName || ''));
     dispatch(updateLastName(data.lastName || ''));
-    dispatch(updateLeadSources(data.leadSources?.id || '', data.leadSources?.name || 'Lead Sources'));
+    dispatch(updateLeadSources(data.leadSource?.id || '', data.leadSource?.name || 'Lead Sources'));
     dispatch(updateMobileNo(data.mobileNo || ''));
     dispatch(updateEmailId(data.emailId || ''));
     dispatch(updateWhatsAppNo(data.whatsAppNo || ''));
     dispatch(updateAddressLine1(data.addressLine1 || ''));
     dispatch(updateAddressLine2(data.addressLine2 || ''));
-    dispatch(updateCity(data.city?.id || '', data.city?.name || 'Select City'));
-    dispatch(updateState(data.state?.id || '', data.state?.name || 'Select State'));
-    dispatch(updateCountry(data.country?.id || '', data.country?.name || 'Select Country', data.country?.isdCode || ''));
+    dispatch(updateCity(data.cityId?.id || '', data.city?.name || 'Select City'));
+    dispatch(updateState(data.stateId?.id || '', data.state?.name || 'Select State'));
+    dispatch(updateCountry(data.countryId?.id || '', data.country?.name || 'Select Country', data.country?.isdCode || ''));
     dispatch(updatePincode(data.pincode || ''));
     dispatch(updateOccupation(data.occupation?.id || '', data.occupation?.name || 'Occupation'));
-    dispatch(updateTypeOfWork(data.typeOfWork || ''));
+    dispatch(updateTypeOfWork(data.workType || ''));
     dispatch(updateMonthlyIncome(data.monthlyIncome || ''));
-    dispatch(updateAssignTo(data.assignTo || ''));
-    dispatch(updateServices(data.services?.id || '', data.services?.name || 'Services'));
+    dispatch(updateAssignTo(data.assignedTo || ''));
+    dispatch(updateServices(data.serviceId?.id || '', data.serviceId?.name || 'Services'));
     dispatch(updateRemark(data.remark || ''));
     
     dispatch(submitSuccess());
@@ -173,62 +173,83 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
 
 
 
-export const leadSubmitAllData = () => async (dispatch, getState) => {
+export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
   dispatch({ type: SUBMIT_REQUEST });
-
-  const { editLeadReducer } = getState();
-   const user = await getItem('tenantId');
+  const { lastReducer } = getState();
+  console.log("----------"+JSON.stringify(newCard))
+  const user = await getItem('tenantId');
+  let newServices=newCard;
   const leadData = {
     id: 0,
     tenantId: user,
     customerId: 0,
     entity: "someEntityValue", 
-    firstName: editLeadReducer.firstName,
-    lastName: editLeadReducer.lastName,
-    emailId: editLeadReducer.emailId ,
-    mobileNo: editLeadReducer.mobileNo ,
-    whatsAppNo: editLeadReducer.whatsAppNo,
-    addressLine1: editLeadReducer.addressLine1,
-    addressLine2: editLeadReducer.addressLine2 ,
-    city : editLeadReducer.city ,
-    cityName : editLeadReducer.cityName,
-    state : editLeadReducer.state,
-    stateName : editLeadReducer.stateName,
-    country : editLeadReducer.country,
-    countryName : editLeadReducer.countryName,
-    pincode: editLeadReducer.pincode,
-    leadSources: editLeadReducer.leadSources ,
-    leadSourcesName: editLeadReducer.leadSourcesName,
-    occupation: editLeadReducer.occupation ,
-    occupationName: editLeadReducer.occupationName ,
-    typeOfWork: editLeadReducer.typeOfWork ,
-    assignedTo: Number(editLeadReducer.assignedTo) || 2, 
+    firstName: lastReducer.firstName,
+    lastName: lastReducer.lastName,
+    emailId: lastReducer.emailId ,
+    mobileNo: lastReducer.mobileNo ,
+    whatsAppNo: lastReducer.whatsAppNo,
+    addressLine1: lastReducer.addressLine1,
+    addressLine2: lastReducer.addressLine2 ,
+    cityId : lastReducer.cityId ,
+    cityName : lastReducer.cityName,
+    stateId : lastReducer.stateId,
+    stateName : lastReducer.stateName,
+    countryId : lastReducer.countryId,
+    countryName : lastReducer.countryName,
+    pincode: lastReducer.pincode,
+    leadSource: lastReducer.leadSource ,
+    leadSourceName: lastReducer.leadSourceName,
+    occupation: lastReducer.occupation ,
+    occupationName: lastReducer.occupationName ,
+    workType: lastReducer.workType ,
+    monthlyIncome: lastReducer.monthlyIncome,
+    assignedTo: lastReducer.assignedTo, 
+    assignedToName: lastReducer.assignedToName, 
     leadDate: new Date().toISOString(),
     isActive: true,
-    serviceDetails: editLeadReducer.serviceDetails || [
-      {
-        id: 0,
-        customerId: 0,
-        services : editLeadReducer.services ,
-        servicesName : editLeadReducer.servicesName ,
-        isExistingClient: true,
-        remark: editLeadReducer.remark,
-        assignedTo: Number(editLeadReducer.assignedTo) || 0, // ✅ Ensure it's an integer
-        isActive: true,
-      },
-    ],
+    serviceDetails: newServices.length > 0
+    ? newServices.map(service => ({
+        id: 0, 
+        customerId: 0,  
+        serviceId: lastReducer.serviceId,
+        serviceName: lastReducer.serviceName,
+        isExistingClient: true, 
+        remark: service.description, 
+        assignedTo: lastReducer.assignedTo, 
+       assignedToName: lastReducer.assignedToName,
+        isActive: true
+      }))
+    : lastReducer.serviceDetails || [
+        {
+          id: 0,
+          customerId: 0,
+          serviceId: lastReducer.serviceId,
+          serviceName: lastReducer.serviceName,
+          isExistingClient: true,
+          remark: lastReducer.remark,
+          assignedTo: lastReducer.assignedTo, 
+          assignedToName: lastReducer.assignedToName, 
+          isActive: true
+        }
+      ]
   };
-  console.log("📤 Submitting Lead Data:", JSON.stringify(leadData, null, 2));
+  console.log("📤 Submitting Lead Data:"+ JSON.stringify(leadData));
 
 
   try {
-    const response = await leadAPISubmit(leadData, "root");
+    const response = await leadAPISubmit(leadData, user);
     console.log("✅ Lead Submitted Successfully:", response);
-
-    dispatch({ type: SUBMIT_SUCCESS, payload: response });
+    if(response.message == "Lead added successfully." || response.success == true){
+      dispatch({ type: SUBMIT_SUCCESS_LEAD, payload: response });
+    }else{
+      dispatch({ type: SUBMIT_FAILURE_LEAD, error: response.message });
+    }
+  
   } catch (error) {
     console.error("❌ Lead Submission Failed:", error);
 
     dispatch({ type: SUBMIT_FAILURE, error: error.message });
   }
+
 };

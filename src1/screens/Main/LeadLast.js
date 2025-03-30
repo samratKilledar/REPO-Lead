@@ -21,7 +21,7 @@ import {resetStateLead} from '../../redux/actions/lastAction';
 
 const LeadLast = props => {
   const dispatch = useDispatch();
-  const {assignto, services, remark, servicesName, assignToName} = useSelector(
+  const {assignedTo, serviceId, remark, serviceName, assignedToName} = useSelector(
     state => state.lastReducer,
   );
   const navigation = useNavigation();
@@ -52,11 +52,21 @@ const LeadLast = props => {
   });
 
   const handleSubmit = () => {
+    if (cards.length === 0) {
+      showToast("Card cannot be empty. Add at least 1 card to submit.");
+      return;
+    }
+    
     dispatch(leadSubmitAllData(cards));
   };
 
   const handleAdd = () => {
-    if (!services || !services.trim()) {
+    if (!assignedTo || String(assignedTo).trim() === "") {
+      showToast("AssignTo cannot be empty");
+      return;
+    }
+    
+    if (!serviceId || !serviceId.trim()) {
       showToast('Services cannot be empty');
       return;
     }
@@ -67,8 +77,8 @@ const LeadLast = props => {
     }
 
     const newCard = {
-      id: services,
-      title: servicesName,
+      id: serviceId,
+      title: serviceName,
       date: new Date().toLocaleDateString(),
       description: remark,
     };
@@ -111,16 +121,16 @@ const LeadLast = props => {
       </View>
       <View style={styles.centerContainer}>
         <StatusDropdown
-          label={assignToName}
-          selectedValue={assignto}
+          label={assignedToName}
+          selectedValue={assignedTo}
           onValueChange={value => dispatch(updateAssignTo(value))}
           apiType="assignTo"
           listData={assignToList.assignTo[3]}
           zIndex={4000}
         />
         <StatusDropdown
-          label={servicesName}
-          selectedValue={service1.services}
+          label={serviceName}
+          selectedValue={service1.serviceId}
           onValueChange={value => dispatch(updateServices(value))}
           apiType="leadSource"
           listData={service1.service}

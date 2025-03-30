@@ -39,17 +39,17 @@ const LeadAddPersonal = ({ navigation }) => {
     lastName,
     mobileNo,
     emailId,
-    leadSources,
-    leadSourcesName,
+    leadSource,
+    leadSourceName,
     whatsAppNo,
     addressLine1,
     addressLine2,
     pincode,
-    city,
+    cityId,
     cityName,
-    state,
+    stateId,
     stateName,
-    country,
+    countryId,
     countryName,
   } = useSelector(state => state.lastReducer);
   const cityList = useSelector(state => state.homeReducer);
@@ -82,19 +82,19 @@ const LeadAddPersonal = ({ navigation }) => {
       showToast('Please enter a valid 6-digit Pincode.');
       return false;
     }
-    if (!city) {
+    if (!cityId) {
       showToast('Please select City.');
       return false;
     }
-    if (!state) {
+    if (!stateId) {
       showToast('Please select State.');
       return false;
     }
-    if (!country) {
+    if (!countryId) {
       showToast('Please select Country.');
       return false;
     }
-    if (!leadSources) {
+    if (!leadSource) {
       showToast('Please select Lead Source');
       return false;
     }
@@ -107,6 +107,10 @@ const LeadAddPersonal = ({ navigation }) => {
     }
   };
 
+  const goback = () => {
+    navigation.navigate('LeadScreen');
+  }
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -115,7 +119,7 @@ const LeadAddPersonal = ({ navigation }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
-            <NavigationHeaderBack text="Add Lead" onPress={() => navigation.goBack()} />
+            <NavigationHeaderBack text="Add Lead" onPress={goback} />
           </View>
 
           <View style={styles.stepperContainer}>
@@ -138,8 +142,8 @@ const LeadAddPersonal = ({ navigation }) => {
                 />
 
                 <StatusDropdown
-                  label={leadSourcesName}
-                  selectedValue={leadSources}
+                  label={leadSourceName}
+                  selectedValue={leadSource}
                   onValueChange={value => dispatch(updateLeadSources(value))}
                   apiType="leadSource"
                   listData={leadSourceList.leadSource}
@@ -181,7 +185,7 @@ const LeadAddPersonal = ({ navigation }) => {
 
                 <StatusDropdown
                   label={cityName}
-                  selectedValue={city}
+                  selectedValue={cityId}
                   onValueChange={value => dispatch(updateCity(value))}
                   apiType="city"
                   listData={cityList.city}
@@ -189,7 +193,7 @@ const LeadAddPersonal = ({ navigation }) => {
 
                 <StatusDropdown
                   label={stateName}
-                  selectedValue={state}
+                  selectedValue={stateId}
                   onValueChange={value => dispatch(updateState(value))}
                   listData={stateList.state}
                   apiType="state"
@@ -197,7 +201,7 @@ const LeadAddPersonal = ({ navigation }) => {
 
                 <StatusDropdown
                   label={countryName}
-                  selectedValue={country}
+                  selectedValue={countryId}
                   onValueChange={value => dispatch(updateCountry(value))}
                   listData={countryList.country}
                   apiType="country"

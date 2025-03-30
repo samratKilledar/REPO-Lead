@@ -17,8 +17,8 @@ const EditLead3 = (props) => {
   // useEffect(() => {
   //   dispatch(EditLeadFetch());
   // }, [dispatch]);
+  const { assignedTo, serviceId, remark, serviceName, assignedToName } = useSelector((state) => state.editLeadReducer);
 
-  const { assignto, services, remark, servicesName, assignToName   } = useSelector((state) => state.editLeadReducer);
   // const {service1} = useSelector((state)=> state.homeReducer)
   // alert(service1)
   const service1= useSelector(state => state.homeReducer);
@@ -58,26 +58,26 @@ const EditLead3 = (props) => {
   };
 
   const handleAdd = () => {
-    // if (!assignto || !assignto.trim()) {
-    //     showToast("Assign to cannot be empty");
-    //     return;
-    // }
-
-    if (!services || !services.trim()) {
-        showToast("Services cannot be empty");
-        return;
+    if (!assignedTo || String(assignedTo).trim() === "") {
+      showToast("AssignTo cannot be empty");
+      return;
+    }
+    
+    if (!serviceId || !serviceId.trim()) {
+      showToast('Services cannot be empty');
+      return;
     }
 
     if (!remark || !remark.trim()) {
-        showToast("Remark cannot be empty");
-        return;
+      showToast('Remark cannot be empty');
+      return;
     }
 
     const newCard = {
-        id: Date.now(),
-        title: services[0], 
-        date: new Date().toLocaleDateString(),
-        description: remark
+      id: serviceId,
+      title: serviceName,
+      date: new Date().toLocaleDateString(),
+      description: remark,
     };
 
     setCards((prevCards) => [...prevCards, newCard]);
@@ -99,8 +99,8 @@ const EditLead3 = (props) => {
       </View>
       <View style={styles.centerContainer}>
         <StatusDropdown
-          label={assignToName}
-          selectedValue={assignto}
+          label={assignedToName}
+          selectedValue={assignedTo}
           onValueChange={(value) => dispatch(updateAssignTo(value))}
          apiType="assignTo"
          listData={assignToList.assignTo[3]}
@@ -116,8 +116,8 @@ const EditLead3 = (props) => {
           /> */}
         
         <StatusDropdown
-                label={servicesName}
-                selectedValue={service1.services}
+                label={serviceName}
+                selectedValue={service1.serviceId}
                 onValueChange={(value) => dispatch(updateServices(value))}
                 apiType="leadSource"
                 listData={service1.service}

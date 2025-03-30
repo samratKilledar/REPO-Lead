@@ -36,9 +36,9 @@ export const updateLastName = (lastName) => ({
   payload: lastName,
 });
 
-export const updateLeadSources = (leadSources) => ({
+export const updateLeadSources = (leadSource) => ({
   type: UPDATE_LEADSOURCES,
-  payload: leadSources,
+  payload: leadSource,
 });
 
 export const updateMobileNo = (mobileNo) => ({
@@ -66,19 +66,19 @@ export const updateAddressLine2 = (addressLine2) => ({
   payload: addressLine2,
 });
 
-export const updateCity = (city) => ({
+export const updateCity = (cityId) => ({
   type: UPDATE_CITY,
-  payload: city,
+  payload: cityId,
 });
 
-export const updateState = (state) => ({
+export const updateState = (stateId) => ({
   type: UPDATE_STATE,
-  payload: state,
+  payload: stateId,
 });
 
-export const updateCountry = (country) => ({
+export const updateCountry = (countryId) => ({
   type: UPDATE_COUNTRY,
-  payload: country,
+  payload: countryId,
 });
 
 export const updatePincode = (pincode) => ({
@@ -91,9 +91,9 @@ export const updateOccupation = (occupation) => ({
   payload: occupation,
 });
 
-export const updateTypeOfWork = (typeOfWork) => ({
+export const updateTypeOfWork = (workType) => ({
   type: UPDATE_TYPEOFWORK,
-  payload: typeOfWork,
+  payload: workType,
 });
 
 export const updateMonthlyIncome = (monthlyIncome) => ({
@@ -101,14 +101,14 @@ export const updateMonthlyIncome = (monthlyIncome) => ({
   payload: monthlyIncome,
 });
 
-export const updateAssignTo = (assignTo) => ({
+export const updateAssignTo = (assignedTo) => ({
   type: UPDATE_ASSIGNTO,
-  payload: assignTo,
+  payload: assignedTo,
 });
 
-export const updateServices = (services) => ({
+export const updateServices = (serviceId) => ({
   type: UPDATE_SERVICES,
-  payload: services,
+  payload: serviceId,
 });
 
 export const updateRemark = (remark) => ({
@@ -134,41 +134,45 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
     whatsAppNo: lastReducer.whatsAppNo,
     addressLine1: lastReducer.addressLine1,
     addressLine2: lastReducer.addressLine2 ,
-    city : lastReducer.city ,
+    cityId : lastReducer.cityId ,
     cityName : lastReducer.cityName,
-    state : lastReducer.state,
+    stateId : lastReducer.stateId,
     stateName : lastReducer.stateName,
-    country : lastReducer.country,
+    countryId : lastReducer.countryId,
     countryName : lastReducer.countryName,
     pincode: lastReducer.pincode,
-    leadSources: lastReducer.leadSources ,
-    leadSourcesName: lastReducer.leadSourcesName,
+    leadSource: lastReducer.leadSource ,
+    leadSourceName: lastReducer.leadSourceName,
     occupation: lastReducer.occupation ,
     occupationName: lastReducer.occupationName ,
-    typeOfWork: lastReducer.typeOfWork ,
-    assignedTo: Number(lastReducer.assignedTo) || 2, 
+    workType: lastReducer.workType ,
+    monthlyIncome: lastReducer.monthlyIncome,
+    assignedTo: lastReducer.assignedTo, 
+    assignedToName: lastReducer.assignedToName, 
     leadDate: new Date().toISOString(),
     isActive: true,
     serviceDetails: newServices.length > 0
     ? newServices.map(service => ({
         id: 0, 
-        customerId: 0, 
-        services: Number(service.id), 
-        servicesName: service.title, 
+        customerId: 0,  
+        serviceId: lastReducer.serviceId,
+        serviceName: lastReducer.serviceName,
         isExistingClient: true, 
         remark: service.description, 
-        assignTo: Number(lastReducer.assignedTo) || 0, 
+        assignedTo: lastReducer.assignedTo, 
+       assignedToName: lastReducer.assignedToName,
         isActive: true
       }))
     : lastReducer.serviceDetails || [
         {
           id: 0,
           customerId: 0,
-          services: Number(service.id),
-          servicesName: lastReducer.servicesName,
+          serviceId: lastReducer.serviceId,
+          serviceName: lastReducer.serviceName,
           isExistingClient: true,
           remark: lastReducer.remark,
-          assignedTo: Number(lastReducer.assignedTo) || 0,
+          assignedTo: lastReducer.assignedTo, 
+          assignedToName: lastReducer.assignedToName, 
           isActive: true
         }
       ]

@@ -19,14 +19,14 @@ const LeadAddOccupation = (props) => {
 
   const { 
     occupation, occupationName,
-    typeOfWork,
+    workType,
     monthlyIncome,
   } = useSelector(state => state.lastReducer);
 
   const occupationList = useSelector(state => state.homeReducer);
 
   const leadLastHandle = () => {
-    if (!typeOfWork.trim()) {
+    if (!workType.trim()) {
       showToast("Type of Work cannot be empty");
       return;
     }
@@ -81,7 +81,7 @@ const LeadAddOccupation = (props) => {
         />
 
         <CustomTextInput
-          value={typeOfWork}
+          value={workType}
           placeholder="Type of Work"
           onChangeText={(text) => {
             dispatch(updateTypeOfWork(text));

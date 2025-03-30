@@ -30,14 +30,18 @@ const Editlead1 = ({ navigation, route }) => {
     lastName,
     mobileNo,
     emailId,
-    leadSources,leadName,
+    leadSource,
+    leadSourceName,
     whatsAppNo,
     addressLine1,
     addressLine2,
     pincode,
-    city,cityName,
-    state,stateName,
-    country,countryName
+    cityId,
+    cityName,
+    stateId,
+    stateName,
+    countryId,
+    countryName,
   } = useSelector(state => state.editLeadReducer);
 
   const cityList = useSelector(state => state.homeReducer);
@@ -69,18 +73,28 @@ const Editlead1 = ({ navigation, route }) => {
       showToast('Please enter a valid 10-digit Mobile Number.');
       return false;
     }
-    if (!addressLine1.trim()) {
-      showToast('Please enter Address Line 1.');
+    if (!emailId || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailId.trim())) {
+      showToast('Please enter a valid Email Address.');
       return false;
     }
-    // Convert pincode to string before trimming and testing
-    const pincodeStr = String(pincode || '');
-    if (!pincodeStr.trim() || !/^\d{6}$/.test(pincodeStr)) {
+    if (!pincode.trim() || !/^\d{6}$/.test(pincode)) {
       showToast('Please enter a valid 6-digit Pincode.');
       return false;
     }
-    if (emailId && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailId.trim())) {
-      showToast('Please enter a valid Email Address.');
+    if (!cityId) {
+      showToast('Please select City.');
+      return false;
+    }
+    if (!stateId) {
+      showToast('Please select State.');
+      return false;
+    }
+    if (!countryId) {
+      showToast('Please select Country.');
+      return false;
+    }
+    if (!leadSource) {
+      showToast('Please select Lead Source');
       return false;
     }
     return true;
@@ -122,8 +136,8 @@ const Editlead1 = ({ navigation, route }) => {
               />
               
               <StatusDropdown
-                label={leadName}
-                selectedValue={leadSources}
+                label={leadSourceName}
+                selectedValue={leadSource}
                 onValueChange={(value) => dispatch(updateLeadSources(value))}
                 apiType="leadSource"
                 listData={leadSourceList.leadSource}
@@ -164,7 +178,7 @@ const Editlead1 = ({ navigation, route }) => {
             
               <StatusDropdown
                 label={cityName}
-                selectedValue={city}
+                selectedValue={cityId}
                 onValueChange={(value) => dispatch(updateCity(value))}
                 apiType="city"
                 listData={cityList.city}
@@ -173,7 +187,7 @@ const Editlead1 = ({ navigation, route }) => {
             
               <StatusDropdown
                 label={stateName}
-                selectedValue={state}
+                selectedValue={stateId}
                 onValueChange={(value) => dispatch(updateState(value))}
                 apiType="state"
                 listData={stateList.state}
@@ -182,7 +196,7 @@ const Editlead1 = ({ navigation, route }) => {
             
               <StatusDropdown
                 label={countryName}
-                selectedValue={country}
+                selectedValue={countryId}
                 onValueChange={(value) => dispatch(updateCountry(value))}
                 apiType="country"
                 listData={countryList.country}
