@@ -32,20 +32,20 @@ const initialState = {
   whatsAppNo:"",
   addressLine1:"",
   addressLine2:"",
-  city:"",
+  cityId:"",
   cityName:"Select City",
-  state:"",
+  stateId:"",
   stateName:"Select State",
-  country:"",
+  countryId:"",
   countryName:"Select Country",
   isdCode:"",
   pincode:"",
   occupation:"",
   occupationName:"Occupation Name",
-  typeOfWork:"",
+  typeOfWork:"it",
   monthlyIncome:"",
-  assignTo:"",
-  assignToName: "Assign To",
+  assignedTo:"",
+  assignedToName: "Assign To",
   services:"",
   servicesName:"Services",
   remark:"",
@@ -82,13 +82,13 @@ const lastReducer = (state = initialState, action) => {
       return { ...state, addressLine2: action.payload };
 
     case UPDATE_CITY:
-      return { ...state, city: action.payload.id, cityName:action.payload.name };
+      return { ...state, cityId: action.payload.id, cityName:action.payload.name };
 
     case UPDATE_STATE:
-      return { ...state, state: action.payload.id,stateName:action.payload.name };
+      return { ...state, stateId: action.payload.id,stateName:action.payload.name };
 
     case UPDATE_COUNTRY:
-      return { ...state, country: action.payload.id, countryName: action.payload.name,isdCode:action.payload.isdCode};
+      return { ...state, countryId: action.payload.id, countryName: action.payload.name,isdCode:action.payload.isdCode};
 
     case UPDATE_PINCODE:
       return { ...state, pincode: action.payload };
@@ -103,7 +103,7 @@ const lastReducer = (state = initialState, action) => {
       return { ...state, monthlyIncome: action.payload };
 
     case UPDATE_ASSIGNTO:
-      return { ...state, assignTo: action.payload.id, assignToName:action.payload.name };
+      return { ...state, assignedTo: action.payload.id, assignedToName:action.payload.name };
 
     case UPDATE_SERVICES:
       return { ...state, services: action.payload.id , servicesName:action.payload.name };

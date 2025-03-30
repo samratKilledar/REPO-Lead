@@ -59,19 +59,21 @@ const LeadCard = props => {
 
   const editProfile = async () => {
     try {
-      if (!id) {
+      alert(props.id)
+      if (!props.id) {
         Alert.alert('Error', "This lead isn't ready for editing yet");
         return;
       }
 
       setIsEditing(true);
-      console.log('Editing lead ID:', id);
+      console.log('Editing lead ID:', props.id);
 
-      const result = await dispatch(EditLeadFetch(id));
-      if (result) {
-        // Only navigate if successful
-        navigation.navigate('Editlead1');
-      }
+      dispatch(EditLeadFetch(props.id));
+      // if (result) {
+      //   // Only navigate if successful
+      //   alert(JSON.stringify(result)+"===="+props.id)
+      //  // navigation.navigate('Editlead1');
+      // }
     } catch (error) {
       console.error('Edit failed:', error);
       const message =
@@ -113,6 +115,7 @@ const LeadCard = props => {
 
   const details = () => {
     if (props.screenType === 'lead') {
+      alert( props.id+"== "+props.name)
       props.navigation.navigate('LeadDetails', {
         leadId: props.id,
         name: props.name,

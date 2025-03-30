@@ -14,19 +14,14 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import {
-  leadSubmitAllData,
-  updateAssignTo,
-  updateRemark,
-  updateServices,
-} from '../../redux/actions/lastAction';
-
-import {useNavigation} from '@react-navigation/native';
+import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
+import { state } from '../../api/mainApi';
+import { useNavigation } from '@react-navigation/native';
 import {resetStateLead} from '../../redux/actions/lastAction';
 
 const LeadLast = props => {
   const dispatch = useDispatch();
-  const {assignto, services, remark, servicesName, assignToName} = useSelector(
+  const {assignedTo, services, remark, servicesName, assignedToName} = useSelector(
     state => state.lastReducer,
   );
   const navigation = useNavigation();
@@ -61,6 +56,11 @@ const LeadLast = props => {
   };
 
   const handleAdd = () => {
+    if (!assignedTo || String(assignedTo).trim() === "") {
+      showToast("AssignTo cannot be empty");
+      return;
+    }
+    
     if (!services || !services.trim()) {
       showToast('Services cannot be empty');
       return;
@@ -116,14 +116,13 @@ const LeadLast = props => {
       </View>
       <View style={styles.centerContainer}>
         <StatusDropdown
-          label={assignToName}
-          selectedValue={assignto}
+          label={assignedToName}
+          selectedValue={assignedTo}
           onValueChange={value => dispatch(updateAssignTo(value))}
           apiType="assignTo"
           listData={assignToList.assignTo[3]}
           zIndex={4000}
         />
-
         <StatusDropdown
           label={servicesName}
           selectedValue={service1.services}
