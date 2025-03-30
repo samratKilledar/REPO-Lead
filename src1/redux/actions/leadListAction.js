@@ -1,12 +1,11 @@
 
-import {LeadList} from '../../api/mainApi';
-import {testDeleteLead} from '../../api/apiClient';
-import {setItem, getItem} from '../../api/storageServices';
+import { LeadList, LeadDetail } from '../../api/mainApi';
+import { testDeleteLead } from '../../api/apiClient';
+import { setItem, getItem } from '../../api/storageServices';
 
 export const FETCH_LEADS_REQUEST = "FETCH_LEADS_REQUEST";
 export const FETCH_LEADS_SUCCESS = "FETCH_LEADS_SUCCESS";
 export const FETCH_LEADS_FAILURE = "FETCH_LEADS_FAILURE";
-
 export const DELETE_LEAD_SUCCESS = "DELETE_LEAD_SUCCESS";
 export const DELETE_LEAD_FAILURE = "DELETE_LEAD_FAILURE";
 
@@ -46,16 +45,16 @@ export const fetchLeads = () => async (dispatch) => {
     const today = new Date();
     const fromDate = getFormattedDate(new Date(today.getFullYear(), today.getMonth(), 1)); // First day of the month
     const toDate = getFormattedDate(today); // Today's date
-    
+
     const apiUrl = `https://opticalerp.in:85/api/lead/getlist/get-all?fromdate=${fromDate}&todate=${toDate}`;
-    
+
     const data = await LeadList(apiUrl);
     console.log("API Response Data:", data); // ✅ Debugging Step 1
 
     if (Array.isArray(data) && data.length > 0) {
       const leadIds = data.map(lead => lead.id); // Extract all lead IDs
       setItem('leadIds', JSON.stringify(leadIds)); // Store as a JSON string
-      
+
       dispatch(fetchLeadsSuccess(data));
       console.log("All Lead IDs:", leadIds); // ✅ Debugging Step 2
     } else {
@@ -67,3 +66,44 @@ export const fetchLeads = () => async (dispatch) => {
   }
 };
 
+
+export const LeadDetailFetch = (leadId) => {
+  return async (dispatch) => {
+    dispatch(fetchLeadsRequest());
+    try {
+      const response = await LeadDetail(leadId);
+
+      if (response && response.data) {
+        const leadData = response.data;
+
+        const transformedData = {
+          id: leadData.id || null,
+          firstName: leadData.firstName || '',
+          lastName: leadData.lastName || '',
+          mobileNo: leadData.mobileNo || '',
+          whatsAppNo: leadData.whatsAppNo || '',
+          addressLine1: leadData.addressLine1 || '',
+          addressLine2: leadData.addressLine2 || '',
+          cityName: leadData.cityName || '',
+          stateName: leadData.stateName || '',
+          countryName: leadData.countryName || '',
+          pincode: leadData.pincode || '',
+          occupationName: leadData.occupationName || '',
+          workType: leadData.workType || '',
+          monthlyIncome: leadData.monthlyIncome || 0,
+          organisationName: leadData.organisationName || '',
+          leadStatusName: leadData.leadStatusName || '',
+          leadDate: leadData.leadDate || '',
+          InsuranceList: leadData.serviceDetails || []
+        };
+
+        dispatch(fetchLeadsSuccess(transformedData));
+      } else {
+        throw new Error("Invalid API response structure");
+      }
+    } catch (error) {
+      console.error("Lead Fetch Error:", error.message);
+      dispatch(fetchLeadsFailure(error.message));
+    }
+  };
+};

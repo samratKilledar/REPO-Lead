@@ -66,19 +66,19 @@ export const updateAddressLine2 = (addressLine2) => ({
   payload: addressLine2,
 });
 
-export const updateCity = (city) => ({
+export const updateCity = (cityId) => ({
   type: UPDATE_CITY,
-  payload: city,
+  payload: cityId,
 });
 
-export const updateState = (state) => ({
+export const updateState = (stateId) => ({
   type: UPDATE_STATE,
-  payload: state,
+  payload: stateId,
 });
 
-export const updateCountry = (country) => ({
+export const updateCountry = (countryId) => ({
   type: UPDATE_COUNTRY,
-  payload: country,
+  payload: countryId,
 });
 
 export const updatePincode = (pincode) => ({
@@ -101,9 +101,9 @@ export const updateMonthlyIncome = (monthlyIncome) => ({
   payload: monthlyIncome,
 });
 
-export const updateAssignTo = (assignTo) => ({
+export const updateAssignTo = (assignedTo) => ({
   type: UPDATE_ASSIGNTO,
-  payload: assignTo,
+  payload: assignedTo,
 });
 
 export const updateServices = (services) => ({
@@ -134,11 +134,11 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
     whatsAppNo: lastReducer.whatsAppNo,
     addressLine1: lastReducer.addressLine1,
     addressLine2: lastReducer.addressLine2 ,
-    city : lastReducer.city ,
+    cityId : lastReducer.cityId ,
     cityName : lastReducer.cityName,
-    state : lastReducer.state,
+    stateId : lastReducer.stateId,
     stateName : lastReducer.stateName,
-    country : lastReducer.country,
+    countryId : lastReducer.countryId,
     countryName : lastReducer.countryName,
     pincode: lastReducer.pincode,
     leadSources: lastReducer.leadSources ,
@@ -146,7 +146,8 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
     occupation: lastReducer.occupation ,
     occupationName: lastReducer.occupationName ,
     typeOfWork: lastReducer.typeOfWork ,
-    assignedTo: Number(lastReducer.assignedTo) || 2, 
+    assignedTo: lastReducer.assignedTo, 
+    assignedToName: lastReducer.assignedToName, 
     leadDate: new Date().toISOString(),
     isActive: true,
     serviceDetails: newServices.length > 0
@@ -157,7 +158,8 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
         servicesName: service.title, 
         isExistingClient: true, 
         remark: service.description, 
-        assignedTo: Number(lastReducer.assignedTo) || 0, 
+        assignedTo: lastReducer.assignedTo, 
+    assignedToName: lastReducer.assignedToName,
         isActive: true
       }))
     : lastReducer.serviceDetails || [
@@ -168,7 +170,8 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
           servicesName: lastReducer.servicesName,
           isExistingClient: true,
           remark: lastReducer.remark,
-          assignedTo: Number(lastReducer.assignedTo) || 0,
+          assignedTo: lastReducer.assignedTo, 
+          assignedToName: lastReducer.assignedToName, 
           isActive: true
         }
       ]

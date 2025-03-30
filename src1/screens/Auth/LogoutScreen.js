@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Image, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, Dimensions , TouchableWithoutFeedback} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Image, ScrollView, StyleSheet, TouchableOpacity, Modal, TextInput, Dimensions, TouchableWithoutFeedback } from 'react-native';
 import TextStyle from '../../styles/TextStyle';
 import CustomText from '../../components/CustomText';
 import CustomButton from "../../components/CustomButton";
@@ -8,6 +8,8 @@ import Dropdown from '../../components/Dropdown';
 import CustomTextInput from '../../components/CustomTextInput';
 import ButtonStyles from '../../styles/ButtonStyles';
 import LinearGradient from 'react-native-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CommonActions } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get('window');
 
@@ -15,6 +17,7 @@ const LogoutScreen = ({ navigation }) => {
   const [modalVisible, setmodalVisible] = useState(false);
   const [Services, setServices] = useState(null);
   const [serviceName, setServiceName] = useState('');
+
 
   const GradientCard = ({ style, colors, start, end, children }) => (
     <LinearGradient
@@ -131,30 +134,44 @@ const LogoutScreen = ({ navigation }) => {
         </View>
 
         <Modal visible={modalVisible} animationType="slide" transparent={true}>
-        <TouchableWithoutFeedback onPress={() => setmodalVisible(false)}>
-          <View style={styles.bottomModalOverlay}>
-            <View style={styles.bottomModalContainer}>
-              <CustomText text={"Logout"} customstyle={TextStyle.modallText} />
-              <Image source={require("../../assets/icons/Line.png")} style={styles.line} />
-              <CustomText text={"Are you sure you want to log out?"} customstyle={TextStyle.logoutText} />
-              <CustomButton
-                title={"Yes, logout"}
-                customStyle={{ width: width - 30 }}
-                onPress={() => {
-                  setmodalVisible(false);
-                  navigation.navigate('LoginScreen');
-                }}
-              />
-              <View style={{ width: width - 30 }}>
+          <TouchableWithoutFeedback onPress={() => setmodalVisible(false)}>
+            <View style={styles.bottomModalOverlay}>
+              <View style={styles.bottomModalContainer}>
+                <CustomText text={"Logout"} customstyle={TextStyle.modallText} />
+                <Image source={require("../../assets/icons/Line.png")} style={styles.line} />
+                <CustomText text={"Are you sure you want to log out?"} customstyle={TextStyle.logoutText} />
                 <CustomButton
-                  title={"Cancel"}
-                  customStyle={ButtonStyles.cancelbutton}
-                  textStyles={ButtonStyles.cancelButtonText}
-                  onPress={() => setmodalVisible(false)}
+                  title={"Yes, logout"}
+                  customStyle={{ width: width - 30 }}
+                  onPress={async () => {
+                    try {
+                      await AsyncStorage.removeItem('authToken');
+
+                      setmodalVisible(false);
+
+                      // Reset stack and navigate to LoginScreen
+                      navigation.dispatch(
+                        CommonActions.reset({
+                          index: 0,
+                          routes: [{ name: 'LoginScreen' }],
+                        })
+                      );
+                    } catch (error) {
+                      console.error('Error clearing auth token:', error);
+                    }
+                  }}
+
                 />
+                <View style={{ width: width - 30 }}>
+                  <CustomButton
+                    title={"Cancel"}
+                    customStyle={ButtonStyles.cancelbutton}
+                    textStyles={ButtonStyles.cancelButtonText}
+                    onPress={() => setmodalVisible(false)}
+                  />
+                </View>
               </View>
             </View>
-          </View>
           </TouchableWithoutFeedback>
         </Modal>
       </View>
@@ -250,12 +267,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   bottomModalContainer: {
-    height: height * 0.43, 
+    height: height * 0.43,
     backgroundColor: 'white',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     padding: width * 0.04,
-    gap : 20,
+    gap: 20,
   },
   modalScrollContent: {
     flexGrow: 1,
@@ -277,18 +294,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '100%', 
+    width: '100%',
     marginVertical: height * 0.01,
-    paddingHorizontal: width * 0.05, 
+    paddingHorizontal: width * 0.05,
   },
   iconContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-end', 
-    gap: width * 0.05, 
+    justifyContent: 'flex-end',
+    gap: width * 0.05,
   },
   smallIcon: {
-    width: width * 0.05, 
+    width: width * 0.05,
     height: width * 0.05,
     resizeMode: 'contain',
   },

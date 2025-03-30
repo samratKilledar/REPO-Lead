@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useCallback } from "react";
 import { View, ScrollView, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from 'react-redux';
 import LeadCard from "../../components/LeadCard";
@@ -6,7 +6,7 @@ import HeaderComp from "../../components/HeaderComp";
 import TextStyle from "../../styles/TextStyle";
 import { fetchLeads } from "../../redux/actions/leadListAction";
 import CustomText from "../../components/CustomText";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation,useFocusEffect } from "@react-navigation/native";
 import LottieScreen from "../../styles/Loader";
 import { RefreshControl } from "react-native";
 
@@ -18,9 +18,11 @@ const LeadScreen = (props) => {
 
   const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    dispatch(fetchLeads());
-  }, [dispatch]);
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(fetchLeads());
+    }, [dispatch])
+  );
 
   useEffect(()=>{
     alert(JSON.stringify(leads))
