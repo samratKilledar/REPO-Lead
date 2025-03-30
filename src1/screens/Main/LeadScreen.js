@@ -22,6 +22,10 @@ const LeadScreen = (props) => {
     dispatch(fetchLeads());
   }, [dispatch]);
 
+  useEffect(()=>{
+    alert(JSON.stringify(leads))
+  })
+
   const onRefresh = () => {
     setRefreshing(true);
     dispatch(fetchLeads()).finally(() => setRefreshing(false));
