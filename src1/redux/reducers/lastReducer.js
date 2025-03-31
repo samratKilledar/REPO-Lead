@@ -5,6 +5,7 @@ import { UPDATE_ASSIGNTO,
   UPDATE_FIRSTNAME,
   UPDATE_LASTNAME,
   UPDATE_LEADSOURCES,
+  UPDATE_OTHER_SOURCE,  // Add this import 
   UPDATE_MOBILENO,
   UPDATE_EMAILID,
   UPDATE_WHATSAPPNO,
@@ -15,6 +16,7 @@ import { UPDATE_ASSIGNTO,
   UPDATE_COUNTRY,
   UPDATE_PINCODE,
   UPDATE_OCCUPATION,
+  UPDATE_ORGANISATIONNAME,
   UPDATE_TYPEOFWORK,
   UPDATE_MONTHLYINCOME,
   SUBMIT_REQUEST,
@@ -23,15 +25,16 @@ import { UPDATE_ASSIGNTO,
 
 
 const initialState = {
-  firstName: "",
-  lastName: "", 
+  firstName: "Pranjali",
+  lastName: "patil", 
   leadSource: "",
   leadSourceName:"Lead Source",
-  mobileNo:"",
-  emailId:"",
+  otherSource:"",
+  mobileNo:"9860763112",
+  emailId:"pranju@gmail.com",
   whatsAppNo:"",
-  addressLine1:"",
-  addressLine2:"",
+  addressLine1:"c",
+  addressLine2:"c",
   cityId:"",
   cityName:"Select City",
   stateId:"",
@@ -39,16 +42,17 @@ const initialState = {
   countryId:"",
   countryName:"Select Country",
   isdCode:"",
-  pincode:"",
+  pincode:"123456",
   occupation:"",
   occupationName:"Occupation Name",
-  workType:"",
-  monthlyIncome:"",
+  organisationName:"",
+  workType:"it",
+  monthlyIncome:"60000",
   assignedTo:"",
   assignedToName: "Assign To",
   serviceId:"",
   serviceName:"Services",
-  remark:"",
+  remark:"bhj",
   messageFromServer:""
 };
 
@@ -63,8 +67,18 @@ const lastReducer = (state = initialState, action) => {
     case UPDATE_LASTNAME:
       return { ...state, lastName: action.payload };
 
-    case UPDATE_LEADSOURCES:
-      return { ...state, leadSource: action.payload.id, leadSourceName:action.payload.name };
+      case UPDATE_LEADSOURCES:
+        return { 
+          ...state, 
+          leadSource: action.payload.id, 
+          leadSourceName: action.payload.name, 
+          showNewSourceInput: action.payload.id === 12  // ✅ Show text input if ID is 12
+        };
+        case UPDATE_OTHER_SOURCE:  // ✅ Handle new source name
+        return { 
+          ...state, 
+          otherSource: action.payload 
+        };
 
     case UPDATE_MOBILENO:
       return { ...state, mobileNo: action.payload };
@@ -94,7 +108,7 @@ const lastReducer = (state = initialState, action) => {
       return { ...state, pincode: action.payload };
 
     case UPDATE_OCCUPATION:
-      return { ...state, occupation: action.payload.id, occupationName: action.payload.name};
+      return { ...state, occupation: action.payload.id, occupationName: action.payload.name,showNewCompanyInput: action.payload.id === 5};
 
     case UPDATE_TYPEOFWORK:
       return { ...state, workType: action.payload };
@@ -104,6 +118,12 @@ const lastReducer = (state = initialState, action) => {
 
     case UPDATE_ASSIGNTO:
       return { ...state, assignedTo: action.payload.id, assignedToName:action.payload.name };
+
+      case UPDATE_ORGANISATIONNAME:  // ✅ Handle new source name
+      return { 
+        ...state, 
+        organisationName: action.payload 
+      };
 
     case UPDATE_SERVICES:
       return { ...state, serviceId: action.payload.id , serviceName:action.payload.name };

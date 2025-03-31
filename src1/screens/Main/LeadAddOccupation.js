@@ -6,7 +6,7 @@ import CustomTextInput from "../../components/CustomTextInput";
 import Stepper from "../../components/StepperComp";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import StatusDropdown from "../../components/StatusDropdown";
-import { updateMonthlyIncome, updateOccupation, updateTypeOfWork } from "../../redux/actions/lastAction";
+import { updateMonthlyIncome, updateOccupation,updateOrganisationName, updateTypeOfWork } from "../../redux/actions/lastAction";
 
 const LeadAddOccupation = (props) => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const LeadAddOccupation = (props) => {
   };
 
   const { 
-    occupation, occupationName,
+    occupation, occupationName,organisationName,
     workType,
     monthlyIncome,
   } = useSelector(state => state.lastReducer);
@@ -58,6 +58,28 @@ const LeadAddOccupation = (props) => {
     props.navigation.goBack();
   };
 
+  const [showNewCompanyInput, setshowNewCompanyInput] = useState(false);
+  
+    // ✅ Handle Dropdown Selection
+    const handleOccupationChange = (value) => {
+      console.log('Selected Lead Source:', value);
+    
+      if (parseInt(value.id, 10) === 5) {
+        setshowNewCompanyInput(true);
+        dispatch(updateOccupation(value)); // Keep lead source selection
+      } else {
+        setshowNewCompanyInput(false);
+        dispatch(updateOccupation(value)); // Normal selection
+        dispatch(updateOrganisationName('')); // Clear otherSource
+      }
+    };
+    
+    // ✅ Debugging: Check if leadSource updates in Redux
+    useEffect(() => {
+      console.log('Redux Lead Source State Updated:', occupationName);
+    }, [occupationName]);
+
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.5 }}>
@@ -72,13 +94,21 @@ const LeadAddOccupation = (props) => {
         <StatusDropdown
           label={occupationName}
           selectedValue={occupation}
-          onValueChange={(value) => {
-            dispatch(updateOccupation(value));
-          }}
+          onValueChange={ handleOccupationChange}
           apiType="occupation"
           listData={occupationList.occupation}
           zIndex={1000}
         />
+        
+        {showNewCompanyInput && (
+                  <CustomTextInput
+                  placeholder="Enter Company Name"
+                    value={organisationName} // Bind to Redux
+                    onChangeText={(text) => {
+                      dispatch(updateOrganisationName(text)); // Store separately
+                    }}
+                  />
+                )} 
 
         <CustomTextInput
           value={workType}

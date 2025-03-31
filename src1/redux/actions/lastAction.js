@@ -11,6 +11,7 @@ export const UPDATE_REMARK = "UPDATE_REMARK";
 export const UPDATE_FIRSTNAME = "UPDATE_FIRSTNAME";
 export const UPDATE_LASTNAME = "UPDATE_LASTNAME";
 export const UPDATE_LEADSOURCES = "UPDATE_LEADSOURCES";
+export const UPDATE_OTHER_SOURCE = "UPDATE_OTHER_SOURCE"; 
 export const UPDATE_MOBILENO = "UPDATE_MOBILENO";
 export const UPDATE_EMAILID = "UPDATE_EMAILID";
 export const UPDATE_WHATSAPPNO = "UPDATE_WHATSAPPNO";
@@ -21,6 +22,7 @@ export const UPDATE_STATE = "UPDATE_STATE";
 export const UPDATE_COUNTRY = "UPDATE_COUNTRY";
 export const UPDATE_PINCODE = "UPDATE_PINCODE";
 export const UPDATE_OCCUPATION = "UPDATE_OCCUPATION";
+export const UPDATE_ORGANISATIONNAME="UPDATE_ORGANISATIONNAME";
 export const UPDATE_TYPEOFWORK = "UPDATE_TYPEOFWORK";
 export const UPDATE_MONTHLYINCOME = "UPDATE_MONTHLYINCOME";
 export const RESET_ALL_STATE = "RESET_ALL_STATE";
@@ -40,6 +42,11 @@ export const updateLeadSources = (leadSource) => ({
   type: UPDATE_LEADSOURCES,
   payload: leadSource,
 });
+
+export const updateOtherSource = (otherSource) => ({
+  type: UPDATE_OTHER_SOURCE,
+  payload: otherSource,
+}); 
 
 export const updateMobileNo = (mobileNo) => ({
   type: UPDATE_MOBILENO,
@@ -91,6 +98,11 @@ export const updateOccupation = (occupation) => ({
   payload: occupation,
 });
 
+export const updateOrganisationName = (otherSource) => ({
+  type: UPDATE_ORGANISATIONNAME,
+  payload: otherSource,
+}); 
+
 export const updateTypeOfWork = (workType) => ({
   type: UPDATE_TYPEOFWORK,
   payload: workType,
@@ -130,6 +142,9 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
     firstName: lastReducer.firstName,
     lastName: lastReducer.lastName,
     emailId: lastReducer.emailId ,
+    leadSource: lastReducer.leadSource ,
+    leadSourceName: lastReducer.leadSourceName,
+    otherSource:lastReducer.otherSource,
     mobileNo: lastReducer.mobileNo ,
     whatsAppNo: lastReducer.whatsAppNo,
     addressLine1: lastReducer.addressLine1,
@@ -141,14 +156,13 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
     countryId : lastReducer.countryId,
     countryName : lastReducer.countryName,
     pincode: lastReducer.pincode,
-    leadSource: lastReducer.leadSource ,
-    leadSourceName: lastReducer.leadSourceName,
     occupation: lastReducer.occupation ,
     occupationName: lastReducer.occupationName ,
     workType: lastReducer.workType ,
     monthlyIncome: lastReducer.monthlyIncome,
     assignedTo: lastReducer.assignedTo, 
     assignedToName: lastReducer.assignedToName, 
+    organisationName:lastReducer.organisationName,
     leadDate: new Date().toISOString(),
     isActive: true,
     serviceDetails: newServices.length > 0

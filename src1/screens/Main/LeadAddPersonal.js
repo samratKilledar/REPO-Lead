@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -30,6 +30,7 @@ import {
   updateWhatsAppNo,
   updateFirstName,
   updateLeadSources,
+  updateOtherSource,
 } from '../../redux/actions/lastAction';
 
 const LeadAddPersonal = ({ navigation }) => {
@@ -41,6 +42,7 @@ const LeadAddPersonal = ({ navigation }) => {
     emailId,
     leadSource,
     leadSourceName,
+    otherSource,
     whatsAppNo,
     addressLine1,
     addressLine2,
@@ -111,6 +113,34 @@ const LeadAddPersonal = ({ navigation }) => {
     navigation.navigate('LeadScreen');
   }
 
+  // ✅ State for new source input field
+  
+  const [showNewSourceInput, setShowNewSourceInput] = useState(false);
+
+  // ✅ Handle Dropdown Selection
+  const handleLeadSourceChange = (value) => {
+    console.log('Selected Lead Source:', value);
+  
+    if (parseInt(value.id, 10) === 12) {
+      setShowNewSourceInput(true);
+      dispatch(updateLeadSources(value)); // Keep lead source selection
+    } else {
+      setShowNewSourceInput(false);
+      dispatch(updateLeadSources(value)); // Normal selection
+      dispatch(updateOtherSource('')); // Clear otherSource
+    }
+  };
+  
+  
+  
+
+  // ✅ Debugging: Check if leadSource updates in Redux
+  useEffect(() => {
+    console.log('Redux Lead Source State Updated:', leadSource);
+  }, [leadSource]);
+
+  
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -141,13 +171,26 @@ const LeadAddPersonal = ({ navigation }) => {
                   onChangeText={value => dispatch(updateLastName(value))}
                 />
 
+                {/* ✅ Lead Source Dropdown */}
                 <StatusDropdown
                   label={leadSourceName}
                   selectedValue={leadSource}
-                  onValueChange={value => dispatch(updateLeadSources(value))}
+                  onValueChange={handleLeadSourceChange}
                   apiType="leadSource"
                   listData={leadSourceList.leadSource}
                 />
+
+                {/* ✅ Show text input if "Refer by" is selected */}
+                {showNewSourceInput && (
+                  <CustomTextInput
+                  placeholder="Enter Source Name"
+                    value={otherSource} // Bind to Redux
+                    onChangeText={(text) => {
+                      dispatch(updateOtherSource(text)); // Store separately
+                    }}
+                    style={styles.textInput}
+                  />
+                )}
                 
 
                 <CustomTextInput
