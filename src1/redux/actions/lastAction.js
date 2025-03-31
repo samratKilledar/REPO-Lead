@@ -26,7 +26,7 @@ export const UPDATE_ORGANISATIONNAME="UPDATE_ORGANISATIONNAME";
 export const UPDATE_TYPEOFWORK = "UPDATE_TYPEOFWORK";
 export const UPDATE_MONTHLYINCOME = "UPDATE_MONTHLYINCOME";
 export const RESET_ALL_STATE = "RESET_ALL_STATE";
-
+export const SET_ALL_DATA_DEFAULT_FOR_EDIT = "SET_ALL_DATA_DEFAULT_FOR_EDIT";
 
 export const updateFirstName = (firstName) => ({
   type: UPDATE_FIRSTNAME,
@@ -211,6 +211,11 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
 
 };
 
+export const setAllInputFileds=(leadData,leadId)=>({
+  type: SET_ALL_DATA_DEFAULT_FOR_EDIT,
+  payload: leadData,
+  //updateFirstName()
+})
 
 
 export const submitSuccess = () => ({ type: SUBMIT_SUCCESS });

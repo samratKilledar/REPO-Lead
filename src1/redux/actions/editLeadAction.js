@@ -1,4 +1,5 @@
-import { EditLead , editUpdate } from "../../api/authApi";
+import {   EditLeadReadData } from "../../api/apiClient";
+import {EditLead} from "../../api/authApi";
 import { leadAPISubmit } from "../../api/mainApi";
 
 export const SUBMIT_SUCCESS = "SUBMIT_SUCCESS";
@@ -22,7 +23,7 @@ export const UPDATE_PINCODE = "UPDATE_PINCODE";
 export const UPDATE_OCCUPATION = "UPDATE_OCCUPATION";
 export const UPDATE_TYPEOFWORK = "UPDATE_TYPEOFWORK";
 export const UPDATE_MONTHLYINCOME = "UPDATE_MONTHLYINCOME";
-
+export const EDIT_DATA_AUTO_FILL_SUCCESS = "EDIT_DATA_AUTO_FILL_SUCCESS";
 
 // Personal Information Actions
 export const updateFirstName = (firstName) => ({
@@ -131,6 +132,11 @@ export const submitFailure = (error) => ({
 
 export const submitRequest = () => ({ type: SUBMIT_REQUEST });
 
+export const updateLeadData = (data)=>({
+  type: EDIT_DATA_AUTO_FILL_SUCCESS,
+  payload: data,
+})
+
 export const EditLeadFetch = (leadId) => async (dispatch) => {
   try {
     if (!leadId || leadId === 'undefined') {
@@ -138,33 +144,36 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
     }
 
     const data = await EditLead(leadId);
-    
-    if (!data || data.error) {
-      throw new Error(data?.error || 'Lead data not found');
+    if(leadId == data.id){
+     // alert(JSON.stringify(data))
+      dispatch(updateLeadData(data));
     }
+    // if (!data || data.error) {
+    //   throw new Error(data?.error || 'Lead data not found');
+    // }
     
-    // Dispatch updates - add null checks for nested objects
-    dispatch(updateFirstName(data.firstName || ''));
-    dispatch(updateLastName(data.lastName || ''));
-    dispatch(updateLeadSources(data.leadSource?.id || '', data.leadSource?.name || 'Lead Sources'));
-    dispatch(updateMobileNo(data.mobileNo || ''));
-    dispatch(updateEmailId(data.emailId || ''));
-    dispatch(updateWhatsAppNo(data.whatsAppNo || ''));
-    dispatch(updateAddressLine1(data.addressLine1 || ''));
-    dispatch(updateAddressLine2(data.addressLine2 || ''));
-    dispatch(updateCity(data.cityId?.id || '', data.city?.name || 'Select City'));
-    dispatch(updateState(data.stateId?.id || '', data.state?.name || 'Select State'));
-    dispatch(updateCountry(data.countryId?.id || '', data.country?.name || 'Select Country', data.country?.isdCode || ''));
-    dispatch(updatePincode(data.pincode || ''));
-    dispatch(updateOccupation(data.occupation?.id || '', data.occupation?.name || 'Occupation'));
-    dispatch(updateTypeOfWork(data.workType || ''));
-    dispatch(updateMonthlyIncome(data.monthlyIncome || ''));
-    dispatch(updateAssignTo(data.assignedTo || ''));
-    dispatch(updateServices(data.serviceId?.id || '', data.serviceId?.name || 'Services'));
-    dispatch(updateRemark(data.remark || ''));
+    // // Dispatch updates - add null checks for nested objects
+    // dispatch(updateFirstName(data.firstName || ''));
+    // dispatch(updateLastName(data.lastName || ''));
+    // dispatch(updateLeadSources(data.leadSource?.id || '', data.leadSource?.name || 'Lead Sources'));
+    // dispatch(updateMobileNo(data.mobileNo || ''));
+    // dispatch(updateEmailId(data.emailId || ''));
+    // dispatch(updateWhatsAppNo(data.whatsAppNo || ''));
+    // dispatch(updateAddressLine1(data.addressLine1 || ''));
+    // dispatch(updateAddressLine2(data.addressLine2 || ''));
+    // dispatch(updateCity(data.cityId?.id || '', data.city?.name || 'Select City'));
+    // dispatch(updateState(data.stateId?.id || '', data.state?.name || 'Select State'));
+    // dispatch(updateCountry(data.countryId?.id || '', data.country?.name || 'Select Country', data.country?.isdCode || ''));
+    // dispatch(updatePincode(data.pincode || ''));
+    // dispatch(updateOccupation(data.occupation?.id || '', data.occupation?.name || 'Occupation'));
+    // dispatch(updateTypeOfWork(data.workType || ''));
+    // dispatch(updateMonthlyIncome(data.monthlyIncome || ''));
+    // dispatch(updateAssignTo(data.assignedTo || ''));
+    // dispatch(updateServices(data.serviceId?.id || '', data.serviceId?.name || 'Services'));
+    // dispatch(updateRemark(data.remark || ''));
     
-    dispatch(submitSuccess());
-    return data; // Return the data for component-level checks
+    // dispatch(submitSuccess());
+    // return data; // Return the data for component-level checks
   } catch (error) {
     console.error("Error fetching lead:", error);
     throw error; // Re-throw for component handling

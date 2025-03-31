@@ -31,10 +31,21 @@ import {
   updateFirstName,
   updateLeadSources,
   updateOtherSource,
+  setAllInputFileds
 } from '../../redux/actions/lastAction';
 
-const LeadAddPersonal = ({ navigation }) => {
+const LeadAddPersonal = ({ navigation,route }) => {
   const dispatch = useDispatch();
+  const { leadId, leadData } = route.params || {};
+
+  useEffect(() => {
+    console.log('Lead ID:', leadId);
+    console.log('Lead Data:====>'+ JSON.stringify(leadData));
+    if(leadId != "" && leadData != undefined){
+     dispatch(setAllInputFileds(leadData,leadId))
+    }
+  }, []);
+
   const {
     firstName,
     lastName,
@@ -62,6 +73,9 @@ const LeadAddPersonal = ({ navigation }) => {
   const showToast = message => {
     ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
   };
+  useEffect(()=>{
+    //alert(leadSources)
+  })
 
   const validateFields = () => {
     if (!firstName.trim()) {

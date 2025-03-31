@@ -18,9 +18,9 @@ import { UPDATE_ASSIGNTO,
   UPDATE_TYPEOFWORK,
   UPDATE_MONTHLYINCOME,
   SUBMIT_REQUEST,
-  SUBMIT_SUCCESS_LEAD, 
-  SUBMIT_FAILURE_LEAD,RESET_ALL_STATE  } from "../actions/lastAction";
-
+  SUBMIT_SUCCESS, 
+  SUBMIT_FAILURE,EDIT_DATA_AUTO_FILL_SUCCESS  } from "../actions/editLeadAction";
+import { occupation } from "../../api/mainApi";
 
 const initialState = {
   firstName: "",
@@ -44,12 +44,12 @@ const initialState = {
   occupationName:"Occupation Name",
   workType:"",
   monthlyIncome:"",
-  assignedTo:"",
-  assignedToName: "Assign To",
-  serviceId:"",
-  serviceName:"Services",
+  assignTo:"",
+  services:"",
+  servicesName:"",
   remark:"",
-  messageFromServer:""
+  editLeadDataAgainstId:{}
+ 
 };
 
 const editLeadReducer = (state = initialState, action) => {
@@ -122,6 +122,8 @@ const editLeadReducer = (state = initialState, action) => {
       
     case RESET_ALL_STATE:
       return initialState
+    case EDIT_DATA_AUTO_FILL_SUCCESS:
+      return {...state, editLeadDataAgainstId: action.payload}  
 
     default:
       return state;

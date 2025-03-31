@@ -149,13 +149,13 @@ export const apiGetLeadList = async (url, token) => {
 
 
 export const apiGetLeadList1 = async (url, token) => {
-  console.log("samrat=============", url);
-  console.log("sss================", token);
+  console.log("Making GET request to:", url);
+  console.log("Using token:", token); 
 
   try {
     const token = await AsyncStorage.getItem("newToken");
       if (token == null) {
-        apiGetLeadList1(api.assignTo)
+        //apiGetLeadList1(api.assignTo)
         throw new Error("------------------------------------Authentication token not found. Please login again.");
       }
     const response = await fetch(url, {
@@ -334,49 +334,39 @@ export const apiGetEditList = async (url,token) => {
   }
 };
 
-export const apigetAddFollowUp = async (url, tenantId) => {
-  console.log("Fetching Data from:", url);
-
+export const EditLeadReadData = async (leadId) => {
   try {
-    const user = await getItem('tenantId');
-    const token = await AsyncStorage.getItem("newToken");
+    const token = await AsyncStorage.getItem("newToken"); // Retrieve token from storage
+
     if (!token) {
       throw new Error("Authentication token not found. Please login again.");
     }
 
-    const response = await fetch(url, {
+    const apiUrl = `https://opticalerp.in:85/api/lead/getbyleadid/${leadId}`;
+
+    console.log("Fetching data from:", apiUrl);
+
+    const response = await fetch(apiUrl, {
       method: "GET",
       headers: {
-        Authorization: `Bearer ${token}`,
-        tenantId: user,
+        "Accept": "application/json",
+        "Authorization": `Bearer ${token}`, // Pass token in the header
       },
     });
 
-    console.log("📢 Response Status Code:", response.status);
-    console.log("📢 Response Headers:", response.headers);
+    console.log("Response status:", response.status);
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error("❌ API Error:", response.status, errorText);
-      Alert.alert("Error", `HTTP Error ${response.status}: ${errorText}`);
-      return;
+      const errorText = await response.text(); // Get error message
+      console.error("Server Response:", errorText);
+      throw new Error(`HTTP Error: ${response.status} - ${errorText}`);
     }
 
-    const text = await response.text();
-    if (!text.trim()) {
-      console.warn("⚠ Server returned an empty response.");
-      //Alert.alert("Warning", "No data received from the server.");
-      return;
-    }
-
-    const result = JSON.parse(text);
-    console.log("✅ API Response Body:", result);
-    return result;
+    const data = await response.json();
+    console.log("API Response:", data);
+    return data;
   } catch (error) {
-    Alert.alert("Error", error.message);
-    console.error("❌ Error:", error.message);
+    console.error(`GET ${leadId} Error:`, error.message);
     throw error;
   }
 };
-
-
