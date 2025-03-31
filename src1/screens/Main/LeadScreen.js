@@ -23,7 +23,7 @@ const LeadScreen = (props) => {
   }, [dispatch]);
 
   useEffect(()=>{
-  //  alert(JSON.stringify(leads))
+    //alert("==samrat==>"+JSON.stringify(editLeadDataAgainstId))
   })
 
   const onRefresh = () => {
@@ -47,15 +47,15 @@ const LeadScreen = (props) => {
         return;
       }
 
-      setIsEditing(true);
-      console.log('Editing lead ID:', id);
+     
+    //   console.log('Editing lead ID:', id);
 
-      const result = await dispatch(EditLeadFetch(id));
-      if (result) {
-        // Only navigate if successful
-        alert(id)
-       // navigation.navigate('Editlead1');
-      }
+    //  // const result = await dispatch(EditLeadFetch(id));
+    //  // if (result) {
+    //     // Only navigate if successful
+    //     alert(id)
+    //    // navigation.navigate('Editlead1');
+    //   //}
     } catch (error) {
       console.error('Edit failed:', error);
       const message =
@@ -63,7 +63,6 @@ const LeadScreen = (props) => {
         'Lead data not available. Please try again in a few seconds.';
       Alert.alert('Error', message);
     } finally {
-      setIsEditing(false);
       setMenuVisible(false);
       setModalVisible(false);
     }

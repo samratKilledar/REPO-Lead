@@ -19,7 +19,7 @@ import { UPDATE_ASSIGNTO,
   UPDATE_MONTHLYINCOME,
   SUBMIT_REQUEST,
   SUBMIT_SUCCESS, 
-  SUBMIT_FAILURE  } from "../actions/editLeadAction";
+  SUBMIT_FAILURE,EDIT_DATA_AUTO_FILL_SUCCESS  } from "../actions/editLeadAction";
 import { occupation } from "../../api/mainApi";
 
 const initialState = {
@@ -47,8 +47,8 @@ const initialState = {
   assignTo:"",
   services:"",
   servicesName:"",
-  remark:""
-
+  remark:"",
+  editLeadDataAgainstId:{}
  
 };
 
@@ -120,7 +120,9 @@ const editLeadReducer = (state = initialState, action) => {
     case SUBMIT_FAILURE:
       return { ...state, isAuthenticated: false , isLoading: false, error: action.payload};
       
-    
+    case EDIT_DATA_AUTO_FILL_SUCCESS:
+      return {...state, editLeadDataAgainstId: action.payload}  
+
     default:
       return state;
   }

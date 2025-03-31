@@ -23,7 +23,7 @@ export const UPDATE_PINCODE = "UPDATE_PINCODE";
 export const UPDATE_OCCUPATION = "UPDATE_OCCUPATION";
 export const UPDATE_TYPEOFWORK = "UPDATE_TYPEOFWORK";
 export const UPDATE_MONTHLYINCOME = "UPDATE_MONTHLYINCOME";
-
+export const EDIT_DATA_AUTO_FILL_SUCCESS = "EDIT_DATA_AUTO_FILL_SUCCESS";
 
 // Personal Information Actions
 export const updateFirstName = (firstName) => ({
@@ -132,6 +132,11 @@ export const submitFailure = (error) => ({
 
 export const submitRequest = () => ({ type: SUBMIT_REQUEST });
 
+export const updateLeadData = (data)=>({
+  type: EDIT_DATA_AUTO_FILL_SUCCESS,
+  payload: data,
+})
+
 export const EditLeadFetch = (leadId) => async (dispatch) => {
   try {
     if (!leadId || leadId === 'undefined') {
@@ -139,7 +144,10 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
     }
 
     const data = await EditLead(leadId);
-    alert(JSON.stringify(data))
+    if(leadId == data.id){
+     // alert(JSON.stringify(data))
+      dispatch(updateLeadData(data));
+    }
     // if (!data || data.error) {
     //   throw new Error(data?.error || 'Lead data not found');
     // }

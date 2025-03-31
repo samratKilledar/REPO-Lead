@@ -8,7 +8,6 @@ import {
   Modal,
   Alert,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import CustomText from './CustomText';
 import TextStyle from '../styles/TextStyle';
@@ -17,9 +16,12 @@ import ButtonStyles from '../styles/ButtonStyles';
 import {EditLeadFetch} from '../redux/actions/editLeadAction';
 import {deleteLead} from '../redux/actions/leadDeleteAction';
 import {useNavigation} from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 
 const LeadCard = props => {
   const dispatch = useDispatch();
+  const {editLeadDataAgainstId} = useSelector((state)=> state.editLeadReducer)
+
   const navigationtolead = useNavigation;
   const {
     id,
@@ -59,7 +61,6 @@ const LeadCard = props => {
 
   const editProfile = async () => {
     try {
-      alert(props.id)
       if (!props.id) {
         Alert.alert('Error', "This lead isn't ready for editing yet");
         return;
@@ -69,6 +70,7 @@ const LeadCard = props => {
       console.log('Editing lead ID:', props.id);
 
       dispatch(EditLeadFetch(props.id));
+      navigation.navigate('LeadAddPersonal', { leadId: props.id, leadData: editLeadDataAgainstId });
       // if (result) {
       //   // Only navigate if successful
       //   alert(JSON.stringify(result)+"===="+props.id)
@@ -115,7 +117,7 @@ const LeadCard = props => {
 
   const details = () => {
     if (props.screenType === 'lead') {
-      alert( props.id+"== "+props.name)
+     // alert( props.id+"== "+props.name)
       props.navigation.navigate('LeadDetails', {
         leadId: props.id,
         name: props.name,
