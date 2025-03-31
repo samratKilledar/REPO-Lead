@@ -2,15 +2,17 @@ import {   EditLeadReadData } from "../../api/apiClient";
 import {EditLead} from "../../api/authApi";
 import { leadAPISubmit } from "../../api/mainApi";
 
-export const SUBMIT_SUCCESS = "SUBMIT_SUCCESS";
-export const SUBMIT_FAILURE = "SUBMIT_FAILURE";
+export const SUBMIT_SUCCESS_LEAD = "SUBMIT_SUCCESS_LEAD";
+export const SUBMIT_FAILURE_LEAD = "SUBMIT_FAILURE_LEAD";
 export const SUBMIT_REQUEST = "SUBMIT_REQUEST";
+export const SUBMIT_FAILURE = "SUBMIT_FAILURE";
 export const UPDATE_ASSIGNTO = "UPDATE_ASSIGNTO";
 export const UPDATE_SERVICES = "UPDATE_SERVICES";
 export const UPDATE_REMARK = "UPDATE_REMARK";
 export const UPDATE_FIRSTNAME = "UPDATE_FIRSTNAME";
 export const UPDATE_LASTNAME = "UPDATE_LASTNAME";
 export const UPDATE_LEADSOURCES = "UPDATE_LEADSOURCES";
+export const UPDATE_OTHER_SOURCE = "UPDATE_OTHER_SOURCE"; 
 export const UPDATE_MOBILENO = "UPDATE_MOBILENO";
 export const UPDATE_EMAILID = "UPDATE_EMAILID";
 export const UPDATE_WHATSAPPNO = "UPDATE_WHATSAPPNO";
@@ -21,6 +23,7 @@ export const UPDATE_STATE = "UPDATE_STATE";
 export const UPDATE_COUNTRY = "UPDATE_COUNTRY";
 export const UPDATE_PINCODE = "UPDATE_PINCODE";
 export const UPDATE_OCCUPATION = "UPDATE_OCCUPATION";
+export const UPDATE_ORGANISATIONNAME="UPDATE_ORGANISATIONNAME";
 export const UPDATE_TYPEOFWORK = "UPDATE_TYPEOFWORK";
 export const UPDATE_MONTHLYINCOME = "UPDATE_MONTHLYINCOME";
 export const EDIT_DATA_AUTO_FILL_SUCCESS = "EDIT_DATA_AUTO_FILL_SUCCESS";
@@ -89,14 +92,24 @@ export const updateLeadSources = (id, name) => ({
   payload: { id, name }
 });
 
+export const updateOtherSource = (otherSource) => ({
+  type: UPDATE_OTHER_SOURCE,
+  payload: otherSource,
+});
+
 export const updateOccupation = (id, name) => ({
   type: UPDATE_OCCUPATION,
   payload: { id, name }
 });
 
+export const updateOrganisationName = (otherSource) => ({
+  type: UPDATE_ORGANISATIONNAME,
+  payload: otherSource,
+}); 
+
 export const updateTypeOfWork = (workType) => ({
   type: UPDATE_TYPEOFWORK,
-  payload: workType
+  payload: workType,
 });
 
 export const updateMonthlyIncome = (monthlyIncome) => ({
@@ -112,7 +125,7 @@ export const updateAssignTo = (id, name) => ({
 // Service Actions
 export const updateServices = (serviceId) => ({
   type: UPDATE_SERVICES,
-  payload: serviceId
+  payload: serviceId,
 });
 
 export const updateRemark = (remark) => ({
@@ -148,32 +161,6 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
      // alert(JSON.stringify(data))
       dispatch(updateLeadData(data));
     }
-    // if (!data || data.error) {
-    //   throw new Error(data?.error || 'Lead data not found');
-    // }
-    
-    // // Dispatch updates - add null checks for nested objects
-    // dispatch(updateFirstName(data.firstName || ''));
-    // dispatch(updateLastName(data.lastName || ''));
-    // dispatch(updateLeadSources(data.leadSource?.id || '', data.leadSource?.name || 'Lead Sources'));
-    // dispatch(updateMobileNo(data.mobileNo || ''));
-    // dispatch(updateEmailId(data.emailId || ''));
-    // dispatch(updateWhatsAppNo(data.whatsAppNo || ''));
-    // dispatch(updateAddressLine1(data.addressLine1 || ''));
-    // dispatch(updateAddressLine2(data.addressLine2 || ''));
-    // dispatch(updateCity(data.cityId?.id || '', data.city?.name || 'Select City'));
-    // dispatch(updateState(data.stateId?.id || '', data.state?.name || 'Select State'));
-    // dispatch(updateCountry(data.countryId?.id || '', data.country?.name || 'Select Country', data.country?.isdCode || ''));
-    // dispatch(updatePincode(data.pincode || ''));
-    // dispatch(updateOccupation(data.occupation?.id || '', data.occupation?.name || 'Occupation'));
-    // dispatch(updateTypeOfWork(data.workType || ''));
-    // dispatch(updateMonthlyIncome(data.monthlyIncome || ''));
-    // dispatch(updateAssignTo(data.assignedTo || ''));
-    // dispatch(updateServices(data.serviceId?.id || '', data.serviceId?.name || 'Services'));
-    // dispatch(updateRemark(data.remark || ''));
-    
-    // dispatch(submitSuccess());
-    // return data; // Return the data for component-level checks
   } catch (error) {
     console.error("Error fetching lead:", error);
     throw error; // Re-throw for component handling
@@ -196,6 +183,9 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
     firstName: lastReducer.firstName,
     lastName: lastReducer.lastName,
     emailId: lastReducer.emailId ,
+    leadSource: lastReducer.leadSource ,
+    leadSourceName: lastReducer.leadSourceName,
+    otherSource:lastReducer.otherSource,
     mobileNo: lastReducer.mobileNo ,
     whatsAppNo: lastReducer.whatsAppNo,
     addressLine1: lastReducer.addressLine1,
@@ -207,14 +197,13 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
     countryId : lastReducer.countryId,
     countryName : lastReducer.countryName,
     pincode: lastReducer.pincode,
-    leadSource: lastReducer.leadSource ,
-    leadSourceName: lastReducer.leadSourceName,
     occupation: lastReducer.occupation ,
     occupationName: lastReducer.occupationName ,
     workType: lastReducer.workType ,
     monthlyIncome: lastReducer.monthlyIncome,
     assignedTo: lastReducer.assignedTo, 
     assignedToName: lastReducer.assignedToName, 
+    organisationName:lastReducer.organisationName,
     leadDate: new Date().toISOString(),
     isActive: true,
     serviceDetails: newServices.length > 0
