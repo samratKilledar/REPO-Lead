@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Image,
@@ -59,6 +59,13 @@ const LeadCard = props => {
     setModalVisible(false);
   };
 
+  useEffect(()=>{
+   alert(editLeadDataAgainstId.id )
+    if(editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined){
+          navigation.navigate('LeadAddPersonal', { leadId: props.id, leadData: editLeadDataAgainstId });
+    }
+  },[editLeadDataAgainstId])
+
   const editProfile = async () => {
     try {
       if (!props.id) {
@@ -70,7 +77,6 @@ const LeadCard = props => {
       console.log('Editing lead ID:', props.id);
 
       dispatch(EditLeadFetch(props.id));
-      navigation.navigate('LeadAddPersonal', { leadId: props.id, leadData: editLeadDataAgainstId });
       // if (result) {
       //   // Only navigate if successful
       //   alert(JSON.stringify(result)+"===="+props.id)

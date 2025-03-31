@@ -39,8 +39,9 @@ const LeadAddPersonal = ({ navigation,route }) => {
 
   useEffect(() => {
     console.log('Lead ID:', leadId);
-    console.log('Lead Data:====>'+ JSON.stringify(leadData));
+    alert('Lead Data:====>'+ JSON.stringify(leadId));
     if(leadId != "" && leadData != undefined){
+      alert(1)
      dispatch(setAllInputFileds(leadData,leadId))
     }
   }, []);
@@ -72,7 +73,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
     ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
   };
   useEffect(()=>{
-    //alert(leadSources)
+  //alert(pincode)
   })
 
   const validateFields = () => {
@@ -92,7 +93,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
       showToast('Please enter a valid Email Address.');
       return false;
     }
-    if (!pincode.trim() || !/^\d{6}$/.test(pincode)) {
+    if (!pincode.toString().trim() || !/^\d{6}$/.test(pincode)) {
       showToast('Please enter a valid 6-digit Pincode.');
       return false;
     }
@@ -218,11 +219,12 @@ const LeadAddPersonal = ({ navigation,route }) => {
                 />
 
                 <CustomTextInput
-                  value={pincode}
+                  value={pincode.toString()}
                   placeholder="Pincode"
                   keyboardType="numeric"
                   onChangeText={value => dispatch(updatePincode(value))}
                 />
+                
 
                 <CustomButton title="Next" customStyle={styles.nextButton} onPress={handleOccupation} />
               </View>

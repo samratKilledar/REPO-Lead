@@ -57,7 +57,7 @@ const initialState = {
 
 const lastReducer = (state = initialState, action) => {
   if (action.type == 'SET_ALL_DATA_DEFAULT_FOR_EDIT') {
-    alert(JSON.stringify(action.payload) + '===');
+    alert(JSON.stringify(action.payload) + '==='+action.payload.pincode);
   }
   switch (action.type) {
     case UPDATE_FIRSTNAME:

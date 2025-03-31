@@ -6,7 +6,7 @@ const StatusDropdown = ({ label, selectedValue, onValueChange, apiType, zIndex, 
   const [selectedItem, setSelectedItem] = useState(selectedValue || null);
 
   useEffect(() => {
-    alert(apiType+" Selected Item: "+selectedItem);
+    //alert(apiType+" Selected Item: "+selectedItem);
   }, [selectedItem]);
 
   useEffect(() => {

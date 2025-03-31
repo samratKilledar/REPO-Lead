@@ -31,7 +31,7 @@ const LeadAddOccupation = (props) => {
       return;
     }
 
-    if (!monthlyIncome.trim()) {
+    if (!monthlyIncome.toString().trim()) {
       showToast("Monthly Income cannot be empty");
       return;
     }
@@ -89,7 +89,7 @@ const LeadAddOccupation = (props) => {
         />
 
         <CustomTextInput
-          value={monthlyIncome}
+          value={monthlyIncome.toString()}
           placeholder="Monthly Income"
           keyboardType="numeric"
           onChangeText={(text) => {

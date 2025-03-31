@@ -53,8 +53,8 @@ const initialState = {
 };
 
 const editLeadReducer = (state = initialState, action) => {
-  if(action.type =="UPDATE_SERVICES"){
-    // alert(JSON.stringify(action.payload)+"===")
+  if(action.type =="EDIT_DATA_AUTO_FILL_SUCCESS"){
+     alert(JSON.stringify(action.payload)+"===")
   }
   switch (action.type) {
     case UPDATE_FIRSTNAME:

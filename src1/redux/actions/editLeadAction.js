@@ -142,10 +142,12 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
     if (!leadId || leadId === 'undefined') {
       throw new Error('Invalid lead ID');
     }
+    console.log(leadId+"respo---------Edit--->"+JSON.stringify(data))
 
     const data = await EditLead(leadId);
+    console.log("respo---------Edit--->"+JSON.stringify(data))
     if(leadId == data.id){
-     // alert(JSON.stringify(data))
+      //alert(JSON.stringify(data))
       dispatch(updateLeadData(data));
     }
     // if (!data || data.error) {
