@@ -4,7 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  Image,
+  Image,Text,
   ToastAndroid,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -28,6 +28,7 @@ const LeadLast = props => {
   const service1 = useSelector(state => state.homeReducer);
   const assignToList = useSelector(state => state.homeReducer);
   const allState = useSelector(state => state.lastReducer);
+  const editLeadDataAgainstId = useSelector(state => state.editLeadReducer.editLeadDataAgainstId)
   const steps = ['Personal', 'Occupation', 'Services'];
   const currentStep = 3;
   const [cards, setCards] = useState([]);
@@ -47,10 +48,19 @@ const LeadLast = props => {
     if (allState.messageFromServer.success) {
       dispatch(resetStateLead());
       showToast(allState.messageFromServer.message);
+      setCards(allState.services)
       navigation.navigate('LeadScreen');
     }
   });
+  const leadLast = useSelector(state => state.homeReducer);
 
+  useEffect(()=>{
+    alert(JSON.stringify(cards))
+  })
+  useEffect(()=>{
+    //alert("==============>"+JSON.stringify(editLeadDataAgainstId.serviceDetails))
+    setCards(editLeadDataAgainstId.serviceDetails)
+  },[editLeadDataAgainstId])
   const handleSubmit = () => {
     if (cards.length === 0) {
       showToast("Card cannot be empty. Add at least 1 card to submit.");
@@ -66,7 +76,7 @@ const LeadLast = props => {
       return;
     }
     
-    if (!serviceId || !serviceId.trim()) {
+    if (!serviceId.toString() || !serviceId.toString().trim()) {
       showToast('Services cannot be empty');
       return;
     }
@@ -76,33 +86,73 @@ const LeadLast = props => {
       return;
     }
 
-    const newCard = {
-      id: serviceId,
-      title: serviceName,
-      date: new Date().toLocaleDateString(),
-      description: remark,
-    };
+    // const newCard = {
+    //   id: serviceId,
+    //   title: serviceName,
+    //   date: new Date().toLocaleDateString(),
+    //   description: remark,
+    // };
 
-    // Check if the newCard already exists based on id and description
-    setCards(prevCards => {
-      const isDuplicate = prevCards.some(
-        card =>
-          card.id === newCard.id && card.description === newCard.description,
-      );
+    // // Check if the newCard already exists based on id and description
+    // setCards(prevCards => {
+    //   const isDuplicate = prevCards.some(
+    //     card =>
+    //       card.id === newCard.id && card.description === newCard.description,
+    //   );
 
-      if (isDuplicate) {
-        showToast('This service already exists!');
-        return prevCards; // Do not add duplicate
+    //   if (isDuplicate) {
+    //     showToast('This service already exists!');
+    //     return prevCards; // Do not add duplicate
+    let newCard ={};
+    if(editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined){
+       newCard = {
+        id: editLeadDataAgainstId.id  ,
+        customerId: editLeadDataAgainstId.customerId,
+        serviceId: serviceId,
+        serviceName: serviceName,
+        leadId:  editLeadDataAgainstId.customerId,
+        clientId: 0,
+        isExistingClient: false,
+        remark: remark,
+        assignedTo: serviceId,
+        assignedToName: assignedToName,
+        isActive: true,
+        date: new Date().toLocaleDateString(),
       }
+    }else{
+       newCard = {
+        id: serviceId,
+        title: serviceName,
+        date: new Date().toLocaleDateString(),
+        remark: remark,
+      };
+    }
+    alert(JSON.stringify(cards) +"=--="+JSON.stringify(newCard ))
+   
 
-      return [...prevCards, newCard]; // Add new card if it's unique
+    // Check if the newCard already exists based on id and remark
+    setCards(prevCards => {
+      const validPrevCards = Array.isArray(prevCards) ? prevCards : [];
+      
+      const isDuplicate = validPrevCards.some(
+        card => card.id === newCard.id && card.remark === newCard.remark
+      );
+    
+      if (isDuplicate) {
+        showToast?.('This service already exists!');
+        return validPrevCards; // Keep existing state if duplicate
+      }
+    
+      // alert(JSON.stringify(validPrevCards)+"======0=======>" + JSON.stringify(newCard));
+      return [...validPrevCards, newCard]; // Add only if unique
     });
+    
   };
 
-  const handleDeleteCard = (id, description) => {
+  const handleDeleteCard = (id, remark) => {
     setCards(prevCards =>
       prevCards.filter(
-        card => !(card.id === id && card.description === description),
+        card => !(card.id === id && card.remark === remark),
       ),
     );
   };
@@ -146,13 +196,13 @@ const LeadLast = props => {
             {cards.map(item => (
               <View key={item.id} style={styles.cardContainer}>
                 <InsuranceCard
-                  title={item.title}
+                  title={item.title!= "" && item.title!= undefined ?  item.title : item.serviceName.toString()}
                   date={item.date}
-                  description={item.description}
+                  description={item.remark!= "" && item.remark!= undefined ? item.remark : item.remark.toString()}
                 />
                 <TouchableOpacity
                   style={styles.deleteButton}
-                  onPress={() => handleDeleteCard(item.id, item.description)}>
+                  onPress={() => handleDeleteCard(item.id, item.remark)}>
                   <Image
                     source={require('../../assets/icons/Delete/delete.png')}
                     style={styles.deleteIcon}
