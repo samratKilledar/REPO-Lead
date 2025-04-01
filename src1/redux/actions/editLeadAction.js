@@ -158,7 +158,7 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
 
     const data = await EditLead(leadId);
     if(leadId == data.id){
-     // alert(JSON.stringify(data))
+    // alert( JSON.stringify(data))
       dispatch(updateLeadData(data));
     }
   } catch (error) {

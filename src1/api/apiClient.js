@@ -301,7 +301,7 @@ export const deleteLeadApi = async (id) => {
   }
 };
 
-export const apiGetEditList = async (url,token) => {
+export const apiGetEditList = async (url,token) => {  //call this function
   console.log("Making GET request to:", url);
   console.log("Using token:", token); 
 

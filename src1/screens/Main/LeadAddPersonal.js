@@ -94,10 +94,14 @@ const LeadAddPersonal = ({ navigation,route }) => {
       showToast('Please enter a valid Email Address.');
       return false;
     }
-    if (!pincode.trim() || !/^\d{6}$/.test(pincode)) {
+    // if (!pincode.trim() || !/^\d{6}$/.test(pincode)) {
+    //   showToast('Please enter a valid 6-digit Pincode.');
+    //   return false;
+    // }
+    if (!pincode.toString().trim() || !/^\d{6}$/.test(pincode)) {
       showToast('Please enter a valid 6-digit Pincode.');
-      return false;
-    }
+      return false;
+    }
     if (!cityId) {
       showToast('Please select City.');
       return false;
@@ -145,16 +149,6 @@ const LeadAddPersonal = ({ navigation,route }) => {
     }
   };
   
-  
-  
-
-  // ✅ Debugging: Check if leadSource updates in Redux
-  useEffect(() => {
-    console.log('Redux Lead Source State Updated:', leadSource);
-  }, [leadSource]);
-
-  
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -265,7 +259,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
                 />
 
                 <CustomTextInput
-                  value={pincode}
+                  value={pincode ? pincode.toString() : ""}
                   placeholder="Pincode"
                   keyboardType="numeric"
                   onChangeText={value => dispatch(updatePincode(value))}
