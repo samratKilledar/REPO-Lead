@@ -18,6 +18,7 @@ import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from 
 import { state } from '../../api/mainApi';
 import { useNavigation } from '@react-navigation/native';
 import {resetStateLead} from '../../redux/actions/lastAction';
+import { leadEditSubmitAllData } from '../../redux/actions/editLeadAction';
 
 const LeadLast = props => {
   const dispatch = useDispatch();
@@ -58,16 +59,25 @@ const LeadLast = props => {
     alert(JSON.stringify(cards))
   })
   useEffect(()=>{
-    //alert("==============>"+JSON.stringify(editLeadDataAgainstId.serviceDetails))
+    alert("==============>"+JSON.stringify(editLeadDataAgainstId))
     setCards(editLeadDataAgainstId.serviceDetails)
   },[editLeadDataAgainstId])
+
   const handleSubmit = () => {
+    console.log(" editLeadDataAgainstId:", editLeadDataAgainstId); 
+  console.log(" editLeadDataAgainstId.id:", editLeadDataAgainstId?.id); 
     if (cards.length === 0) {
       showToast("Card cannot be empty. Add at least 1 card to submit.");
       return;
     }
-    
-    dispatch(leadSubmitAllData(cards));
+    if (editLeadDataAgainstId?.id) {
+      console.log(" Editing Lead...");
+      dispatch(leadEditSubmitAllData(cards));
+    }else{
+      console.log(" Creating New Lead...");
+      dispatch(leadSubmitAllData(cards));
+    }
+   
   };
 
   const handleAdd = () => {
@@ -81,28 +91,12 @@ const LeadLast = props => {
       return;
     }
 
-    if (!remark || !remark.trim()) {
+    if (!remark.toString() || !remark.toString().trim()) {
       showToast('Remark cannot be empty');
       return;
     }
 
-    // const newCard = {
-    //   id: serviceId,
-    //   title: serviceName,
-    //   date: new Date().toLocaleDateString(),
-    //   description: remark,
-    // };
 
-    // // Check if the newCard already exists based on id and description
-    // setCards(prevCards => {
-    //   const isDuplicate = prevCards.some(
-    //     card =>
-    //       card.id === newCard.id && card.description === newCard.description,
-    //   );
-
-    //   if (isDuplicate) {
-    //     showToast('This service already exists!');
-    //     return prevCards; // Do not add duplicate
     let newCard ={};
     if(editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined){
        newCard = {
@@ -186,14 +180,15 @@ const LeadLast = props => {
           listData={service1.service}
         />
         <CustomTextInput
-          value={remark}
+          value={remark ? remark.toString() : ""}
           placeholder="Remark"
           onChangeText={value => dispatch(updateRemark(value))}
         />
         <CustomButton title="Add" onPress={handleAdd} />
         <ScrollView contentContainerStyle={styles.insuranceCardContainer}>
           <View style={styles.insuranceCard}>
-            {cards.map(item => (
+          {Array.isArray(cards) && cards.length > 0 &&
+            cards.map(item => (
               <View key={item.id} style={styles.cardContainer}>
                 <InsuranceCard
                   title={item.title!= "" && item.title!= undefined ?  item.title : item.serviceName.toString()}

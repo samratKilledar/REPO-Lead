@@ -172,7 +172,7 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
         serviceId: lastReducer.serviceId,
         serviceName: lastReducer.serviceName,
         isExistingClient: true, 
-        remark: service.description, 
+        remark: service.remark, 
         assignedTo: lastReducer.assignedTo, 
        assignedToName: lastReducer.assignedToName,
         isActive: true

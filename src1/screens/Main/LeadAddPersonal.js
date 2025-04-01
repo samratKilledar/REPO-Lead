@@ -41,11 +41,19 @@ const LeadAddPersonal = ({ navigation,route }) => {
   useEffect(() => {
     console.log('Lead ID:', leadId);
     alert('Lead Data:====>'+ JSON.stringify(leadId));
-    if(leadId != "" && leadData != undefined){
+    if (leadId !== "" && leadData !== undefined) {
       alert(1)
-     dispatch(setAllInputFileds(leadData,leadId))
+      dispatch(setAllInputFileds(leadData, leadId));
+  
+      // ✅ Check if "Refer By" was selected before and show input
+      if (parseInt(leadData.leadSource, 10) === 12) {
+        setShowNewSourceInput(true);
+      } else {
+        setShowNewSourceInput(false);
+      }
     }
   }, []);
+  
 
   const {
     firstName,
@@ -93,6 +101,10 @@ const LeadAddPersonal = ({ navigation,route }) => {
     }
     if (!emailId || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailId.trim())) {
       showToast('Please enter a valid Email Address.');
+      return false;
+    }
+    if (!addressLine1.trim()) {
+      showToast('Please enter Address.');
       return false;
     }
     // if (!pincode.trim() || !/^\d{6}$/.test(pincode)) {

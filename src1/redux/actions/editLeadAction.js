@@ -171,14 +171,124 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
 
 
 
-export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
+// export const leadEditSubmitAllData = (newCard) => async (dispatch, getState) => {
+//   dispatch({ type: SUBMIT_REQUEST });
+//   const { lastReducer } = getState();
+//   console.log("----------" + JSON.stringify(newCard));
+
+//   const user = await getItem("tenantId");
+//   //let newServices = newCard;
+
+//   if (!leadId) {
+//     console.warn("❌ No lead ID provided for update.");
+//     return;
+//   }
+//   // Ensure leadId is correctly retrieved from state or response
+//   const leadId = lastReducer.leadId || 0;
+
+//   const leadData = {
+//     id: leadId, // Use existing lead ID if editing
+//     tenantId: user,
+//     customerId: lastReducer.customerId || 0,
+//     entity: "someEntityValue",
+//     firstName: lastReducer.firstName,
+//     lastName: lastReducer.lastName,
+//     emailId: lastReducer.emailId,
+//     leadSource: lastReducer.leadSource,
+//     leadSourceName: lastReducer.leadSourceName,
+//     otherSource: lastReducer.otherSource,
+//     mobileNo: lastReducer.mobileNo,
+//     whatsAppNo: lastReducer.whatsAppNo,
+//     addressLine1: lastReducer.addressLine1,
+//     addressLine2: lastReducer.addressLine2,
+//     cityId: lastReducer.cityId,
+//     cityName: lastReducer.cityName,
+//     stateId: lastReducer.stateId,
+//     stateName: lastReducer.stateName,
+//     countryId: lastReducer.countryId,
+//     countryName: lastReducer.countryName,
+//     pincode: lastReducer.pincode,
+//     occupation: lastReducer.occupation,
+//     occupationName: lastReducer.occupationName,
+//     workType: lastReducer.workType,
+//     monthlyIncome: lastReducer.monthlyIncome,
+//     assignedTo: lastReducer.assignedTo,
+//     assignedToName: lastReducer.assignedToName,
+//     organisationName: lastReducer.organisationName,
+//     leadDate: new Date().toISOString(),
+//     isActive: true,
+//     serviceDetails:
+//       newServices.length > 0
+//         ? newServices.map((service) => ({
+//             id: service.id || 0, // Preserve existing service ID if editing
+//             customerId: lastReducer.customerId || 0,
+//             serviceId: lastReducer.serviceId,
+//             serviceName: lastReducer.serviceName,
+//             isExistingClient: true,
+//             remark: service.description,
+//             assignedTo: lastReducer.assignedTo,
+//             assignedToName: lastReducer.assignedToName,
+//             isActive: true,
+//           }))
+//         : lastReducer.serviceDetails || [
+//             {
+//               id: 0,
+//               customerId: lastReducer.customerId || 0,
+//               serviceId: lastReducer.serviceId,
+//               serviceName: lastReducer.serviceName,
+//               isExistingClient: true,
+//               remark: lastReducer.remark,
+//               assignedTo: lastReducer.assignedTo,
+//               assignedToName: lastReducer.assignedToName,
+//               isActive: true,
+//             },
+//           ],
+//   };
+  
+//   console.log("📤 Submitting Lead Data:" + JSON.stringify(leadData));
+
+//   try {
+//     const response = await leadAPISubmit(leadData, user);
+//     console.log("✅ Lead Submitted Successfully:", response);
+    
+//     if (response.success) {
+//       dispatch({ type: SUBMIT_SUCCESS_LEAD, payload: response });
+      
+//       // Store leadId for future edits
+//       if (!lastReducer.leadId) {
+//         dispatch({ type: "UPDATE_LEAD_ID", payload: response.leadId });
+//       }
+//     } else {
+//       dispatch({ type: SUBMIT_FAILURE_LEAD, error: response.message });
+//     }
+//   } catch (error) {
+//     console.error("❌ Lead Submission Failed:", error);
+//     dispatch({ type: SUBMIT_FAILURE, error: error.message });
+//   }
+// };
+
+
+
+export const leadEditSubmitAllData = (cards) => async (dispatch, getState) => {
+  console.log("leadEditSubmitAllData function called!");  // Add this
   dispatch({ type: SUBMIT_REQUEST });
-  const { lastReducer } = getState();
-  console.log("----------"+JSON.stringify(newCard))
-  const user = await getItem('tenantId');
-  let newServices=newCard;
-  const leadData = {
-    id: 0,
+
+  const { lastReducer, editLeadDataAgainstId } = getState(); // Get existing lead details
+  const user = await getItem("tenantId");
+
+  console.log(" editLeadDataAgainstId----:", JSON.stringify(editLeadDataAgainstId));
+  console.log(" lastReducer:", JSON.stringify(lastReducer));
+
+  if (!editLeadDataAgainstId || !editLeadDataAgainstId.id) {
+    console.error(" Lead ID is missing, cannot edit.");
+    dispatch({ type: SUBMIT_FAILURE, error: "Lead ID is required for editing." });
+    return;
+  }
+
+  const newServices = cards || [];
+
+const leadData = {
+  id: lastReducer.id,
     tenantId: user,
     customerId: 0,
     entity: "someEntityValue", 
@@ -215,7 +325,7 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
         serviceId: lastReducer.serviceId,
         serviceName: lastReducer.serviceName,
         isExistingClient: true, 
-        remark: service.description, 
+        remark: service.remark, 
         assignedTo: lastReducer.assignedTo, 
        assignedToName: lastReducer.assignedToName,
         isActive: true
@@ -234,22 +344,20 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
         }
       ]
   };
-  console.log("📤 Submitting Lead Data:"+ JSON.stringify(leadData));
 
+  console.log("📡 Sending data to API:", JSON.stringify(leadData));
 
   try {
-    const response = await leadAPISubmit(leadData, user);
-    console.log("✅ Lead Submitted Successfully:", response);
-    if(response.message == "Lead added successfully." || response.success == true){
+    const response = await leadAPISubmit(leadData, user); // Ensure this API supports updating
+    console.log("✅ Lead Updated Successfully:", response);
+
+    if (response.success === true || response.message === "Lead updated successfully.") {
       dispatch({ type: SUBMIT_SUCCESS_LEAD, payload: response });
-    }else{
+    } else {
       dispatch({ type: SUBMIT_FAILURE_LEAD, error: response.message });
     }
-  
   } catch (error) {
-    console.error("❌ Lead Submission Failed:", error);
-
+    console.error("❌ Lead Update Failed:", error);
     dispatch({ type: SUBMIT_FAILURE, error: error.message });
   }
-
 };

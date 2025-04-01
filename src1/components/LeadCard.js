@@ -94,7 +94,7 @@ const LeadCard = props => {
       setModalVisible(false);
     }
   };
-
+  
   const handledelete = async () => {
     try {
       if (!id) {

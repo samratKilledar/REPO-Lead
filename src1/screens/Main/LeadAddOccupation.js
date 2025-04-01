@@ -77,8 +77,16 @@ const LeadAddOccupation = (props) => {
 
   // ✅ Debugging: Check if leadSource updates in Redux
   useEffect(() => {
-    console.log('Redux Lead Source State Updated:', occupationName);
-  }, [occupationName]);
+    console.log('Redux Occupation State Updated:', occupation);
+  
+    // ✅ Show "Enter Company Name" field if occupation ID is 5 (or required ID)
+    if (parseInt(occupation, 10) === 5) {
+      setshowNewCompanyInput(true);
+    } else {
+      setshowNewCompanyInput(false);
+    }
+  }, [occupation]);
+  
 
 
   return (
