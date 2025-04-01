@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import {useState} from 'react';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createStackNavigator} from '@react-navigation/stack';
 import {
   View,
   TouchableOpacity,
@@ -47,11 +47,11 @@ import Editlead1 from '../screens/Main/Editlead1';
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 
-const HomeStackScreen = ({ navigation, route }) => {
+const HomeStackScreen = ({navigation, route}) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <HomeStack.Navigator screenOptions={{headerShown: false}}>
       {/* <HomeStack.Screen name="SplashScreen" component={SplashScreen} /> */}
       <HomeStack.Screen name="Home" component={HomeScreen} />
       <HomeStack.Screen name="UpcomingMeetings" component={UpcomingMeetings} />
@@ -64,17 +64,20 @@ const HomeStackScreen = ({ navigation, route }) => {
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
-      <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen} />
+      <HomeStack.Screen
+        name="CloseAccountScreen"
+        component={CloseAccountScreen}
+      />
       <HomeStack.Screen name="LeadAddServices" component={LeadAddServices} />
     </HomeStack.Navigator>
   );
 };
 
-const LeadStackScreen = ({ navigation, route }) => {
+const LeadStackScreen = ({navigation, route}) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <HomeStack.Navigator screenOptions={{headerShown: false}}>
       <HomeStack.Screen name="Lead" component={LeadScreen} />
       {/* <HomeStack.Screen name="AddFollowUp" component={AddFollowUp} /> */}
       {/* <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} /> */}
@@ -83,7 +86,10 @@ const LeadStackScreen = ({ navigation, route }) => {
       {/* <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} /> */}
       {/* <HomeStack.Screen name="Notifications" component={Notifications} /> */}
       <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
-      <HomeStack.Screen name="LeadAddOccupation" component={LeadAddOccupation} />
+      <HomeStack.Screen
+        name="LeadAddOccupation"
+        component={LeadAddOccupation}
+      />
       <HomeStack.Screen name="LeadLast" component={LeadLast} />
       <HomeStack.Screen name="Editlead1" component={Editlead1} />
       <HomeStack.Screen name="EditLead2" component={EditLead2} />
@@ -92,43 +98,61 @@ const LeadStackScreen = ({ navigation, route }) => {
   );
 };
 
-const LogoutStackScreen = ({ navigation, route }) => {
+const LogoutStackScreen = ({navigation, route}) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <HomeStack.Navigator screenOptions={{headerShown: false}}>
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
-      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+      <HomeStack.Screen
+        name="EditProfileScreen"
+        component={EditProfileScreen}
+      />
       <HomeStack.Screen name="LoginScreen" component={LoginScreen} />
       <HomeStack.Screen name="Notifications" component={Notifications} />
     </HomeStack.Navigator>
   );
 };
 
-const ClientStackScreen = ({ navigation, route }) => {
+const ClientStackScreen = ({navigation, route}) => {
   const routeName = getFocusedRouteNameFromRoute(route);
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <HomeStack.Navigator screenOptions={{headerShown: false}}>
       <HomeStack.Screen name="Client" component={ClientScreen} />
-      <HomeStack.Screen name="ClientAddFollowUp" component={ClientAddFollowUP} />
-      <HomeStack.Screen name="EditProfileScreen" component={EditProfileScreen} />
+      <HomeStack.Screen
+        name="ClientAddFollowUp"
+        component={ClientAddFollowUP}
+      />
+      <HomeStack.Screen
+        name="EditProfileScreen"
+        component={EditProfileScreen}
+      />
       <HomeStack.Screen name="ClientDetails" component={ClientDetails} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
-      <HomeStack.Screen name="ClientAddServices" component={ClientAddServices} />
+      <HomeStack.Screen
+        name="ClientAddServices"
+        component={ClientAddServices}
+      />
       <HomeStack.Screen name="Notifications" component={Notifications} />
       <HomeStack.Screen name="LeadAddPersonal" component={LeadAddPersonal} />
-      <HomeStack.Screen name="LeadAddOccupation" component={LeadAddOccupation} />
+      <HomeStack.Screen
+        name="LeadAddOccupation"
+        component={LeadAddOccupation}
+      />
       <HomeStack.Screen name="LeadLast" component={LeadLast} />
     </HomeStack.Navigator>
   );
 };
 
-const TaskStackScreen = ({ navigation, route }) => {
+const TaskStackScreen = ({navigation, route}) => {
   const routeName = getFocusedRouteNameFromRoute(route);
   return (
-    <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <HomeStack.Navigator screenOptions={{headerShown: false}}>
       <HomeStack.Screen name="Task" component={TaskScreen} />
-      <HomeStack.Screen name="CloseAccountScreen" component={CloseAccountScreen} />
+      <HomeStack.Screen
+        name="CloseAccountScreen"
+        component={CloseAccountScreen}
+      />
       <HomeStack.Screen name="AddTask" component={AddTask} />
       <HomeStack.Screen name="LogoutScreen" component={LogoutScreen} />
       <HomeStack.Screen
@@ -141,7 +165,7 @@ const TaskStackScreen = ({ navigation, route }) => {
   );
 };
 
-const CustomTabButton = ({ onPress }) => {
+const CustomTabButton = ({onPress}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
@@ -149,7 +173,7 @@ const CustomTabButton = ({ onPress }) => {
     <View>
       <TouchableOpacity
         style={styles.plusButton}
-        activeOpacity={0.7} 
+        activeOpacity={0.7}
         onPress={() => setModalVisible(true)}>
         <View style={styles.plusButtonInner}>
           <Image
@@ -158,7 +182,7 @@ const CustomTabButton = ({ onPress }) => {
           />
         </View>
       </TouchableOpacity>
-      
+
       <Modal
         transparent={true}
         visible={modalVisible}
@@ -175,7 +199,7 @@ const CustomTabButton = ({ onPress }) => {
               style={styles.option}
               onPress={() => {
                 setModalVisible(false);
-                navigation.navigate('Lead', { screen: 'LeadAddPersonal' });
+                navigation.navigate('Lead', {screen: 'LeadAddPersonal'});
               }}>
               <Text style={styles.optionText}>Lead</Text>
               <Image
@@ -188,7 +212,7 @@ const CustomTabButton = ({ onPress }) => {
               style={styles.option}
               onPress={() => {
                 setModalVisible(false);
-                navigation.navigate('Task', { screen: 'AddTask' });
+                navigation.navigate('Task', {screen: 'AddTask'});
               }}>
               <Text style={styles.optionText}>Task</Text>
               <Image
@@ -205,15 +229,15 @@ const CustomTabButton = ({ onPress }) => {
 
 const MainNavigator = () => {
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       <Tab.Navigator
-        screenOptions={({ route }) => {
+        screenOptions={({route}) => {
           const routeName = getFocusedRouteNameFromRoute(route);
           return {
             tabBarShowLabel: false,
             tabBarStyle:
               routeName === 'Notifications'
-                ? { display: 'none' }
+                ? {display: 'none'}
                 : styles.tabBarStyle,
             headerShown: false,
           };
@@ -222,7 +246,7 @@ const MainNavigator = () => {
           name="HomeStack"
           component={HomeStackScreen}
           options={{
-            tabBarIcon: ({ focused }) => (
+            tabBarIcon: ({focused}) => (
               <View style={styles.tabContainer}>
                 <Image
                   source={
@@ -240,11 +264,41 @@ const MainNavigator = () => {
           }}
         />
 
-        <Tab.Screen
+        {/* <Tab.Screen
           name="Lead"
           component={LeadStackScreen}
           options={{
             tabBarIcon: ({ focused }) => (
+              <View style={styles.tabContainer}>
+                <Image
+                  source={
+                    focused
+                      ? require('../assets/icons/LeadLogoBlue/leadLogoBlue.png')
+                      : require('../assets/icons/LeadLogo/leadLogo.png')
+                  }
+                  style={styles.icon}
+                />
+                <Text style={[styles.label, focused && styles.labelFocused]}>
+                  Lead
+                </Text>
+              </View>
+            ),
+          }}
+        /> */}
+        <Tab.Screen
+          name="Lead"
+          component={LeadStackScreen}
+          listeners={({navigation}) => ({
+            tabPress: e => {
+              e.preventDefault(); // Prevent default behavior
+              navigation.reset({
+                index: 0,
+                routes: [{name: 'Lead'}], // Ensure it always starts at 'LeadScreen'
+              });
+            },
+          })}
+          options={{
+            tabBarIcon: ({focused}) => (
               <View style={styles.tabContainer}>
                 <Image
                   source={
@@ -269,7 +323,7 @@ const MainNavigator = () => {
             tabBarButton: props => (
               <CustomTabButton
                 {...props}
-              // onPress={() => navigation.navigate('AddTask')}
+                // onPress={() => navigation.navigate('AddTask')}
               />
             ),
           }}
@@ -278,7 +332,7 @@ const MainNavigator = () => {
           name="Client"
           component={ClientStackScreen}
           options={{
-            tabBarIcon: ({ focused }) => (
+            tabBarIcon: ({focused}) => (
               <View style={styles.tabContainer}>
                 <Image
                   source={
@@ -300,7 +354,7 @@ const MainNavigator = () => {
           name="Task"
           component={TaskStackScreen}
           options={{
-            tabBarIcon: ({ focused }) => (
+            tabBarIcon: ({focused}) => (
               <View style={styles.tabContainer}>
                 <Image
                   source={
@@ -334,7 +388,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
   },
 
   tabContainer: {
@@ -389,7 +443,7 @@ const styles = StyleSheet.create({
     bottom: 70,
     elevation: 15,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.2,
     shadowRadius: 1,
   },
@@ -415,7 +469,7 @@ const styles = StyleSheet.create({
   optionIcon: {
     width: 28,
     height: 28,
-    resizeMode: "con"
+    resizeMode: 'con',
   },
   triangle: {
     position: 'absolute',
@@ -432,7 +486,6 @@ const styles = StyleSheet.create({
     borderRightColor: 'transparent',
     borderTopColor: 'white',
   },
-
 });
 
 export default MainNavigator;
