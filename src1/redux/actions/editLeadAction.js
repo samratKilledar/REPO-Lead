@@ -27,7 +27,7 @@ export const UPDATE_ORGANISATIONNAME="UPDATE_ORGANISATIONNAME";
 export const UPDATE_TYPEOFWORK = "UPDATE_TYPEOFWORK";
 export const UPDATE_MONTHLYINCOME = "UPDATE_MONTHLYINCOME";
 export const EDIT_DATA_AUTO_FILL_SUCCESS = "EDIT_DATA_AUTO_FILL_SUCCESS";
-
+export const RESET_ALL_STATE = "RESET_ALL_STATE";
 // Personal Information Actions
 export const updateFirstName = (firstName) => ({
   type: UPDATE_FIRSTNAME,
@@ -381,3 +381,4 @@ export const leadEditSubmitAllData = (updatedServices) => async (dispatch, getSt
 };
 
 
+export const resetStateLeadID = () => ({type: RESET_ALL_STATE,});

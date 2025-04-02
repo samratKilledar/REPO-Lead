@@ -16,7 +16,7 @@ import CustomTextInput from '../../components/CustomTextInput';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-
+import {resetStateLeadID} from '../../redux/actions/editLeadAction'
 import {
   updateAddressLine1,
   updateAddressLine2,
@@ -31,7 +31,7 @@ import {
   updateFirstName,
   updateLeadSources,
   updateOtherSource,
-  setAllInputFileds
+  setAllInputFileds,resetStateLead
 } from '../../redux/actions/lastAction';
 
 const LeadAddPersonal = ({ navigation,route }) => {
@@ -139,6 +139,12 @@ const LeadAddPersonal = ({ navigation,route }) => {
       navigation.navigate('LeadAddOccupation');
     }
   };
+ const goBack=()=>{
+  navigation.goBack();
+  dispatch(resetStateLead())
+  dispatch(resetStateLeadID())
+
+ }
 
   const goback = () => {
     navigation.navigate('LeadScreen');
@@ -171,6 +177,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
         <View style={styles.container}>
           <View style={styles.headerContainer}>
             <NavigationHeaderBack text="Add Lead" onPress={goback} />
+            <NavigationHeaderBack text="Add Lead" onPress={ goBack} />
           </View>
 
           <View style={styles.stepperContainer}>
