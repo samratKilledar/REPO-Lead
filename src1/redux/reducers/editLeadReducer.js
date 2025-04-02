@@ -64,6 +64,10 @@ const editLeadReducer = (state = initialState, action) => {
      alert(JSON.stringify(action.payload)+"===")
   }
   switch (action.type) {
+
+    case EDIT_DATA_AUTO_FILL_SUCCESS:
+      return { ...state, editLeadDataAgainstId: action.payload };
+
     case UPDATE_FIRSTNAME:
       return {...state, firstName: action.payload};
 
@@ -153,8 +157,8 @@ const editLeadReducer = (state = initialState, action) => {
         error: action.payload,
       };
       
-    case EDIT_DATA_AUTO_FILL_SUCCESS:
-      return {...state, editLeadDataAgainstId: action.payload}  
+    // case EDIT_DATA_AUTO_FILL_SUCCESS:
+    //   return {...state, editLeadDataAgainstId: action.payload}  
 
     default:
       return state;

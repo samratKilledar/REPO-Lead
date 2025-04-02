@@ -169,195 +169,215 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
   }
 };
 
+import { getItem } from "../../api/storageServices";
+// export const leadEditSubmitAllData = (updatedServices) => async (dispatch, getState) => { 
+//   console.log("🚀 Function Called - leadEditSubmitAllData");
 
-
-// export const leadEditSubmitAllData = (newCard) => async (dispatch, getState) => {
 //   dispatch({ type: SUBMIT_REQUEST });
-//   const { lastReducer } = getState();
-//   console.log("----------" + JSON.stringify(newCard));
 
+//   // 🔍 Get Redux state
+//   const state = getState();
+//   console.log("🛠️ Full Redux State:", state);  
+
+//   const lastReducer = state?.editLeadReducer; 
+//   const editLeadDataAgainstId = state?.editLeadReducer?.editLeadDataAgainstId;
 //   const user = await getItem("tenantId");
-//   //let newServices = newCard;
 
-//   if (!leadId) {
-//     console.warn("❌ No lead ID provided for update.");
+//   if (!editLeadDataAgainstId || !editLeadDataAgainstId.id) {
+//     console.error("❌ Lead ID is missing, cannot edit.");
+//     dispatch({ type: SUBMIT_FAILURE, error: "Lead ID is required for editing." });
 //     return;
 //   }
-//   // Ensure leadId is correctly retrieved from state or response
-//   const leadId = lastReducer.leadId || 0;
 
+//   console.log("📌 editLeadDataAgainstId:", editLeadDataAgainstId); 
+//   console.log("📌 editLeadDataAgainstId.id:", editLeadDataAgainstId?.id);
+
+//   // 📝 Construct lead data with all required fields
 //   const leadData = {
-//     id: leadId, // Use existing lead ID if editing
+//     id: editLeadDataAgainstId.id, // Correct ID
 //     tenantId: user,
-//     customerId: lastReducer.customerId || 0,
-//     entity: "someEntityValue",
-//     firstName: lastReducer.firstName,
-//     lastName: lastReducer.lastName,
-//     emailId: lastReducer.emailId,
-//     leadSource: lastReducer.leadSource,
-//     leadSourceName: lastReducer.leadSourceName,
-//     otherSource: lastReducer.otherSource,
-//     mobileNo: lastReducer.mobileNo,
-//     whatsAppNo: lastReducer.whatsAppNo,
-//     addressLine1: lastReducer.addressLine1,
-//     addressLine2: lastReducer.addressLine2,
-//     cityId: lastReducer.cityId,
-//     cityName: lastReducer.cityName,
-//     stateId: lastReducer.stateId,
-//     stateName: lastReducer.stateName,
-//     countryId: lastReducer.countryId,
-//     countryName: lastReducer.countryName,
-//     pincode: lastReducer.pincode,
-//     occupation: lastReducer.occupation,
-//     occupationName: lastReducer.occupationName,
-//     workType: lastReducer.workType,
-//     monthlyIncome: lastReducer.monthlyIncome,
-//     assignedTo: lastReducer.assignedTo,
-//     assignedToName: lastReducer.assignedToName,
-//     organisationName: lastReducer.organisationName,
-//     leadDate: new Date().toISOString(),
+//     customerId: editLeadDataAgainstId.customerId || 0,
+//     entity: editLeadDataAgainstId.entity || "someEntityValue", 
+//     firstName: lastReducer?.firstName || editLeadDataAgainstId.firstName,
+//     lastName: lastReducer?.lastName || editLeadDataAgainstId.lastName,
+//     emailId: lastReducer?.emailId || editLeadDataAgainstId.emailId,
+//     leadSource: lastReducer?.leadSource || editLeadDataAgainstId.leadSource,
+//     leadSourceName: lastReducer?.leadSourceName || editLeadDataAgainstId.leadSourceName,
+//     otherSource: lastReducer?.otherSource || editLeadDataAgainstId.otherSource,
+//     mobileNo: lastReducer?.mobileNo || editLeadDataAgainstId.mobileNo,
+//     whatsAppNo: lastReducer?.whatsAppNo || editLeadDataAgainstId.whatsAppNo,
+//     addressLine1: lastReducer?.addressLine1 || editLeadDataAgainstId.addressLine1,
+//     addressLine2: lastReducer?.addressLine2 || editLeadDataAgainstId.addressLine2,
+//     cityId: lastReducer?.cityId || editLeadDataAgainstId.cityId,
+//     cityName: lastReducer?.cityName || editLeadDataAgainstId.cityName,
+//     stateId: lastReducer?.stateId || editLeadDataAgainstId.stateId,
+//     stateName: lastReducer?.stateName || editLeadDataAgainstId.stateName,
+//     countryId: lastReducer?.countryId || editLeadDataAgainstId.countryId,
+//     countryName: lastReducer?.countryName || editLeadDataAgainstId.countryName,
+//     pincode: lastReducer?.pincode || editLeadDataAgainstId.pincode,
+//     occupation: lastReducer?.occupation || editLeadDataAgainstId.occupation,
+//     occupationName: lastReducer?.occupationName || editLeadDataAgainstId.occupationName,
+//     workType: lastReducer?.workType || editLeadDataAgainstId.workType,
+//     monthlyIncome: lastReducer?.monthlyIncome || editLeadDataAgainstId.monthlyIncome,
+//     assignedTo: lastReducer?.assignedTo || editLeadDataAgainstId.assignedTo,
+//     assignedToName: lastReducer?.assignedToName || editLeadDataAgainstId.assignedToName,
+//     organisationName: lastReducer?.organisationName || editLeadDataAgainstId.organisationName,
+//     leadDate: editLeadDataAgainstId.leadDate || new Date().toISOString(),
 //     isActive: true,
-//     serviceDetails:
-//       newServices.length > 0
-//         ? newServices.map((service) => ({
-//             id: service.id || 0, // Preserve existing service ID if editing
-//             customerId: lastReducer.customerId || 0,
-//             serviceId: lastReducer.serviceId,
-//             serviceName: lastReducer.serviceName,
+//     serviceDetails: updatedServices?.length > 0
+//       ? updatedServices.map(service => ({
+//           id: service.id || 0, 
+//           customerId: editLeadDataAgainstId.customerId || 0,  
+//           serviceId: service.serviceId || editLeadDataAgainstId.serviceId,
+//           serviceName: service.serviceName || editLeadDataAgainstId.serviceName,
+//           isExistingClient: true, 
+//           remark: service.remark || editLeadDataAgainstId.remark, 
+//           assignedTo: lastReducer?.assignedTo || editLeadDataAgainstId.assignedTo,
+//           assignedToName: lastReducer?.assignedToName || editLeadDataAgainstId.assignedToName,
+//           isActive: true
+//         }))
+//       : editLeadDataAgainstId.serviceDetails || [
+//           {
+//             id: 0,
+//             customerId: editLeadDataAgainstId.customerId || 0,
+//             serviceId: lastReducer?.serviceId || editLeadDataAgainstId.serviceId,
+//             serviceName: lastReducer?.serviceName || editLeadDataAgainstId.serviceName,
 //             isExistingClient: true,
-//             remark: service.description,
-//             assignedTo: lastReducer.assignedTo,
-//             assignedToName: lastReducer.assignedToName,
-//             isActive: true,
-//           }))
-//         : lastReducer.serviceDetails || [
-//             {
-//               id: 0,
-//               customerId: lastReducer.customerId || 0,
-//               serviceId: lastReducer.serviceId,
-//               serviceName: lastReducer.serviceName,
-//               isExistingClient: true,
-//               remark: lastReducer.remark,
-//               assignedTo: lastReducer.assignedTo,
-//               assignedToName: lastReducer.assignedToName,
-//               isActive: true,
-//             },
-//           ],
+//             remark: lastReducer?.remark || editLeadDataAgainstId.remark,
+//             assignedTo: lastReducer?.assignedTo || editLeadDataAgainstId.assignedTo,
+//             assignedToName: lastReducer?.assignedToName || editLeadDataAgainstId.assignedToName,
+//             isActive: true
+//           }
+//       ]
 //   };
-  
-//   console.log("📤 Submitting Lead Data:" + JSON.stringify(leadData));
+
+//   console.log("📡 Sending updated lead data:", JSON.stringify(leadData));
 
 //   try {
 //     const response = await leadAPISubmit(leadData, user);
-//     console.log("✅ Lead Submitted Successfully:", response);
-    
-//     if (response.success) {
+//     console.log("✅ Lead Updated Successfully:", response);
+
+//     if (response.success === true || response.message === "Lead updated successfully.") {
 //       dispatch({ type: SUBMIT_SUCCESS_LEAD, payload: response });
-      
-//       // Store leadId for future edits
-//       if (!lastReducer.leadId) {
-//         dispatch({ type: "UPDATE_LEAD_ID", payload: response.leadId });
-//       }
 //     } else {
+//       console.error("⚠️ Lead Update Failed:", response.message);
 //       dispatch({ type: SUBMIT_FAILURE_LEAD, error: response.message });
 //     }
 //   } catch (error) {
-//     console.error("❌ Lead Submission Failed:", error);
+//     console.error("❌ Lead Update API Call Failed:", error);
 //     dispatch({ type: SUBMIT_FAILURE, error: error.message });
 //   }
 // };
 
 
 
-export const leadEditSubmitAllData = (cards) => async (dispatch, getState) => {
-  console.log("leadEditSubmitAllData function called!");  // Add this
+
+
+
+
+export const leadEditSubmitAllData = (updatedServices) => async (dispatch, getState) => { 
+  console.log("🚀 Function Called - leadEditSubmitAllData()");
+
   dispatch({ type: SUBMIT_REQUEST });
 
-  const { lastReducer, editLeadDataAgainstId } = getState(); // Get existing lead details
+  const state = getState();
+  //console.log("🛠️ Full Redux State:", state);  
+
+  const lastReducer = state?.editLeadReducer; 
+  const editLeadDataAgainstId = state?.editLeadReducer?.editLeadDataAgainstId;
   const user = await getItem("tenantId");
 
-  console.log(" editLeadDataAgainstId----:", JSON.stringify(editLeadDataAgainstId));
-  console.log(" lastReducer:", JSON.stringify(lastReducer));
-
   if (!editLeadDataAgainstId || !editLeadDataAgainstId.id) {
-    console.error(" Lead ID is missing, cannot edit.");
+    console.error("❌ Lead ID is missing, cannot edit.");
     dispatch({ type: SUBMIT_FAILURE, error: "Lead ID is required for editing." });
     return;
   }
 
-  const newServices = cards || [];
+  console.log("📌 editLeadDataAgainstId:", editLeadDataAgainstId); 
+  console.log("📌 editLeadDataAgainstId.id:", editLeadDataAgainstId?.id);
 
-const leadData = {
-  id: lastReducer.id,
+  const leadData = {
+    id: editLeadDataAgainstId.id,
     tenantId: user,
-    customerId: 0,
-    entity: "someEntityValue", 
-    firstName: lastReducer.firstName,
-    lastName: lastReducer.lastName,
-    emailId: lastReducer.emailId ,
-    leadSource: lastReducer.leadSource ,
-    leadSourceName: lastReducer.leadSourceName,
-    otherSource:lastReducer.otherSource,
-    mobileNo: lastReducer.mobileNo ,
-    whatsAppNo: lastReducer.whatsAppNo,
-    addressLine1: lastReducer.addressLine1,
-    addressLine2: lastReducer.addressLine2 ,
-    cityId : lastReducer.cityId ,
-    cityName : lastReducer.cityName,
-    stateId : lastReducer.stateId,
-    stateName : lastReducer.stateName,
-    countryId : lastReducer.countryId,
-    countryName : lastReducer.countryName,
-    pincode: lastReducer.pincode,
-    occupation: lastReducer.occupation ,
-    occupationName: lastReducer.occupationName ,
-    workType: lastReducer.workType ,
-    monthlyIncome: lastReducer.monthlyIncome,
-    assignedTo: lastReducer.assignedTo, 
-    assignedToName: lastReducer.assignedToName, 
-    organisationName:lastReducer.organisationName,
-    leadDate: new Date().toISOString(),
+    customerId: editLeadDataAgainstId.customerId || 0,
+    entity: editLeadDataAgainstId.entity || "someEntityValue", 
+    firstName: lastReducer?.firstName || editLeadDataAgainstId.firstName,
+    lastName: lastReducer?.lastName || editLeadDataAgainstId.lastName,
+    emailId: lastReducer?.emailId || editLeadDataAgainstId.emailId,
+    leadSource: lastReducer?.leadSource || editLeadDataAgainstId.leadSource,
+    leadSourceName: lastReducer?.leadSourceName || editLeadDataAgainstId.leadSourceName,
+    otherSource: lastReducer?.otherSource || editLeadDataAgainstId.otherSource,
+    mobileNo: lastReducer?.mobileNo || editLeadDataAgainstId.mobileNo,
+    whatsAppNo: lastReducer?.whatsAppNo || editLeadDataAgainstId.whatsAppNo,
+    addressLine1: lastReducer?.addressLine1 || editLeadDataAgainstId.addressLine1,
+    addressLine2: lastReducer?.addressLine2 || editLeadDataAgainstId.addressLine2,
+    cityId: lastReducer?.cityId || editLeadDataAgainstId.cityId,
+    cityName: lastReducer?.cityName || editLeadDataAgainstId.cityName,
+    stateId: lastReducer?.stateId || editLeadDataAgainstId.stateId,
+    stateName: lastReducer?.stateName || editLeadDataAgainstId.stateName,
+    countryId: lastReducer?.countryId || editLeadDataAgainstId.countryId,
+    countryName: lastReducer?.countryName || editLeadDataAgainstId.countryName,
+    pincode: lastReducer?.pincode || editLeadDataAgainstId.pincode,
+    occupation: lastReducer?.occupation || editLeadDataAgainstId.occupation,
+    occupationName: lastReducer?.occupationName || editLeadDataAgainstId.occupationName,
+    workType: lastReducer?.workType || editLeadDataAgainstId.workType,
+    monthlyIncome: lastReducer?.monthlyIncome || editLeadDataAgainstId.monthlyIncome,
+    assignedTo: lastReducer?.assignedTo || editLeadDataAgainstId.assignedTo,
+    assignedToName: lastReducer?.assignedToName || editLeadDataAgainstId.assignedToName,
+    organisationName: lastReducer?.organisationName || editLeadDataAgainstId.organisationName,
+    leadDate: editLeadDataAgainstId.leadDate || new Date().toISOString(),
     isActive: true,
-    serviceDetails: newServices.length > 0
-    ? newServices.map(service => ({
-        id: 0, 
-        customerId: 0,  
-        serviceId: lastReducer.serviceId,
-        serviceName: lastReducer.serviceName,
-        isExistingClient: true, 
-        remark: service.remark, 
-        assignedTo: lastReducer.assignedTo, 
-       assignedToName: lastReducer.assignedToName,
-        isActive: true
-      }))
-    : lastReducer.serviceDetails || [
+    serviceDetails: updatedServices?.length > 0
+      ? updatedServices.map(service => ({
+          id: service.id || 0, 
+          customerId: editLeadDataAgainstId.customerId || 0,  
+          serviceId: service.serviceId || editLeadDataAgainstId.serviceId,
+          serviceName: service.serviceName || editLeadDataAgainstId.serviceName,
+          isExistingClient: true, 
+          remark: service.remark || editLeadDataAgainstId.remark, 
+          assignedTo: lastReducer?.assignedTo || editLeadDataAgainstId.assignedTo,
+          assignedToName: lastReducer?.assignedToName || editLeadDataAgainstId.assignedToName,
+          isActive: true
+        }))
+      : editLeadDataAgainstId.serviceDetails || [
         {
-          id: 0,
-          customerId: 0,
-          serviceId: lastReducer.serviceId,
-          serviceName: lastReducer.serviceName,
-          isExistingClient: true,
-          remark: lastReducer.remark,
-          assignedTo: lastReducer.assignedTo, 
-          assignedToName: lastReducer.assignedToName, 
+          id: service.id || 0, 
+          customerId: editLeadDataAgainstId.customerId || 0,  
+          serviceId: service.serviceId || editLeadDataAgainstId.serviceId,
+          serviceName: service.serviceName || editLeadDataAgainstId.serviceName,
+          isExistingClient: true, 
+          remark: service.remark || editLeadDataAgainstId.remark, 
+          assignedTo: lastReducer?.assignedTo || editLeadDataAgainstId.assignedTo,
+          assignedToName: lastReducer?.assignedToName || editLeadDataAgainstId.assignedToName,
           isActive: true
         }
       ]
   };
 
-  console.log("📡 Sending data to API:", JSON.stringify(leadData));
+  console.log("📡 Sending updated lead data:", JSON.stringify(leadData));
 
   try {
-    const response = await leadAPISubmit(leadData, user); // Ensure this API supports updating
+    const response = await leadAPISubmit(leadData, user);
     console.log("✅ Lead Updated Successfully:", response);
 
-    if (response.success === true || response.message === "Lead updated successfully.") {
-      dispatch({ type: SUBMIT_SUCCESS_LEAD, payload: response });
+    if (response.success) {
+      dispatch({
+        type: SUBMIT_SUCCESS_LEAD,
+        payload: {
+          ...state.editLeadReducer, // Preserve existing data
+          ...leadData, // Merge new data
+          message: response.message
+        }
+      });
+      
     } else {
+      console.error("⚠️ Lead Update Failed:", response.message);
       dispatch({ type: SUBMIT_FAILURE_LEAD, error: response.message });
     }
   } catch (error) {
-    console.error("❌ Lead Update Failed:", error);
+    console.error("❌ Lead Update API Call Failed:", error);
     dispatch({ type: SUBMIT_FAILURE, error: error.message });
   }
 };
+
+

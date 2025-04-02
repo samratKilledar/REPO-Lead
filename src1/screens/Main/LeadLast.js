@@ -52,16 +52,24 @@ const LeadLast = props => {
       setCards(allState.services)
       navigation.navigate('LeadScreen');
     }
-  });
+  }, [allState]);
   const leadLast = useSelector(state => state.homeReducer);
 
   useEffect(()=>{
     alert(JSON.stringify(cards))
   })
-  useEffect(()=>{
-    alert("==============>"+JSON.stringify(editLeadDataAgainstId))
-    setCards(editLeadDataAgainstId.serviceDetails)
-  },[editLeadDataAgainstId])
+  // useEffect(()=>{
+  //   alert("==============>"+JSON.stringify(editLeadDataAgainstId))
+  //   setCards(editLeadDataAgainstId.serviceDetails)
+  // },[editLeadDataAgainstId])
+
+  useEffect(() => {
+    if (editLeadDataAgainstId?.serviceDetails?.length) {
+      console.log("Setting Cards:", editLeadDataAgainstId.serviceDetails);
+      setCards(editLeadDataAgainstId.serviceDetails);
+    }
+  }, [editLeadDataAgainstId]);
+  
 
   const handleSubmit = () => {
     console.log(" editLeadDataAgainstId:", editLeadDataAgainstId); 
