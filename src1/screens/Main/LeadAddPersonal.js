@@ -16,7 +16,7 @@ import CustomTextInput from '../../components/CustomTextInput';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-
+import {resetStateLeadID} from '../../redux/actions/editLeadAction'
 import {
   updateAddressLine1,
   updateAddressLine2,
@@ -124,6 +124,8 @@ const LeadAddPersonal = ({ navigation,route }) => {
  const goBack=()=>{
   navigation.goBack();
   dispatch(resetStateLead())
+  dispatch(resetStateLeadID())
+
  }
 
   return (

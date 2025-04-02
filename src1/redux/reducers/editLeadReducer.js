@@ -19,7 +19,7 @@ import { UPDATE_ASSIGNTO,
   UPDATE_MONTHLYINCOME,
   SUBMIT_REQUEST,
   SUBMIT_SUCCESS, 
-  SUBMIT_FAILURE,EDIT_DATA_AUTO_FILL_SUCCESS  } from "../actions/editLeadAction";
+  SUBMIT_FAILURE,EDIT_DATA_AUTO_FILL_SUCCESS,RESET_ALL_STATE  } from "../actions/editLeadAction";
 import { occupation } from "../../api/mainApi";
 
 const initialState = {
@@ -122,6 +122,10 @@ const editLeadReducer = (state = initialState, action) => {
       
     case EDIT_DATA_AUTO_FILL_SUCCESS:
       return {...state, editLeadDataAgainstId: action.payload}  
+
+
+      case RESET_ALL_STATE:
+      return initialState;
 
     default:
       return state;
