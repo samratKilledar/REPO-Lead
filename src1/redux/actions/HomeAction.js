@@ -16,6 +16,7 @@ import {
 export const FETCH_DROPDOWN_SUCCESS = 'FETCH_DROPDOWN_SUCCESS';
 export const FETCH_DROPDOWN_FAILURE = 'FETCH_DROPDOWN_FAILURE';
 export const RESET_ALL_STATE = 'RESET_ALL_STATE';
+export const FETCH_DROPDOWN_READ = 'FETCH_DROPDOWN_READ';
 
 export const callAllDropDownAPI = (storedData) => {
   return async (dispatch) => {
@@ -28,13 +29,13 @@ export const callAllDropDownAPI = (storedData) => {
         try {
           const response = await apiFunc(storedData);
           responses[key] = response;
-          console.log(`${key} API Response:`, JSON.stringify(response));
+          console.log(`${key} API Response:==========================>`, JSON.stringify(response));
         } catch (error) {
           errors[key] = error.message || 'API call failed';
           console.error(`${key} API Error:`, error);
         }
       };
-
+      dispatch({ type: FETCH_DROPDOWN_READ });
       // Sequential API calls with error handling
       await callApi(followUp, 'followUpRes');
       await callApi(clientFollowUp, 'clientFollowUpRes');

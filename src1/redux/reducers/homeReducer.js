@@ -2,7 +2,7 @@ import { assignTo } from '../../api/mainApi';
 import UpcomingMeetings from '../../screens/Main/UpcomingMeetings';
 import {
   FETCH_DROPDOWN_SUCCESS,
-  FETCH_DROPDOWN_FAILURE,RESET_ALL_STATE
+  FETCH_DROPDOWN_FAILURE,RESET_ALL_STATE,FETCH_DROPDOWN_READ
 } from '../actions/HomeAction';
 
 const initialState = {
@@ -24,6 +24,12 @@ const initialState = {
 
 const homeReducer = (state = initialState, action) => {
   switch (action.type) {
+
+    case FETCH_DROPDOWN_READ:
+      return {
+        ...state,
+        isLoading: true
+      }
     
     case FETCH_DROPDOWN_SUCCESS:
       return {
