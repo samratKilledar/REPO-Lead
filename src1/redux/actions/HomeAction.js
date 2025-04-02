@@ -11,6 +11,7 @@ import {
   assignTo,
   profileDetail
 } from '../../api/mainApi';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const FETCH_DROPDOWN_SUCCESS = 'FETCH_DROPDOWN_SUCCESS';
 export const FETCH_DROPDOWN_FAILURE = 'FETCH_DROPDOWN_FAILURE';
@@ -31,7 +32,9 @@ export const callAllDropDownAPI = (storedData) => {
           console.log(`${key} API Response:==========================>`, JSON.stringify(response));
         } catch (error) {
           errors[key] = error.message || 'API call failed';
-          console.error(`${key} API Error:`, error);
+          console.error(`${key} API Error:=========================>`, error);
+          await AsyncStorage.clear();
+          console.log('Local storage cleared');
         }
       };
       dispatch({ type: FETCH_DROPDOWN_READ });

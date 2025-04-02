@@ -211,10 +211,7 @@ export const submitFailure = (error) => ({
 });
 
 
-export const resetStateLead = (error) => ({
-  type: RESET_ALL_STATE,
-
-});
+export const resetStateLead = () => ({type: RESET_ALL_STATE,});
 
 export const submitRequest = () => ({ type: SUBMIT_REQUEST });
 

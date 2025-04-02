@@ -30,7 +30,7 @@ import {
   updateWhatsAppNo,
   updateFirstName,
   updateLeadSources,
-  setAllInputFileds
+  setAllInputFileds,resetStateLead
 } from '../../redux/actions/lastAction';
 
 const LeadAddPersonal = ({ navigation,route }) => {
@@ -41,7 +41,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
     console.log('Lead ID:', leadId);
     alert('Lead Data:====>'+ JSON.stringify(leadId));
     if(leadId != "" && leadData != undefined){
-      alert(1)
+      //alert(1)
      dispatch(setAllInputFileds(leadData,leadId))
     }
   }, []);
@@ -121,6 +121,10 @@ const LeadAddPersonal = ({ navigation,route }) => {
       navigation.navigate('LeadAddOccupation');
     }
   };
+ const goBack=()=>{
+  navigation.goBack();
+  dispatch(resetStateLead())
+ }
 
   return (
     <KeyboardAvoidingView
@@ -130,7 +134,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
-            <NavigationHeaderBack text="Add Lead" onPress={() => navigation.goBack()} />
+            <NavigationHeaderBack text="Add Lead" onPress={ goBack} />
           </View>
 
           <View style={styles.stepperContainer}>

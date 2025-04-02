@@ -59,8 +59,10 @@ const LeadCard = props => {
     setModalVisible(false);
   };
 
+
+
   useEffect(()=>{
-   alert(editLeadDataAgainstId.id )
+  // alert(editLeadDataAgainstId.id )
     if(editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined){
           navigation.navigate('LeadAddPersonal', { leadId: props.id, leadData: editLeadDataAgainstId });
     }
