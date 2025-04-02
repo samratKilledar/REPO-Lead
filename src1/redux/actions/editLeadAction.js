@@ -24,7 +24,7 @@ export const UPDATE_OCCUPATION = "UPDATE_OCCUPATION";
 export const UPDATE_TYPEOFWORK = "UPDATE_TYPEOFWORK";
 export const UPDATE_MONTHLYINCOME = "UPDATE_MONTHLYINCOME";
 export const EDIT_DATA_AUTO_FILL_SUCCESS = "EDIT_DATA_AUTO_FILL_SUCCESS";
-export const RESET_ALL_STATE = "RESET_ALL_STATE";
+export const RESET_ALL_LEAD_ID = "RESET_ALL_LEAD_ID";
 // Personal Information Actions
 export const updateFirstName = (firstName) => ({
   type: UPDATE_FIRSTNAME,
@@ -243,4 +243,4 @@ export const leadSubmitAllData = () => async (dispatch, getState) => {
   }
 };
 
-export const resetStateLeadID = () => ({type: RESET_ALL_STATE,});
+export const resetStateLeadID = () => ({type: RESET_ALL_LEAD_ID,});

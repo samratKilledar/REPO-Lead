@@ -14,6 +14,9 @@ import {
   getFocusedRouteNameFromRoute,
   useNavigation,
 } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import {resetStateLeadID} from "../redux/actions/editLeadAction";
+import {resetStateLead} from '../redux/actions/lastAction';
 
 import HomeScreen from '../screens/Main/HomeScreen';
 import ProfileScreen from '../screens/Main/ProfileScreen';
@@ -168,6 +171,7 @@ const TaskStackScreen = ({navigation, route}) => {
 const CustomTabButton = ({onPress}) => {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   return (
     <View>
@@ -199,7 +203,13 @@ const CustomTabButton = ({onPress}) => {
               style={styles.option}
               onPress={() => {
                 setModalVisible(false);
-                navigation.navigate('Lead', {screen: 'LeadAddPersonal'});
+                navigation.navigate('Lead', {
+                  screen: 'LeadAddPersonal',
+                  params: { leadId: "" } // Add your parameters here
+                });
+               // alert(1)
+                // dispatch(resetStateLead())
+                // dispatch(resetStateLeadID())
               }}>
               <Text style={styles.optionText}>Lead</Text>
               <Image

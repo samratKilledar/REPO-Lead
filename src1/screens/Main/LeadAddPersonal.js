@@ -37,14 +37,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
   const dispatch = useDispatch();
   const { leadId, leadData } = route.params || {};
 
-  useEffect(() => {
-    console.log('Lead ID:', leadId);
-    alert('Lead Data:====>'+ JSON.stringify(leadId));
-    if(leadId != "" && leadData != undefined){
-      //alert(1)
-     dispatch(setAllInputFileds(leadData,leadId))
-    }
-  }, []);
+
 
   const {
     firstName,
@@ -72,9 +65,19 @@ const LeadAddPersonal = ({ navigation,route }) => {
   const showToast = message => {
     ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
   };
-  useEffect(()=>{
-  //alert(pincode)
-  })
+
+  useEffect(() => {
+    //  alert(leadId+'Lead Data:====>'+ JSON.stringify(leadId));
+      if(leadId != "" && leadData != undefined){
+        //alert(1)
+       dispatch(setAllInputFileds(leadData,leadId))
+      }else{
+        alert('Lead ID:'+ leadSourceList);
+  
+        dispatch(resetStateLeadID())
+      }
+    }, []);
+
 
   const validateFields = () => {
     if (!firstName.trim()) {
@@ -123,7 +126,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
   };
  const goBack=()=>{
   navigation.goBack();
-  dispatch(resetStateLead())
+  // dispatch(resetStateLead())
   dispatch(resetStateLeadID())
 
  }

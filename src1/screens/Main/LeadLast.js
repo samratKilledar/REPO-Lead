@@ -44,7 +44,7 @@ const LeadLast = props => {
 
   useEffect(() => {
     if (allState.messageFromServer.success) {
-      dispatch(resetStateLead());
+    //  dispatch(resetStateLead());
       showToast(allState.messageFromServer.message);
       setCards(allState.services)
       navigation.navigate('LeadScreen');
