@@ -23,7 +23,7 @@ import {
   SUBMIT_REQUEST,
   SUBMIT_SUCCESS_LEAD,
   SUBMIT_FAILURE_LEAD,
-  RESET_ALL_STATE,
+  RESET_ALL_LEAD_ID,
   SET_ALL_DATA_DEFAULT_FOR_EDIT,
 } from '../actions/lastAction';
 
@@ -62,8 +62,8 @@ const initialState = {
 const lastReducer = (state = initialState, action) => {
   // if (action.type == 'SET_ALL_DATA_DEFAULT_FOR_EDIT') {
   //   alert(JSON.stringify(action.payload) + '===');
-  if (action.type == 'RESET_ALL_STATE') {
-    alert(JSON.stringify(action.payload) + '=s===sss=='+action.payload);
+  if (action.type == 'RESET_ALL_STATE1') {
+    console.log(JSON.stringify(action.payload) + '=s=========sss=='+action.payload);
   }
   switch (action.type) {
     case UPDATE_FIRSTNAME:
@@ -191,8 +191,11 @@ const lastReducer = (state = initialState, action) => {
         messageFromServer: '',
       };
 
-    case RESET_ALL_STATE:
-      return initialState;
+    case RESET_ALL_LEAD_ID:
+  
+        
+         return initialState;
+      
 
     default:
       return state;
