@@ -65,10 +65,11 @@ const LeadLast = props => {
 
   useEffect(() => {
     if (editLeadDataAgainstId?.serviceDetails?.length) {
-      console.log("Setting Cards:", editLeadDataAgainstId.serviceDetails);
+      console.log("Setting Cards=========:", editLeadDataAgainstId.serviceDetails);
       setCards(editLeadDataAgainstId.serviceDetails);
     }
   }, [editLeadDataAgainstId]);
+  
   
 
   const handleSubmit = () => {
@@ -83,7 +84,7 @@ const LeadLast = props => {
       dispatch(leadEditSubmitAllData(cards));
     }else{
       console.log(" Creating New Lead...");
-      dispatch(leadSubmitAllData(cards));
+      dispatch(leadSubmitAllData(cards , updateServices));
     }
    
   };

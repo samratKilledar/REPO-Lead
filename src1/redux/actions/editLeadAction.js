@@ -170,112 +170,8 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
 };
 
 import { getItem } from "../../api/storageServices";
-// export const leadEditSubmitAllData = (updatedServices) => async (dispatch, getState) => { 
-//   console.log("🚀 Function Called - leadEditSubmitAllData");
 
-//   dispatch({ type: SUBMIT_REQUEST });
-
-//   // 🔍 Get Redux state
-//   const state = getState();
-//   console.log("🛠️ Full Redux State:", state);  
-
-//   const lastReducer = state?.editLeadReducer; 
-//   const editLeadDataAgainstId = state?.editLeadReducer?.editLeadDataAgainstId;
-//   const user = await getItem("tenantId");
-
-//   if (!editLeadDataAgainstId || !editLeadDataAgainstId.id) {
-//     console.error("❌ Lead ID is missing, cannot edit.");
-//     dispatch({ type: SUBMIT_FAILURE, error: "Lead ID is required for editing." });
-//     return;
-//   }
-
-//   console.log("📌 editLeadDataAgainstId:", editLeadDataAgainstId); 
-//   console.log("📌 editLeadDataAgainstId.id:", editLeadDataAgainstId?.id);
-
-//   // 📝 Construct lead data with all required fields
-//   const leadData = {
-//     id: editLeadDataAgainstId.id, // Correct ID
-//     tenantId: user,
-//     customerId: editLeadDataAgainstId.customerId || 0,
-//     entity: editLeadDataAgainstId.entity || "someEntityValue", 
-//     firstName: lastReducer?.firstName || editLeadDataAgainstId.firstName,
-//     lastName: lastReducer?.lastName || editLeadDataAgainstId.lastName,
-//     emailId: lastReducer?.emailId || editLeadDataAgainstId.emailId,
-//     leadSource: lastReducer?.leadSource || editLeadDataAgainstId.leadSource,
-//     leadSourceName: lastReducer?.leadSourceName || editLeadDataAgainstId.leadSourceName,
-//     otherSource: lastReducer?.otherSource || editLeadDataAgainstId.otherSource,
-//     mobileNo: lastReducer?.mobileNo || editLeadDataAgainstId.mobileNo,
-//     whatsAppNo: lastReducer?.whatsAppNo || editLeadDataAgainstId.whatsAppNo,
-//     addressLine1: lastReducer?.addressLine1 || editLeadDataAgainstId.addressLine1,
-//     addressLine2: lastReducer?.addressLine2 || editLeadDataAgainstId.addressLine2,
-//     cityId: lastReducer?.cityId || editLeadDataAgainstId.cityId,
-//     cityName: lastReducer?.cityName || editLeadDataAgainstId.cityName,
-//     stateId: lastReducer?.stateId || editLeadDataAgainstId.stateId,
-//     stateName: lastReducer?.stateName || editLeadDataAgainstId.stateName,
-//     countryId: lastReducer?.countryId || editLeadDataAgainstId.countryId,
-//     countryName: lastReducer?.countryName || editLeadDataAgainstId.countryName,
-//     pincode: lastReducer?.pincode || editLeadDataAgainstId.pincode,
-//     occupation: lastReducer?.occupation || editLeadDataAgainstId.occupation,
-//     occupationName: lastReducer?.occupationName || editLeadDataAgainstId.occupationName,
-//     workType: lastReducer?.workType || editLeadDataAgainstId.workType,
-//     monthlyIncome: lastReducer?.monthlyIncome || editLeadDataAgainstId.monthlyIncome,
-//     assignedTo: lastReducer?.assignedTo || editLeadDataAgainstId.assignedTo,
-//     assignedToName: lastReducer?.assignedToName || editLeadDataAgainstId.assignedToName,
-//     organisationName: lastReducer?.organisationName || editLeadDataAgainstId.organisationName,
-//     leadDate: editLeadDataAgainstId.leadDate || new Date().toISOString(),
-//     isActive: true,
-//     serviceDetails: updatedServices?.length > 0
-//       ? updatedServices.map(service => ({
-//           id: service.id || 0, 
-//           customerId: editLeadDataAgainstId.customerId || 0,  
-//           serviceId: service.serviceId || editLeadDataAgainstId.serviceId,
-//           serviceName: service.serviceName || editLeadDataAgainstId.serviceName,
-//           isExistingClient: true, 
-//           remark: service.remark || editLeadDataAgainstId.remark, 
-//           assignedTo: lastReducer?.assignedTo || editLeadDataAgainstId.assignedTo,
-//           assignedToName: lastReducer?.assignedToName || editLeadDataAgainstId.assignedToName,
-//           isActive: true
-//         }))
-//       : editLeadDataAgainstId.serviceDetails || [
-//           {
-//             id: 0,
-//             customerId: editLeadDataAgainstId.customerId || 0,
-//             serviceId: lastReducer?.serviceId || editLeadDataAgainstId.serviceId,
-//             serviceName: lastReducer?.serviceName || editLeadDataAgainstId.serviceName,
-//             isExistingClient: true,
-//             remark: lastReducer?.remark || editLeadDataAgainstId.remark,
-//             assignedTo: lastReducer?.assignedTo || editLeadDataAgainstId.assignedTo,
-//             assignedToName: lastReducer?.assignedToName || editLeadDataAgainstId.assignedToName,
-//             isActive: true
-//           }
-//       ]
-//   };
-
-//   console.log("📡 Sending updated lead data:", JSON.stringify(leadData));
-
-//   try {
-//     const response = await leadAPISubmit(leadData, user);
-//     console.log("✅ Lead Updated Successfully:", response);
-
-//     if (response.success === true || response.message === "Lead updated successfully.") {
-//       dispatch({ type: SUBMIT_SUCCESS_LEAD, payload: response });
-//     } else {
-//       console.error("⚠️ Lead Update Failed:", response.message);
-//       dispatch({ type: SUBMIT_FAILURE_LEAD, error: response.message });
-//     }
-//   } catch (error) {
-//     console.error("❌ Lead Update API Call Failed:", error);
-//     dispatch({ type: SUBMIT_FAILURE, error: error.message });
-//   }
-// };
-
-
-
-
-
-
-
-export const leadEditSubmitAllData = (updatedServices) => async (dispatch, getState) => { 
+export const leadEditSubmitAllData = (updateServices) => async (dispatch, getState) => { 
   console.log("🚀 Function Called - leadEditSubmitAllData()");
 
   dispatch({ type: SUBMIT_REQUEST });
@@ -327,8 +223,8 @@ export const leadEditSubmitAllData = (updatedServices) => async (dispatch, getSt
     organisationName: lastReducer?.organisationName || editLeadDataAgainstId.organisationName,
     leadDate: editLeadDataAgainstId.leadDate || new Date().toISOString(),
     isActive: true,
-    serviceDetails: updatedServices?.length > 0
-      ? updatedServices.map(service => ({
+    serviceDetails: updateServices?.length > 0
+      ? updateServices.map(service => ({
           id: service.id || 0, 
           customerId: editLeadDataAgainstId.customerId || 0,  
           serviceId: service.serviceId || editLeadDataAgainstId.serviceId,

@@ -176,7 +176,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
           <View style={styles.headerContainer}>
-            <NavigationHeaderBack text="Add Lead" onPress={goback} />
+            {/* <NavigationHeaderBack text="Add Leadd" onPress={goback} /> */}
             <NavigationHeaderBack text="Add Lead" onPress={ goBack} />
           </View>
 
