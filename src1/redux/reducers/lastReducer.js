@@ -28,6 +28,7 @@ import {
 } from '../actions/lastAction';
 
 const initialState = {
+  editId: "",
   firstName: "",
   lastName: "",
   leadSource: "",
@@ -53,6 +54,8 @@ const initialState = {
   monthlyIncome: "",
   assignedTo: "",
   assignedToName: "Assign To",
+  leadStatus:"",
+  leadStatusName:"",
   serviceId: "",
   serviceName: "Services",
   remark: " ",
@@ -60,8 +63,6 @@ const initialState = {
 };
 
 const lastReducer = (state = initialState, action) => {
-  // if (action.type == 'SET_ALL_DATA_DEFAULT_FOR_EDIT') {
-  //   alert(JSON.stringify(action.payload) + '===');
   if (action.type == 'RESET_ALL_STATE1') {
     console.log(JSON.stringify(action.payload) + '=s=========sss=='+action.payload);
   }
@@ -181,10 +182,9 @@ const lastReducer = (state = initialState, action) => {
         monthlyIncome: action.payload.monthlyIncome,
         assignedTo: action.payload.assignedTo,
         assignedToName: action.payload.assignedToName,
+        leadStatus: action.payload.leadStatus,
+        leadStatusName: action.payload.leadStatusName,
         organisationName: action.payload.organisationName,
-        // services: action.payload.serviceDetails,
-        // servicesName: 'Services',
-        // remark: '',
         serviceId: action.payload.serviceDetails?.[0]?.serviceId ?? '',
         serviceName: action.payload.serviceDetails?.[0]?.serviceName ?? 'Services',
         remark: action.payload.serviceDetails?.[0]?.remark ?? '',
