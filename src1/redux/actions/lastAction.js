@@ -202,9 +202,9 @@ export const leadSubmitEditAllData = (newCard, cutsomerId) => async (dispatch, g
     const user = await getItem('tenantId');
     const userId = await getItem('userId')
     let newServices = newCard;
-    console.log("---card--->"+JSON.stringify(newServices))
+    console.log("---card--->"+JSON.stringify(lastReducer))
     const leadData = {
-      id: 1,
+      id: lastReducer.editId,
       tenantId: user,
       customerId: cutsomerId,
       // entity: "someEntityValue",
@@ -232,9 +232,9 @@ export const leadSubmitEditAllData = (newCard, cutsomerId) => async (dispatch, g
       monthlyIncome:parseInt(lastReducer.monthlyIncome),
       assignedTo: lastReducer.assignedTo,
       assignedToName: lastReducer.assignedToName,
-      leadStatus: 13,
-      leadStatusName: "New Lead",
-      createdBy: 0,
+      leadStatus: lastReducer.leadStatus,
+      leadStatusName: lastReducer.leadStatusName,
+      createdBy: lastReducer.createdBy,
       createdByName: userId,
       leadDate: new Date().toISOString(),//new Date().toISOString(),
       isActive: true,
@@ -271,11 +271,11 @@ export const leadSubmitEditAllData = (newCard, cutsomerId) => async (dispatch, g
     };
     console.log('📤 Editing Lead Data:===' + JSON.stringify(leadData));
     console.log('----------' + JSON.stringify(leadData));
-  
+   
     try {
       const response = await leadAPISubmit(leadData, user);
       console.log('✅ Lead Editted Successfully:', response);
-      return true;
+  
       if (
         response.message == 'Lead added successfully.' ||
         response.success == true

@@ -158,6 +158,7 @@ const lastReducer = (state = initialState, action) => {
 
     case SET_ALL_DATA_DEFAULT_FOR_EDIT:
       return {
+        editId: action.payload.id,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
         leadSource: action.payload.leadSource,
@@ -174,13 +175,15 @@ const lastReducer = (state = initialState, action) => {
         stateName: action.payload.stateName,
         countryId: action.payload.countryId,
         countryName: action.payload.countryName,
-        isdCode: action.payload.countryId,
+        // isdCode: action.payload.countryId,
         pincode: action.payload.pincode,
         occupation: action.payload.occupation,
         occupationName: action.payload.occupationName,
         workType: action.payload.workType,
         monthlyIncome: action.payload.monthlyIncome,
         assignedTo: action.payload.assignedTo,
+        leadStatus: action.payload.leadStatus,
+        leadStatusName:action.payload.leadStatusName,
         assignedToName: action.payload.assignedToName,
         leadStatus: action.payload.leadStatus,
         leadStatusName: action.payload.leadStatusName,
