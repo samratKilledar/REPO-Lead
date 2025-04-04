@@ -38,21 +38,21 @@ const LeadAddPersonal = ({ navigation,route }) => {
   const dispatch = useDispatch();
   const { leadId, leadData } = route.params || {};
 
-  useEffect(() => {
-    console.log('Lead ID:', leadId);
-    alert('Lead Data:====>'+ JSON.stringify(leadId));
-    if (leadId !== "" && leadData !== undefined) {
-      alert(1)
-      dispatch(setAllInputFileds(leadData, leadId));
+  // useEffect(() => {
+  //   console.log('Lead ID:', leadId);
+  //   alert('Lead Data:====>'+ JSON.stringify(leadId));
+  //   if (leadId !== "" && leadData !== undefined) {
+  //     alert(1)
+  //     dispatch(setAllInputFileds(leadData, leadId));
   
-      // ✅ Check if "Refer By" was selected before and show input
-      if (parseInt(leadData.leadSource, 10) === 12) {
-        setShowNewSourceInput(true);
-      } else {
-        setShowNewSourceInput(false);
-      }
-    }
-  }, []);
+  //     // ✅ Check if "Refer By" was selected before and show input
+      // if (parseInt(leadData.leadSource, 10) === 12) {
+      //   setShowNewSourceInput(true);
+      // } else {
+      //   setShowNewSourceInput(false);
+      // }
+  //   }
+  // }, []);
   
 
   const {
@@ -83,18 +83,26 @@ const LeadAddPersonal = ({ navigation,route }) => {
     ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
   };
 
+ 
   useEffect(() => {
-      console.log(leadId+'Lead Data:====>'+ JSON.stringify(leadId));
-      if(leadId != "" && leadData != undefined){
-        //alert(1)
-        alert('Existing---- Lead ID:'+ JSON.stringify(leadSourceList));
-       dispatch(setAllInputFileds(leadData,leadId))
-      }else{
-        alert('neww Lead ID:'+ JSON.stringify(leadSourceList));
-  
-        dispatch(resetStateLeadID())
-      }
-    }, []);
+    console.log(leadId+'Lead Data:====>'+ JSON.stringify(leadId));
+    if(leadId != "" && leadData != undefined){
+      //alert(1)
+      alert('Existing---- Lead ID:'+ JSON.stringify(leadSourceList));
+     dispatch(setAllInputFileds(leadData,leadId))
+
+     if (parseInt(leadData.leadSource, 10) === 12) {
+      setShowNewSourceInput(true);
+    } else {
+      setShowNewSourceInput(false);
+    }
+    
+    }else{
+      alert('neww Lead ID:'+ JSON.stringify(leadSourceList));
+
+      dispatch(resetStateLeadID())
+    }
+  }, []);
 
 
   const validateFields = () => {

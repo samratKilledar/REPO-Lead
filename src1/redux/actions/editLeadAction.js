@@ -322,4 +322,4 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
 // };
 
 
-// export const resetStateLeadID = () => ({type: RESET_ALL_LEAD_ID,});
+ export const resetStateLeadID = () => ({type: RESET_ALL_LEAD_ID,});

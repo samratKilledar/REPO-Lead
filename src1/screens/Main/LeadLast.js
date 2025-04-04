@@ -18,7 +18,7 @@ import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices, leadSu
 import { state } from '../../api/mainApi';
 import { useNavigation } from '@react-navigation/native';
 import {resetStateLead} from '../../redux/actions/lastAction';
-import { leadEditSubmitAllData } from '../../redux/actions/editLeadAction';
+//import { leadEditSubmitAllData } from '../../redux/actions/editLeadAction';
 
 const LeadLast = props => {
   const dispatch = useDispatch();
@@ -67,7 +67,6 @@ const LeadLast = props => {
   },[editLeadDataAgainstId])
   
   const handleSubmit = () => {
-   
     if(editLeadDataAgainstId.id  != "" && editLeadDataAgainstId.id != undefined){
       alert("cards-->"+JSON.stringify(cards))
        dispatch(leadSubmitEditAllData(cards,editLeadDataAgainstId.id));
@@ -75,7 +74,7 @@ const LeadLast = props => {
       dispatch(leadSubmitAllData(cards));
     }
     alert(JSON.stringify(editLeadDataAgainstId.id ))
-    //
+    props.navigation.navigate("LeadScreen")
   };
 
   const handleAdd = () => {

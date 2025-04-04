@@ -143,56 +143,6 @@ export const leadSubmitAllData = newCard => async (dispatch, getState) => {
     customerId: 0,
     firstName: lastReducer.firstName,
     lastName: lastReducer.lastName,
-    // emailId: lastReducer.emailId ,
-    // leadSource: lastReducer.leadSource ,
-    // leadSourceName: lastReducer.leadSourceName,
-    // otherSource:lastReducer.otherSource,
-    // mobileNo: lastReducer.mobileNo ,
-    // whatsAppNo: lastReducer.whatsAppNo,
-    // addressLine1: lastReducer.addressLine1,
-    // addressLine2: lastReducer.addressLine2 ,
-    // cityId : lastReducer.cityId ,
-    // cityName : lastReducer.cityName,
-    // stateId : lastReducer.stateId,
-    // stateName : lastReducer.stateName,
-    // countryId : lastReducer.countryId,
-    // countryName : lastReducer.countryName,
-    // pincode: lastReducer.pincode,
-    // occupation: lastReducer.occupation ,
-    // occupationName: lastReducer.occupationName ,
-    // workType: lastReducer.workType ,
-    // monthlyIncome: lastReducer.monthlyIncome,
-    // assignedTo: lastReducer.assignedTo, 
-    // assignedToName: lastReducer.assignedToName, 
-    // organisationName:lastReducer.organisationName,
-    // leadDate: new Date().toISOString(),
-    // isActive: true,
-    // serviceDetails: newServices.length > 0
-    // ? newServices.map(service => ({
-    //     id: 0, 
-    //     customerId: 0,  
-    //     serviceId: lastReducer.serviceId,
-    //     serviceName: lastReducer.serviceName,
-    //     isExistingClient: true, 
-    //     remark: service.remark, 
-    //     assignedTo: lastReducer.assignedTo, 
-    //    assignedToName: lastReducer.assignedToName,
-    //     isActive: true
-    //   }))
-    // : lastReducer.serviceDetails || [
-    //     {
-    //       id: 0,
-    //       customerId: 0,
-    //       serviceId: lastReducer.serviceId,
-    //       serviceName: lastReducer.serviceName,
-    //       isExistingClient: true,
-    //       remark: lastReducer.remark,
-    //       assignedTo: lastReducer.assignedTo, 
-    //       assignedToName: lastReducer.assignedToName, 
-    //       isActive: true
-    //     }
-    //   ]
-      
     emailId: lastReducer.emailId,
     mobileNo: lastReducer.mobileNo,
     whatsAppNo: lastReducer.whatsAppNo,
@@ -207,17 +157,17 @@ export const leadSubmitAllData = newCard => async (dispatch, getState) => {
     pincode: parseInt(lastReducer.pincode),
     leadSource: parseInt(lastReducer.leadSource),
     leadSourceName: lastReducer.leadSourceName,
-    otherSource:"",
+    otherSource:lastReducer.otherSource,
     occupation: parseInt(lastReducer.occupation),
     occupationName: lastReducer.occupationName,
   
-    organisationName: '',
+    organisationName:lastReducer.organisationName,
     workType: lastReducer.workType,
     monthlyIncome: parseInt(lastReducer.monthlyIncome),
     assignedTo: lastReducer.assignedTo,
     assignedToName: lastReducer.assignedToName,
-    leadStatus: 0,
-    leadStatusName: '',
+    // leadStatus: 0,
+    // leadStatusName: '',
     createdBy: 0,
     createdByName: userId,
   
@@ -246,8 +196,7 @@ export const leadSubmitAllData = newCard => async (dispatch, getState) => {
   }
 };
 
-export const leadSubmitEditAllData =
-  (newCard, cutsomerId) => async (dispatch, getState) => {
+export const leadSubmitEditAllData = (newCard, cutsomerId) => async (dispatch, getState) => {
     dispatch({type: SUBMIT_REQUEST});
     const {lastReducer} = getState();
     const user = await getItem('tenantId');
@@ -273,21 +222,21 @@ export const leadSubmitEditAllData =
       countryId: lastReducer.countryId,
       countryName: lastReducer.countryName,
       pincode: parseInt(lastReducer.pincode),
-      leadSource: parseInt(lastReducer.leadSources),
-      leadSourceName: lastReducer.leadSourcesName,
-      otherSource: '',
+      leadSource: parseInt(lastReducer.leadSource),
+      leadSourceName: lastReducer.leadSourceName,
+      otherSource:lastReducer.otherSource,
       occupation: parseInt(lastReducer.occupation),
       occupationName: lastReducer.occupationName,
-      organisationName:"",
-      workType: lastReducer.typeOfWork,
+      organisationName:lastReducer.organisationName,
+      workType: lastReducer.workType,
       monthlyIncome:parseInt(lastReducer.monthlyIncome),
       assignedTo: lastReducer.assignedTo,
       assignedToName: lastReducer.assignedToName,
-      leadStatus: 0,
-      leadStatusName: '',
+      leadStatus: 13,
+      leadStatusName: "New Lead",
       createdBy: 0,
       createdByName: userId,
-      leadDate: lastReducer.leadDate,//new Date().toISOString(),
+      leadDate: new Date().toISOString(),//new Date().toISOString(),
       isActive: true,
       serviceDetails:newServices
         // newServices.length > 0
