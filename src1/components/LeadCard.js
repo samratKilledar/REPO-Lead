@@ -64,7 +64,9 @@ const LeadCard = props => {
   useEffect(()=>{
   // alert("====>"+editLeadDataAgainstId.id )
     if(editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined){
-          navigation.navigate('LeadAddPersonal', { leadId: props.id, leadData: editLeadDataAgainstId });
+      if (props.id != "" && props.id != undefined){
+        navigation.navigate('LeadAddPersonal', { leadId: props.id, leadData: editLeadDataAgainstId });
+      }
     }
   },[editLeadDataAgainstId])
 
