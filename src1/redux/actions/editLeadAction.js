@@ -168,3 +168,5 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
     throw error; // Re-throw for component handling
   }
 };
+
+export const resetStateLeadID = () => ({type: RESET_ALL_LEAD_ID,});
