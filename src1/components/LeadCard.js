@@ -62,13 +62,13 @@ const LeadCard = props => {
 
 
   useEffect(()=>{
-  // alert(editLeadDataAgainstId.id )
+  // alert("====>"+editLeadDataAgainstId.id )
     if(editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined){
           navigation.navigate('LeadAddPersonal', { leadId: props.id, leadData: editLeadDataAgainstId });
     }
   },[editLeadDataAgainstId])
 
-  const editProfile = async () => {
+  const editLeadProfile = async () => {
     try {
       if (!props.id) {
         Alert.alert('Error', "This lead isn't ready for editing yet");
@@ -77,7 +77,7 @@ const LeadCard = props => {
 
       setIsEditing(true);
       console.log('Editing lead ID:', props.id);
-
+      //alert(props.id)
       dispatch(EditLeadFetch(props.id));
       // if (result) {
       //   // Only navigate if successful
@@ -183,7 +183,7 @@ const LeadCard = props => {
 
       {menuVisible && (
         <View style={styles.menuBox}>
-          <TouchableOpacity style={styles.menuItem} onPress={editProfile}>
+          <TouchableOpacity style={styles.menuItem} onPress={editLeadProfile}>
             <Image
               source={require('../assets/icons/Edit/edit.png')}
               style={styles.menuIcon}

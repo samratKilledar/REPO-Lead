@@ -142,10 +142,10 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
     if (!leadId || leadId === 'undefined') {
       throw new Error('Invalid lead ID');
     }
-    console.log(leadId+"respo---------Edit--->"+JSON.stringify(data))
-
     const data = await EditLead(leadId);
     console.log("respo---------Edit--->"+JSON.stringify(data))
+   // console.log(leadId+"respo---------Edit--->"+data.id)
+
     if(leadId == data.id){
       //alert(JSON.stringify(data))
       dispatch(updateLeadData(data));
@@ -186,7 +186,8 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
 
 export const leadSubmitAllData = () => async (dispatch, getState) => {
   dispatch({ type: SUBMIT_REQUEST });
-
+  console.log("obbbbbbbbb")
+  return true
   const { editLeadReducer } = getState();
   const leadData = {
     id: 0,
@@ -208,7 +209,7 @@ export const leadSubmitAllData = () => async (dispatch, getState) => {
     countryName : editLeadReducer.countryName,
     pincode: editLeadReducer.pincode,
     leadSources: editLeadReducer.leadSources ,
-    leadSourcesName: editLeadReducer.leadSourcesName,
+    leadSourceName: editLeadReducer.leadSourcesName,
     occupation: editLeadReducer.occupation ,
     occupationName: editLeadReducer.occupationName ,
     typeOfWork: editLeadReducer.typeOfWork ,

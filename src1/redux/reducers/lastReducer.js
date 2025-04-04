@@ -45,7 +45,7 @@ const initialState = {
   pincode: '',
   occupation: '',
   occupationName: 'Occupation Name',
-  typeOfWork: 'it',
+  typeOfWork: '',
   monthlyIncome: '',
   assignedTo: '',
   assignedToName: 'Assign To',

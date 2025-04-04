@@ -14,7 +14,7 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
+import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices, leadSubmitEditAllData } from '../../redux/actions/lastAction';
 import { state } from '../../api/mainApi';
 import { useNavigation } from '@react-navigation/native';
 import {resetStateLead} from '../../redux/actions/lastAction';
@@ -46,21 +46,32 @@ const LeadLast = props => {
     if (allState.messageFromServer.success) {
     //  dispatch(resetStateLead());
       showToast(allState.messageFromServer.message);
-      setCards(allState.services)
-      navigation.navigate('LeadScreen');
+    //  setCards(allState.services)
+      navigation.navigate('Lead', {
+        screen: 'LeadAddPersonal',
+        params: { leadId: "" } // Your parameters
+      });
     }
   });
-  const leadLast = useSelector(state => state.homeReducer);
+ // const leadLast = useSelector(state => state.homeReducer);
 
   useEffect(()=>{
-    alert(JSON.stringify(cards))
+    alert("cards==>"+JSON.stringify(cards))
   })
   useEffect(()=>{
-    //alert("==============>"+JSON.stringify(editLeadDataAgainstId.serviceDetails))
+    //alert(JSON.stringify( JSON.stringify(editLeadDataAgainstId))+"==============>"+JSON.stringify(editLeadDataAgainstId.serviceDetails))
     setCards(editLeadDataAgainstId.serviceDetails)
   },[editLeadDataAgainstId])
   const handleSubmit = () => {
-    dispatch(leadSubmitAllData(cards));
+   
+    if(editLeadDataAgainstId.id  != "" && editLeadDataAgainstId.id != undefined){
+      alert("cards-->"+JSON.stringify(cards))
+       dispatch(leadSubmitEditAllData(cards,editLeadDataAgainstId.id));
+    }else{
+      dispatch(leadSubmitAllData(cards));
+    }
+    alert(JSON.stringify(editLeadDataAgainstId.id ))
+    //
   };
 
   const handleAdd = () => {
@@ -81,28 +92,35 @@ const LeadLast = props => {
     let newCard ={};
     if(editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined){
        newCard = {
-        id: editLeadDataAgainstId.id  ,
-        customerId: editLeadDataAgainstId.customerId,
-        serviceId: services,
+        id: 0 ,
+        customerId: 0,
+        serviceId: parseInt(services),
         serviceName: servicesName,
-        leadId:  editLeadDataAgainstId.customerId,
+        leadId:  0,
         clientId: 0,
-        isExistingClient: false,
+        isExistingClient: true,
         remark: remark,
-        assignedTo: services,
+        assignedTo: assignedTo,
         assignedToName: assignedToName,
         isActive: true,
-        date: new Date().toLocaleDateString(),
       }
     }else{
+      alert(assignedTo+"new"+services)
        newCard = {
-        id: services,
-        title: servicesName,
-        date: new Date().toLocaleDateString(),
+        id: 0,
+        customerId:0 ,
+        serviceId: parseInt(services),
+        serviceName: servicesName,
+        leadId:  0,
+        clientId: 0,
+        isExistingClient: true,
         remark: remark,
+        assignedTo: assignedTo,
+        assignedToName: assignedToName,
+        isActive: true,
       };
     }
-    alert(JSON.stringify(cards) +"=--="+JSON.stringify(newCard ))
+    alert(editLeadDataAgainstId.id+"===="+JSON.stringify(newCard) +"=--="+JSON.stringify( Object.keys(editLeadDataAgainstId).length  ))
    
 
     // Check if the newCard already exists based on id and remark
@@ -168,23 +186,28 @@ const LeadLast = props => {
         <CustomButton title="Add" onPress={handleAdd} />
         <ScrollView contentContainerStyle={styles.insuranceCardContainer}>
           <View style={styles.insuranceCard}>
-            {cards.map(item => (
-              <View key={item.id} style={styles.cardContainer}>
-                <InsuranceCard
-                  title={item.title!= "" && item.title!= undefined ?  item.title : item.serviceName.toString()}
-                  date={item.date}
-                  description={item.remark!= "" && item.remark!= undefined ? item.remark : item.remark.toString()}
-                />
-                <TouchableOpacity
-                  style={styles.deleteButton}
-                  onPress={() => handleDeleteCard(item.id, item.remark)}>
-                  <Image
-                    source={require('../../assets/icons/Delete/delete.png')}
-                    style={styles.deleteIcon}
+            {
+             cards != undefined ?
+              cards.map(item => (
+                <View key={item.id} style={styles.cardContainer}>
+                  <InsuranceCard
+                    title={item.title!= "" && item.title!= undefined ?  item.title : item.serviceName.toString()}
+                    date={item.date}
+                    description={item.remark!= "" && item.remark!= undefined ? item.remark : item.remark.toString()}
                   />
-                </TouchableOpacity>
-              </View>
-            ))}
+                  <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={() => handleDeleteCard(item.id, item.remark)}>
+                    <Image
+                      source={require('../../assets/icons/Delete/delete.png')}
+                      style={styles.deleteIcon}
+                    />
+                  </TouchableOpacity>
+                </View>
+              ))
+              :<></>
+            }
+            
             <CustomButton title="Submit" onPress={handleSubmit} />
           </View>
         </ScrollView>

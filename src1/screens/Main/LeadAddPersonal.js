@@ -67,12 +67,13 @@ const LeadAddPersonal = ({ navigation,route }) => {
   };
 
   useEffect(() => {
-    //  alert(leadId+'Lead Data:====>'+ JSON.stringify(leadId));
+      console.log(leadId+'Lead Data:====>'+ JSON.stringify(leadId));
       if(leadId != "" && leadData != undefined){
         //alert(1)
+        alert('Existing---- Lead ID:'+ JSON.stringify(leadSourceList));
        dispatch(setAllInputFileds(leadData,leadId))
       }else{
-        alert('Lead ID:'+ leadSourceList);
+        alert('neww Lead ID:'+ JSON.stringify(leadSourceList));
   
         dispatch(resetStateLeadID())
       }
