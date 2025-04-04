@@ -48,8 +48,7 @@ const LeadLast = props => {
       showToast(allState.messageFromServer.message);
     //  setCards(allState.services)
       navigation.navigate('Lead', {
-        screen: 'LeadAddPersonal',
-        params: { leadId: "" } // Your parameters
+        params: { leadId: "" ,name:""} // Your parameters
       });
     }
   });
@@ -120,7 +119,7 @@ const LeadLast = props => {
         isActive: true,
       };
     }
-    alert(editLeadDataAgainstId.id+"===="+JSON.stringify(newCard) +"=--="+JSON.stringify( Object.keys(editLeadDataAgainstId).length  ))
+    //alert(editLeadDataAgainstId.id+"===="+JSON.stringify(newCard) +"=--="+JSON.stringify( Object.keys(editLeadDataAgainstId).length  ))
    
 
     // Check if the newCard already exists based on id and remark

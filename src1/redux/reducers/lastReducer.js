@@ -26,6 +26,7 @@ import {
 } from '../actions/lastAction';
 
 const initialState = {
+  editId:'',
   firstName: '',
   lastName: '',
   leadSources: '',
@@ -45,13 +46,15 @@ const initialState = {
   pincode: '',
   occupation: '',
   occupationName: 'Occupation Name',
-  typeOfWork: '',
+  typeOfWork: 'it',
   monthlyIncome: '',
   assignedTo: '',
   assignedToName: 'Assign To',
+  leadStatus: '',
+  leadStatusName:'',
   services: '',
   servicesName: 'Services',
-  remark: '',
+  remark: ' ',
   messageFromServer: '',
 };
 
@@ -164,6 +167,7 @@ const lastReducer = (state = initialState, action) => {
 
     case SET_ALL_DATA_DEFAULT_FOR_EDIT:
       return {
+        editId: action.payload.id,
         firstName: action.payload.firstName,
         lastName: action.payload.lastName,
         leadSources: action.payload.leadSource,
@@ -175,17 +179,19 @@ const lastReducer = (state = initialState, action) => {
         addressLine2: action.payload.addressLine2,
         cityId: action.payload.cityId,
         cityName: action.payload.cityName,
-        stateId: action.payload.cityId,
+        stateId: action.payload.stateId,
         stateName: action.payload.stateName,
-        countryId: action.payload.stateId,
+        countryId: action.payload.countryId,
         countryName: action.payload.countryName,
-        isdCode: action.payload.countryId,
+        // isdCode: action.payload.countryId,
         pincode: action.payload.pincode,
         occupation: action.payload.occupation,
         occupationName: action.payload.occupationName,
         typeOfWork: action.payload.workType,
         monthlyIncome: action.payload.monthlyIncome,
         assignedTo: action.payload.assignedTo,
+        leadStatus: action.payload.leadStatus,
+        leadStatusName:action.payload.leadStatusName,
         assignedToName: action.payload.assignedToName,
         services: action.payload.serviceDetails,
         servicesName: 'Services',
