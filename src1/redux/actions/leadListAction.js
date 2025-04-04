@@ -45,6 +45,7 @@ export const FETCH_LEADS_FAILURE = "FETCH_LEADS_FAILURE";
 
 export const DELETE_LEAD_SUCCESS = "DELETE_LEAD_SUCCESS";
 export const DELETE_LEAD_FAILURE = "DELETE_LEAD_FAILURE";
+export const STOP_LOADING_FILTER = "STOP_LOADING_FILTER";
 
 export const fetchLeadsRequest = () => ({
   type: FETCH_LEADS_REQUEST,
@@ -74,7 +75,9 @@ export const deleteLeadFailure = (error) => ({
   payload: error,
 });
 
-
+export const fetchLeadsLengthZero = (data)=>({
+  type: STOP_LOADING_FILTER
+})
 
 export const fetchLeads = () => async (dispatch) => {
   dispatch(fetchLeadsRequest());
@@ -86,16 +89,17 @@ export const fetchLeads = () => async (dispatch) => {
     const apiUrl = `https://opticalerp.in:85/api/lead/getlist/get-all?fromdate=${fromDate}&todate=${toDate}`;
     
     const data = await LeadList(apiUrl);
-    console.log("API Response Data:", data); // ✅ Debugging Step 1
+    console.log("API Response Data:", JSON.stringify(data)); // ✅ Debugging Step 1
 
     if (Array.isArray(data) && data.length > 0) {
-      const leadIds = data.map(lead => lead.id); // Extract all lead IDs
-      setItem('leadIds', JSON.stringify(leadIds)); // Store as a JSON string
+      // const leadIds = data.map(lead => lead.id); // Extract all lead IDs
+      // setItem('leadIds', JSON.stringify(leadIds)); // Store as a JSON string
       
       dispatch(fetchLeadsSuccess(data));
-      console.log("All Lead IDs:", leadIds); // ✅ Debugging Step 2
+    //  console.log("All Lead IDs:", JSON.stringify(leadIds)); // ✅ Debugging Step 2
     } else {
       console.error("No leads found in API response.");
+      dispatch(fetchLeadsLengthZero());
     }
   } catch (error) {
     console.error("Error fetching leads:", error.message);

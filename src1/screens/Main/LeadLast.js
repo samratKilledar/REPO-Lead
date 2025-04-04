@@ -14,7 +14,7 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
+import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices, leadSubmitEditAllData } from '../../redux/actions/lastAction';
 import { state } from '../../api/mainApi';
 import { useNavigation } from '@react-navigation/native';
 import {resetStateLead} from '../../redux/actions/lastAction';
@@ -49,44 +49,33 @@ const LeadLast = props => {
     if (allState.messageFromServer.success) {
     //  dispatch(resetStateLead());
       showToast(allState.messageFromServer.message);
-      setCards(allState.services)
-      navigation.navigate('LeadScreen');
+    //  setCards(allState.services)
+      navigation.navigate('Lead', {
+        screen: 'LeadAddPersonal',
+        params: { leadId: "" } // Your parameters
+      });
     }
-  }, [allState]);
-  const leadLast = useSelector(state => state.homeReducer);
+  });
+ // const leadLast = useSelector(state => state.homeReducer);
 
   useEffect(()=>{
-    alert(JSON.stringify(cards))
+    alert("cards==>"+JSON.stringify(cards))
   })
-  // useEffect(()=>{
-  //   alert("==============>"+JSON.stringify(editLeadDataAgainstId))
-  //   setCards(editLeadDataAgainstId.serviceDetails)
-  // },[editLeadDataAgainstId])
-
-  useEffect(() => {
-    if (editLeadDataAgainstId?.serviceDetails?.length) {
-      console.log("Setting Cards=========:", editLeadDataAgainstId.serviceDetails);
-      setCards(editLeadDataAgainstId.serviceDetails);
-    }
-  }, [editLeadDataAgainstId]);
+  useEffect(()=>{
+    //alert(JSON.stringify( JSON.stringify(editLeadDataAgainstId))+"==============>"+JSON.stringify(editLeadDataAgainstId.serviceDetails))
+    setCards(editLeadDataAgainstId.serviceDetails)
+  },[editLeadDataAgainstId])
   
-  
-
   const handleSubmit = () => {
-    console.log(" editLeadDataAgainstId:", editLeadDataAgainstId); 
-  console.log(" editLeadDataAgainstId.id:", editLeadDataAgainstId?.id); 
-    if (cards.length === 0) {
-      showToast("Card cannot be empty. Add at least 1 card to submit.");
-      return;
-    }
-    if (editLeadDataAgainstId?.id) {
-      console.log(" Editing Lead...");
-      dispatch(leadEditSubmitAllData(cards));
-    }else{
-      console.log(" Creating New Lead...");
-      dispatch(leadSubmitAllData(cards , updateServices));
-    }
    
+    if(editLeadDataAgainstId.id  != "" && editLeadDataAgainstId.id != undefined){
+      alert("cards-->"+JSON.stringify(cards))
+       dispatch(leadSubmitEditAllData(cards,editLeadDataAgainstId.id));
+    }else{
+      dispatch(leadSubmitAllData(cards));
+    }
+    alert(JSON.stringify(editLeadDataAgainstId.id ))
+    //
   };
 
   const handleAdd = () => {
@@ -109,28 +98,35 @@ const LeadLast = props => {
     let newCard ={};
     if(editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined){
        newCard = {
-        id: editLeadDataAgainstId.id  ,
-        customerId: editLeadDataAgainstId.customerId,
-        serviceId: serviceId,
+        id: 0 ,
+        customerId: 0,
+        serviceId: parseInt(serviceId),
         serviceName: serviceName,
-        leadId:  editLeadDataAgainstId.customerId,
+        leadId:  0,
         clientId: 0,
-        isExistingClient: false,
+        isExistingClient: true,
         remark: remark,
-        assignedTo: serviceId,
+        assignedTo: assignedTo,
         assignedToName: assignedToName,
         isActive: true,
-        date: new Date().toLocaleDateString(),
       }
     }else{
+      alert(assignedTo+"new"+serviceId)
        newCard = {
-        id: serviceId,
-        title: serviceName,
-        date: new Date().toLocaleDateString(),
+        id: 0,
+        customerId:0 ,
+        serviceId: parseInt(serviceId),
+        serviceName: serviceName,
+        leadId:  0,
+        clientId: 0,
+        isExistingClient: true,
         remark: remark,
+        assignedTo: assignedTo,
+        assignedToName: assignedToName,
+        isActive: true,
       };
     }
-    alert(JSON.stringify(cards) +"=--="+JSON.stringify(newCard ))
+    alert(editLeadDataAgainstId.id+"===="+JSON.stringify(newCard) +"=--="+JSON.stringify( Object.keys(editLeadDataAgainstId).length  ))
    
 
     // Check if the newCard already exists based on id and remark
@@ -196,24 +192,28 @@ const LeadLast = props => {
         <CustomButton title="Add" onPress={handleAdd} />
         <ScrollView contentContainerStyle={styles.insuranceCardContainer}>
           <View style={styles.insuranceCard}>
-          {Array.isArray(cards) && cards.length > 0 &&
-            cards.map(item => (
-              <View key={item.id} style={styles.cardContainer}>
-                <InsuranceCard
-                  title={item.title!= "" && item.title!= undefined ?  item.title : item.serviceName.toString()}
-                  date={item.date}
-                  description={item.remark!= "" && item.remark!= undefined ? item.remark : item.remark.toString()}
-                />
-                <TouchableOpacity
-                  style={styles.deleteButton}
-                  onPress={() => handleDeleteCard(item.id, item.remark)}>
-                  <Image
-                    source={require('../../assets/icons/Delete/delete.png')}
-                    style={styles.deleteIcon}
+            {
+             cards != undefined ?
+              cards.map(item => (
+                <View key={item.id} style={styles.cardContainer}>
+                  <InsuranceCard
+                    title={item.title!= "" && item.title!= undefined ?  item.title : item.serviceName.toString()}
+                    date={item.date}
+                    description={item.remark!= "" && item.remark!= undefined ? item.remark : item.remark.toString()}
                   />
-                </TouchableOpacity>
-              </View>
-            ))}
+                  <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={() => handleDeleteCard(item.id, item.remark)}>
+                    <Image
+                      source={require('../../assets/icons/Delete/delete.png')}
+                      style={styles.deleteIcon}
+                    />
+                  </TouchableOpacity>
+                </View>
+              ))
+              :<></>
+            }
+            
             <CustomButton title="Submit" onPress={handleSubmit} />
           </View>
         </ScrollView>

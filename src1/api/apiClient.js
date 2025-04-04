@@ -318,7 +318,7 @@ export const apiGetEditList = async (url,token) => {  //call this function
       },
     });
 
-    console.log("Response status:", response.status); 
+    alert("Response status:"+ JSON.stringify(response)); 
 
     if (!response.ok) {
       console.error("HTTP error! Status:", response.status);

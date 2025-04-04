@@ -17,7 +17,7 @@ const LeadScreen = props => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [refreshing, setRefreshing] = useState(false);
-
+alert("==lease=>"+JSON.stringify(leads))
   useEffect(() => {
     dispatch(fetchLeads());
   }, [dispatch]);
