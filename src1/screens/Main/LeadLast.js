@@ -73,7 +73,7 @@ const LeadLast = props => {
       dispatch(leadSubmitAllData(cards));
     }
     alert(JSON.stringify(editLeadDataAgainstId.id ))
-    props.navigation.navigate("LeadScreen")
+    props.navigation.navigate("Lead")
   };
 
   const handleAdd = () => {
