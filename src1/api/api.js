@@ -7,8 +7,9 @@ export const api={
     createPass:"https://opticalerp.in:85/api/currentuser/changepassword/change-password",
     verifyUser:"https://opticalerp.in:85/api/users/resetpassword/reset-password",
     profileDetails:"https://opticalerp.in:85/api/users/getbyidwithrole",
-    getAllLeadApi:"https://opticalerp.in:85/api/lead/getlist/get-all",
+    getAllLeadApi:"https://opticalerp.in:85/api/lead/getlist/get-all?fromdate=${fromDate}&todate=${toDate}",
     editProfileApi :"https://opticalerp.in:85/api/users/update/1/update",
+    editLead :"https://opticalerp.in:85/api/lead/getbyleadid/63",
     
 
 
@@ -24,9 +25,9 @@ export const api={
     state:"https://opticalerp.in:85/api/cascadecountrycitystate/getstates",
     occupation:"https://opticalerp.in:85/api/udc/getvaluesbytype?type=Occupation",
     taskList:"https://opticalerp.in:85/api/taskdetails/getlist",
-    assignTo : "https://opticalerp.in:85/api/lead/getdropdowndata/getdropdowndata",
     
     particularLeadDetailApi:"https://opticalerp.in:85/api/lead/getbyleadid",
+    assignTo :"https://opticalerp.in:85/api/lead/getdropdowndata/getdropdowndata",
 
     //AddFollowUP screen 
     addFollowUp: "https://opticalerp.in:85/api/followupdetails/createupdatefollowup?Id=0&FollowupType=Lead&FollowupTypeId=5&Title=Meeting%20follow%20up&FollowupStatus=15&AssignedTo=3&FollowupDate=3%2F22%2F2025&FollowupTime=3%2F21%2F2025%206%3A00%3A00%20PM&AttachmentUrl=https%3A%2F%2Flocalhost%3A44333%2FFiles%2FFollowup%2FFollowupDetails%2FExperienceLetterFormat.docx&Remark=Meeting%20scheduled%20at%2006%3A00%20PM&IsActive=true",
@@ -36,7 +37,8 @@ export const api={
    leadDetail:"https://opticalerp.in:85/api/lead/getbyleadid",
    client:"https://opticalerp.in:85/api/client/getlist/get-all",
    clientDetail:"https://opticalerp.in:85/api/client/get/",
-   // UpcomingMeetingsList:"https://opticalerp.in:85/api/lead/getlist/get-all"
+   UpcomingMeetingsList:"https://opticalerp.in:85/api/lead/getlist/get-all",
+   UpcomingTaskList:"https://opticalerp.in:85/api/taskdetails/getlist",
 
 
    leadSubmit:"https://opticalerp.in:85/api/lead/insertupdateleaddetails/create-update",

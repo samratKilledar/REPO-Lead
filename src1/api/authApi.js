@@ -146,32 +146,6 @@ export const fetchDropdownDataApi = async (apiType) => {
 };
 
 
-export const LeadList = async (url) => {
-    const authToken = await AsyncStorage.getItem("newToken");
-    return await apiGetLeadList(url, authToken);
-};
-
-export const EditLead = async (leadId) => {
-    const token = await AsyncStorage.getItem("newToken");
-    const url = `https://opticalerp.in:85/api/lead/getbyleadid/${leadId}`;
-    return await apiGetEditList(url, token);
-};
-export const updateUserProfile = async userData => {
-    console.log("data---"+JSON.stringify(authToken));
-    const authToken = await getItem("authToken");
-
-    console.log("-------------ssss------------token--"+JSON.stringify(authToken));
-    return await apiPut(api.editProfileApi,authToken,userData);
-}
-
-
-export const leadAddServiceApiCall = async userData => {
-    console.log("data---"+JSON.stringify(authToken));
-    const authToken = await getItem("authToken");
-
-    console.log("-----sbssss--"+JSON.stringify(authToken));
-    return await apiGet(api.leadAddServiceApi,authToken);
-}
 
 import jwtDecode from 'jwt-decode';
 import AsyncStorage from '@react-native-async-storage/async-storage';

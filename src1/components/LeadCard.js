@@ -73,7 +73,7 @@ const LeadCard = props => {
   const editLeadProfile = async () => {
     try {
       if (!props.id) {
-        Alert.alert('Error', "This lead isn't ready for editing yet");
+        console.log('Error', "This lead isn't ready for editing yet");
         return;
       }
 
@@ -91,7 +91,7 @@ const LeadCard = props => {
       const message =
         error.response?.data?.message ||
         'Lead data not available. Please try again in a few seconds.';
-      Alert.alert('Error', message);
+      console.log('Error', message);
     } finally {
       setIsEditing(false);
       setMenuVisible(false);
@@ -118,7 +118,7 @@ const LeadCard = props => {
       const message =
         error.response?.data?.message ||
         'Lead data not available. Please try again in a few seconds.';
-      Alert.alert('Error', message);
+      console.log('Error', message);
     } finally {
       setMenuVisible(false);
       setModalVisible(false);

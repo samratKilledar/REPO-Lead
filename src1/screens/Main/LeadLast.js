@@ -50,7 +50,7 @@ const LeadLast = props => {
     //  dispatch(resetStateLead());
       showToast(allState.messageFromServer.message);
     //  setCards(allState.services)
-      navigation.navigate('Lead', {
+      navigation.navigate("Lead", {
         params: { leadId: "" ,name:""} // Your parameters
       });
     }
@@ -58,7 +58,7 @@ const LeadLast = props => {
  // const leadLast = useSelector(state => state.homeReducer);
 
   useEffect(()=>{
-    alert("cards==>"+JSON.stringify(cards))
+    //alert("cards==>"+JSON.stringify(cards))
   })
   useEffect(()=>{
     //alert(JSON.stringify( JSON.stringify(editLeadDataAgainstId))+"==============>"+JSON.stringify(editLeadDataAgainstId.serviceDetails))
@@ -67,12 +67,12 @@ const LeadLast = props => {
   
   const handleSubmit = () => {
     if(editLeadDataAgainstId.id  != "" && editLeadDataAgainstId.id != undefined){
-      alert("cards-->"+JSON.stringify(cards))
+     // alert("cards-->"+JSON.stringify(cards))
        dispatch(leadSubmitEditAllData(cards,editLeadDataAgainstId.id));
     }else{
       dispatch(leadSubmitAllData(cards));
     }
-    alert(JSON.stringify(editLeadDataAgainstId.id ))
+   // alert(JSON.stringify(editLeadDataAgainstId.id ))
     props.navigation.navigate("Lead")
   };
 
@@ -109,7 +109,7 @@ const LeadLast = props => {
         isActive: true,
       }
     }else{
-      alert(assignedTo+"new"+serviceId)
+      //alert(assignedTo+"new"+serviceId)
        newCard = {
         id: 0,
         customerId:0 ,

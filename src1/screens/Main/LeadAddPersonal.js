@@ -38,23 +38,6 @@ const LeadAddPersonal = ({ navigation,route }) => {
   const dispatch = useDispatch();
   const { leadId, leadData } = route.params || {};
 
-  // useEffect(() => {
-  //   console.log('Lead ID:', leadId);
-  //   alert('Lead Data:====>'+ JSON.stringify(leadId));
-  //   if (leadId !== "" && leadData !== undefined) {
-  //     alert(1)
-  //     dispatch(setAllInputFileds(leadData, leadId));
-  
-  //     // ✅ Check if "Refer By" was selected before and show input
-      // if (parseInt(leadData.leadSource, 10) === 12) {
-      //   setShowNewSourceInput(true);
-      // } else {
-      //   setShowNewSourceInput(false);
-      // }
-  //   }
-  // }, []);
-  
-
   const {
     firstName,
     lastName,
@@ -88,7 +71,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
     console.log(leadId+'Lead Data:====>'+ JSON.stringify(leadId));
     if(leadId != "" && leadData != undefined){
       //alert(1)
-      alert('Existing---- Lead ID:'+ JSON.stringify(leadSourceList));
+     // alert('Existing---- Lead ID:'+ JSON.stringify(leadSourceList));
      dispatch(setAllInputFileds(leadData,leadId))
 
      if (parseInt(leadData.leadSource, 10) === 12) {
@@ -98,7 +81,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
     }
     
     }else{
-      alert('neww Lead ID:'+ JSON.stringify(leadSourceList));
+      //alert('neww Lead ID:'+ JSON.stringify(leadSourceList));
 
       dispatch(resetStateLeadID())
     }
@@ -126,10 +109,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
       showToast('Please enter Address.');
       return false;
     }
-    // if (!pincode.trim() || !/^\d{6}$/.test(pincode)) {
-    //   showToast('Please enter a valid 6-digit Pincode.');
-    //   return false;
-    // }
+
     if (!pincode.toString().trim() || !/^\d{6}$/.test(pincode)) {
       showToast('Please enter a valid 6-digit Pincode.');
       return false;

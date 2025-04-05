@@ -1,4 +1,4 @@
-import {leadAddServiceApiCall} from '../../api/authApi';
+import {leadAddServiceApiCall} from '../../api/mainApi';
 import {setItem, getItem} from '../../api/storageServices';
 
 export const UPDATE_REMARK = "UPDATE_REMARK";

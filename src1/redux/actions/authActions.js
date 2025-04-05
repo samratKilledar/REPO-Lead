@@ -28,6 +28,7 @@ export const loginUser = () => async (dispatch, getState) => {
       if (newTokenData) {
         setItem('authToken', newTokenData.token); // Store the updated token
       }
+
       // alert(newTokenData)
       scheduleTokenRefresh(); // Start automatic refresh mechanism
     } else {

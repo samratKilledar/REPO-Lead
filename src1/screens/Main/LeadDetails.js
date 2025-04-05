@@ -1,86 +1,127 @@
-import { useState , useEffect } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from "react-native";
 import DetailItem from "../../components/DetailItem";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import CustomButton from "../../components/CustomButton";
 import ButtonStyles from "../../styles/ButtonStyles";
-import { ScrollView } from "react-native-gesture-handler";
 import InsuranceCard from "../../components/InsuranceCard";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLeadSuccess, fetchInsuranceSuccess } from "../../redux/actions/leadDetailActions";
+import { LeadDetailFetch } from "../../redux/actions/leadListAction";
 
-const LeadDetails = (props) => {
-  const navigation = useNavigation();
+const LeadDetails = ({ route, navigation }) => {
   const dispatch = useDispatch();
+  const { leadId } = route.params;
 
-  const goBackCall = () => {
-    navigation.goBack();
-  };
-
-  const leadDetails = useSelector((state) => state.leadDetailReducer.LeadValue);
-  const leadDetailsPlaceholder = useSelector((state) => state.leadDetailReducer.LeadPlaceholder);
+  const leadDetails = useSelector((state) => state.leadDetailReducer);
   const insuranceList = useSelector((state) => state.leadDetailReducer.InsuranceList);
 
   const [menuVisible, setMenuVisible] = useState(false);
+
+  useEffect(() => {
+    if (leadId) {
+      dispatch(LeadDetailFetch(leadId))
+        .catch((error) => console.error("Error fetching lead details:", error));
+    }
+  }, [dispatch, leadId]);
+
   const addfollow = () => {
-    props.navigation.navigate("AddFollowUp")
+    navigation.navigate("AddFollowUp")
   }
   const addService = () => {
-    props.navigation.navigate("LeadAddServices")
+    navigation.navigate("LeadAddServices")
   }
   
   // useEffect(() => {
   //   dispatch(fetchLeadDetails());
   // }, [dispatch]);
 
+  // Combine first and last name
+  const fullName = `${leadDetails?.firstName || ''} ${leadDetails?.lastName || ''}`.trim();
+
   return (
     <View style={styles.container}>
-      <View style={{ flexDirection: "row",  paddingRight: 28, marginLeft: 8 }}>
-        <NavigationHeaderBack text="Barbara Moore" onPress={goBackCall} />
+      <View style={{ flexDirection: "row", paddingRight: 28, marginLeft: 8 }}>
+        <NavigationHeaderBack text={fullName || "Lead Details"} onPress={() => navigation.goBack()} />
         <TouchableOpacity onPress={() => setMenuVisible(!menuVisible)}>
-          <Image
-            source={require('../../assets/icons/MoreCircle.png')}
-            style={{ width: 28, height: 28 }}
-          />
+          <Image source={require('../../assets/icons/MoreCircle.png')} style={{ width: 28, height: 28 }} />
         </TouchableOpacity>
       </View>
-  
+
       <ScrollView style={styles.centralcontainer}>
         <View style={styles.detailsContainer}>
-          <DetailItem icon={require('../../assets/icons/ProfileGrey/profileGrey.png')} label={leadDetailsPlaceholder.name} detail={leadDetails.name} />
-          <DetailItem icon={require('../../assets/icons/Call/call.png')}  label={leadDetailsPlaceholder.mobileNo} detail={leadDetails.mobileNo} />
-          <DetailItem icon={require('../../assets/icons/Address/Address.png')} label={leadDetailsPlaceholder.address} detail={leadDetails.address} />
-          <DetailItem icon={require('../../assets/icons/Bag/bag.png')} label={leadDetailsPlaceholder.occupation} detail={leadDetails.occupation} />
-          <DetailItem icon={require('../../assets/icons/Work/work.png')} label={leadDetailsPlaceholder.typeOfWork} detail={leadDetails.typeOfWork} />
-          <DetailItem icon={require('../../assets/icons/Wallet/wallett.png')} label={leadDetailsPlaceholder.monthlyIncome} detail={leadDetails.monthlyIncome} />
-          <DetailItem icon={require('../../assets/icons/Chart/chart.png')} label={leadDetailsPlaceholder.companyName} detail={leadDetails.companyName} />
+          <DetailItem
+            icon={require('../../assets/icons/ProfileGrey/profileGrey.png')}
+            label="Name"
+            detail={fullName || "N/A"}
+          />
+          <DetailItem
+            icon={require('../../assets/icons/Call/call.png')}
+            label="Mobile No"
+            detail={leadDetails?.mobileNo || "N/A"}
+          />
+          <DetailItem
+            icon={require('../../assets/icons/Address/Address.png')}
+            label="Address"
+            detail={`${leadDetails?.addressLine1 || ''}, ${leadDetails?.cityName || ''}` || "N/A"}
+          />
+          <DetailItem
+            icon={require('../../assets/icons/Bag/bag.png')}
+            label="Occupation"
+            detail={leadDetails?.occupationName || "N/A"}
+          />
+          <DetailItem
+            icon={require('../../assets/icons/Work/work.png')}
+            label="Type of Work"
+            detail={leadDetails?.workType || "N/A"}
+          />
+          <DetailItem
+            icon={require('../../assets/icons/Wallet/wallett.png')}
+            label="Monthly Income"
+            detail={leadDetails?.monthlyIncome ? `₹${leadDetails.monthlyIncome}` : "N/A"}
+          />
+          <DetailItem
+            icon={require('../../assets/icons/Chart/chart.png')}
+            label="Company Name"
+            detail={leadDetails?.organisationName || "N/A"}
+          />
           <View style={styles.leadStatusContainer}>
-            <DetailItem icon={require('../../assets/icons/LSTIckSquare/lsTickSquare.png')} label={leadDetailsPlaceholder.leadStatus} detail={<Text style={styles.leadStatusText}>{leadDetails.leadStatus}</Text>} />
+            <DetailItem
+              icon={require('../../assets/icons/LSTIckSquare/lsTickSquare.png')}
+              label="Lead Status"
+              detail={<Text style={styles.leadStatusText}>{leadDetails?.leadStatusName || "N/A"}</Text>}
+            />
           </View>
-          <DetailItem icon={require('../../assets/icons/Calendar/calendar.png')} label={leadDetailsPlaceholder.nextMeetingDate} detail={leadDetails.nextMeetingDate}  />
-          <DetailItem icon={require('../../assets/icons/Remarks.png')} label={leadDetailsPlaceholder.attachment}  detail={leadDetails.attachment} />
+          <DetailItem
+            icon={require('../../assets/icons/Calendar/calendar.png')}
+            label="Lead Date"
+            detail={leadDetails?.leadDate || "N/A"}
+          />
         </View>
 
         <View style={styles.followup}>
-        <View style={{ flex: 1, margin: 10 }}>
-          <CustomButton title="Add Follow Up" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} onPress={addfollow} />
-        </View>
-        <View style={{ flex: 1, margin: 10 }}>
-          <CustomButton title="Add Services" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} onPress={addService} />
-        </View>
+          <View style={{ flex: 1, margin: 10 }}>
+            <CustomButton title="Add Follow Up" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} onPress={addfollow} />
+          </View>
+          <View style={{ flex: 1, margin: 10 }}>/           
+            <CustomButton title="Add Services" customStyle={ButtonStyles.addButton} textStyles={ButtonStyles.addButtonText} onPress={addService} />
+          </View>
         </View>
 
         <View style={styles.insuranceCard}>
           <Text style={styles.insuranceText}>Interested Services</Text>
-          {insuranceList.map((item) => (
-            <InsuranceCard
-              key={item.id}
-              title={item.title}
-              date={item.date}
-              description={item.description}
-            />
-          ))}
+          {insuranceList && insuranceList.length > 0 ? (
+            insuranceList.map((item, index) => (
+              <InsuranceCard
+                key={index}
+                title={item.serviceName || "Service"}
+                date={leadDetails?.leadDate || "N/A"} 
+                description={item.remark || "No remarks"}
+              />
+            ))
+          ) : (
+            <Text style={styles.noServicesText}>No services added yet</Text>
+          )}
         </View>
       </ScrollView>
 
@@ -108,7 +149,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   centralcontainer: {
-    paddingLeft: 10,
+    paddingLeft: 20,
     paddingRight: 5,
   },
   detailsContainer: {
@@ -118,7 +159,7 @@ const styles = StyleSheet.create({
   },
   followup: {
     flexDirection: 'row',
-    gap: 10,
+    gap: 12,
     flex: 1,
     paddingRight: 5,
   },
@@ -135,7 +176,7 @@ const styles = StyleSheet.create({
   insuranceCard: {
     marginTop: 10,
     marginRight: 10,
-    marginLeft: 5,
+    marginLeft: 1,
     marginBottom: 30,
     gap: 24,
   },
@@ -145,6 +186,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 21.6,
     color: "#212121",
+  },
+  noServicesText: {
+    textAlign: 'center',
+    marginTop: 10,
+    color: '#666',
   },
   menuBox: {
     position: "absolute",
@@ -175,4 +221,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
 });
+
 export default LeadDetails;
+
+
+
+

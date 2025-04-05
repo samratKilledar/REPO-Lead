@@ -1,5 +1,5 @@
 import {   EditLeadReadData } from "../../api/apiClient";
-import {EditLead} from "../../api/authApi";
+import {EditLead} from "../../api/mainApi";
 import { leadAPISubmit } from "../../api/mainApi";
 
 export const SUBMIT_SUCCESS_LEAD = "SUBMIT_SUCCESS_LEAD";

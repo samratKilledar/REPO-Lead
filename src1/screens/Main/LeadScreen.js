@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
-import {View, ScrollView, StyleSheet} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import LeadCard from '../../components/LeadCard';
-import HeaderComp from '../../components/HeaderComp';
-import TextStyle from '../../styles/TextStyle';
-import {fetchLeads} from '../../redux/actions/leadListAction';
-import CustomText from '../../components/CustomText';
-import {useNavigation} from '@react-navigation/native';
-import LottieScreen from '../../styles/Loader';
-import {RefreshControl} from 'react-native';
+import React, { useEffect, useState,useCallback } from "react";
+import { View, ScrollView, StyleSheet } from "react-native";
+import { useDispatch, useSelector } from 'react-redux';
+import LeadCard from "../../components/LeadCard";
+import HeaderComp from "../../components/HeaderComp";
+import TextStyle from "../../styles/TextStyle";
+import { fetchLeads } from "../../redux/actions/leadListAction";
+import CustomText from "../../components/CustomText";
+import { useNavigation,useFocusEffect } from "@react-navigation/native";
+import LottieScreen from "../../styles/Loader";
+import { RefreshControl } from "react-native";
 
 const LeadScreen = props => {
   const dispatch = useDispatch();
@@ -17,13 +17,21 @@ const LeadScreen = props => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [refreshing, setRefreshing] = useState(false);
-alert("==lease=>"+JSON.stringify(leads))
-  useEffect(() => {
-    dispatch(fetchLeads());
-  }, [dispatch]);
+  //alert("==lease=>"+JSON.stringify(leads))
+
+  useFocusEffect(
+    useCallback(() => {
+      dispatch(fetchLeads());
+    }, [dispatch])
+  );
+
+  
+  // useEffect(() => {
+  //   dispatch(fetchLeads());
+  // }, [dispatch]);
 
   useEffect(() => {
-    //alert("==samrat==>"+JSON.stringify(editLeadDataAgainstId))
+    //("==samrat==>"+JSON.stringify(editLeadDataAgainstId))
   });
 
   const onRefresh = () => {
@@ -32,6 +40,9 @@ alert("==lease=>"+JSON.stringify(leads))
   };
 
   // Show loading filter animation
+  if (isLoading || loading) {
+    return <LottieScreen />;
+  }
 
   // Show error state
   if (error) {
@@ -40,24 +51,15 @@ alert("==lease=>"+JSON.stringify(leads))
   const editProfile = async id => {
     try {
       if (!id) {
-        Alert.alert('Error', "This lead isn't ready for editing yet");
+        console.log('Error', "This lead isn't ready for editing yet");
         return;
       }
-
-      //   console.log('Editing lead ID:', id);
-
-      //  // const result = await dispatch(EditLeadFetch(id));
-      //  // if (result) {
-      //     // Only navigate if successful
-      //     alert(id)
-      //    // navigation.navigate('Editlead1');
-      //   //}
     } catch (error) {
       console.error('Edit failed:', error);
       const message =
         error.response?.data?.message ||
         'Lead data not available. Please try again in a few seconds.';
-      Alert.alert('Error', message);
+      console.log('Error', message);
     } finally {
       setMenuVisible(false);
       setModalVisible(false);
@@ -101,7 +103,7 @@ alert("==lease=>"+JSON.stringify(leads))
               />
             ))
           ) : (
-            <CustomText text="No Data Found" />
+            <CustomText text="" />
           )}
         </ScrollView>
       </View>
