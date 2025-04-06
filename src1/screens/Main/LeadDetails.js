@@ -63,7 +63,9 @@ const LeadDetails = ({ route, navigation }) => {
           <DetailItem
             icon={require('../../assets/icons/Address/Address.png')}
             label="Address"
-            detail={`${leadDetails?.addressLine1 || ''}, ${leadDetails?.cityName || ''}` || "N/A"}
+            detail={`${leadDetails?.addressLine1 || ''}, ${leadDetails?.addressLine2 || ''},${leadDetails?.cityName || ''} `|| "N/A"}
+            multiline={true}
+            // detailStyle={styles.addressDetail}
           />
           <DetailItem
             icon={require('../../assets/icons/Bag/bag.png')}
@@ -115,7 +117,6 @@ const LeadDetails = ({ route, navigation }) => {
               <InsuranceCard
                 key={index}
                 title={item.serviceName || "Service"}
-                date={leadDetails?.leadDate || "N/A"} 
                 description={item.remark || "No remarks"}
               />
             ))

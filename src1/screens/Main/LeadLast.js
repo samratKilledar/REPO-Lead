@@ -18,7 +18,7 @@ import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices, leadSu
 import { state } from '../../api/mainApi';
 import { useNavigation } from '@react-navigation/native';
 import {resetStateLead} from '../../redux/actions/lastAction';
-//import { leadEditSubmitAllData } from '../../redux/actions/editLeadAction';
+import { CommonActions } from '@react-navigation/native';
 
 const LeadLast = props => {
   const dispatch = useDispatch();
@@ -45,17 +45,25 @@ const LeadLast = props => {
     );
   };
 
-  useEffect(() => {
-    if (allState.messageFromServer.success) {
-    //  dispatch(resetStateLead());
-      showToast(allState.messageFromServer.message);
-    //  setCards(allState.services)
-      navigation.navigate("Lead", {
-        params: { leadId: "" ,name:""} // Your parameters
-      });
-    }
-  });
- // const leadLast = useSelector(state => state.homeReducer);
+useEffect(() => {
+  if (allState.messageFromServer.success) {
+    // Optionally reset the redux state or show a toast
+    showToast(allState.messageFromServer.message);
+
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          {
+            name: 'Lead', // Replace with your actual screen name
+            params: { leadId: "", name: "" },
+          },
+        ],
+      })
+    );
+  }
+}, [allState.messageFromServer.success]);
+
 
   useEffect(()=>{
     //alert("cards==>"+JSON.stringify(cards))
@@ -65,15 +73,24 @@ const LeadLast = props => {
     setCards(editLeadDataAgainstId.serviceDetails)
   },[editLeadDataAgainstId])
   
+
   const handleSubmit = () => {
-    if(editLeadDataAgainstId.id  != "" && editLeadDataAgainstId.id != undefined){
-     // alert("cards-->"+JSON.stringify(cards))
-       dispatch(leadSubmitEditAllData(cards,editLeadDataAgainstId.id));
-    }else{
-      dispatch(leadSubmitAllData(cards));
+    if (!cards || cards.length === 0) {
+      showToast("Add at least one service");
+      return;
     }
-   // alert(JSON.stringify(editLeadDataAgainstId.id ))
-    props.navigation.navigate("Lead")
+
+    if(editLeadDataAgainstId.id  != "" && editLeadDataAgainstId.id != undefined){
+      dispatch(leadSubmitEditAllData(cards, editLeadDataAgainstId.id)).then(() => {
+        dispatch(resetStateLead());
+        navigation.navigate("Lead");
+      });
+    } else {
+      dispatch(leadSubmitAllData(cards)).then(() => {
+        dispatch(resetStateLead());
+        navigation.navigate("Lead");
+      });
+    }
   };
 
   const handleAdd = () => {

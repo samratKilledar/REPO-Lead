@@ -109,10 +109,15 @@ const LeadCard = props => {
       console.log('Deleting  lead ID:', id);
       // await dispatch(deleteLead(id));
       const result = await dispatch(deleteLead(id));
-      if (result) {
-        // Only navigate if successful
-        navigationtolead.navigate('Lead');
+
+      if (props.onDeleteSuccess) {
+        props.onDeleteSuccess();  // refresh list
       }
+
+      // if (result) {
+      //   // Only navigate if successful
+      //   navigationtolead.navigate('Lead');
+      // }
     } catch (error) {
       console.error('Delete failed:', error);
       const message =

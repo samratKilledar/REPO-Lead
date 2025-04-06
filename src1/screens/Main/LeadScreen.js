@@ -1,5 +1,5 @@
 import React, { useEffect, useState,useCallback } from "react";
-import { View, ScrollView, StyleSheet } from "react-native";
+import { View, StyleSheet , FlatList } from "react-native";
 import { useDispatch, useSelector } from 'react-redux';
 import LeadCard from "../../components/LeadCard";
 import HeaderComp from "../../components/HeaderComp";
@@ -81,31 +81,29 @@ const LeadScreen = props => {
           <CustomText text="Lead" customstyle={TextStyle.leadText} />
         </View>
 
-        <ScrollView
+        <FlatList
+          style={{ padding: 20, flex:1, marginBottom: 60 }}
+          data={leads}
+          keyExtractor={item => item.id?.toString()}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          style={{padding: 20, flex: 1, marginBottom: 60}}>
-          {leads && leads.length > 0 ? (
-            leads.map(item => (
-              <LeadCard
-                key={item.id}
-                id={item.id}
-                name={item.customerName}
-                phone={item.mobileNo}
-                dateTime={item.leadDate}
-                status={item.leadStatus}
-                statusGradient={getStatusGradient(item.leadStatus)}
-                menuType="follow"
-                navigation={props.navigation}
-                onPress={editProfile(item.id)}
-                screenType="lead"
-              />
-            ))
-          ) : (
-            <CustomText text="" />
+          renderItem={({ item }) => (
+            <LeadCard
+              id={item.id}
+              name={item.customerName}
+              phone={item.mobileNo}
+              dateTime={item.leadDate}
+              status={item.leadStatus}
+              statusGradient={getStatusGradient(item.leadStatus)}
+              menuType="follow"
+              navigation={props.navigation}
+              onPress={editProfile(item.id)}  // <-- Make sure it's a function
+              screenType="lead"
+            />
           )}
-        </ScrollView>
+          ListEmptyComponent={<CustomText text="" />}
+        />
       </View>
     </View>
   );
