@@ -32,12 +32,12 @@ const ClientAddFollowUP = (props) => {
   } = useSelector(state => state.addFollowUp);
   //alert(followupStatus)
   const {
-    titlePlaceholder, followupStatusName, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder,
+    titlePlaceholder, followupStatusName, assignedToName, attachmentUrlPlaceholder, followupDatePlaceholder,
     followupTimePlaceholder, remarkPlaceholder
   } = useSelector(state => state.addFollowUp);
 
   const followUpList = useSelector(state => state.homeReducer);
-  // Alert.alert(JSON.stringify(followUpList))
+  const assignToList= useSelector(state => state.homeReducer);
 
   const goBackCall = () => {
     navigation.popToTop();
@@ -46,10 +46,14 @@ const ClientAddFollowUP = (props) => {
   useEffect(() => {
     if (isAuthenticated) {
       Alert.alert("Success", "Follow-up added successfully!", [
-        { text: "OK", onPress: () => navigation.goBack() }
+        {
+          text: "OK",
+          onPress: () => dispatch(submitFollowUp({ isAuthenticated: false }))
+        }
       ]);
     }
   }, [isAuthenticated]);
+  
   useEffect(() => {
     if (error) {
       Alert.alert("Error", error);
@@ -132,18 +136,20 @@ const ClientAddFollowUP = (props) => {
   return (
     <View style={styles.container}>
       <View style={{ flex: 0.1, marginLeft: 5 }}>
+      
         <NavigationHeaderBack text="Add Follow-Up" onPress={goBackCall} />
-       
+        
       </View>
       <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ paddingBottom: 70 }}>
       <View style={styles.centerContainer}>
+        
         <CustomTextInput
           value={title}
           placeholder={titlePlaceholder}
           onChangeText={(text) => dispatch(changeTitle(text))}
         />
-
+       
         <StatusDropdown
           label={followupStatusName}
           selectedValue={followupStatus}
@@ -154,21 +160,17 @@ const ClientAddFollowUP = (props) => {
           elevation={6}
           listData={followUpList.followUp}
         />
-        <Dropdown
-          label={assignedToPlaceholder}
+       
+        <StatusDropdown
+          label={assignedToName}
           selectedValue={assignedTo}
           onValueChange={(value) => dispatch(changeAssignedTo(value))}
-          //listData={followUpList.followUp}
-          options={[
-            { label: "Mr.Akshat", value: "akshat" },
-            { label: "Mr.Paresh", value: "paresh" },
-            { label: "Mr.Rajesh", value: "rajesh" },
-            { label: "Mr.Subhash", value: "subhash" },
-          ]}
+          apiType="assignTo"
+          listData={assignToList.assignTo[3]}
           zIndex={1000}
           elevation={4}
         />
-
+       
         <CustomTextInput
           followupicon={require('../../assets/icons/Scan/scan.png')}
           value={attachmentUrl}
@@ -190,6 +192,7 @@ const ClientAddFollowUP = (props) => {
           }}
       
         />
+        
         <CustomTextInput
           followupicon={require("../../assets/icons/Calendar/calendar.png")}
           value={followupDate}
@@ -197,6 +200,7 @@ const ClientAddFollowUP = (props) => {
           onChangeText={(text) => dispatch(changeFollowupDate(text))}
           onIconPress={() => setShowDatePicker(true)}
         />
+         
         {showDatePicker && (
           <DateTimePicker
             value={new Date()}
@@ -205,6 +209,7 @@ const ClientAddFollowUP = (props) => {
             onChange={handleDateChange}
           />
         )}
+            
         <CustomTextInput
           followupicon={require("../../assets/icons/Calendar/calendar.png")}
           value={followupTime}
@@ -212,6 +217,7 @@ const ClientAddFollowUP = (props) => {
           onChangeText={(text) => dispatch(changeFollowupTime(text))}
           onIconPress={() => setShowTimePicker(true)}
         />
+         
         {showTimePicker && (
           <DateTimePicker
             value={new Date()}
@@ -221,20 +227,20 @@ const ClientAddFollowUP = (props) => {
             onChange={handleTimeChange}
           />
         )}
-  
+        
         <CustomTextInput
           value={remark}
           placeholder={remarkPlaceholder}
           onChangeText={(text) => dispatch(changeRemark(text))}
         />
-
+       
         <CustomButton 
           title="Submit" 
           customStyle={ButtonStyles.blueButton} 
           textStyles={ButtonStyles.blueButtonText} 
           onPress={validateAndSubmit}
         />
-       
+        
       </View>
       </ScrollView>
       </KeyboardAvoidingView>

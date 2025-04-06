@@ -165,13 +165,6 @@ const AddFollowUP = (props) => {
           label={assignedToName}
           selectedValue={assignedTo}
           onValueChange={(value) => dispatch(changeAssignedTo(value))}
-          //listData={followUpList.followUp}
-          // options={[
-          //   { label: "Mr.Akshat", value: "akshat" },
-          //   { label: "Mr.Paresh", value: "paresh" },
-          //   { label: "Mr.Rajesh", value: "rajesh" },
-          //   { label: "Mr.Subhash", value: "subhash" },
-          // ]}
           apiType="assignTo"
           listData={assignToList.assignTo[3]}
           zIndex={1000}
