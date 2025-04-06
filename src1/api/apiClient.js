@@ -427,14 +427,14 @@ export const apigetAddFollowUp = async (url, tenantId) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error("❌ API Error:", response.status, errorText);
-      Alert.alert("Error",` HTTP Error ${response.status}: ${errorText}`);
+      console.log("Error",` HTTP Error ${response.status}: ${errorText}`);
       return;
     }
 
     const text = await response.text();
     if (!text.trim()) {
       console.warn("⚠ Server returned an empty response.");
-      Alert.alert("Warning", "No data received from the server.");
+     // Alert.alert("Warning", "No data received from the server.");
       return;
     }
 

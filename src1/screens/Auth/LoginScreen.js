@@ -172,7 +172,7 @@ const LoginScreen = props => {
                   onChangeText={text =>
                     dispatch(updateCredential({customerId: text}))
                   }
-                  keyboardType="numeric"
+                  // keyboardType="numeric"
                 />
                 <CustomTextInput
                   icon={require('../../assets/icons/Message/message.png')}

@@ -43,16 +43,16 @@ const AddFollowUP = (props) => {
     navigation.popToTop();
   };
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      Alert.alert("Success", "Follow-up added successfully!", [
-        {
-          text: "OK",
-          onPress: () => dispatch(submitFollowUp({ isAuthenticated: false }))
-        }
-      ]);
-    }
-  }, [isAuthenticated]);
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     showToast("Success", "Follow-up added successfully!", [
+  //       {
+  //         text: "OK",
+  //         onPress: () => dispatch(submitFollowUp({ isAuthenticated: false }))
+  //       }
+  //     ]);
+  //   }
+  // }, [isAuthenticated]);
   
   useEffect(() => {
     if (error) {
