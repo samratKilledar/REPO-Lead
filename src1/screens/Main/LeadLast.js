@@ -136,7 +136,6 @@ useEffect(() => {
         isActive: true,
       }
     }else{
-      //alert(assignedTo+"new"+serviceId)
        newCard = {
         id: 0,
         customerId:0 ,
