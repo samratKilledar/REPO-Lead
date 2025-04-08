@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     zIndex: 999, 
   },
   lottie: {
-    width: 400,
-    height: 400,
+    width: 200,
+    height: 200,
   },
 });
 

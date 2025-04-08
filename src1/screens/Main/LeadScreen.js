@@ -39,11 +39,6 @@ const LeadScreen = props => {
     dispatch(fetchLeads()).finally(() => setRefreshing(false));
   };
 
-  // Show loading filter animation
-  if (isLoading || loading) {
-    return <LottieScreen />;
-  }
-
   // Show error state
   if (error) {
     return <CustomText text={`Error: ${error}`} />;

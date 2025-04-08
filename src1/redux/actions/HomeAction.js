@@ -18,6 +18,7 @@ export const FETCH_DROPDOWN_SUCCESS = 'FETCH_DROPDOWN_SUCCESS';
 export const FETCH_DROPDOWN_FAILURE = 'FETCH_DROPDOWN_FAILURE';
 export const RESET_ALL_STATE = 'RESET_ALL_STATE';
 export const FETCH_DROPDOWN_READ = 'FETCH_DROPDOWN_READ';
+export const  RESET_ALL_API_STATE = 'RESET_ALL_API_STATE';
 
 export const callAllDropDownAPI = (storedData) => {
   return async (dispatch) => {
@@ -54,16 +55,27 @@ export const callAllDropDownAPI = (storedData) => {
 
       // Dispatch success action with all responses
       dispatch({ type: FETCH_DROPDOWN_SUCCESS, payload: responses });
+      
 
       // If there are any failed APIs, dispatch a failure action
       if (Object.keys(errors).length > 0) {
         dispatch({ type: FETCH_DROPDOWN_FAILURE, payload: errors });
+       // dispatch({ type: RESET_ALL_API_STATE, payload: true });
       }
 
     } catch (error) {
-      console.error('Unexpected Error:', error);
+      console.error('Unexpected Error:========================================================'+ error);
+      // navigation.dispatch(
+      //   CommonActions.reset({
+      //     index: 0,
+      //     routes: [{name : 'Login'}],
+      //   })
+      // );
+      await AsyncStorage.clear();
       dispatch({ type: FETCH_DROPDOWN_FAILURE, payload: { general: error.message } });
+      //dispatch({ type: RESET_ALL_API_STATE, payload: true });
     }
   };
 };
+export const resetStateApi = () => ({type: RESET_ALL_API_STATE});
 

@@ -13,6 +13,7 @@ import {
   Alert,
   TouchableOpacity,
   Dimensions,
+  ToastAndroid
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -40,6 +41,10 @@ const LoginScreen = props => {
   const dispatch = useDispatch();
   const loginPlaceHolder = useSelector(state => state.auth.loginPlaceHolder);
   const loginValue = useSelector(state => state.auth.loginValue);
+
+  const showToast = (message) => {
+    ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
+  };
 
   useEffect(() => {
     requestPermissions();
@@ -85,7 +90,7 @@ const LoginScreen = props => {
         if (allPermissionsGranted) {
           console.log('🎉 All permissions successfully granted!');
         } else {
-          Alert.alert(
+          showToast(
             'Permissions Required',
             'Some permissions were denied. Please enable them in settings.',
           );
@@ -128,17 +133,24 @@ const LoginScreen = props => {
       console.error('Error saving credentials:', error);
     }
   };
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!loginValue.customerId || !loginValue.email || !loginValue.password) {
-      Alert.alert('Lead', 'All fields are required!');
+      showToast( 'All fields are required!');
       return;
     } else if (!/\S+@\S+\.\S+/.test(loginValue.email)) {
-      Alert.alert('Error', 'Enter a valid email address!');
+      showToast('Enter a valid email address!');
       return;
     } else {
       setLoading(true);
       saveCredentials();
-      dispatch(loginUser());
+      //dispatch(loginUser());
+      const response = await dispatch(loginUser());
+      if (!response || response.success === false) {
+        setLoading(false);
+      } else {
+        // success, you can navigate or do anything
+        setLoading(false); // Optional, if you stop spinner after navigation
+      }
     }
   };
 

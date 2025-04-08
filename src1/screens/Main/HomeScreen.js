@@ -1,4 +1,4 @@
-import { View, ScrollView, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity, Pressable , Alert } from 'react-native';
 import Headercomp from '../../components/HeaderComp.js';
 import HoriCardcomp from '../../components/HoriCardcomp';
 import RectCardcomp from '../../components/RectCardcomp.js';
@@ -10,6 +10,8 @@ import {callAllDropDownAPI} from '../../redux/actions/HomeAction.js';
 import {getItem} from '../../api/storageServices';
 import { state } from '../../api/mainApi.js';
 import LottieScreen from '../../styles/Loader';
+import { RESET_ALL_API_STATE } from '../../redux/actions/HomeAction.js';
+import { CommonActions } from '@react-navigation/native';
 
 const meetingsData = [
   {
@@ -44,9 +46,24 @@ const HomeScreen = ({navigation}) => {
     props.navigation.navigate('CloseAccountScreen');
   };
 
+  const apiReset = useSelector (state => state.homeReducer);
+
   useEffect(() => {
-  readData();
-   
+    //Alert.alert("apierror=====" + JSON.stringify(apiReset.faliureState, null, 2));
+    if (apiReset.faliureState) {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'Login' }],
+        })
+      );
+      //dispatch({ type: RESET_ALL_API_STATE, payload: false });
+    }
+  },[apiReset.faliureState]);
+
+
+  useEffect(() => {
+  readData();  
   },[]);
 const readData=async()=>{
   const storedData = await getItem('authToken');

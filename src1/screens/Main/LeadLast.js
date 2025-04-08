@@ -19,9 +19,11 @@ import { state } from '../../api/mainApi';
 import { useNavigation } from '@react-navigation/native';
 import {resetStateLead} from '../../redux/actions/lastAction';
 import { CommonActions } from '@react-navigation/native';
+import LottieScreen from '../../styles/Loader';
 
 const LeadLast = props => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false)
   const {assignedTo, serviceId, remark, serviceName, assignedToName} = useSelector(
     state => state.lastReducer,
   );
@@ -79,20 +81,28 @@ useEffect(() => {
       showToast("Add at least one service");
       return;
     }
-
-    if(editLeadDataAgainstId.id  != "" && editLeadDataAgainstId.id != undefined){
+    setIsLoading(true);
+    if (editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined) {
       dispatch(leadSubmitEditAllData(cards, editLeadDataAgainstId.id)).then(() => {
+        setIsLoading(false);
         dispatch(resetStateLead());
         navigation.navigate("Lead");
-      });
+      })
+        .catch(() => {
+          setIsLoading(false); // Hide loader on error
+        });
     } else {
-      dispatch(leadSubmitAllData(cards)).then(() => {
-        dispatch(resetStateLead());
-        navigation.navigate("Lead");
-      });
+      dispatch(leadSubmitAllData(cards))
+        .then(() => {
+          setIsLoading(false);
+          dispatch(resetStateLead());
+          navigation.navigate("Lead");
+        })
+        .catch(() => {
+          setIsLoading(false); // Hide loader on error
+        });
     }
   };
-
   const handleAdd = () => {
     if (!assignedTo || String(assignedTo).trim() === "") {
       showToast("AssignTo cannot be empty");
@@ -184,6 +194,10 @@ useEffect(() => {
         />
       </View>
       <View style={styles.centerContainer}>
+      {isLoading ? (
+          <LottieScreen />
+        ) : (
+          <>
         <StatusDropdown
           label={assignedToName}
           selectedValue={assignedTo}
@@ -232,6 +246,8 @@ useEffect(() => {
             <CustomButton title="Submit" onPress={handleSubmit} />
           </View>
         </ScrollView>
+        </>
+        )}
       </View>
     </View>
   );

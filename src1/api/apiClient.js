@@ -61,6 +61,7 @@ export const apiPost = async (url, param = {}) => {
     console.log('Success:', result);
     return result;
   } catch (error) {
+    Alert.alert('Network request failed:', error.message);
     console.error('Network request failed:', error.message);
     return null;
   }
@@ -112,6 +113,7 @@ export const apiPostLead = async (url, payload, tenantId) => {
   } catch (error) {
     //Alert.alert("Error", error.message);
     console.error("❌ Error:", error.message);
+    console.error('Network request failed:', error.message);
     return { success: false, error: error.message };
   }
 };
