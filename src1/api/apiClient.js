@@ -1,5 +1,11 @@
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getItem } from './storageServices';
+import { ToastAndroid } from 'react-native';
+const showToast = (message) => {
+  ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
+};
+
 //GET Request Function
 export const apiGet = async (url, token) => {
   try {
@@ -66,6 +72,7 @@ export const apiPostLead = async (url, payload, tenantId) => {
 
   try {
     const token = await AsyncStorage.getItem("newToken");
+    const user = await getItem('tenantId');
     if (!token) {
       throw new Error("Authentication token not found. Please login again.");
     }
@@ -75,7 +82,7 @@ export const apiPostLead = async (url, payload, tenantId) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        tenant: tenantId,
+        tenantId: user,
       },
       body: JSON.stringify(payload),
     });
@@ -93,7 +100,8 @@ export const apiPostLead = async (url, payload, tenantId) => {
     const text = await response.text();
     if (!text.trim()) {
       console.warn("⚠ Server returned an empty response.");
-      // Alert.alert("Lead added successfully.");
+      showToast("Lead added successfully.");
+     // Alert.alert("Lead added successfully.");
       return { success: true, message: "Lead added successfully." };
     }
 
@@ -203,6 +211,7 @@ export const apiPut = async (url, data, token) => {
 
 export const apiPostForgotPass = async (url, param = {}) => {
   try {
+      const user = await getItem('tenantId');
     const data = param.data || {};
     console.log('📨 Sending Data:', JSON.stringify(data));
 
@@ -210,7 +219,7 @@ export const apiPostForgotPass = async (url, param = {}) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        tenant: 'Root',
+        tenantId: user,
       },
       body: JSON.stringify({ email: data.email }),
     });
@@ -307,7 +316,7 @@ export const apiGetEditList = async (url, token) => {
       },
     });
 
-    console.log("Response status:", response.status);
+    //alert("Response status:"+ JSON.stringify(response)); 
 
     if (!response.ok) {
       console.error("HTTP error! Status:", response.status);
@@ -390,6 +399,51 @@ export const apiGetDetailList = async (url) => {
     return { data };
   } catch (error) {
     console.error(`GET ${url} Error:`, error.message);
+    throw error;
+  }
+};
+
+
+export const apigetAddFollowUp = async (url, tenantId) => {
+  console.log("Fetching Data from:", url);
+
+  try {
+    const token = await AsyncStorage.getItem("newToken");
+    if (!token) {
+      throw new Error("Authentication token not found. Please login again.");
+    }
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        tenant: "root",
+      },
+    });
+
+    console.log("📢 Response Status Code:", response.status);
+    console.log("📢 Response Headers:", response.headers);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("❌ API Error:", response.status, errorText);
+      Alert.alert("Error",` HTTP Error ${response.status}: ${errorText}`);
+      return;
+    }
+
+    const text = await response.text();
+    if (!text.trim()) {
+      console.warn("⚠ Server returned an empty response.");
+      Alert.alert("Warning", "No data received from the server.");
+      return;
+    }
+
+    const result = JSON.parse(text);
+    console.log("✅ API Response Body:", result);
+    return result;
+  } catch (error) {
+    Alert.alert("Error", error.message);
+    console.error("❌ Error:", error.message);
     throw error;
   }
 };

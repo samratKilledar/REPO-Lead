@@ -1,4 +1,4 @@
-import { apiGet, apiGetLeadList1, apiPost, apiPostLead, apiPostFollowup, apiGetDetails, apiGetEditList, apiGetLeadList, apiPut, apiGetDetailList } from './apiClient';
+import { apiGet, apiGetLeadList1, apiPost, apiPostLead,  apiGetDetails, apiGetEditList, apiGetLeadList, apiPut, apiGetDetailList , apigetAddFollowUp} from './apiClient';
 import { api } from './api';
 import { getItem } from './storageServices';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -90,14 +90,6 @@ export const leadAPISubmit = async (data, tenantId) => {
     return await apiPostLead(api.leadSubmit, data, tenantId);
 }
 
-export const followupAPISubmit = async data => {
-    const authToken = await getItem("authToken");
-    console.log("------------------------------token--" + JSON.stringify(authToken));
-    console.log('inside function' + JSON.stringify(data));
-    return await apiPostFollowup(api.addFollowUp, { data });
-};
-
-
 export const taskListResApi = async authToken => {
     //  console.log("ss---samrat---ssss"+authToken)
     return await apiGet(api.taskList, authToken);
@@ -148,3 +140,7 @@ export const LeadDetail = async (leadId) => {
     return await apiGetDetailList(url, token);
 };
 
+export const addFollowUpAPI = async (data,tenantId) =>{
+    console.log(tenantId+'inside function' + JSON.stringify(data));
+    return await apigetAddFollowUp(api.addFollowUp, data,tenantId);
+}

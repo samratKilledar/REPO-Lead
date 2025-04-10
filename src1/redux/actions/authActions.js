@@ -19,6 +19,7 @@ export const loginUser = () => async (dispatch, getState) => {
       setItem('refreshToken', data.refreshToken);
       setItem('refreshTokenExpiryTime', data.refreshTokenExpiryTime);
       setItem('tenantId', loginValue.customerId); // Store tenantId for refresh API
+      setItem('userId', loginValue.email); // Store tenantId for refresh API
 
       dispatch({ type: LOGIN_SUCCESS });
 

@@ -29,10 +29,8 @@ export const api={
     particularLeadDetailApi:"https://opticalerp.in:85/api/lead/getbyleadid",
     assignTo :"https://opticalerp.in:85/api/lead/getdropdowndata/getdropdowndata",
 
-
     //AddFollowUP screen 
-    addFollowUP: "https://opticalerp.in:85/api/followupdetails/create/create",
-    
+    addFollowUp: "https://opticalerp.in:85/api/followupdetails/createupdatefollowup?Id=0&FollowupType=Lead&FollowupTypeId=5&Title=Meeting%20follow%20up&FollowupStatus=15&AssignedTo=3&FollowupDate=3%2F22%2F2025&FollowupTime=3%2F21%2F2025%206%3A00%3A00%20PM&AttachmentUrl=https%3A%2F%2Flocalhost%3A44333%2FFiles%2FFollowup%2FFollowupDetails%2FExperienceLetterFormat.docx&Remark=Meeting%20scheduled%20at%2006%3A00%20PM&IsActive=true",
     //add Task screen API
    addTask:"https://opticalerp.in:85/api/taskdetails/create",
    upComingTask: "https://opticalerp.in:85/api/taskdetails/getlist",
@@ -44,7 +42,10 @@ export const api={
 
 
    leadSubmit:"https://opticalerp.in:85/api/lead/insertupdateleaddetails/create-update",
+   leadDetailBarbara: "https://opticalerp.in:85/api/lead/getbyleadid/1",
+   clientDetailBarbara: "https://opticalerp.in:85/api/client/getbyclientid/1",
    leadDelete:"https://opticalerp.in:85/api/lead/delete?leadId=${leadId}",
    leadAddServiceApi : "",
    
 }
+

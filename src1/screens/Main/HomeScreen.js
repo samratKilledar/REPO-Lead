@@ -5,9 +5,12 @@ import RectCardcomp from '../../components/RectCardcomp.js';
 import CustomText from '../../components/CustomText.js';
 import TextStyle from '../../styles/TextStyle.js';
 import {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {callAllDropDownAPI} from '../../redux/actions/HomeAction.js';
 import {getItem} from '../../api/storageServices';
+import { state } from '../../api/mainApi.js';
+import LottieScreen from '../../styles/Loader';
+
 const meetingsData = [
   {
     name: 'Barbara Moore',
@@ -33,7 +36,7 @@ const meetingsData = [
 
 const HomeScreen = ({navigation}) => {
   const dispatch = useDispatch();
-
+  let isLoading = useSelector((state)=> state.homeReducer)
   const NavigateToLeadDetails = props => {
     props.navigation.navigate('LeadDetails');
   };
@@ -44,7 +47,7 @@ const HomeScreen = ({navigation}) => {
   useEffect(() => {
   readData();
    
-  });
+  },[]);
 const readData=async()=>{
   const storedData = await getItem('authToken');
   dispatch(callAllDropDownAPI(JSON.stringify(storedData)));
@@ -53,6 +56,13 @@ const readData=async()=>{
   return (
     <View style={{flex: 1}}>
       <Headercomp navigation={navigation} />
+      {isLoading.isLoading ? (
+        <View>
+          <LottieScreen />
+        </View>
+      ) : (
+        <></>
+      )}
       <ScrollView style={style.container} showsVerticalScrollIndicator={false}>
         <View style={{ marginBottom: 90 }}>
           <View style={{ marginTop: 30, MarginBottom: 30 }}>

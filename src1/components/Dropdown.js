@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { View, StyleSheet, Image } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
 
-const Dropdown = ({ label, selectedValue, onValueChange, options, zIndex }) => {
+const Dropdown = ({ label, selectedValue, onValueChange, options, zIndex, searchable = false, searchPlaceholder}) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -12,8 +12,8 @@ const Dropdown = ({ label, selectedValue, onValueChange, options, zIndex }) => {
         setOpen={setOpen}
         value={selectedValue}
         setValue={(callback) => {
-          const newValue = callback(selectedValue); // Ensure correct value update
-          onValueChange(newValue); // Pass new value to parent component
+          const newValue = callback(selectedValue);
+          onValueChange(newValue);
         }}
         items={options}
         placeholder={label}
@@ -25,6 +25,16 @@ const Dropdown = ({ label, selectedValue, onValueChange, options, zIndex }) => {
         textStyle={[styles.labelStyle, open ? styles.labelStyleOpen : null]}
         listItemContainerStyle={styles.listItem}
         listMode="MODAL" // Dropdown opens in a modal
+        searchable={searchable} // Enable search functionality
+        searchPlaceholder={searchPlaceholder} // Set search placeholder text
+        searchTextInputStyle={styles.searchInput}
+        searchContainerStyle={styles.searchContainer}
+        searchIcon={() => (
+          <Image
+            source={require('../assets/icons/Search/search.png')}
+            style={styles.searchIcon}
+          />
+        )}
         ArrowUpIconComponent={() => (
           <Image
             source={require("../assets/icons/ArrowUp/arrowup.png")}
@@ -90,6 +100,30 @@ const styles = StyleSheet.create({
   listItem: {
     borderBottomWidth: 1,
     borderBottomColor: "#cccccc",
+  },
+  searchInput: {
+    height: 40,
+    borderColor: '#cccccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    backgroundColor: 'white',
+    marginHorizontal: 10,
+    marginBottom: 10,
+    paddingLeft: 35,
+  },
+  searchContainer: {
+    borderBottomColor: '#e0e0e0',
+    borderBottomWidth: 1,
+    paddingBottom: 10,
+  },
+  searchIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+    position: 'absolute',
+    left: 20,
+    top: 10,
   },
 });
 

@@ -8,7 +8,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import InsuranceCard from "../../components/InsuranceCard";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchLeadSuccess, fetchInsuranceSuccess } from "../../redux/actions/clientDetailActions";
+import { fetchLeadSuccess, fetchInsuranceSuccess , fetchClientDetails} from "../../redux/actions/clientDetailActions";
 
 const ClientDetails = (props) => {
   const navigation = useNavigation();
@@ -29,6 +29,11 @@ const ClientDetails = (props) => {
   const addService = () => {
     props.navigation.navigate("ClientAddServices")
   }
+
+    // useEffect(() => {
+    //   dispatch(fetchClientDetails());
+    // }, [dispatch]);
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row",  paddingRight: 28, marginLeft: 8 }}>

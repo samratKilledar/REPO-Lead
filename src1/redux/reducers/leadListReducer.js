@@ -1,4 +1,4 @@
-import { FETCH_LEADS_REQUEST, FETCH_LEADS_SUCCESS, FETCH_LEADS_FAILURE ,DELETE_LEAD_SUCCESS,DELETE_LEAD_FAILURE} from "../actions/leadListAction";
+import { FETCH_LEADS_REQUEST,STOP_LOADING_FILTER, FETCH_LEADS_SUCCESS, FETCH_LEADS_FAILURE ,DELETE_LEAD_SUCCESS,DELETE_LEAD_FAILURE} from "../actions/leadListAction";
 
 const initialState = {
   leads: [],
@@ -11,6 +11,9 @@ const leadReducer = (state = initialState, action) => {
     case FETCH_LEADS_REQUEST:
       return { ...state, loading: true };
 
+      case STOP_LOADING_FILTER:
+        return{ ...state, loading: false };
+        
     case FETCH_LEADS_SUCCESS:
       return { ...state, loading: false, leads: action.payload };
 

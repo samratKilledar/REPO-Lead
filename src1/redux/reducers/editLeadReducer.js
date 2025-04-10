@@ -1,10 +1,12 @@
 import { act } from "react";
-import { UPDATE_ASSIGNTO, 
-  UPDATE_SERVICES, 
+import {  
+  UPDATE_ASSIGNTO,
+  UPDATE_SERVICES,
   UPDATE_REMARK,
   UPDATE_FIRSTNAME,
   UPDATE_LASTNAME,
   UPDATE_LEADSOURCES,
+  UPDATE_OTHER_SOURCE,  // Add this import 
   UPDATE_MOBILENO,
   UPDATE_EMAILID,
   UPDATE_WHATSAPPNO,
@@ -15,113 +17,155 @@ import { UPDATE_ASSIGNTO,
   UPDATE_COUNTRY,
   UPDATE_PINCODE,
   UPDATE_OCCUPATION,
+  UPDATE_ORGANISATIONNAME,
   UPDATE_TYPEOFWORK,
   UPDATE_MONTHLYINCOME,
   SUBMIT_REQUEST,
   SUBMIT_SUCCESS, 
-  SUBMIT_FAILURE  } from "../actions/lastAction";
-
+  SUBMIT_FAILURE,
+  SUBMIT_SUCCESS_LEAD,
+  SUBMIT_FAILURE_LEAD,
+  EDIT_DATA_AUTO_FILL_SUCCESS ,RESET_ALL_LEAD_ID } from "../actions/editLeadAction";
+import { occupation } from "../../api/mainApi";
 
 const initialState = {
   firstName: "",
   lastName: "", 
-  leadSources: "",
-  leadSourcesName:"Lead Source",
+  leadSource: "",
+  leadSourceName:"Lead Source",
+  otherSource:"",
   mobileNo:"",
   emailId:"",
   whatsAppNo:"",
   addressLine1:"",
   addressLine2:"",
-  city:"",
+  cityId:"",
   cityName:"Select City",
-  state:"",
+  stateId:"",
   stateName:"Select State",
-  country:"",
+  countryId:"",
   countryName:"Select Country",
   isdCode:"",
   pincode:"",
   occupation:"",
   occupationName:"Occupation Name",
-  typeOfWork:"",
+  organisationName:"",
+  workType:"",
   monthlyIncome:"",
-  assignTo:"",
-  assignToName: "Assign To",
-  services:"",
-  servicesName:"Services",
-  remark:""
-
+  assignedTo:"",
+  assignedToName: "Assign To",
+  serviceId:"",
+  serviceName:"Services",
+  remark:"",
+  editLeadDataAgainstId:{}
  
 };
 
 const editLeadReducer = (state = initialState, action) => {
-  // if(action.type =="UPDATE_SERVICES"){
-  //   alert(JSON.stringify(action.payload)+"===")
-  // }
+  if(action.type =="RESET_ALL_LEAD_ID"){
+    // alert(JSON.stringify(action.payload)+"=---========--==")
+  }
   switch (action.type) {
+
+    case EDIT_DATA_AUTO_FILL_SUCCESS:
+      return { ...state, editLeadDataAgainstId: action.payload };
+
     case UPDATE_FIRSTNAME:
-      return { ...state, firstName: action.payload };
+      return {...state, firstName: action.payload};
 
     case UPDATE_LASTNAME:
-      return { ...state, lastName: action.payload };
+      return {...state, lastName: action.payload};
 
-    case UPDATE_LEADSOURCES:
-      return { ...state, leadSources: action.payload.id, leadSourcesName:action.payload.name };
+      case UPDATE_LEADSOURCES:
+        return { 
+          ...state, 
+          leadSource: action.payload.id, 
+          leadSourceName: action.payload.name, 
+          showNewSourceInput: action.payload.id === 12  // ✅ Show text input if ID is 12
+        };
+        case UPDATE_OTHER_SOURCE:  // ✅ Handle new source name
+        return { 
+          ...state, 
+          otherSource: action.payload 
+        };
 
     case UPDATE_MOBILENO:
-      return { ...state, mobileNo: action.payload };
+      return {...state, mobileNo: action.payload};
 
     case UPDATE_EMAILID:
-      return { ...state, emailId: action.payload };
+      return {...state, emailId: action.payload};
 
     case UPDATE_WHATSAPPNO:
-      return { ...state, whatsAppNo: action.payload };
+      return {...state, whatsAppNo: action.payload};
 
     case UPDATE_ADDRESSLINE1:
-      return { ...state, addressLine1: action.payload };
+      return {...state, addressLine1: action.payload};
 
     case UPDATE_ADDRESSLINE2:
-      return { ...state, addressLine2: action.payload };
+      return {...state, addressLine2: action.payload};
 
     case UPDATE_CITY:
-      return { ...state, city: action.payload.id, cityName:action.payload.name };
+      return { ...state, cityId: action.payload.id, cityName:action.payload.name };
 
     case UPDATE_STATE:
-      return { ...state, state: action.payload.id,stateName:action.payload.name };
+      return { ...state, stateId: action.payload.id,stateName:action.payload.name };
 
     case UPDATE_COUNTRY:
-      return { ...state, country: action.payload.id, countryName: action.payload.name,isdCode:action.payload.isdCode};
+      return { ...state, countryId: action.payload.id, countryName: action.payload.name,isdCode:action.payload.isdCode};
 
     case UPDATE_PINCODE:
-      return { ...state, pincode: action.payload };
+      return {...state, pincode: action.payload};
 
     case UPDATE_OCCUPATION:
-      return { ...state, occupation: action.payload.id, occupationName: action.payload.name};
+      return { ...state, occupation: action.payload.id, occupationName: action.payload.name,showNewCompanyInput: action.payload.id === 5};
 
     case UPDATE_TYPEOFWORK:
-      return { ...state, typeOfWork: action.payload };
+      return { ...state, workType: action.payload };
 
     case UPDATE_MONTHLYINCOME:
-      return { ...state, monthlyIncome: action.payload };
+      return {...state, monthlyIncome: action.payload};
 
     case UPDATE_ASSIGNTO:
-      return { ...state, assignTo: action.payload.id, assignToName:action.payload.name };
+      return { ...state, assignedTo: action.payload.id, assignedToName:action.payload.name };
+
+      case UPDATE_ORGANISATIONNAME:  // ✅ Handle new source name
+      return { 
+        ...state, 
+        organisationName: action.payload 
+      };
 
     case UPDATE_SERVICES:
-      return { ...state, services: action.payload.id , servicesName:action.payload.name };
+      return { ...state, serviceId: action.payload.id , serviceName:action.payload.name };
 
     case UPDATE_REMARK:
-      return { ...state, remark: action.payload };
+      return {...state, remark: action.payload};
 
     case SUBMIT_REQUEST:
-      return { ...state, isLoading: true, error: null };
+      return {...state, isLoading: true, error: null};
 
-      case SUBMIT_SUCCESS:
-      return { ...state, isAuthenticated: true ,  isLoading: false, error: null, };
+    case SUBMIT_SUCCESS_LEAD:
+      return {
+        ...state,
+        messageFromServer: action.payload,
+        isLoading: false,
+        error: null,
+      };
 
-    case SUBMIT_FAILURE:
-      return { ...state, isAuthenticated: false , isLoading: false, error: action.payload};
+    case SUBMIT_FAILURE_LEAD:
+      return {
+        ...state,
+        messageFromServer: action.payload,
+        isLoading: false,
+        error: action.payload,
+      };
       
-    
+    // case EDIT_DATA_AUTO_FILL_SUCCESS:
+    //   return {...state, editLeadDataAgainstId: action.payload}  
+
+
+      case RESET_ALL_LEAD_ID:
+      return initialState;
+
     default:
       return state;
   }

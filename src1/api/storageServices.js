@@ -40,7 +40,7 @@ export const getItem = async (key) => {
     const jsonValue = await AsyncStorage.getItem(key);
     return jsonValue ? JSON.parse(jsonValue) : null;
   } catch (error) {
-    console.error('Error retrieving data:', error);
+    console.error('Error retrieving data:', JSON.stringify(error));
     return null;
   }
 };

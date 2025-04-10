@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet } from 'react-native';
 import CustomText from './CustomText';
 import TextStyle from '../styles/TextStyle';
 
-const DetailItem = ({ icon, label, detail }) => {
+const DetailItem = ({ icon, label, detail ,multiline = false,detailStyle }) => {
   const isLeadStatus = label === "Lead Status";
   const isServiceRequest = label === "Service Request";
 
@@ -26,7 +26,12 @@ const DetailItem = ({ icon, label, detail }) => {
           </View>
         ) : (
           <View style={styles.detailContainer}>
-            <CustomText text={detail} customstyle={TextStyle.detail} />
+          <Text 
+            style={[TextStyle.detail, detailStyle]}
+            numberOfLines={multiline ? undefined : 1}
+          >
+            {detail}
+          </Text>
           </View>
         )}
       </View>
@@ -57,6 +62,7 @@ const styles = StyleSheet.create({
 
   detailContainer: {
     justifyContent: 'center',
+    flexShrink: 1,
   },
 
   leadStatusContainer: {

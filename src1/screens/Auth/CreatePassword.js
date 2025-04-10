@@ -151,7 +151,6 @@ const CreatePassword = props => {
                    onPress={handleContinue}
                 />
               </View>
-
               <Modal
                 animationType="fade"
                 transparent={true}

@@ -8,28 +8,38 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
+import { EditLeadFetch, leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/editLeadAction';
 import { state } from '../../api/mainApi';
-import { CommonActions } from '@react-navigation/native';
-import { useNavigation } from '@react-navigation/native';
-
-import { updateAddressLine1, updateAddressLine2, updateCity, updateCountry, updateEmailId, updateLastName, updateMobileNo, updatePincode, updateState, updateWhatsAppNo, updateFirstName, updateLeadSources } from '../../redux/actions/lastAction';
-import { updateMonthlyIncome, updateOccupation, updateTypeOfWork } from "../../redux/actions/editLeadAction";
 
 const EditLead3 = (props) => {
   const dispatch = useDispatch();
-  const { assignto, services, remark, servicesName, assignToName } = useSelector((state) => state.editLeadReducer);
+
+  // useEffect(() => {
+  //   dispatch(EditLeadFetch());
+  // }, [dispatch]);
+  const { assignedTo, serviceId, remark, serviceName, assignedToName } = useSelector((state) => state.editLeadReducer);
+
   // const {service1} = useSelector((state)=> state.homeReducer)
   // alert(service1)
-  const navigation = useNavigation();
   const service1= useSelector(state => state.homeReducer);
-  const assignToList= useSelector(state => state.homeReducer);
-//  alert((service1.assignTo)) 
+    const assignToList= useSelector(state => state.homeReducer);
+  //alert(JSON.stringify(service1.service)) 
   const steps = ['Personal', 'Occupation', 'Services'];
   const currentStep = 3;
 
   const [cards, setCards] = useState([
-    
+    {
+      id: 1,
+      title: 'Insurance',
+      date: '10-01-2025',
+      description: 'Lorem Ipsum is simply dummy text of the printing industry...'
+    },
+    {
+      id: 2,
+      title: 'Mutual Fund',
+      date: '20-01-2025',
+      description: "Lorem Ipsum has been the industry's standard dummy text..."
+    },
   ]);
 
 
@@ -39,63 +49,39 @@ const EditLead3 = (props) => {
 
   const showToast = (message) => {
     ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
-  };
+  };
 
   const handleSubmit = () => {
-    dispatch(leadSubmitAllData());
-    dispatch(updateFirstName(""));
-    dispatch(updateLastName(""));
-    dispatch(updateMobileNo(""));
-    dispatch(updateEmailId(""));
-    dispatch(updateWhatsAppNo(""));
-    dispatch(updateAddressLine1(""));
-    dispatch(updateAddressLine2(""));
-    dispatch(updatePincode(""));
-    dispatch(updateCity(""));
-    dispatch(updateState(""));
-    dispatch(updateCountry(""));
-    dispatch(updateLeadSources(""));
-  
-    dispatch(updateOccupation(""));
-  dispatch(updateTypeOfWork(""));
-  dispatch(updateMonthlyIncome(""));
-
-    dispatch(updateAssignTo("")); 
-  dispatch(updateServices("")); 
-  dispatch(updateRemark("")); 
-  setCards([]); 
-
-  // Reset navigation to LeadScreen
-   // Only navigate if successful
-    navigation.navigate("LeadScreen");
- 
-   // showToast("Lead submitted successfully!");
+    
+    dispatch(leadSubmitAllData())
+    props.navigation.navigate('LeadScreen');
   };
 
   const handleAdd = () => {
-    // if (!assignto || !assignto.trim()) {
-    //     showToast("Assign to cannot be empty");
-    //     return;
-    // }
-
-    if (!services || !services.trim()) {
-        showToast("Services cannot be empty");
-        return;
+    if (!assignedTo || String(assignedTo).trim() === "") {
+      showToast("AssignTo cannot be empty");
+      return;
+    }
+    
+    if (!serviceId || !serviceId.trim()) {
+      showToast('Services cannot be empty');
+      return;
     }
 
     if (!remark || !remark.trim()) {
-        showToast("Remark cannot be empty");
-        return;
+      showToast('Remark cannot be empty');
+      return;
     }
 
     const newCard = {
-        id: Date.now(),
-        title: servicesName, 
-        date: new Date().toLocaleDateString(),
-        description: remark
+      id: serviceId,
+      title: serviceName,
+      date: new Date().toLocaleDateString(),
+      description: remark,
     };
 
     setCards((prevCards) => [...prevCards, newCard]);
+
 };
 
 
@@ -113,18 +99,25 @@ const EditLead3 = (props) => {
       </View>
       <View style={styles.centerContainer}>
         <StatusDropdown
-          label={assignToName}
-          selectedValue={assignto}
+          label={assignedToName}
+          selectedValue={assignedTo}
           onValueChange={(value) => dispatch(updateAssignTo(value))}
-          apiType="assignTo"
-                listData={assignToList.assignTo[3]}
+         apiType="assignTo"
+         listData={assignToList.assignTo[3]}
           zIndex={4000}
         />
       
+          {/* <StatusDropdown
+            label="Services"
+            selectedValue={service1.service}
+            // onValueChange={(value) => dispatch(updateServices([value]))} 
+            apiType="service"
+            zIndex={2000}
+          /> */}
         
         <StatusDropdown
-                label={servicesName}
-                selectedValue={service1.services}
+                label={serviceName}
+                selectedValue={service1.serviceId}
                 onValueChange={(value) => dispatch(updateServices(value))}
                 apiType="leadSource"
                 listData={service1.service}

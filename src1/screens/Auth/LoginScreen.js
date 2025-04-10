@@ -56,8 +56,8 @@ const LoginScreen = props => {
           // Android 13+ (API 33+)
           permissions.push(
             PermissionsAndroid.PERMISSIONS.READ_MEDIA_IMAGES,
-            PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
-            PermissionsAndroid.PERMISSIONS.READ_MEDIA_AUDIO,
+             PermissionsAndroid.PERMISSIONS.READ_MEDIA_VIDEO,
+            PermissionsAndroid.PERMISSIONS.READ_MEDIA_AUDIO
           );
         } else {
           // Android 12 and below

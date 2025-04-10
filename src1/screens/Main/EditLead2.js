@@ -3,16 +3,20 @@ import { View, StyleSheet, Alert , ToastAndroid } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import CustomButton from "../../components/CustomButton";
 import CustomTextInput from "../../components/CustomTextInput";
-import Dropdown from "../../components/Dropdown";
 import Stepper from "../../components/StepperComp";
 import NavigationHeaderBack from "../../components/NavigationHeaderBack";
 import StatusDropdown from "../../components/StatusDropdown";
-import { updateMonthlyIncome, updateOccupation, updateTypeOfWork } from "../../redux/actions/editLeadAction";
+import { updateMonthlyIncome, updateOccupation, updateTypeOfWork ,EditLeadFetch} from "../../redux/actions/editLeadAction";
 
 
 const EditLead2 = (props) => {
   const dispatch = useDispatch();
-  // const occupations = useSelector((state) => state.occupationReducer);
+
+  // useEffect(() => {
+  //   dispatch(EditLeadFetch());
+  // }, [dispatch]);
+
+  const occupations = useSelector((state) => state.occupationReducer);
 
   const steps = ["Personal", "Occupation", "Services"];
   const currentStep = 2;
@@ -22,43 +26,40 @@ const EditLead2 = (props) => {
   };
 
   const { 
-    occupation,occupationName,
-    typeOfWork,
+    occupation, occupationName,
+    workType,
     monthlyIncome,
     } = useSelector(state => state.editLeadReducer);
 
     const occupationList= useSelector(state => state.homeReducer);
    // alert(JSON.stringify(occupationList))
 
-    const leadLastHandle = () => 
-      {
-        if (!typeOfWork.trim()) {
-          showToast("Type of Work cannot be empty");
-          return;
-        }
+   const leadLastHandle = () => {
+    const monthlyIncomeStr = String(monthlyIncome || ""); // Ensure it's a string
     
-        if (!monthlyIncome.trim()) {
-          showToast("Monthly Income cannot be empty");
-          return;
-        }
-    
-        if (!/^\d+$/.test(monthlyIncome)) {
-          showToast("Invalid Input: Monthly Income should contain only numbers");
-          return;
-        }
-    
-        // Optional: Check if income is within a valid range
-        const incomeValue = parseInt(monthlyIncome, 10);
-        if (incomeValue < 1000 || incomeValue > 10000000) {
-          showToast("Monthly Income should be between 1,000 and 1,00,00,000");
-          return;
-        }
-        if(!occupation){
-          showToast("Select the Occupation");
-          return;
-        }
-        props.navigation.navigate("EditLead3");
-      };
+    if (!workType.trim()) {
+      showToast("Type of Work cannot be empty");
+      return;
+    }
+  
+    if (!monthlyIncomeStr.trim()) {
+      showToast("Monthly Income cannot be empty");
+      return;
+    }
+  
+    if (!/^\d+$/.test(monthlyIncomeStr)) {
+      showToast("Invalid Input: Monthly Income should contain only numbers");
+      return;
+    }
+  
+    const incomeValue = parseInt(monthlyIncomeStr, 10);
+    if (incomeValue < 1000 || incomeValue > 10000000) {
+      showToast("Monthly Income should be between 1,000 and 1,00,00,000");
+      return;
+    }
+  
+    props.navigation.navigate("EditLead3");
+  };
 
   const goBackCall = () => {
     props.navigation.goBack();
@@ -92,7 +93,7 @@ const EditLead2 = (props) => {
         />
        
         <CustomTextInput
-          value={typeOfWork}
+          value={workType}
           placeholder="Type of Work"
           onChangeText={(text) => {
             dispatch(updateTypeOfWork(text));

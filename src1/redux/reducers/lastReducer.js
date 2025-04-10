@@ -1,10 +1,12 @@
-import { act } from "react";
-import { UPDATE_ASSIGNTO, 
-  UPDATE_SERVICES, 
+import { act } from 'react';
+import {
+  UPDATE_ASSIGNTO,
+  UPDATE_SERVICES,
   UPDATE_REMARK,
   UPDATE_FIRSTNAME,
   UPDATE_LASTNAME,
   UPDATE_LEADSOURCES,
+  UPDATE_OTHER_SOURCE,  // Add this import 
   UPDATE_MOBILENO,
   UPDATE_EMAILID,
   UPDATE_WHATSAPPNO,
@@ -15,47 +17,55 @@ import { UPDATE_ASSIGNTO,
   UPDATE_COUNTRY,
   UPDATE_PINCODE,
   UPDATE_OCCUPATION,
+  UPDATE_ORGANISATIONNAME,
   UPDATE_TYPEOFWORK,
   UPDATE_MONTHLYINCOME,
   SUBMIT_REQUEST,
-  SUBMIT_SUCCESS_LEAD, 
-  SUBMIT_FAILURE_LEAD,RESET_ALL_STATE  } from "../actions/lastAction";
-
+  SUBMIT_SUCCESS_LEAD,
+  SUBMIT_FAILURE_LEAD,
+  RESET_ALL_LEAD_ID,
+  SET_ALL_DATA_DEFAULT_FOR_EDIT,
+} from '../actions/lastAction';
 
 const initialState = {
-  firstName: "",
-  lastName: "", 
-  leadSources: "",
-  leadSourcesName:"Lead Source",
-  mobileNo:"",
-  emailId:"",
-  whatsAppNo:"",
-  addressLine1:"",
-  addressLine2:"",
-  cityId:"",
-  cityName:"Select City",
-  stateId:"",
-  stateName:"Select State",
-  countryId:"",
-  countryName:"Select Country",
-  isdCode:"",
-  pincode:"",
-  occupation:"",
-  occupationName:"Occupation Name",
-  typeOfWork:"it",
-  monthlyIncome:"",
-  assignedTo:"",
+  editId: "",
+  firstName: "sam",
+  lastName: "desai",
+  leadSource: "",
+  leadSourceName: "Lead Source",
+  otherSource: "",
+  mobileNo: "1234567890",
+  emailId: "samruddhi@gmail.com",
+  whatsAppNo: "1234567890",
+  addressLine1: "Ichalkaranji",
+  addressLine2: "kolhapur",
+  cityId: "",
+  cityName: "Select City",
+  stateId: "",
+  stateName: "Select State",
+  countryId: "",
+  countryName: "Select Country",
+  isdCode: "",
+  pincode: "123456",
+  occupation: "",
+  occupationName: "Occupation Name",
+  organisationName: "",
+  workType: "bcjeb",
+  monthlyIncome: "123456",
+  assignedTo: "",
   assignedToName: "Assign To",
-  services:"",
-  servicesName:"Services",
-  remark:"",
-  messageFromServer:""
+  leadStatus:"",
+  leadStatusName:"",
+  serviceId: "",
+  serviceName: "Services",
+  remark: "ekjdu",
+  messageFromServer: ""
 };
 
 const lastReducer = (state = initialState, action) => {
-  // if(action.type =="UPDATE_SERVICES"){
-  //   alert(JSON.stringify(action.payload)+"===")
-  // }
+  if (action.type == 'RESET_ALL_STATE1') {
+    console.log(JSON.stringify(action.payload) + '=s=========sss=='+action.payload);
+  }
   switch (action.type) {
     case UPDATE_FIRSTNAME:
       return { ...state, firstName: action.payload };
@@ -64,7 +74,17 @@ const lastReducer = (state = initialState, action) => {
       return { ...state, lastName: action.payload };
 
     case UPDATE_LEADSOURCES:
-      return { ...state, leadSources: action.payload.id, leadSourcesName:action.payload.name };
+      return {
+        ...state,
+        leadSource: action.payload.id,
+        leadSourceName: action.payload.name,
+        showNewSourceInput: action.payload.id === 12  // ✅ Show text input if ID is 12
+      };
+    case UPDATE_OTHER_SOURCE:  // ✅ Handle new source name
+      return {
+        ...state,
+        otherSource: action.payload
+      };
 
     case UPDATE_MOBILENO:
       return { ...state, mobileNo: action.payload };
@@ -82,31 +102,37 @@ const lastReducer = (state = initialState, action) => {
       return { ...state, addressLine2: action.payload };
 
     case UPDATE_CITY:
-      return { ...state, cityId: action.payload.id, cityName:action.payload.name };
+      return { ...state, cityId: action.payload.id, cityName: action.payload.name };
 
     case UPDATE_STATE:
-      return { ...state, stateId: action.payload.id,stateName:action.payload.name };
+      return { ...state, stateId: action.payload.id, stateName: action.payload.name };
 
     case UPDATE_COUNTRY:
-      return { ...state, countryId: action.payload.id, countryName: action.payload.name,isdCode:action.payload.isdCode};
+      return { ...state, countryId: action.payload.id, countryName: action.payload.name, isdCode: action.payload.isdCode };
 
     case UPDATE_PINCODE:
       return { ...state, pincode: action.payload };
 
     case UPDATE_OCCUPATION:
-      return { ...state, occupation: action.payload.id, occupationName: action.payload.name};
+      return { ...state, occupation: action.payload.id, occupationName: action.payload.name, showNewCompanyInput: action.payload.id === 5 };
 
     case UPDATE_TYPEOFWORK:
-      return { ...state, typeOfWork: action.payload };
+      return { ...state, workType: action.payload };
 
     case UPDATE_MONTHLYINCOME:
       return { ...state, monthlyIncome: action.payload };
 
     case UPDATE_ASSIGNTO:
-      return { ...state, assignedTo: action.payload.id, assignedToName:action.payload.name };
+      return { ...state, assignedTo: action.payload.id, assignedToName: action.payload.name };
+
+    case UPDATE_ORGANISATIONNAME:  // ✅ Handle new source name
+      return {
+        ...state,
+        organisationName: action.payload
+      };
 
     case UPDATE_SERVICES:
-      return { ...state, services: action.payload.id , servicesName:action.payload.name };
+      return { ...state, serviceId: action.payload.id, serviceName: action.payload.name };
 
     case UPDATE_REMARK:
       return { ...state, remark: action.payload };
@@ -114,14 +140,65 @@ const lastReducer = (state = initialState, action) => {
     case SUBMIT_REQUEST:
       return { ...state, isLoading: true, error: null };
 
-      case SUBMIT_SUCCESS_LEAD:
-      return { ...state, messageFromServer: action.payload ,  isLoading: false, error: null, };
+    case SUBMIT_SUCCESS_LEAD:
+      return {
+        ...state,
+        messageFromServer: action.payload,
+        isLoading: false,
+        error: null,
+      };
 
     case SUBMIT_FAILURE_LEAD:
-      return { ...state, messageFromServer: action.payload , isLoading: false, error: action.payload};
+      return {
+        ...state,
+        messageFromServer: action.payload,
+        isLoading: false,
+        error: action.payload,
+      };
+
+    case SET_ALL_DATA_DEFAULT_FOR_EDIT:
+      return {
+        editId: action.payload.id,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        leadSource: action.payload.leadSource,
+        leadSourceName: action.payload.leadSourceName,
+        otherSource: action.payload.otherSource,
+        mobileNo: action.payload.mobileNo,
+        emailId: action.payload.emailId,
+        whatsAppNo: action.payload.whatsAppNo,
+        addressLine1: action.payload.addressLine1,
+        addressLine2: action.payload.addressLine2,
+        cityId: action.payload.cityId,
+        cityName: action.payload.cityName,
+        stateId: action.payload.stateId,
+        stateName: action.payload.stateName,
+        countryId: action.payload.countryId,
+        countryName: action.payload.countryName,
+        // isdCode: action.payload.countryId,
+        pincode: action.payload.pincode,
+        occupation: action.payload.occupation,
+        occupationName: action.payload.occupationName,
+        workType: action.payload.workType,
+        monthlyIncome: action.payload.monthlyIncome,
+        assignedTo: action.payload.assignedTo,
+        leadStatus: action.payload.leadStatus,
+        leadStatusName:action.payload.leadStatusName,
+        assignedToName: action.payload.assignedToName,
+        leadStatus: action.payload.leadStatus,
+        leadStatusName: action.payload.leadStatusName,
+        organisationName: action.payload.organisationName,
+        serviceId: action.payload.serviceDetails?.[0]?.serviceId ?? '',
+        serviceName: action.payload.serviceDetails?.[0]?.serviceName ?? 'Services',
+        remark: action.payload.serviceDetails?.[0]?.remark ?? '',
+        messageFromServer: '',
+      };
+
+    case RESET_ALL_LEAD_ID:
+  
+        
+         return initialState;
       
-    case RESET_ALL_STATE:
-      return initialState
 
     default:
       return state;

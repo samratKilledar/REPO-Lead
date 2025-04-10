@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Image,
@@ -8,7 +8,6 @@ import {
   Modal,
   Alert,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import CustomText from './CustomText';
 import TextStyle from '../styles/TextStyle';
@@ -17,9 +16,12 @@ import ButtonStyles from '../styles/ButtonStyles';
 import {EditLeadFetch} from '../redux/actions/editLeadAction';
 import {deleteLead} from '../redux/actions/leadDeleteAction';
 import {useNavigation} from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 
 const LeadCard = props => {
   const dispatch = useDispatch();
+  const {editLeadDataAgainstId} = useSelector((state)=> state.editLeadReducer)
+
   const navigationtolead = useNavigation;
   const {
     id,
@@ -57,17 +59,27 @@ const LeadCard = props => {
     setModalVisible(false);
   };
 
-  const editProfile = async () => {
+
+
+  useEffect(()=>{
+  // alert("====>"+editLeadDataAgainstId.id )
+    if(editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined){
+      if (props.id != "" && props.id != undefined){
+        navigation.navigate('LeadAddPersonal', { leadId: props.id, leadData: editLeadDataAgainstId });
+      }
+    }
+  },[editLeadDataAgainstId])
+
+  const editLeadProfile = async () => {
     try {
-      alert(props.id)
       if (!props.id) {
-        Alert.alert('Error', "This lead isn't ready for editing yet");
+        console.log('Error', "This lead isn't ready for editing yet");
         return;
       }
 
       setIsEditing(true);
       console.log('Editing lead ID:', props.id);
-
+      //alert(props.id)
       dispatch(EditLeadFetch(props.id));
       // if (result) {
       //   // Only navigate if successful
@@ -79,14 +91,14 @@ const LeadCard = props => {
       const message =
         error.response?.data?.message ||
         'Lead data not available. Please try again in a few seconds.';
-      Alert.alert('Error', message);
+      console.log('Error', message);
     } finally {
       setIsEditing(false);
       setMenuVisible(false);
       setModalVisible(false);
     }
   };
-
+  
   const handledelete = async () => {
     try {
       if (!id) {
@@ -106,16 +118,17 @@ const LeadCard = props => {
       const message =
         error.response?.data?.message ||
         'Lead data not available. Please try again in a few seconds.';
-      Alert.alert('Error', message);
+      console.log('Error', message);
     } finally {
       setMenuVisible(false);
       setModalVisible(false);
     }
   };
 
+
   const details = () => {
     if (props.screenType === 'lead') {
-      alert( props.id+"== "+props.name)
+     // alert( props.id+"== "+props.name)
       props.navigation.navigate('LeadDetails', {
         leadId: props.id,
         name: props.name,
@@ -173,7 +186,7 @@ const LeadCard = props => {
 
       {menuVisible && (
         <View style={styles.menuBox}>
-          <TouchableOpacity style={styles.menuItem} onPress={editProfile}>
+          <TouchableOpacity style={styles.menuItem} onPress={editLeadProfile}>
             <Image
               source={require('../assets/icons/Edit/edit.png')}
               style={styles.menuIcon}
