@@ -4,7 +4,6 @@ import DropDownPicker from "react-native-dropdown-picker";
 
 const Dropdown = ({ label, selectedValue, onValueChange, options, zIndex }) => {
   const [open, setOpen] = useState(false);
-
   return (
     <View style={[styles.container, { zIndex: zIndex }]}>
       <DropDownPicker

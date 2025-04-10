@@ -1,5 +1,11 @@
 import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getItem } from './storageServices';
+import { ToastAndroid } from 'react-native';
+const showToast = (message) => {
+  ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
+};
+
 //GET Request Function
 export const apiGet = async (url, token) => {
   try {
@@ -66,6 +72,7 @@ export const apiPostLead = async (url, payload, tenantId) => {
 
   try {
     const token = await AsyncStorage.getItem("newToken");
+    const user = await getItem('tenantId');
     if (!token) {
       throw new Error("Authentication token not found. Please login again.");
     }
@@ -75,7 +82,7 @@ export const apiPostLead = async (url, payload, tenantId) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
-        tenant: tenantId,
+        tenantId: user,
       },
       body: JSON.stringify(payload),
     });
@@ -93,6 +100,7 @@ export const apiPostLead = async (url, payload, tenantId) => {
     const text = await response.text();
     if (!text.trim()) {
       console.warn("⚠ Server returned an empty response.");
+      showToast("Lead added successfully.");
      // Alert.alert("Lead added successfully.");
       return { success: true, message: "Lead added successfully." };
     }
@@ -141,13 +149,13 @@ export const apiGetLeadList = async (url, token) => {
 
 
 export const apiGetLeadList1 = async (url, token) => {
-  console.log("samrat=============", url);
-  console.log("sss================", token);
+  console.log("Making GET request to:", url);
+  console.log("Using token:", token); 
 
   try {
     const token = await AsyncStorage.getItem("newToken");
       if (token == null) {
-        apiGetLeadList1(api.assignTo)
+        //apiGetLeadList1(api.assignTo)
         throw new Error("------------------------------------Authentication token not found. Please login again.");
       }
     const response = await fetch(url, {
@@ -203,6 +211,7 @@ export const apiPut = async (url, data, token) => {
 
 export const apiPostForgotPass = async (url, param = {}) => {
   try {
+      const user = await getItem('tenantId');
     const data = param.data || {};
     console.log('📨 Sending Data:', JSON.stringify(data));
 
@@ -210,7 +219,7 @@ export const apiPostForgotPass = async (url, param = {}) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        tenant: 'Root',
+        tenantId: user,
       },
       body: JSON.stringify({ email: data.email }),
     });
@@ -292,7 +301,7 @@ export const deleteLeadApi = async (id) => {
   }
 };
 
-export const apiGetEditList = async (url,token) => {
+export const apiGetEditList = async (url,token) => {  //call this function
   console.log("Making GET request to:", url);
   console.log("Using token:", token); 
 
@@ -321,6 +330,43 @@ export const apiGetEditList = async (url,token) => {
     return data;
   } catch (error) {
     console.error(`GET ${url} Error:`, error.message);
+    throw error;
+  }
+};
+
+export const EditLeadReadData = async (leadId) => {
+  try {
+    const token = await AsyncStorage.getItem("newToken"); // Retrieve token from storage
+
+    if (!token) {
+      throw new Error("Authentication token not found. Please login again.");
+    }
+
+    const apiUrl = `https://opticalerp.in:85/api/lead/getbyleadid/${leadId}`;
+
+    console.log("Fetching data from:", apiUrl);
+
+    const response = await fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        "Accept": "application/json",
+        "Authorization": `Bearer ${token}`, // Pass token in the header
+      },
+    });
+
+    console.log("Response status:", response.status);
+
+    if (!response.ok) {
+      const errorText = await response.text(); // Get error message
+      console.error("Server Response:", errorText);
+      throw new Error(`HTTP Error: ${response.status} - ${errorText}`);
+    }
+
+    const data = await response.json();
+    console.log("API Response:", data);
+    return data;
+  } catch (error) {
+    console.error(`GET ${leadId} Error:`, error.message);
     throw error;
   }
 };

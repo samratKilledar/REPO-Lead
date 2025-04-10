@@ -29,6 +29,11 @@ const LeadDetails = (props) => {
   const addService = () => {
     props.navigation.navigate("LeadAddServices")
   }
+  
+  // useEffect(() => {
+  //   dispatch(fetchLeadDetails());
+  // }, [dispatch]);
+
   return (
     <View style={styles.container}>
       <View style={{ flexDirection: "row",  paddingRight: 28, marginLeft: 8 }}>

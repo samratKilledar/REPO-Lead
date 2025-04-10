@@ -4,7 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  Image,
+  Image,Text,
   ToastAndroid,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -14,25 +14,22 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import {
-  leadSubmitAllData,
-  updateAssignTo,
-  updateRemark,
-  updateServices,
-} from '../../redux/actions/lastAction';
-
-import {useNavigation} from '@react-navigation/native';
+import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices } from '../../redux/actions/lastAction';
+import { state } from '../../api/mainApi';
+import { useNavigation } from '@react-navigation/native';
 import {resetStateLead} from '../../redux/actions/lastAction';
+import { leadEditSubmitAllData } from '../../redux/actions/editLeadAction';
 
 const LeadLast = props => {
   const dispatch = useDispatch();
-  const {assignto, services, remark, servicesName, assignToName} = useSelector(
+  const {assignedTo, serviceId, remark, serviceName, assignedToName} = useSelector(
     state => state.lastReducer,
   );
   const navigation = useNavigation();
   const service1 = useSelector(state => state.homeReducer);
   const assignToList = useSelector(state => state.homeReducer);
   const allState = useSelector(state => state.lastReducer);
+  const editLeadDataAgainstId = useSelector(state => state.editLeadReducer.editLeadDataAgainstId)
   const steps = ['Personal', 'Occupation', 'Services'];
   const currentStep = 3;
   const [cards, setCards] = useState([]);
@@ -52,52 +49,104 @@ const LeadLast = props => {
     if (allState.messageFromServer.success) {
       dispatch(resetStateLead());
       showToast(allState.messageFromServer.message);
+      setCards(allState.services)
       navigation.navigate('LeadScreen');
     }
   });
+  const leadLast = useSelector(state => state.homeReducer);
+
+  useEffect(()=>{
+    alert(JSON.stringify(cards))
+  })
+  useEffect(()=>{
+    alert("==============>"+JSON.stringify(editLeadDataAgainstId))
+    setCards(editLeadDataAgainstId.serviceDetails)
+  },[editLeadDataAgainstId])
 
   const handleSubmit = () => {
-    dispatch(leadSubmitAllData(cards));
+    console.log(" editLeadDataAgainstId:", editLeadDataAgainstId); 
+  console.log(" editLeadDataAgainstId.id:", editLeadDataAgainstId?.id); 
+    if (cards.length === 0) {
+      showToast("Card cannot be empty. Add at least 1 card to submit.");
+      return;
+    }
+    if (editLeadDataAgainstId?.id) {
+      console.log(" Editing Lead...");
+      dispatch(leadEditSubmitAllData(cards));
+    }else{
+      console.log(" Creating New Lead...");
+      dispatch(leadSubmitAllData(cards));
+    }
+   
   };
 
   const handleAdd = () => {
-    if (!services || !services.trim()) {
+    if (!assignedTo || String(assignedTo).trim() === "") {
+      showToast("AssignTo cannot be empty");
+      return;
+    }
+    
+    if (!serviceId.toString() || !serviceId.toString().trim()) {
       showToast('Services cannot be empty');
       return;
     }
 
-    if (!remark || !remark.trim()) {
+    if (!remark.toString() || !remark.toString().trim()) {
       showToast('Remark cannot be empty');
       return;
     }
 
-    const newCard = {
-      id: services,
-      title: servicesName,
-      date: new Date().toLocaleDateString(),
-      description: remark,
-    };
 
-    // Check if the newCard already exists based on id and description
-    setCards(prevCards => {
-      const isDuplicate = prevCards.some(
-        card =>
-          card.id === newCard.id && card.description === newCard.description,
-      );
-
-      if (isDuplicate) {
-        showToast('This service already exists!');
-        return prevCards; // Do not add duplicate
+    let newCard ={};
+    if(editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined){
+       newCard = {
+        id: editLeadDataAgainstId.id  ,
+        customerId: editLeadDataAgainstId.customerId,
+        serviceId: serviceId,
+        serviceName: serviceName,
+        leadId:  editLeadDataAgainstId.customerId,
+        clientId: 0,
+        isExistingClient: false,
+        remark: remark,
+        assignedTo: serviceId,
+        assignedToName: assignedToName,
+        isActive: true,
+        date: new Date().toLocaleDateString(),
       }
+    }else{
+       newCard = {
+        id: serviceId,
+        title: serviceName,
+        date: new Date().toLocaleDateString(),
+        remark: remark,
+      };
+    }
+    alert(JSON.stringify(cards) +"=--="+JSON.stringify(newCard ))
+   
 
-      return [...prevCards, newCard]; // Add new card if it's unique
+    // Check if the newCard already exists based on id and remark
+    setCards(prevCards => {
+      const validPrevCards = Array.isArray(prevCards) ? prevCards : [];
+      
+      const isDuplicate = validPrevCards.some(
+        card => card.id === newCard.id && card.remark === newCard.remark
+      );
+    
+      if (isDuplicate) {
+        showToast?.('This service already exists!');
+        return validPrevCards; // Keep existing state if duplicate
+      }
+    
+      // alert(JSON.stringify(validPrevCards)+"======0=======>" + JSON.stringify(newCard));
+      return [...validPrevCards, newCard]; // Add only if unique
     });
+    
   };
 
-  const handleDeleteCard = (id, description) => {
+  const handleDeleteCard = (id, remark) => {
     setCards(prevCards =>
       prevCards.filter(
-        card => !(card.id === id && card.description === description),
+        card => !(card.id === id && card.remark === remark),
       ),
     );
   };
@@ -116,39 +165,39 @@ const LeadLast = props => {
       </View>
       <View style={styles.centerContainer}>
         <StatusDropdown
-          label={assignToName}
-          selectedValue={assignto}
+          label={assignedToName}
+          selectedValue={assignedTo}
           onValueChange={value => dispatch(updateAssignTo(value))}
           apiType="assignTo"
           listData={assignToList.assignTo[3]}
           zIndex={4000}
         />
-
         <StatusDropdown
-          label={servicesName}
-          selectedValue={service1.services}
+          label={serviceName}
+          selectedValue={service1.serviceId}
           onValueChange={value => dispatch(updateServices(value))}
           apiType="leadSource"
           listData={service1.service}
         />
         <CustomTextInput
-          value={remark}
+          value={remark ? remark.toString() : ""}
           placeholder="Remark"
           onChangeText={value => dispatch(updateRemark(value))}
         />
         <CustomButton title="Add" onPress={handleAdd} />
         <ScrollView contentContainerStyle={styles.insuranceCardContainer}>
           <View style={styles.insuranceCard}>
-            {cards.map(item => (
+          {Array.isArray(cards) && cards.length > 0 &&
+            cards.map(item => (
               <View key={item.id} style={styles.cardContainer}>
                 <InsuranceCard
-                  title={item.title}
+                  title={item.title!= "" && item.title!= undefined ?  item.title : item.serviceName.toString()}
                   date={item.date}
-                  description={item.description}
+                  description={item.remark!= "" && item.remark!= undefined ? item.remark : item.remark.toString()}
                 />
                 <TouchableOpacity
                   style={styles.deleteButton}
-                  onPress={() => handleDeleteCard(item.id, item.description)}>
+                  onPress={() => handleDeleteCard(item.id, item.remark)}>
                   <Image
                     source={require('../../assets/icons/Delete/delete.png')}
                     style={styles.deleteIcon}

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Image,
@@ -8,7 +8,6 @@ import {
   Modal,
   Alert,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import CustomText from './CustomText';
 import TextStyle from '../styles/TextStyle';
@@ -17,9 +16,12 @@ import ButtonStyles from '../styles/ButtonStyles';
 import {EditLeadFetch} from '../redux/actions/editLeadAction';
 import {deleteLead} from '../redux/actions/leadDeleteAction';
 import {useNavigation} from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 
 const LeadCard = props => {
   const dispatch = useDispatch();
+  const {editLeadDataAgainstId} = useSelector((state)=> state.editLeadReducer)
+
   const navigationtolead = useNavigation;
   const {
     id,
@@ -57,21 +59,29 @@ const LeadCard = props => {
     setModalVisible(false);
   };
 
+  useEffect(()=>{
+   alert(editLeadDataAgainstId.id )
+    if(editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined){
+          navigation.navigate('LeadAddPersonal', { leadId: props.id, leadData: editLeadDataAgainstId });
+    }
+  },[editLeadDataAgainstId])
+
   const editProfile = async () => {
     try {
-      if (!id) {
+      if (!props.id) {
         Alert.alert('Error', "This lead isn't ready for editing yet");
         return;
       }
 
       setIsEditing(true);
-      console.log('Editing lead ID:', id);
+      console.log('Editing lead ID:', props.id);
 
-      const result = await dispatch(EditLeadFetch(id));
-      if (result) {
-        // Only navigate if successful
-        navigation.navigate('Editlead1');
-      }
+      dispatch(EditLeadFetch(props.id));
+      // if (result) {
+      //   // Only navigate if successful
+      //   alert(JSON.stringify(result)+"===="+props.id)
+      //  // navigation.navigate('Editlead1');
+      // }
     } catch (error) {
       console.error('Edit failed:', error);
       const message =
@@ -84,7 +94,7 @@ const LeadCard = props => {
       setModalVisible(false);
     }
   };
-
+  
   const handledelete = async () => {
     try {
       if (!id) {
@@ -113,6 +123,7 @@ const LeadCard = props => {
 
   const details = () => {
     if (props.screenType === 'lead') {
+     // alert( props.id+"== "+props.name)
       props.navigation.navigate('LeadDetails', {
         leadId: props.id,
         name: props.name,

@@ -32,12 +32,12 @@ const AddFollowUP = (props) => {
   } = useSelector(state => state.addFollowUp);
   //alert(followupStatus)
   const {
-    titlePlaceholder, followupStatusName, assignedToPlaceholder, attachmentUrlPlaceholder, followupDatePlaceholder,
+    titlePlaceholder, followupStatusName, assignedToName, attachmentUrlPlaceholder, followupDatePlaceholder,
     followupTimePlaceholder, remarkPlaceholder
   } = useSelector(state => state.addFollowUp);
 
   const followUpList = useSelector(state => state.homeReducer);
-  // Alert.alert(JSON.stringify(followUpList))
+  const assignToList= useSelector(state => state.homeReducer);
 
   const goBackCall = () => {
     navigation.popToTop();
@@ -46,10 +46,14 @@ const AddFollowUP = (props) => {
   useEffect(() => {
     if (isAuthenticated) {
       Alert.alert("Success", "Follow-up added successfully!", [
-        { text: "OK", onPress: () => navigation.goBack() }
+        {
+          text: "OK",
+          onPress: () => dispatch(submitFollowUp({ isAuthenticated: false }))
+        }
       ]);
     }
   }, [isAuthenticated]);
+  
   useEffect(() => {
     if (error) {
       Alert.alert("Error", error);
@@ -159,17 +163,19 @@ const AddFollowUP = (props) => {
         />
         </Suspense>
         <Suspense fallback={<Dropdown/>}>
-        <Dropdown
-          label={assignedToPlaceholder}
+        <StatusDropdown
+          label={assignedToName}
           selectedValue={assignedTo}
           onValueChange={(value) => dispatch(changeAssignedTo(value))}
           //listData={followUpList.followUp}
-          options={[
-            { label: "Mr.Akshat", value: "akshat" },
-            { label: "Mr.Paresh", value: "paresh" },
-            { label: "Mr.Rajesh", value: "rajesh" },
-            { label: "Mr.Subhash", value: "subhash" },
-          ]}
+          // options={[
+          //   { label: "Mr.Akshat", value: "akshat" },
+          //   { label: "Mr.Paresh", value: "paresh" },
+          //   { label: "Mr.Rajesh", value: "rajesh" },
+          //   { label: "Mr.Subhash", value: "subhash" },
+          // ]}
+          apiType="assignTo"
+          listData={assignToList.assignTo[3]}
           zIndex={1000}
           elevation={4}
         />

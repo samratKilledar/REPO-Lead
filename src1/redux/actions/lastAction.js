@@ -11,6 +11,7 @@ export const UPDATE_REMARK = "UPDATE_REMARK";
 export const UPDATE_FIRSTNAME = "UPDATE_FIRSTNAME";
 export const UPDATE_LASTNAME = "UPDATE_LASTNAME";
 export const UPDATE_LEADSOURCES = "UPDATE_LEADSOURCES";
+export const UPDATE_OTHER_SOURCE = "UPDATE_OTHER_SOURCE"; 
 export const UPDATE_MOBILENO = "UPDATE_MOBILENO";
 export const UPDATE_EMAILID = "UPDATE_EMAILID";
 export const UPDATE_WHATSAPPNO = "UPDATE_WHATSAPPNO";
@@ -21,10 +22,11 @@ export const UPDATE_STATE = "UPDATE_STATE";
 export const UPDATE_COUNTRY = "UPDATE_COUNTRY";
 export const UPDATE_PINCODE = "UPDATE_PINCODE";
 export const UPDATE_OCCUPATION = "UPDATE_OCCUPATION";
+export const UPDATE_ORGANISATIONNAME="UPDATE_ORGANISATIONNAME";
 export const UPDATE_TYPEOFWORK = "UPDATE_TYPEOFWORK";
 export const UPDATE_MONTHLYINCOME = "UPDATE_MONTHLYINCOME";
 export const RESET_ALL_STATE = "RESET_ALL_STATE";
-
+export const SET_ALL_DATA_DEFAULT_FOR_EDIT = "SET_ALL_DATA_DEFAULT_FOR_EDIT";
 
 export const updateFirstName = (firstName) => ({
   type: UPDATE_FIRSTNAME,
@@ -36,10 +38,15 @@ export const updateLastName = (lastName) => ({
   payload: lastName,
 });
 
-export const updateLeadSources = (leadSources) => ({
+export const updateLeadSources = (leadSource) => ({
   type: UPDATE_LEADSOURCES,
-  payload: leadSources,
+  payload: leadSource,
 });
+
+export const updateOtherSource = (otherSource) => ({
+  type: UPDATE_OTHER_SOURCE,
+  payload: otherSource,
+}); 
 
 export const updateMobileNo = (mobileNo) => ({
   type: UPDATE_MOBILENO,
@@ -66,19 +73,19 @@ export const updateAddressLine2 = (addressLine2) => ({
   payload: addressLine2,
 });
 
-export const updateCity = (city) => ({
+export const updateCity = (cityId) => ({
   type: UPDATE_CITY,
-  payload: city,
+  payload: cityId,
 });
 
-export const updateState = (state) => ({
+export const updateState = (stateId) => ({
   type: UPDATE_STATE,
-  payload: state,
+  payload: stateId,
 });
 
-export const updateCountry = (country) => ({
+export const updateCountry = (countryId) => ({
   type: UPDATE_COUNTRY,
-  payload: country,
+  payload: countryId,
 });
 
 export const updatePincode = (pincode) => ({
@@ -91,9 +98,14 @@ export const updateOccupation = (occupation) => ({
   payload: occupation,
 });
 
-export const updateTypeOfWork = (typeOfWork) => ({
+export const updateOrganisationName = (otherSource) => ({
+  type: UPDATE_ORGANISATIONNAME,
+  payload: otherSource,
+}); 
+
+export const updateTypeOfWork = (workType) => ({
   type: UPDATE_TYPEOFWORK,
-  payload: typeOfWork,
+  payload: workType,
 });
 
 export const updateMonthlyIncome = (monthlyIncome) => ({
@@ -101,14 +113,14 @@ export const updateMonthlyIncome = (monthlyIncome) => ({
   payload: monthlyIncome,
 });
 
-export const updateAssignTo = (assignTo) => ({
+export const updateAssignTo = (assignedTo) => ({
   type: UPDATE_ASSIGNTO,
-  payload: assignTo,
+  payload: assignedTo,
 });
 
-export const updateServices = (services) => ({
+export const updateServices = (serviceId) => ({
   type: UPDATE_SERVICES,
-  payload: services,
+  payload: serviceId,
 });
 
 export const updateRemark = (remark) => ({
@@ -130,45 +142,51 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
     firstName: lastReducer.firstName,
     lastName: lastReducer.lastName,
     emailId: lastReducer.emailId ,
+    leadSource: lastReducer.leadSource ,
+    leadSourceName: lastReducer.leadSourceName,
+    otherSource:lastReducer.otherSource,
     mobileNo: lastReducer.mobileNo ,
     whatsAppNo: lastReducer.whatsAppNo,
     addressLine1: lastReducer.addressLine1,
     addressLine2: lastReducer.addressLine2 ,
-    city : lastReducer.city ,
+    cityId : lastReducer.cityId ,
     cityName : lastReducer.cityName,
-    state : lastReducer.state,
+    stateId : lastReducer.stateId,
     stateName : lastReducer.stateName,
-    country : lastReducer.country,
+    countryId : lastReducer.countryId,
     countryName : lastReducer.countryName,
     pincode: lastReducer.pincode,
-    leadSources: lastReducer.leadSources ,
-    leadSourcesName: lastReducer.leadSourcesName,
     occupation: lastReducer.occupation ,
     occupationName: lastReducer.occupationName ,
-    typeOfWork: lastReducer.typeOfWork ,
-    assignedTo: Number(lastReducer.assignedTo) || 2, 
+    workType: lastReducer.workType ,
+    monthlyIncome: lastReducer.monthlyIncome,
+    assignedTo: lastReducer.assignedTo, 
+    assignedToName: lastReducer.assignedToName, 
+    organisationName:lastReducer.organisationName,
     leadDate: new Date().toISOString(),
     isActive: true,
     serviceDetails: newServices.length > 0
     ? newServices.map(service => ({
         id: 0, 
-        customerId: 0, 
-        services: Number(service.id), 
-        servicesName: service.title, 
+        customerId: 0,  
+        serviceId: lastReducer.serviceId,
+        serviceName: lastReducer.serviceName,
         isExistingClient: true, 
-        remark: service.description, 
-        assignedTo: Number(lastReducer.assignedTo) || 0, 
+        remark: service.remark, 
+        assignedTo: lastReducer.assignedTo, 
+       assignedToName: lastReducer.assignedToName,
         isActive: true
       }))
     : lastReducer.serviceDetails || [
         {
           id: 0,
           customerId: 0,
-          services: Number(service.id),
-          servicesName: lastReducer.servicesName,
+          serviceId: lastReducer.serviceId,
+          serviceName: lastReducer.serviceName,
           isExistingClient: true,
           remark: lastReducer.remark,
-          assignedTo: Number(lastReducer.assignedTo) || 0,
+          assignedTo: lastReducer.assignedTo, 
+          assignedToName: lastReducer.assignedToName, 
           isActive: true
         }
       ]
@@ -193,6 +211,11 @@ export const leadSubmitAllData = (newCard) => async (dispatch, getState) => {
 
 };
 
+export const setAllInputFileds=(leadData,leadId)=>({
+  type: SET_ALL_DATA_DEFAULT_FOR_EDIT,
+  payload: leadData,
+  //updateFirstName()
+})
 
 
 export const submitSuccess = () => ({ type: SUBMIT_SUCCESS });

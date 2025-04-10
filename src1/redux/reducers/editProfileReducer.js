@@ -12,10 +12,10 @@ import {
 
 const initialState = {
     isUpdating: false,
-    firstname: "daniel",
-    lastname: "Austin",
-    email: "daniel_austin@gmail.com",
-    phonenumber: "1234567890",
+    firstname: "",
+    lastname: "",
+    email: "",
+    phonenumber: "",
     gender: [],
     date: "",
 

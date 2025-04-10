@@ -1,15 +1,18 @@
-import { EditLead , editUpdate } from "../../api/authApi";
+import {   EditLeadReadData } from "../../api/apiClient";
+import {EditLead} from "../../api/authApi";
 import { leadAPISubmit } from "../../api/mainApi";
 
-export const SUBMIT_SUCCESS = "SUBMIT_SUCCESS";
-export const SUBMIT_FAILURE = "SUBMIT_FAILURE";
+export const SUBMIT_SUCCESS_LEAD = "SUBMIT_SUCCESS_LEAD";
+export const SUBMIT_FAILURE_LEAD = "SUBMIT_FAILURE_LEAD";
 export const SUBMIT_REQUEST = "SUBMIT_REQUEST";
+export const SUBMIT_FAILURE = "SUBMIT_FAILURE";
 export const UPDATE_ASSIGNTO = "UPDATE_ASSIGNTO";
 export const UPDATE_SERVICES = "UPDATE_SERVICES";
 export const UPDATE_REMARK = "UPDATE_REMARK";
 export const UPDATE_FIRSTNAME = "UPDATE_FIRSTNAME";
 export const UPDATE_LASTNAME = "UPDATE_LASTNAME";
 export const UPDATE_LEADSOURCES = "UPDATE_LEADSOURCES";
+export const UPDATE_OTHER_SOURCE = "UPDATE_OTHER_SOURCE"; 
 export const UPDATE_MOBILENO = "UPDATE_MOBILENO";
 export const UPDATE_EMAILID = "UPDATE_EMAILID";
 export const UPDATE_WHATSAPPNO = "UPDATE_WHATSAPPNO";
@@ -20,9 +23,10 @@ export const UPDATE_STATE = "UPDATE_STATE";
 export const UPDATE_COUNTRY = "UPDATE_COUNTRY";
 export const UPDATE_PINCODE = "UPDATE_PINCODE";
 export const UPDATE_OCCUPATION = "UPDATE_OCCUPATION";
+export const UPDATE_ORGANISATIONNAME="UPDATE_ORGANISATIONNAME";
 export const UPDATE_TYPEOFWORK = "UPDATE_TYPEOFWORK";
 export const UPDATE_MONTHLYINCOME = "UPDATE_MONTHLYINCOME";
-
+export const EDIT_DATA_AUTO_FILL_SUCCESS = "EDIT_DATA_AUTO_FILL_SUCCESS";
 
 // Personal Information Actions
 export const updateFirstName = (firstName) => ({
@@ -88,14 +92,24 @@ export const updateLeadSources = (id, name) => ({
   payload: { id, name }
 });
 
+export const updateOtherSource = (otherSource) => ({
+  type: UPDATE_OTHER_SOURCE,
+  payload: otherSource,
+});
+
 export const updateOccupation = (id, name) => ({
   type: UPDATE_OCCUPATION,
   payload: { id, name }
 });
 
-export const updateTypeOfWork = (typeOfWork) => ({
+export const updateOrganisationName = (otherSource) => ({
+  type: UPDATE_ORGANISATIONNAME,
+  payload: otherSource,
+}); 
+
+export const updateTypeOfWork = (workType) => ({
   type: UPDATE_TYPEOFWORK,
-  payload: typeOfWork
+  payload: workType,
 });
 
 export const updateMonthlyIncome = (monthlyIncome) => ({
@@ -109,9 +123,9 @@ export const updateAssignTo = (id, name) => ({
 });
 
 // Service Actions
-export const updateServices = (services) => ({
+export const updateServices = (serviceId) => ({
   type: UPDATE_SERVICES,
-  payload: services
+  payload: serviceId,
 });
 
 export const updateRemark = (remark) => ({
@@ -131,40 +145,24 @@ export const submitFailure = (error) => ({
 
 export const submitRequest = () => ({ type: SUBMIT_REQUEST });
 
+export const updateLeadData = (data)=>({
+  type: EDIT_DATA_AUTO_FILL_SUCCESS,
+  payload: data,
+})
+
 export const EditLeadFetch = (leadId) => async (dispatch) => {
   try {
     if (!leadId || leadId === 'undefined') {
       throw new Error('Invalid lead ID');
     }
+    console.log(leadId+"respo---------Edit--->"+JSON.stringify(data))
 
     const data = await EditLead(leadId);
-    
-    if (!data || data.error) {
-      throw new Error(data?.error || 'Lead data not found');
+    console.log("respo---------Edit--->"+JSON.stringify(data))
+    if(leadId == data.id){
+      //alert(JSON.stringify(data))
+      dispatch(updateLeadData(data));
     }
-    
-    // Dispatch updates - add null checks for nested objects
-    dispatch(updateFirstName(data.firstName || ''));
-    dispatch(updateLastName(data.lastName || ''));
-    dispatch(updateLeadSources(data.leadSources?.id || '', data.leadSources?.name || 'Lead Sources'));
-    dispatch(updateMobileNo(data.mobileNo || ''));
-    dispatch(updateEmailId(data.emailId || ''));
-    dispatch(updateWhatsAppNo(data.whatsAppNo || ''));
-    dispatch(updateAddressLine1(data.addressLine1 || ''));
-    dispatch(updateAddressLine2(data.addressLine2 || ''));
-    dispatch(updateCity(data.city?.id || '', data.city?.name || 'Select City'));
-    dispatch(updateState(data.state?.id || '', data.state?.name || 'Select State'));
-    dispatch(updateCountry(data.country?.id || '', data.country?.name || 'Select Country', data.country?.isdCode || ''));
-    dispatch(updatePincode(data.pincode || ''));
-    dispatch(updateOccupation(data.occupation?.id || '', data.occupation?.name || 'Occupation'));
-    dispatch(updateTypeOfWork(data.typeOfWork || ''));
-    dispatch(updateMonthlyIncome(data.monthlyIncome || ''));
-    dispatch(updateAssignTo(data.assignTo || ''));
-    dispatch(updateServices(data.services?.id || '', data.services?.name || 'Services'));
-    dispatch(updateRemark(data.remark || ''));
-    
-    dispatch(submitSuccess());
-    return data; // Return the data for component-level checks
   } catch (error) {
     console.error("Error fetching lead:", error);
     throw error; // Re-throw for component handling
@@ -173,61 +171,193 @@ export const EditLeadFetch = (leadId) => async (dispatch) => {
 
 
 
-export const leadSubmitAllData = () => async (dispatch, getState) => {
+// export const leadEditSubmitAllData = (newCard) => async (dispatch, getState) => {
+//   dispatch({ type: SUBMIT_REQUEST });
+//   const { lastReducer } = getState();
+//   console.log("----------" + JSON.stringify(newCard));
+
+//   const user = await getItem("tenantId");
+//   //let newServices = newCard;
+
+//   if (!leadId) {
+//     console.warn("❌ No lead ID provided for update.");
+//     return;
+//   }
+//   // Ensure leadId is correctly retrieved from state or response
+//   const leadId = lastReducer.leadId || 0;
+
+//   const leadData = {
+//     id: leadId, // Use existing lead ID if editing
+//     tenantId: user,
+//     customerId: lastReducer.customerId || 0,
+//     entity: "someEntityValue",
+//     firstName: lastReducer.firstName,
+//     lastName: lastReducer.lastName,
+//     emailId: lastReducer.emailId,
+//     leadSource: lastReducer.leadSource,
+//     leadSourceName: lastReducer.leadSourceName,
+//     otherSource: lastReducer.otherSource,
+//     mobileNo: lastReducer.mobileNo,
+//     whatsAppNo: lastReducer.whatsAppNo,
+//     addressLine1: lastReducer.addressLine1,
+//     addressLine2: lastReducer.addressLine2,
+//     cityId: lastReducer.cityId,
+//     cityName: lastReducer.cityName,
+//     stateId: lastReducer.stateId,
+//     stateName: lastReducer.stateName,
+//     countryId: lastReducer.countryId,
+//     countryName: lastReducer.countryName,
+//     pincode: lastReducer.pincode,
+//     occupation: lastReducer.occupation,
+//     occupationName: lastReducer.occupationName,
+//     workType: lastReducer.workType,
+//     monthlyIncome: lastReducer.monthlyIncome,
+//     assignedTo: lastReducer.assignedTo,
+//     assignedToName: lastReducer.assignedToName,
+//     organisationName: lastReducer.organisationName,
+//     leadDate: new Date().toISOString(),
+//     isActive: true,
+//     serviceDetails:
+//       newServices.length > 0
+//         ? newServices.map((service) => ({
+//             id: service.id || 0, // Preserve existing service ID if editing
+//             customerId: lastReducer.customerId || 0,
+//             serviceId: lastReducer.serviceId,
+//             serviceName: lastReducer.serviceName,
+//             isExistingClient: true,
+//             remark: service.description,
+//             assignedTo: lastReducer.assignedTo,
+//             assignedToName: lastReducer.assignedToName,
+//             isActive: true,
+//           }))
+//         : lastReducer.serviceDetails || [
+//             {
+//               id: 0,
+//               customerId: lastReducer.customerId || 0,
+//               serviceId: lastReducer.serviceId,
+//               serviceName: lastReducer.serviceName,
+//               isExistingClient: true,
+//               remark: lastReducer.remark,
+//               assignedTo: lastReducer.assignedTo,
+//               assignedToName: lastReducer.assignedToName,
+//               isActive: true,
+//             },
+//           ],
+//   };
+  
+//   console.log("📤 Submitting Lead Data:" + JSON.stringify(leadData));
+
+//   try {
+//     const response = await leadAPISubmit(leadData, user);
+//     console.log("✅ Lead Submitted Successfully:", response);
+    
+//     if (response.success) {
+//       dispatch({ type: SUBMIT_SUCCESS_LEAD, payload: response });
+      
+//       // Store leadId for future edits
+//       if (!lastReducer.leadId) {
+//         dispatch({ type: "UPDATE_LEAD_ID", payload: response.leadId });
+//       }
+//     } else {
+//       dispatch({ type: SUBMIT_FAILURE_LEAD, error: response.message });
+//     }
+//   } catch (error) {
+//     console.error("❌ Lead Submission Failed:", error);
+//     dispatch({ type: SUBMIT_FAILURE, error: error.message });
+//   }
+// };
+
+
+
+export const leadEditSubmitAllData = (cards) => async (dispatch, getState) => {
+  console.log("leadEditSubmitAllData function called!");  // Add this
   dispatch({ type: SUBMIT_REQUEST });
 
-  const { editLeadReducer } = getState();
-  const leadData = {
-    id: 0,
-    tenantId: "root",
+  const { lastReducer, editLeadDataAgainstId } = getState(); // Get existing lead details
+  const user = await getItem("tenantId");
+
+  console.log(" editLeadDataAgainstId----:", JSON.stringify(editLeadDataAgainstId));
+  console.log(" lastReducer:", JSON.stringify(lastReducer));
+
+  if (!editLeadDataAgainstId || !editLeadDataAgainstId.id) {
+    console.error(" Lead ID is missing, cannot edit.");
+    dispatch({ type: SUBMIT_FAILURE, error: "Lead ID is required for editing." });
+    return;
+  }
+
+  const newServices = cards || [];
+
+const leadData = {
+  id: lastReducer.id,
+    tenantId: user,
     customerId: 0,
     entity: "someEntityValue", 
-    firstName: editLeadReducer.firstName,
-    lastName: editLeadReducer.lastName,
-    emailId: editLeadReducer.emailId ,
-    mobileNo: editLeadReducer.mobileNo ,
-    whatsAppNo: editLeadReducer.whatsAppNo,
-    addressLine1: editLeadReducer.addressLine1,
-    addressLine2: editLeadReducer.addressLine2 ,
-    city : editLeadReducer.city ,
-    cityName : editLeadReducer.cityName,
-    state : editLeadReducer.state,
-    stateName : editLeadReducer.stateName,
-    country : editLeadReducer.country,
-    countryName : editLeadReducer.countryName,
-    pincode: editLeadReducer.pincode,
-    leadSources: editLeadReducer.leadSources ,
-    leadSourcesName: editLeadReducer.leadSourcesName,
-    occupation: editLeadReducer.occupation ,
-    occupationName: editLeadReducer.occupationName ,
-    typeOfWork: editLeadReducer.typeOfWork ,
-    assignedTo: Number(editLeadReducer.assignedTo) || 2, 
+    firstName: lastReducer.firstName,
+    lastName: lastReducer.lastName,
+    emailId: lastReducer.emailId ,
+    leadSource: lastReducer.leadSource ,
+    leadSourceName: lastReducer.leadSourceName,
+    otherSource:lastReducer.otherSource,
+    mobileNo: lastReducer.mobileNo ,
+    whatsAppNo: lastReducer.whatsAppNo,
+    addressLine1: lastReducer.addressLine1,
+    addressLine2: lastReducer.addressLine2 ,
+    cityId : lastReducer.cityId ,
+    cityName : lastReducer.cityName,
+    stateId : lastReducer.stateId,
+    stateName : lastReducer.stateName,
+    countryId : lastReducer.countryId,
+    countryName : lastReducer.countryName,
+    pincode: lastReducer.pincode,
+    occupation: lastReducer.occupation ,
+    occupationName: lastReducer.occupationName ,
+    workType: lastReducer.workType ,
+    monthlyIncome: lastReducer.monthlyIncome,
+    assignedTo: lastReducer.assignedTo, 
+    assignedToName: lastReducer.assignedToName, 
+    organisationName:lastReducer.organisationName,
     leadDate: new Date().toISOString(),
     isActive: true,
-    serviceDetails: editLeadReducer.serviceDetails || [
-      {
-        id: 0,
-        customerId: 0,
-        services : editLeadReducer.services ,
-        servicesName : editLeadReducer.servicesName ,
-        isExistingClient: true,
-        remark: editLeadReducer.remark,
-        assignedTo: Number(editLeadReducer.assignedTo) || 0, // ✅ Ensure it's an integer
-        isActive: true,
-      },
-    ],
+    serviceDetails: newServices.length > 0
+    ? newServices.map(service => ({
+        id: 0, 
+        customerId: 0,  
+        serviceId: lastReducer.serviceId,
+        serviceName: lastReducer.serviceName,
+        isExistingClient: true, 
+        remark: service.remark, 
+        assignedTo: lastReducer.assignedTo, 
+       assignedToName: lastReducer.assignedToName,
+        isActive: true
+      }))
+    : lastReducer.serviceDetails || [
+        {
+          id: 0,
+          customerId: 0,
+          serviceId: lastReducer.serviceId,
+          serviceName: lastReducer.serviceName,
+          isExistingClient: true,
+          remark: lastReducer.remark,
+          assignedTo: lastReducer.assignedTo, 
+          assignedToName: lastReducer.assignedToName, 
+          isActive: true
+        }
+      ]
   };
-  console.log("📤 Submitting Lead Data:", JSON.stringify(leadData, null, 2));
 
+  console.log("📡 Sending data to API:", JSON.stringify(leadData));
 
   try {
-    const response = await leadAPISubmit(leadData, "root");
-    console.log("✅ Lead Submitted Successfully:", response);
+    const response = await leadAPISubmit(leadData, user); // Ensure this API supports updating
+    console.log("✅ Lead Updated Successfully:", response);
 
-    dispatch({ type: SUBMIT_SUCCESS, payload: response });
+    if (response.success === true || response.message === "Lead updated successfully.") {
+      dispatch({ type: SUBMIT_SUCCESS_LEAD, payload: response });
+    } else {
+      dispatch({ type: SUBMIT_FAILURE_LEAD, error: response.message });
+    }
   } catch (error) {
-    console.error("❌ Lead Submission Failed:", error);
-
+    console.error("❌ Lead Update Failed:", error);
     dispatch({ type: SUBMIT_FAILURE, error: error.message });
   }
 };

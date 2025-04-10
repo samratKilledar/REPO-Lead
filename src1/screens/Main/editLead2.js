@@ -26,8 +26,8 @@ const EditLead2 = (props) => {
   };
 
   const { 
-    occupation,occupationName,
-    typeOfWork,
+    occupation, occupationName,
+    workType,
     monthlyIncome,
     } = useSelector(state => state.editLeadReducer);
 
@@ -37,7 +37,7 @@ const EditLead2 = (props) => {
    const leadLastHandle = () => {
     const monthlyIncomeStr = String(monthlyIncome || ""); // Ensure it's a string
     
-    if (!typeOfWork.trim()) {
+    if (!workType.trim()) {
       showToast("Type of Work cannot be empty");
       return;
     }
@@ -93,7 +93,7 @@ const EditLead2 = (props) => {
         />
        
         <CustomTextInput
-          value={typeOfWork}
+          value={workType}
           placeholder="Type of Work"
           onChangeText={(text) => {
             dispatch(updateTypeOfWork(text));

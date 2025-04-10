@@ -23,7 +23,7 @@ const LeadScreen = (props) => {
   }, [dispatch]);
 
   useEffect(()=>{
-    alert(JSON.stringify(leads))
+    //alert("==samrat==>"+JSON.stringify(editLeadDataAgainstId))
   })
 
   const onRefresh = () => {
@@ -40,6 +40,34 @@ const LeadScreen = (props) => {
   if (error) {
     return <CustomText text={`Error: ${error}`} />;
   }
+  const editProfile = async (id) => {
+    try {
+      if (!id) {
+        Alert.alert('Error', "This lead isn't ready for editing yet");
+        return;
+      }
+
+     
+    //   console.log('Editing lead ID:', id);
+
+    //  // const result = await dispatch(EditLeadFetch(id));
+    //  // if (result) {
+    //     // Only navigate if successful
+    //     alert(id)
+    //    // navigation.navigate('Editlead1');
+    //   //}
+    } catch (error) {
+      console.error('Edit failed:', error);
+      const message =
+        error.response?.data?.message ||
+        'Lead data not available. Please try again in a few seconds.';
+      Alert.alert('Error', message);
+    } finally {
+      setMenuVisible(false);
+      setModalVisible(false);
+    }
+  };
+
 
   return (
     <View style={styles.container}>
@@ -67,6 +95,7 @@ const LeadScreen = (props) => {
                 statusGradient={getStatusGradient(item.leadStatus)}
                 menuType="follow"
                 navigation={props.navigation}
+                onPress={editProfile(item.id)}
                 screenType="lead"
               />
             ))

@@ -4,7 +4,7 @@ import AuthNavigator from './AuthNavigator';
 import MainNavigator from './MainNavigator';
 import { getItem } from '../api/storageServices';
 import { ActivityIndicator, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 
