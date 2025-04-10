@@ -1,13 +1,18 @@
-import { View, ScrollView, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
+import { View, ScrollView, StyleSheet, TouchableOpacity, Pressable , Alert } from 'react-native';
 import Headercomp from '../../components/HeaderComp.js';
 import HoriCardcomp from '../../components/HoriCardcomp';
 import RectCardcomp from '../../components/RectCardcomp.js';
 import CustomText from '../../components/CustomText.js';
 import TextStyle from '../../styles/TextStyle.js';
 import {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {callAllDropDownAPI} from '../../redux/actions/HomeAction.js';
 import {getItem} from '../../api/storageServices';
+import { state } from '../../api/mainApi.js';
+import LottieScreen from '../../styles/Loader';
+import { RESET_ALL_API_STATE } from '../../redux/actions/HomeAction.js';
+import { CommonActions } from '@react-navigation/native';
+
 const meetingsData = [
   {
     name: 'Barbara Moore',
@@ -33,7 +38,7 @@ const meetingsData = [
 
 const HomeScreen = ({navigation}) => {
   const dispatch = useDispatch();
-
+  let isLoading = useSelector((state)=> state.homeReducer)
   const NavigateToLeadDetails = props => {
     props.navigation.navigate('LeadDetails');
   };
@@ -41,10 +46,25 @@ const HomeScreen = ({navigation}) => {
     props.navigation.navigate('CloseAccountScreen');
   };
 
+  const apiReset = useSelector (state => state.homeReducer);
+
   useEffect(() => {
-  readData();
-   
-  });
+    //Alert.alert("apierror=====" + JSON.stringify(apiReset.faliureState, null, 2));
+    if (apiReset.faliureState) {
+      navigation.dispatch(
+        CommonActions.reset({
+          index: 0,
+          routes: [{ name: 'Login' }],
+        })
+      );
+      //dispatch({ type: RESET_ALL_API_STATE, payload: false });
+    }
+  },[apiReset.faliureState]);
+
+
+  useEffect(() => {
+  readData();  
+  },[]);
 const readData=async()=>{
   const storedData = await getItem('authToken');
   dispatch(callAllDropDownAPI(JSON.stringify(storedData)));
@@ -53,6 +73,13 @@ const readData=async()=>{
   return (
     <View style={{flex: 1}}>
       <Headercomp navigation={navigation} />
+      {isLoading.isLoading ? (
+        <View>
+          <LottieScreen />
+        </View>
+      ) : (
+        <></>
+      )}
       <ScrollView style={style.container} showsVerticalScrollIndicator={false}>
         <View style={{ marginBottom: 90 }}>
           <View style={{ marginTop: 30, MarginBottom: 30 }}>

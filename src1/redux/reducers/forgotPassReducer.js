@@ -43,8 +43,8 @@ const initialState = {
     
   },
   emailValue: {
-    email: "Supra@admin.com",
-    customerId:"Root",
+    email: "",
+    customerId:"",
   },
   loading: false, // Tracks API request status
   success: false, // Indicates if request was successful

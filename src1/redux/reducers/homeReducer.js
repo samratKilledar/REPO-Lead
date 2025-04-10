@@ -1,8 +1,8 @@
-import { assignTo } from '../../api/mainApi';
+import { assignTo, state } from '../../api/mainApi';
 import UpcomingMeetings from '../../screens/Main/UpcomingMeetings';
 import {
   FETCH_DROPDOWN_SUCCESS,
-  FETCH_DROPDOWN_FAILURE,RESET_ALL_STATE
+  FETCH_DROPDOWN_FAILURE,RESET_ALL_STATE,FETCH_DROPDOWN_READ , RESET_ALL_API_STATE , SET_CITIES
 } from '../actions/HomeAction';
 
 const initialState = {
@@ -19,11 +19,17 @@ const initialState = {
   getAllLeadApi:['No Data Avialable'],
   taskList:['No Data Avialable'],
   assignTo:['No Data Avialable'],
-
+  faliureState: "",
 };
 
 const homeReducer = (state = initialState, action) => {
   switch (action.type) {
+
+    case FETCH_DROPDOWN_READ:
+      return {
+        ...state,
+        isLoading: true
+      }
     
     case FETCH_DROPDOWN_SUCCESS:
       return {
@@ -66,7 +72,19 @@ const homeReducer = (state = initialState, action) => {
       case RESET_ALL_STATE:
         {
           return { ...initialState };
-        }
+        };
+      
+      case RESET_ALL_API_STATE:  
+       return {
+          ...state, 
+          faliureState : action.payload,
+        };
+
+        case SET_CITIES:
+      return {
+        ...state,
+        city: action.payload,
+      };
 
     default:
       return state;

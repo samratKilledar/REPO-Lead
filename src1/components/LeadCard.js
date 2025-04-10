@@ -59,23 +59,27 @@ const LeadCard = props => {
     setModalVisible(false);
   };
 
+
+
   useEffect(()=>{
-   alert(editLeadDataAgainstId.id )
+  // alert("====>"+editLeadDataAgainstId.id )
     if(editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined){
-          navigation.navigate('LeadAddPersonal', { leadId: props.id, leadData: editLeadDataAgainstId });
+      if (props.id != "" && props.id != undefined){
+        navigation.navigate('LeadAddPersonal', { leadId: props.id, leadData: editLeadDataAgainstId });
+      }
     }
   },[editLeadDataAgainstId])
 
-  const editProfile = async () => {
+  const editLeadProfile = async () => {
     try {
       if (!props.id) {
-        Alert.alert('Error', "This lead isn't ready for editing yet");
+        console.log('Error', "This lead isn't ready for editing yet");
         return;
       }
 
       setIsEditing(true);
       console.log('Editing lead ID:', props.id);
-
+      //alert(props.id)
       dispatch(EditLeadFetch(props.id));
       // if (result) {
       //   // Only navigate if successful
@@ -87,7 +91,7 @@ const LeadCard = props => {
       const message =
         error.response?.data?.message ||
         'Lead data not available. Please try again in a few seconds.';
-      Alert.alert('Error', message);
+      console.log('Error', message);
     } finally {
       setIsEditing(false);
       setMenuVisible(false);
@@ -105,16 +109,21 @@ const LeadCard = props => {
       console.log('Deleting  lead ID:', id);
       // await dispatch(deleteLead(id));
       const result = await dispatch(deleteLead(id));
-      if (result) {
-        // Only navigate if successful
-        navigationtolead.navigate('Lead');
+
+      if (props.onDeleteSuccess) {
+        props.onDeleteSuccess();  // refresh list
       }
+
+      // if (result) {
+      //   // Only navigate if successful
+      //   navigationtolead.navigate('Lead');
+      // }
     } catch (error) {
       console.error('Delete failed:', error);
       const message =
         error.response?.data?.message ||
         'Lead data not available. Please try again in a few seconds.';
-      Alert.alert('Error', message);
+      console.log('Error', message);
     } finally {
       setMenuVisible(false);
       setModalVisible(false);
@@ -181,7 +190,7 @@ const LeadCard = props => {
 
       {menuVisible && (
         <View style={styles.menuBox}>
-          <TouchableOpacity style={styles.menuItem} onPress={editProfile}>
+          <TouchableOpacity style={styles.menuItem} onPress={editLeadProfile}>
             <Image
               source={require('../assets/icons/Edit/edit.png')}
               style={styles.menuIcon}

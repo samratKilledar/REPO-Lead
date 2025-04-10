@@ -8,10 +8,10 @@ const initialState = {
     password: "Password"
   },
   loginValue: {
-    customerId: "Root",
-    tenantId: "12345",
-    email: "Supra@admin.com",
-    password: "Admin@123"
+    customerId: "",
+    tenantId: "",
+    email: "",
+    password: ""
   },
 };
 

@@ -27,10 +27,10 @@ const initialState = {
     followupTimePlaceholder: "Schedule Time",
     remarkPlaceholder: "Remark",
 
-    title: "vnb",
+    title: "",
     followupStatus: "",
     assignedTo: "",
-    attachmentUrl: "poj.pdf",
+    attachmentUrl: "",
     followupDate: "",
     followupTime: "",
     remark: "",

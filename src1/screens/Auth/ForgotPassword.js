@@ -102,8 +102,8 @@ const ForgotPassword = props => {
                 title="Continue"
                 customStyle={[ButtonStyles.blueButton]}
                 textStyles={ButtonStyles.blueButtonText}
-                // onPress={() => props.navigation.navigate('ResetPassword')}
-                onPress={handleEmail}
+                 onPress={() => props.navigation.navigate('ResetPassword')}
+               // onPress={handleEmail}
               />
             </View>
           </View>

@@ -20,8 +20,8 @@ export const apiGet = async (url, token) => {
 
       },
     });
-   // console.log(url + "---------------------s------------------------------")
-    console.log("🛠️ Token being sent:"+ JSON.stringify(response));
+    // console.log(url + "---------------------s------------------------------")
+    console.log("🛠️ Token being sent:" + JSON.stringify(response));
 
     if (!response.ok) {
       //alert(11)
@@ -61,6 +61,7 @@ export const apiPost = async (url, param = {}) => {
     console.log('Success:', result);
     return result;
   } catch (error) {
+    Alert.alert('Network request failed:', error.message);
     console.error('Network request failed:', error.message);
     return null;
   }
@@ -93,7 +94,7 @@ export const apiPostLead = async (url, payload, tenantId) => {
     if (!response.ok) {
       const errorText = await response.text();
       console.error("❌ API Error:", response.status, errorText);
-     // Alert.alert("Error", `HTTP Error ${response.status}: ${errorText}`);
+      // Alert.alert("Error", `HTTP Error ${response.status}: ${errorText}`);
       return { success: false, status: response.status, error: errorText };
     }
 
@@ -112,6 +113,7 @@ export const apiPostLead = async (url, payload, tenantId) => {
   } catch (error) {
     //Alert.alert("Error", error.message);
     console.error("❌ Error:", error.message);
+    console.error('Network request failed:', error.message);
     return { success: false, error: error.message };
   }
 };
@@ -226,17 +228,15 @@ export const apiPostForgotPass = async (url, param = {}) => {
 
     console.log('📩 API Response Status:', response.status);
 
-    // ✅ Detect Content-Type (JSON or Plain Text)
+
     const contentType = response.headers.get("content-type");
     let result;
 
     if (contentType && contentType.includes("application/json")) {
-      result = await response.json(); // ✅ Parse JSON response
+      result = await response.json();
     } else {
-      result = await response.text(); // ✅ Handle plain text response
+      result = await response.text();
     }
-
-    //console.log("✅ API Success:", result);
     Alert.alert("Success", result);
 
     return { success: true, message: result };
@@ -294,16 +294,16 @@ export const deleteLeadApi = async (id) => {
     }
 
     console.log("Lead deleted successfully");
-    return { success: true }; // Ensure API function returns a response
+    return { success: true };
   } catch (error) {
     console.error("Error deleting lead:", error.message);
     throw error;
   }
 };
 
-export const apiGetEditList = async (url,token) => {  //call this function
+export const apiGetEditList = async (url, token) => {
   console.log("Making GET request to:", url);
-  console.log("Using token:", token); 
+  console.log("Using token:", token);
 
   try {
     const token = await AsyncStorage.getItem("newToken");
@@ -318,7 +318,7 @@ export const apiGetEditList = async (url,token) => {  //call this function
       },
     });
 
-    console.log("Response status:", response.status); 
+    //alert("Response status:"+ JSON.stringify(response)); 
 
     if (!response.ok) {
       console.error("HTTP error! Status:", response.status);
@@ -326,7 +326,7 @@ export const apiGetEditList = async (url,token) => {  //call this function
     }
 
     const data = await response.json();
-    console.log("API Response:", data); 
+    console.log("API Response:", data);
     return data;
   } catch (error) {
     console.error(`GET ${url} Error:`, error.message);
@@ -367,6 +367,85 @@ export const EditLeadReadData = async (leadId) => {
     return data;
   } catch (error) {
     console.error(`GET ${leadId} Error:`, error.message);
+    throw error;
+  }
+};
+
+
+export const apiGetDetailList = async (url) => {
+  console.log("Making GET request to:", url);
+
+  try {
+    const token = await AsyncStorage.getItem("newToken");
+    if (!token) {
+      throw new Error("Authentication token not found. Please login again.");
+    }
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log("Response status:", response.status);
+
+    if (!response.ok) {
+      console.error("HTTP error! Status:", response.status);
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log("API Response:", data);
+    return { data };
+  } catch (error) {
+    console.error(`GET ${url} Error:`, error.message);
+    throw error;
+  }
+};
+
+
+export const apigetAddFollowUp = async (url, tenantId) => {
+  console.log("Fetching Data from:", url);
+
+  try {
+    const token = await AsyncStorage.getItem("newToken");
+    if (!token) {
+      throw new Error("Authentication token not found. Please login again.");
+    }
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        tenant: "root",
+      },
+    });
+
+    console.log("📢 Response Status Code:", response.status);
+    console.log("📢 Response Headers:", response.headers);
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("❌ API Error:", response.status, errorText);
+      console.log("Error",` HTTP Error ${response.status}: ${errorText}`);
+      return;
+    }
+
+    const text = await response.text();
+    if (!text.trim()) {
+      console.warn("⚠ Server returned an empty response.");
+     // Alert.alert("Warning", "No data received from the server.");
+      return;
+    }
+
+    const result = JSON.parse(text);
+    console.log("✅ API Response Body:", result);
+    return result;
+  } catch (error) {
+    Alert.alert("Error", error.message);
+    console.error("❌ Error:", error.message);
     throw error;
   }
 };

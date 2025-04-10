@@ -26,13 +26,13 @@ export const setAssignedToOptions = (options) => ({ type: "SET_ASSIGNED_TO_OPTIO
 
 
 export const submitFollowUp = (url) => async (dispatch) => {
-    dispatch({ type: SUBMIT_CLICK });
-  
-    try {
-      const response = await addFollowUpAPI(url);
-      dispatch({ type: SUBMIT_SUCCESS, payload: response });
-    } catch (error) {
-      console.error("Follow-up submission failed:", error.message);
-      dispatch({ type: SUBMIT_FAILURE, payload: error.message });
-    }
-  };
+  dispatch({ type: SUBMIT_CLICK });
+
+  try {
+    const response = await addFollowUpAPI(url);
+    dispatch({ type: SUBMIT_SUCCESS, payload: response });
+  } catch (error) {
+    console.error("Follow-up submission failed:", error.message);
+    dispatch({ type: SUBMIT_FAILURE, payload: error.message });
+    }
+  };

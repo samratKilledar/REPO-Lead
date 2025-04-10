@@ -21,9 +21,11 @@ import {
   UPDATE_TYPEOFWORK,
   UPDATE_MONTHLYINCOME,
   SUBMIT_REQUEST,
+  SUBMIT_SUCCESS, 
+  SUBMIT_FAILURE,
   SUBMIT_SUCCESS_LEAD,
   SUBMIT_FAILURE_LEAD,
-  EDIT_DATA_AUTO_FILL_SUCCESS  } from "../actions/editLeadAction";
+  EDIT_DATA_AUTO_FILL_SUCCESS ,RESET_ALL_LEAD_ID } from "../actions/editLeadAction";
 import { occupation } from "../../api/mainApi";
 
 const initialState = {
@@ -60,10 +62,14 @@ const initialState = {
 };
 
 const editLeadReducer = (state = initialState, action) => {
-  if(action.type =="EDIT_DATA_AUTO_FILL_SUCCESS"){
-     alert(JSON.stringify(action.payload)+"===")
+  if(action.type =="RESET_ALL_LEAD_ID"){
+    // alert(JSON.stringify(action.payload)+"=---========--==")
   }
   switch (action.type) {
+
+    case EDIT_DATA_AUTO_FILL_SUCCESS:
+      return { ...state, editLeadDataAgainstId: action.payload };
+
     case UPDATE_FIRSTNAME:
       return {...state, firstName: action.payload};
 
@@ -153,8 +159,12 @@ const editLeadReducer = (state = initialState, action) => {
         error: action.payload,
       };
       
-    case EDIT_DATA_AUTO_FILL_SUCCESS:
-      return {...state, editLeadDataAgainstId: action.payload}  
+    // case EDIT_DATA_AUTO_FILL_SUCCESS:
+    //   return {...state, editLeadDataAgainstId: action.payload}  
+
+
+      case RESET_ALL_LEAD_ID:
+      return initialState;
 
     default:
       return state;

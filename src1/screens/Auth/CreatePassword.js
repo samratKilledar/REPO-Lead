@@ -147,8 +147,8 @@ const CreatePassword = props => {
                   title="Continue"
                   customStyle={[ButtonStyles.blueButton]}
                   textStyles={ButtonStyles.blueButtonText}
-                  //onPress={() => setModalVisible(true)}
-                   onPress={handleContinue}
+                  onPress={() => setModalVisible(true)}
+                   //onPress={handleContinue}
                 />
               </View>
               <Modal
