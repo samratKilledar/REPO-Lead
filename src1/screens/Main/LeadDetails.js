@@ -8,15 +8,21 @@ import InsuranceCard from "../../components/InsuranceCard";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { LeadDetailFetch } from "../../redux/actions/leadListAction";
+import {EditLeadFetch} from '../../redux/actions/editLeadAction';
+import {deleteLead} from '../../redux/actions/leadDeleteAction';
+
 
 const LeadDetails = ({ route, navigation }) => {
   const dispatch = useDispatch();
+  const {editLeadDataAgainstId} = useSelector((state)=> state.editLeadReducer)
   const { leadId } = route.params;
 
   const leadDetails = useSelector((state) => state.leadDetailReducer);
   const insuranceList = useSelector((state) => state.leadDetailReducer.InsuranceList);
 
   const [menuVisible, setMenuVisible] = useState(false);
+  const [isEditing, setIsEditing] = useState(false); 
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     if (leadId) {
@@ -31,12 +37,59 @@ const LeadDetails = ({ route, navigation }) => {
   const addService = () => {
     navigation.navigate("LeadAddServices")
   }
-  
-  // useEffect(() => {
-  //   dispatch(fetchLeadDetails());
-  // }, [dispatch]);
 
-  // Combine first and last name
+    useEffect(()=>{
+      if(editLeadDataAgainstId.id != "" && editLeadDataAgainstId.id != undefined){
+        if (leadId != "" && leadId != undefined){
+          navigation.navigate('LeadAddPersonal', { leadId: leadId, leadData: editLeadDataAgainstId });
+        }
+      }
+    },[editLeadDataAgainstId])
+
+    const editLeadPage = async () => {
+      try {
+        if (!leadId) {
+          console.log('Error', "This lead isn't ready for editing yet");
+          return;
+        }
+  
+        setIsEditing(true);
+        console.log('Editing lead ID:', leadId);
+        dispatch(EditLeadFetch(leadId));
+      } catch (error) {
+        console.error('Edit failed:', error);
+        const message =
+          error.response?.data?.message ||
+          'Lead data not available. Please try again in a few seconds.';
+        console.log('Error', message);
+      } finally {
+        setIsEditing(false);
+        setMenuVisible(false);
+        setModalVisible(false);
+      }
+    };
+
+    const handledelete = async () => {
+      try {
+        if (!leadId) {
+          console.warn('Lead ID missing');
+          return;
+        }
+    
+        // Execute delete action
+        await dispatch(deleteLead(leadId));
+        
+        // If we get here, deletion was successful
+        navigation.navigate("Lead");
+        
+      } catch (error) {
+        console.error('Delete failed:', error);
+      } finally {
+        setMenuVisible(false);
+      }
+    };
+
+
   const fullName = `${leadDetails?.firstName || ''} ${leadDetails?.lastName || ''}`.trim();
 
   return (
@@ -63,9 +116,9 @@ const LeadDetails = ({ route, navigation }) => {
           <DetailItem
             icon={require('../../assets/icons/Address/Address.png')}
             label="Address"
-            detail={`${leadDetails?.addressLine1 || ''}, ${leadDetails?.addressLine2 || ''},${leadDetails?.cityName || ''} `|| "N/A"}
+            detail={`${leadDetails?.addressLine1 || ''}, ${leadDetails?.addressLine2 || ''},${leadDetails?.cityName || ''}` || "N/A"}
             multiline={true}
-            // detailStyle={styles.addressDetail}
+            detailStyle={styles.addressDetail}
           />
           <DetailItem
             icon={require('../../assets/icons/Bag/bag.png')}
@@ -116,7 +169,7 @@ const LeadDetails = ({ route, navigation }) => {
             insuranceList.map((item, index) => (
               <InsuranceCard
                 key={index}
-                title={item.serviceName || "Service"}
+                title={item.serviceName || "Service"} 
                 description={item.remark || "No remarks"}
               />
             ))
@@ -128,11 +181,11 @@ const LeadDetails = ({ route, navigation }) => {
 
       {menuVisible && (
         <View style={styles.menuBox}>
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Edit clicked")}>
+          <TouchableOpacity style={styles.menuItem} onPress={editLeadPage}>
             <Image source={require("../../assets/icons/Edit/edit.png")} style={styles.menuIcon} />
             <Text style={styles.menuText}>Edit</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItem} onPress={() => console.log("Delete clicked")}>
+          <TouchableOpacity style={styles.menuItem} onPress={handledelete}>
             <Image source={require("../../assets/icons/Delete/delete.png")} style={styles.menuIcon} />
             <Text style={styles.menuText}>Delete</Text>
           </TouchableOpacity>
@@ -221,10 +274,13 @@ const styles = StyleSheet.create({
   menuText: {
     fontSize: 14,
   },
+    addressDetail: {
+    flexShrink: 1,
+    flexWrap: 'wrap',
+    maxWidth: '80%',
+  },
 });
 
 export default LeadDetails;
-
-
 
 

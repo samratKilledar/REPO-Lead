@@ -158,7 +158,7 @@ useEffect(() => {
       const validPrevCards = Array.isArray(prevCards) ? prevCards : [];
       
       const isDuplicate = validPrevCards.some(
-        card => card.id === newCard.id && card.remark === newCard.remark
+        card => card.serviceId === newCard.serviceId
       );
     
       if (isDuplicate) {
@@ -204,6 +204,8 @@ useEffect(() => {
           apiType="assignTo"
           listData={assignToList.assignTo[3]}
           zIndex={4000}
+          searchPlaceholder="Search Assigned To"
+
         />
         <StatusDropdown
           label={serviceName}
@@ -211,6 +213,8 @@ useEffect(() => {
           onValueChange={value => dispatch(updateServices(value))}
           apiType="leadSource"
           listData={service1.service}
+          searchPlaceholder="Search Service"
+
         />
         <CustomTextInput
           value={remark ? remark.toString() : ""}

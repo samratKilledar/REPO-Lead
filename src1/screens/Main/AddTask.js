@@ -186,6 +186,8 @@ const AddTask = (props) => {
             zIndex={1000}
             elevation={5}
             listData={taskPriorityList.taskPriority}
+            searchPlaceholder="Search Priority"
+
           />
          
             <CustomTextInput

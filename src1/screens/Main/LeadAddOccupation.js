@@ -107,6 +107,7 @@ const LeadAddOccupation = (props) => {
           apiType="occupation"
           listData={occupationList.occupation}
           zIndex={1000}
+           searchPlaceholder="Search Occupation"
         />
 
         {showNewCompanyInput && (

@@ -1,5 +1,5 @@
 
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -16,7 +16,7 @@ import CustomTextInput from '../../components/CustomTextInput';
 import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import {resetStateLeadID} from '../../redux/actions/editLeadAction'
+import { resetStateLeadID } from '../../redux/actions/editLeadAction'
 import {
   updateAddressLine1,
   updateAddressLine2,
@@ -31,10 +31,11 @@ import {
   updateFirstName,
   updateLeadSources,
   updateOtherSource,
-  setAllInputFileds,resetStateLead
+  setAllInputFileds, resetStateLead
 } from '../../redux/actions/lastAction';
+import { fetchCitiesByStateId } from '../../redux/actions/HomeAction';
 
-const LeadAddPersonal = ({ navigation,route }) => {
+const LeadAddPersonal = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const { leadId, leadData } = route.params || {};
 
@@ -66,21 +67,21 @@ const LeadAddPersonal = ({ navigation,route }) => {
     ToastAndroid.showWithGravity(message, ToastAndroid.SHORT, ToastAndroid.CENTER);
   };
 
- 
-  useEffect(() => {
-    console.log(leadId+'Lead Data:====>'+ JSON.stringify(leadId));
-    if(leadId != "" && leadData != undefined){
-      //alert(1)
-     // alert('Existing---- Lead ID:'+ JSON.stringify(leadSourceList));
-     dispatch(setAllInputFileds(leadData,leadId))
 
-     if (parseInt(leadData.leadSource, 10) === 12) {
-      setShowNewSourceInput(true);
+  useEffect(() => {
+    console.log(leadId + 'Lead Data:====>' + JSON.stringify(leadId));
+    if (leadId != "" && leadData != undefined) {
+      //alert(1)
+      // alert('Existing---- Lead ID:'+ JSON.stringify(leadSourceList));
+      dispatch(setAllInputFileds(leadData, leadId))
+
+      if (parseInt(leadData.leadSource, 10) === 12) {
+        setShowNewSourceInput(true);
+      } else {
+        setShowNewSourceInput(false);
+      }
+
     } else {
-      setShowNewSourceInput(false);
-    }
-    
-    }else{
       //alert('neww Lead ID:'+ JSON.stringify(leadSourceList));
 
       dispatch(resetStateLeadID())
@@ -112,8 +113,8 @@ const LeadAddPersonal = ({ navigation,route }) => {
 
     if (!pincode.toString().trim() || !/^\d{6}$/.test(pincode)) {
       showToast('Please enter a valid 6-digit Pincode.');
-      return false;
-    }
+      return false;
+    }
     if (!cityId) {
       showToast('Please select City.');
       return false;
@@ -138,25 +139,25 @@ const LeadAddPersonal = ({ navigation,route }) => {
       navigation.navigate('LeadAddOccupation');
     }
   };
- const goBack=()=>{
-  navigation.goBack();
-  // dispatch(resetStateLead())
-  dispatch(resetStateLeadID())
+  const goBack = () => {
+    navigation.goBack();
+    // dispatch(resetStateLead())
+    dispatch(resetStateLeadID())
 
- }
+  }
 
   const goback = () => {
     navigation.navigate('LeadScreen');
   }
 
   // ✅ State for new source input field
-  
+
   const [showNewSourceInput, setShowNewSourceInput] = useState(false);
 
   // ✅ Handle Dropdown Selection
   const handleLeadSourceChange = (value) => {
     console.log('Selected Lead Source:', value);
-  
+
     if (parseInt(value.id, 10) === 12) {
       setShowNewSourceInput(true);
       dispatch(updateLeadSources(value)); // Keep lead source selection
@@ -166,7 +167,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
       dispatch(updateOtherSource('')); // Clear otherSource
     }
   };
-  
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
@@ -176,7 +177,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
         <View style={styles.container}>
           <View style={styles.headerContainer}>
             {/* <NavigationHeaderBack text="Add Leadd" onPress={goback} /> */}
-            <NavigationHeaderBack text="Add Lead" onPress={ goBack} />
+            <NavigationHeaderBack text="Add Lead" onPress={goBack} />
           </View>
 
           <View style={styles.stepperContainer}>
@@ -205,12 +206,14 @@ const LeadAddPersonal = ({ navigation,route }) => {
                   onValueChange={handleLeadSourceChange}
                   apiType="leadSource"
                   listData={leadSourceList.leadSource}
+                  searchPlaceholder="Search Lead Source"
+
                 />
 
                 {/* ✅ Show text input if "Refer by" is selected */}
                 {showNewSourceInput && (
                   <CustomTextInput
-                  placeholder="Enter Source Name"
+                    placeholder="Enter Source Name"
                     value={otherSource} // Bind to Redux
                     onChangeText={(text) => {
                       dispatch(updateOtherSource(text)); // Store separately
@@ -218,7 +221,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
                     style={styles.textInput}
                   />
                 )}
-                
+
 
                 <CustomTextInput
                   value={mobileNo}
@@ -253,21 +256,6 @@ const LeadAddPersonal = ({ navigation,route }) => {
                   onChangeText={value => dispatch(updateAddressLine2(value))}
                 />
 
-                <StatusDropdown
-                  label={cityName}
-                  selectedValue={cityId}
-                  onValueChange={value => dispatch(updateCity(value))}
-                  apiType="city"
-                  listData={cityList.city}
-                />
-
-                <StatusDropdown
-                  label={stateName}
-                  selectedValue={stateId}
-                  onValueChange={value => dispatch(updateState(value))}
-                  listData={stateList.state}
-                  apiType="state"
-                />
 
                 <StatusDropdown
                   label={countryName}
@@ -275,6 +263,32 @@ const LeadAddPersonal = ({ navigation,route }) => {
                   onValueChange={value => dispatch(updateCountry(value))}
                   listData={countryList.country}
                   apiType="country"
+                  searchPlaceholder="Search Country"
+
+                />
+
+                <StatusDropdown
+                  label={stateName}
+                  selectedValue={stateId}
+                  onValueChange={(value) => {
+                    dispatch(updateState(value)); // Update selected state in Redux
+                    dispatch(fetchCitiesByStateId(value.id)); // Fetch cities for selected state
+                  }}
+
+                  listData={stateList.state}
+                  apiType="state"
+                  searchPlaceholder="Search State "
+
+                />
+
+                <StatusDropdown
+                  label={cityName}
+                  selectedValue={cityId}
+                  onValueChange={value => dispatch(updateCity(value))}
+                  apiType="city"
+                  listData={cityList.city}
+                  searchPlaceholder="Search City"
+
                 />
 
                 <CustomTextInput
@@ -283,7 +297,7 @@ const LeadAddPersonal = ({ navigation,route }) => {
                   keyboardType="numeric"
                   onChangeText={value => dispatch(updatePincode(value))}
                 />
-                
+
 
                 <CustomButton title="Next" customStyle={styles.nextButton} onPress={handleOccupation} />
               </View>

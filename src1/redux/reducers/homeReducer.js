@@ -2,7 +2,7 @@ import { assignTo, state } from '../../api/mainApi';
 import UpcomingMeetings from '../../screens/Main/UpcomingMeetings';
 import {
   FETCH_DROPDOWN_SUCCESS,
-  FETCH_DROPDOWN_FAILURE,RESET_ALL_STATE,FETCH_DROPDOWN_READ , RESET_ALL_API_STATE
+  FETCH_DROPDOWN_FAILURE,RESET_ALL_STATE,FETCH_DROPDOWN_READ , RESET_ALL_API_STATE , SET_CITIES
 } from '../actions/HomeAction';
 
 const initialState = {
@@ -79,6 +79,12 @@ const homeReducer = (state = initialState, action) => {
           ...state, 
           faliureState : action.payload,
         };
+
+        case SET_CITIES:
+      return {
+        ...state,
+        city: action.payload,
+      };
 
     default:
       return state;

@@ -159,6 +159,7 @@ const AddFollowUP = (props) => {
           zIndex={2000}
           elevation={6}
           listData={followUpList.followUp}
+            searchPlaceholder="Search Follow Up"
         />
        
         <StatusDropdown
@@ -169,6 +170,7 @@ const AddFollowUP = (props) => {
           listData={assignToList.assignTo[3]}
           zIndex={1000}
           elevation={4}
+            searchPlaceholder="Search Assigned To"
         />
        
         <CustomTextInput
