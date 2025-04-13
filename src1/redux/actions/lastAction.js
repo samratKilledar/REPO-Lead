@@ -26,6 +26,7 @@ export const UPDATE_ORGANISATIONNAME="UPDATE_ORGANISATIONNAME";
 export const UPDATE_TYPEOFWORK = "UPDATE_TYPEOFWORK";
 export const UPDATE_MONTHLYINCOME = "UPDATE_MONTHLYINCOME";
 export const RESET_ALL_LEAD_ID = "RESET_ALL_LEAD_ID";
+export const RESET_SERVICE_AND_REMARK = "RESET_SERVICE_AND_REMARK";
 export const SET_ALL_DATA_DEFAULT_FOR_EDIT = "SET_ALL_DATA_DEFAULT_FOR_EDIT";
 
 export const updateFirstName = firstName => ({
@@ -305,5 +306,7 @@ export const submitFailure = error => ({
 });
 
 export const resetStateLead = () => ({type: RESET_ALL_LEAD_ID});
+
+export const resetServiceAndRemark = () => ({type: RESET_SERVICE_AND_REMARK,});
 
 export const submitRequest = () => ({type: SUBMIT_REQUEST});

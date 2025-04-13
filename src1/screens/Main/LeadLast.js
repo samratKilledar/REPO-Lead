@@ -14,22 +14,23 @@ import NavigationHeaderBack from '../../components/NavigationHeaderBack';
 import InsuranceCard from '../../components/InsuranceCard';
 import Stepper from '../../components/StepperComp';
 import StatusDropdown from '../../components/StatusDropdown';
-import { leadSubmitAllData, updateAssignTo, updateRemark, updateServices, leadSubmitEditAllData } from '../../redux/actions/lastAction';
+import { leadSubmitAllData, updateRemark, updateServices, leadSubmitEditAllData } from '../../redux/actions/lastAction';
 import { state } from '../../api/mainApi';
 import { useNavigation } from '@react-navigation/native';
 import {resetStateLead} from '../../redux/actions/lastAction';
+import { resetServiceAndRemark } from '../../redux/actions/lastAction';
 import { CommonActions } from '@react-navigation/native';
 import LottieScreen from '../../styles/Loader';
 
 const LeadLast = props => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false)
-  const {assignedTo, serviceId, remark, serviceName, assignedToName} = useSelector(
+  const { serviceId, remark, serviceName} = useSelector(
     state => state.lastReducer,
   );
   const navigation = useNavigation();
   const service1 = useSelector(state => state.homeReducer);
-  const assignToList = useSelector(state => state.homeReducer);
+
   const allState = useSelector(state => state.lastReducer);
   const editLeadDataAgainstId = useSelector(state => state.editLeadReducer.editLeadDataAgainstId)
   const steps = ['Personal', 'Occupation', 'Services'];
@@ -104,10 +105,6 @@ useEffect(() => {
     }
   };
   const handleAdd = () => {
-    if (!assignedTo || String(assignedTo).trim() === "") {
-      showToast("AssignTo cannot be empty");
-      return;
-    }
     
     if (!serviceId.toString() || !serviceId.toString().trim()) {
       showToast('Services cannot be empty');
@@ -131,8 +128,6 @@ useEffect(() => {
         clientId: 0,
         isExistingClient: true,
         remark: remark,
-        assignedTo: assignedTo,
-        assignedToName: assignedToName,
         isActive: true,
       }
     }else{
@@ -145,8 +140,6 @@ useEffect(() => {
         clientId: 0,
         isExistingClient: true,
         remark: remark,
-        assignedTo: assignedTo,
-        assignedToName: assignedToName,
         isActive: true,
       };
     }
@@ -160,29 +153,28 @@ useEffect(() => {
       const isDuplicate = validPrevCards.some(
         card => card.serviceId === newCard.serviceId
       );
+      
     
       if (isDuplicate) {
         showToast?.('This service already exists!');
         return validPrevCards; // Keep existing state if duplicate
       }
     
+      dispatch(resetServiceAndRemark());
       // alert(JSON.stringify(validPrevCards)+"======0=======>" + JSON.stringify(newCard));
       return [...validPrevCards, newCard]; // Add only if unique
     });
     
   };
 
-  const handleDeleteCard = (id, remark) => {
-    setCards(prevCards =>
-      prevCards.filter(
-        card => !(card.id === id && card.remark === remark),
-      ),
-    );
-  };
+  const handleDeleteCard = (indexToDelete) => {
+    setCards(prevCards => prevCards.filter((_, index) => index !== indexToDelete));
+  };  
+  
 
   return (
     <View style={styles.container}>
-      <View style={{flex: 0.5}}>
+      <View style={{flex: 0.6}}>
         <NavigationHeaderBack text="Add Lead" onPress={goBackCall} />
       </View>
       <View style={styles.stepperContainer1}>
@@ -197,18 +189,9 @@ useEffect(() => {
           <LottieScreen />
         ) : (
           <>
+       
         <StatusDropdown
-          label={assignedToName}
-          selectedValue={assignedTo}
-          onValueChange={value => dispatch(updateAssignTo(value))}
-          apiType="assignTo"
-          listData={assignToList.assignTo[3]}
-          zIndex={4000}
-          searchPlaceholder="Search Assigned To"
-
-        />
-        <StatusDropdown
-          label={serviceName}
+          label={serviceName  || "Service"}
           selectedValue={service1.serviceId}
           onValueChange={value => dispatch(updateServices(value))}
           apiType="leadSource"
@@ -226,7 +209,7 @@ useEffect(() => {
           <View style={styles.insuranceCard}>
             {
              cards != undefined ?
-              cards.map(item => (
+              cards.map((item, index) => (
                 <View key={item.id} style={styles.cardContainer}>
                   <InsuranceCard
                     title={item.title!= "" && item.title!= undefined ?  item.title : item.serviceName.toString()}
@@ -235,7 +218,7 @@ useEffect(() => {
                   />
                   <TouchableOpacity
                     style={styles.deleteButton}
-                    onPress={() => handleDeleteCard(item.id, item.remark)}>
+                    onPress={() => handleDeleteCard(index)}>
                     <Image
                       source={require('../../assets/icons/Delete/delete.png')}
                       style={styles.deleteIcon}
@@ -259,10 +242,11 @@ useEffect(() => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#FFFFFF",
   },
   centerContainer: {
-    marginTop: 10,
-    flex: 6,
+    paddingTop: 20,
+    flex: 5,
     paddingBottom: 20,
     gap: 10,
     paddingHorizontal: 15,

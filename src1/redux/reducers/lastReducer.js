@@ -24,6 +24,7 @@ import {
   SUBMIT_SUCCESS_LEAD,
   SUBMIT_FAILURE_LEAD,
   RESET_ALL_LEAD_ID,
+  RESET_SERVICE_AND_REMARK,
   SET_ALL_DATA_DEFAULT_FOR_EDIT,
 } from '../actions/lastAction';
 
@@ -194,11 +195,16 @@ const lastReducer = (state = initialState, action) => {
         messageFromServer: '',
       };
 
-    case RESET_ALL_LEAD_ID:
-  
-        
+    case RESET_ALL_LEAD_ID: 
          return initialState;
       
+    case RESET_SERVICE_AND_REMARK:
+      return {
+        ...state,
+        serviceId: '',
+        serviceName: '',
+        remark: '',
+      };    
 
     default:
       return state;

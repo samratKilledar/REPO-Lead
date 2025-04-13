@@ -31,6 +31,7 @@ import {
   updateFirstName,
   updateLeadSources,
   updateOtherSource,
+  updateAssignTo,
   setAllInputFileds, resetStateLead
 } from '../../redux/actions/lastAction';
 import { fetchCitiesByStateId } from '../../redux/actions/HomeAction';
@@ -57,10 +58,13 @@ const LeadAddPersonal = ({ navigation, route }) => {
     stateName,
     countryId,
     countryName,
+    assignedTo,
+    assignedToName
   } = useSelector(state => state.lastReducer);
   const cityList = useSelector(state => state.homeReducer);
   const countryList = useSelector(state => state.homeReducer);
   const leadSourceList = useSelector(state => state.homeReducer);
+    const assignToList = useSelector(state => state.homeReducer);
   const stateList = useSelector(state => state.homeReducer);
 
   const showToast = message => {
@@ -130,6 +134,14 @@ const LeadAddPersonal = ({ navigation, route }) => {
     if (!leadSource) {
       showToast('Please select Lead Source');
       return false;
+    }
+    // if (!otherSource) {
+    //   showToast('Please select Source Name');
+    //   return false;
+    // }
+    if (!assignedTo || String(assignedTo).trim() === "") {
+      showToast("AssignTo cannot be empty");
+      return;
     }
     return true;
   };
@@ -222,6 +234,16 @@ const LeadAddPersonal = ({ navigation, route }) => {
                   />
                 )}
 
+                <StatusDropdown
+                  label={assignedToName}
+                  selectedValue={assignedTo}
+                  onValueChange={value => dispatch(updateAssignTo(value))}
+                  apiType="assignTo"
+                  listData={assignToList.assignTo[3]}
+                  zIndex={4000}
+                  searchPlaceholder="Search Assigned To"
+
+                />
 
                 <CustomTextInput
                   value={mobileNo}
@@ -315,7 +337,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   headerContainer: {
-    flex: 0.4,
+    flex: 0.5,
   },
   stepperContainer: {
     flex: 0.5,
@@ -324,6 +346,7 @@ const styles = StyleSheet.create({
   },
   centerContainer: {
     paddingBottom: 20,
+    paddingTop: 20,
     gap: 10,
     paddingHorizontal: 15,
   },
