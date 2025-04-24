@@ -151,15 +151,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
   },
   centerContainer: {
-    marginTop: 10,
-    flex: 6,
+    //marginTop: 10,
+    flex: 4.7,
+    paddingTop: 20,
     paddingBottom: 20,
     gap: 10,
     paddingHorizontal: 15,
   },
   stepperContainer1: {
     flex: 0.5,
-    justifyContent: 'center', backgroundColor: '#EEF0FF',
+    justifyContent: 'center', 
+    backgroundColor: '#EEF0FF',
     alignItems: 'center', // Ensure full width
   },
 });
